@@ -1,0 +1,895 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    max-width: 1256px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    background-color: cornsilk;
+}
+
+.header-bottom {
+    width: 100%;
+    height: 80px;
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+
+.store-name h1 {
+    color: red;
+    font-size: 36px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 4px 4px 5px rgba(0, 0, 0, 0.5);
+    font-family: 'Impact', sans-serif;
+    padding-left: 50px;
+}
+
+.store-name a {
+    text-decoration: none;
+}
+
+.color1 {
+    color: #42c842;
+}
+
+.color2 {
+    color: #c85656;
+}
+
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.search-input {
+    border: none;
+    padding: 10px;
+    width: 500px;
+    font-size: 16px;
+    border-radius: 4px;
+    outline: none;
+}
+
+.search-btn {
+    background-color: black;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase; /* Chữ in hoa cho nút tìm kiếm */
+}
+
+.search-btn:hover {
+    background-color: #e65c00; /* Màu đậm hơn khi hover */
+}
+
+
+.contact-info {
+    display: flex;
+    align-items: center;
+    color: #f5f5f5;
+}
+
+.phone-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.phone-number {
+    font-size: 18px;
+    font-weight: bold;
+    color: #5c4f4f;
+}
+
+.menu {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+.menu h1 {
+    font-size: 34px;
+    font-family: "Montserrat", sans-serif;
+    color: #4b4848;
+    margin: 0 0 13px 0;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+
+.header-top {
+    width: 100%;
+    height: 48px;
+    background-color: #417505;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+
+
+}
+
+.header-left {
+    display: flex;
+    gap: 50px;
+
+}
+
+
+.header-left span {
+    font-size: 20px;
+    color: #333;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+}
+
+.icon {
+    width: 16px; /* Điều chỉnh kích thước icon */
+    height: 16px;
+    background: none; /* Không có nền */
+    border: none; /* Không viền */
+    display: block;
+    fill: #f5f5f5;
+}
+
+.header-right {
+    display: flex;
+    gap: 20px;
+}
+
+.header-right {
+    text-align: center;
+    display: flex;
+    align-items: center; /* Đảm bảo nội dung căn giữa theo chiều dọc */
+    justify-content: center;
+    padding: 5px 10px;
+}
+
+
+.btn {
+    text-decoration: none;
+    color: #ffffff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+/* Style cho floating-cart để làm gọn biểu tượng giỏ hàng */
+.floating-cart {
+    position: fixed; /* Đảm bảo vị trí cố định trên trang */
+    bottom: 20px; /* Khoảng cách với mép dưới trang */
+    right: 20px; /* Khoảng cách với mép phải của trang */
+    width: 60px; /* Giảm chiều rộng của biểu tượng giỏ hàng */
+    height: 60px; /* Giảm chiều cao của biểu tượng giỏ hàng */
+    background-color: #ff5722; /* Màu nền của biểu tượng */
+    border-radius: 50%; /* Biểu tượng có hình tròn */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng nhẹ để nổi bật */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Đảm bảo nằm trên các thành phần khác */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu khi hover */
+}
+
+/* Khi hover vào floating-cart */
+.floating-cart:hover {
+    background-color: #e64a19; /* Đổi màu khi người dùng di chuột vào */
+}
+
+/* Style cho biểu tượng giỏ hàng (cart-icon) */
+.floating-cart .cart-icon {
+    width: 40px; /* Giảm kích thước icon */
+    height: 40px;
+    object-fit: contain; /* Đảm bảo ảnh vừa khung mà không bị méo */
+}
+
+/* Hiển thị mini-cart khi hover vào floating-cart */
+.floating-cart:hover .mini-cart {
+    display: block; /* Hiển thị mini-cart khi hover */
+}
+
+/* Style cho mini-cart */
+.mini-cart {
+    display: none; /* Mặc định ẩn mini-cart */
+    position: absolute;
+    bottom: 80px; /* Đặt mini-cart ngay trên biểu tượng giỏ hàng */
+    right: 0;
+    width: 250px; /* Giảm chiều rộng của mini-cart */
+    max-height: 400px; /* Giới hạn chiều cao để tránh quá dài */
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng nhẹ */
+    overflow-y: auto; /* Cho phép cuộn khi nội dung quá dài */
+    padding: 10px;
+}
+
+/* Style cho danh sách sản phẩm trong mini-cart */
+.mini-cart ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mini-cart li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.mini-cart li img {
+    width: 40px; /* Kích thước hình ảnh nhỏ hơn */
+    height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.mini-cart .item-info {
+    font-size: 14px;
+}
+
+.mini-cart .item-info h4 {
+    margin: 0;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Thêm dấu "..." khi tên sách quá dài */
+}
+
+.mini-cart .item-info span {
+    color: #ff5722;
+    font-weight: bold;
+}
+/* Style cho floating-cart để làm gọn biểu tượng giỏ hàng */
+.floating-cart {
+    position: fixed; /* Đảm bảo vị trí cố định trên trang */
+    bottom: 20px; /* Khoảng cách với mép dưới trang */
+    right: 20px; /* Khoảng cách với mép phải của trang */
+    width: 60px; /* Giảm chiều rộng của biểu tượng giỏ hàng */
+    height: 60px; /* Giảm chiều cao của biểu tượng giỏ hàng */
+    background-color: transparent; /* Màu nền xanh lá dễ nhìn, hiện đại */
+    border-radius: 50%; /* Biểu tượng có hình tròn */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Đổ bóng nổi bật hơn */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Đảm bảo nằm trên các thành phần khác */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển màu và phóng to khi hover */
+}
+
+/* Khi hover vào floating-cart */
+.floating-cart:hover {
+    background-color: transparent; /* Màu nền khi hover */
+    transform: scale(1.1); /* Phóng to nhẹ khi hover */
+}
+
+/* Style cho biểu tượng giỏ hàng (cart-icon) */
+.floating-cart .cart-icon {
+    width: 40px; /* Kích thước icon */
+    height: 40px;
+    object-fit: contain; /* Đảm bảo ảnh vừa khung mà không bị méo */
+    border: none; /* Xóa viền mặc định của hình ảnh */
+    outline: none; /* Xóa outline khi focus */
+}
+
+/* Hiển thị mini-cart khi hover vào floating-cart */
+.floating-cart:hover .mini-cart {
+    display: block; /* Hiển thị mini-cart khi hover */
+}
+
+/* Style cho mini-cart */
+.mini-cart {
+    display: none; /* Mặc định ẩn mini-cart */
+    position: absolute;
+    bottom: 80px; /* Đặt mini-cart ngay trên biểu tượng giỏ hàng */
+    right: 0;
+    width: 250px; /* Chiều rộng của mini-cart */
+    max-height: 400px; /* Giới hạn chiều cao để tránh quá dài */
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Đổ bóng mạnh hơn */
+    overflow-y: auto; /* Cho phép cuộn khi nội dung quá dài */
+    padding: 10px;
+    z-index: 999;
+}
+
+/* Style cho danh sách sản phẩm trong mini-cart */
+.mini-cart ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mini-cart li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.mini-cart li img {
+    width: 40px; /* Kích thước hình ảnh */
+    height: 40px;
+    object-fit: cover;
+    border-radius: 4px; /* Hình ảnh bo tròn nhẹ */
+    margin-right: 10px;
+    border: none; /* Xóa viền */
+    outline: none; /* Xóa outline */
+}
+
+.mini-cart .item-info {
+    font-size: 14px;
+}
+
+.mini-cart .item-info h4 {
+    margin: 0;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Thêm dấu "..." khi tên sách quá dài */
+}
+
+.mini-cart .item-info span {
+    color: #ff5722;
+    font-weight: bold;
+}
+/* Style cho số lượng sản phẩm trong giỏ hàng */
+.item-count {
+    position: absolute;
+    top: 5px; /* Vị trí từ đầu biểu tượng giỏ hàng */
+    right: 5px; /* Vị trí từ bên phải biểu tượng giỏ hàng */
+    background-color: red; /* Màu nền */
+    color: white; /* Màu chữ */
+    border-radius: 50%; /* Hình tròn */
+    width: 20px; /* Chiều rộng */
+    height: 20px; /* Chiều cao */
+    display: flex;
+    justify-content: center; /* Canh giữa */
+    align-items: center; /* Canh giữa */
+    font-size: 12px; /* Kích thước chữ */
+    font-weight: bold; /* Đậm chữ */
+}
+.add-to-cart-button {
+    background-color: #28a745; /* Màu nền của nút */
+    color: white; /* Màu chữ */
+    border: none; /* Không viền */
+    border-radius: 5px; /* Bo góc */
+    padding: 10px 15px; /* Khoảng cách trong nút */
+    font-size: 16px; /* Kích thước chữ */
+    cursor: pointer; /* Con trỏ chuột khi hover */
+    text-align: center; /* Căn giữa chữ trong nút */
+    margin-top: 10px; /* Khoảng cách phía trên nút */
+    transition: background-color 0.3s; /* Hiệu ứng chuyển màu khi hover */
+}
+
+.add-to-cart-button:hover {
+    background-color: #218838; /* Màu nền khi hover */
+}
+
+
+
+
+
+.main-content-wrapper {
+    display: flex;
+    background-color: #f9f9f9; /* Màu nền của phần nội dung chính */
+    min-height: 100vh; /* Đảm bảo nội dung chiếm toàn bộ chiều cao của trang */
+    padding: 20px; /* Tạo khoảng cách từ phần nội dung tới cạnh trang */
+}
+
+/* Sidebar là một khối riêng với màu nền và padding */
+.sidebar {
+    width: 20%;
+    padding: 20px;
+    margin-top: 30px;
+    background-color: #f8f2f2;
+    padding-left: 40px;
+    margin-left: 70px;
+    margin-bottom: 30px;
+    border-radius: 8px; /* Góc bo tròn cho khối sidebar */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ để tạo hiệu ứng bảng nổi */
+    box-sizing: border-box; /* Đảm bảo padding không làm thay đổi kích thước của sidebar */
+
+}
+
+.main-content {
+    width: 75%; /* Chiếm 75% còn lại của trang (sidebar 20% và 5% cho khoảng cách giữa) */
+    padding-top: 20px; /* Khoảng cách bên trong phần nội dung */
+    padding-left: 30px;
+    margin-left: 5%;
+
+}
+
+.container {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    position: relative;
+    display: flex;
+    box-sizing: border-box;
+
+}
+
+.sidebar h2 {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.sidebar ul li {
+    position: relative;
+    padding: 10px 0;
+
+}
+
+.sidebar ul li strong {
+    font-size: 1.2rem;
+
+    cursor: pointer;
+}
+
+.sidebar ul li ul.dropdown,
+.sidebar ul li ul.sub-dropdown {
+    display: none;
+    list-style-type: none;
+    padding-left: 20px;
+    margin: 0;
+}
+
+.sidebar ul li:hover > ul.dropdown {
+    display: block; /* Hiển thị dropdown khi di chuột vào */
+}
+
+.sidebar ul li ul li:hover > ul.sub-dropdown {
+    display: block; /* Hiển thị sub-dropdown khi di chuột vào */
+}
+
+.sidebar ul li ul li {
+    padding: 5px 0;
+
+}
+
+.sidebar ul li ul li ul li {
+    padding: 3px 0;
+    font-size: 0.9rem;
+
+}
+
+/* Hiệu ứng hover */
+.sidebar ul li:hover > strong {
+    color: #e91e63; /* Đổi màu chữ khi di chuột vào danh mục lớn */
+}
+
+.sidebar ul li ul li:hover {
+    color: #e91e63; /* Đổi màu chữ khi di chuột vào danh mục nhỏ */
+}
+
+
+.banner {
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.banner img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease-in-out;
+    transform-origin: center; /* Thu nhỏ từ trung tâm (4 góc) */
+
+}
+
+.banner:hover img {
+    transform: scale(0.8); /* Thu nhỏ ảnh xuống 80% kích thước ban đầu */
+}
+
+
+.book-list {
+    width: 100%;
+    padding-top: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Container for the whole banner section */
+.main-banner {
+    width: 90%; /* Chiếm 80% còn lại */
+    padding-left: 20px; /* Tạo khoảng cách với sidebar */
+    box-sizing: border-box;
+}
+
+/* Banner lớn phía trên */
+.large-banner {
+    width: 96%;
+    margin-bottom: 20px;
+    margin-top: 33px;
+    display: flex;
+    margin-left: 25px;
+
+}
+
+.large-banner img {
+    width: 100%;
+    height: 220px;
+    display: block;
+
+
+}
+
+/* Container for the small banners */
+.small-banners {
+    display: flex;
+    justify-content: space-between; /* Đẩy hai banner nhỏ ra hai góc */
+    width: 96%; /* Đảm bảo chiều rộng của small banners bằng với banner lớn */
+
+    margin-top: 20px; /* Khoảng cách với banner lớn */
+    margin-left: 25px;
+
+}
+
+/* Banner nhỏ */
+.small-banner {
+    width: 48%; /* Điều chỉnh kích thước của banner nhỏ để chiếm đều 2 góc */
+    overflow: hidden;
+    position: relative;
+}
+
+.small-banner img {
+    width: 100%;
+    height: 150px;
+    display: block;
+    border-radius: 8px; /* Ban đầu là hình vuông (các góc không bo tròn) */
+    transition: border-radius 0.5s ease-in-out; /* Hiệu ứng mượt khi thay đổi góc */
+
+}
+
+/* Khi di chuột vào, ảnh chuyển thành hình tròn */
+.small-banner:hover img {
+    border-radius: 50%; /* Chuyển từ hình vuông thành hình tròn */
+}
+
+.book-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.book-item img {
+    width: 60px; /* Kích thước hình ảnh nhỏ hơn */
+    height: auto;
+    margin-right: 10px;
+}
+
+.main-content {
+    margin-top: 30px; /* Tạo khoảng cách giữa phần banner và sản phẩm */
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.book-info {
+    max-width: 220px; /* Đảm bảo thông tin sách không tràn quá chiều rộng khung */
+}
+
+.book-title {
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+
+.price {
+    font-size: 12px;
+    color: #333;
+}
+
+.old-price {
+    text-decoration: line-through;
+    color: #999;
+    margin-right: 5px;
+    font-size: 12px;
+}
+
+.discount-price {
+    color: red;
+    font-weight: bold;
+}
+
+
+.book-item span {
+    font-size: 14px;
+    color: #d32f2f; /* Màu giá sách */
+}
+
+.book-item p:hover {
+    color: #28a745; /* Màu xanh lá cây */
+}
+
+
+/* Sắp xếp sản phẩm theo hàng ngang */
+/* Đảm bảo tất cả các phần tử sử dụng box-sizing: border-box để dễ quản lý kích thước */
+/* Đảm bảo tất cả các phần tử sử dụng box-sizing: border-box để dễ quản lý kích thước */
+
+
+/* Container của phần trình bày sản phẩm */
+.product-display {
+    padding: 20px;
+    background-color: #f9f9f9; /* Nền nhẹ để phân biệt với phần khác */
+}
+
+/* Tiêu đề danh sách sách */
+.product-display h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+    color: #333;
+}
+
+/* Row chứa các sản phẩm */
+.product-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Căn chỉnh từ trái sang phải */
+    gap: 2px; /* Khoảng cách giữa các sản phẩm */
+}
+
+
+/* Mỗi sản phẩm */
+.product {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    width: 23%; /* 4 sản phẩm mỗi hàng với khoảng cách */
+    margin-bottom: 20px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative; /* Để chứa icon-container với vị trí tuyệt đối */
+    overflow: hidden; /* Ẩn phần icon-container khi vượt ra ngoài */
+    margin-left: 13px;
+}
+
+/* Hiệu ứng hover cho sản phẩm */
+.product:hover {
+    transform: translateY(-5px);
+}
+
+/* Hình ảnh sản phẩm */
+.product-image {
+    width: 100%;
+    height: 150px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    position: relative; /* Để chứa icon-container nếu cần */
+}
+
+/* Tên sản phẩm */
+.product-name {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 10px;
+    flex-grow: 1; /* Đẩy giá và icon xuống dưới */
+}
+
+/* Giá sản phẩm */
+.item-price .price {
+    color: #e74c3c;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+/* Container chứa các icon */
+.icon-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 10px;
+    opacity: 0; /* Ẩn ban đầu */
+    transition: opacity 0.3s ease;
+    pointer-events: none; /* Không tương tác khi ẩn */
+}
+
+/* Hiển thị icon-container khi hover vào product */
+.product:hover .icon-container {
+    opacity: 1;
+    pointer-events: auto; /* Cho phép tương tác khi hiển thị */
+}
+
+/* Các icon */
+.icon {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    padding: 8px;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+/* Thay đổi màu nền và kích thước khi hover vào icon */
+.icon:hover {
+    transform: scale(1.2);
+    background-color: rgba(255, 255, 255, 1);
+}
+
+/* Hình ảnh trong icon */
+.icon-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Responsive Design */
+
+/* Màn hình trung bình: 2 sản phẩm mỗi hàng */
+@media (max-width: 992px) {
+    .product {
+        width: 48%;
+    }
+}
+
+/* Màn hình nhỏ: 1 sản phẩm mỗi hàng */
+@media (max-width: 600px) {
+    .product {
+        width: 100%;
+    }
+
+    /* Điều chỉnh kích thước icon trên màn hình nhỏ */
+    .icon {
+        width: 30px;
+        height: 30px;
+        padding: 5px;
+    }
+}
+
+
+footer {
+    background-color: #f8f8f8;
+    padding: 20px 0;
+    color: #333;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-section {
+    flex: 1;
+    margin: 0 10px;
+}
+
+.footer-section h3 {
+    margin-bottom: 15px;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin: 5px 0;
+}
+
+.footer-section ul li a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.footer-section form {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-section form input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+}
+
+.footer-section form button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+
+h1 {
+    margin: 20px 0;
+    font-size: 15px;
+}
+
+
+.change-password-btn {
+    margin-left: 10px; /* Khoảng cách giữa tên người dùng và nút */
+    color: #007bff; /* Màu chữ */
+    text-decoration: none; /* Không gạch chân */
+}
+
+.change-password-btn:hover {
+    text-decoration: underline; /* Gạch chân khi hover */
+}
+@keyframes flyToCart {
+    0% {
+        opacity: 1;
+        transform: scale(1) translate(0, 0);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.1) translate(500px, -500px); /* Di chuyển đến giỏ hàng */
+    }
+}
+
+.flying-image {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    z-index: 1000;
+    pointer-events: none; /* Không cho phép click vào ảnh đang bay */
+    animation: flyToCart 1s ease forwards;
+}
+
+
+
+
+
+
+
+

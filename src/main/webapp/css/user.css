@@ -1,0 +1,71 @@
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Thêm hiệu ứng bóng */
+    border-radius: 8px; /* Làm góc bảng mềm mại hơn */
+}
+
+.user-table th, .user-table td {
+    padding: 12px 20px; /* Tăng khoảng cách giữa nội dung và viền ô */
+    text-align: center; /* Căn giữa nội dung */
+    border-bottom: 1px solid #ddd;
+    font-size: 14px; /* Thay đổi kích thước chữ để dễ đọc */
+}
+
+.user-table th {
+    background-color: #28a745; /* Thay đổi màu tiêu đề */
+    color: white;
+    text-transform: uppercase;
+}
+
+.user-table tr:hover {
+    background-color: #f9f9f9; /* Hiệu ứng hover nhẹ */
+}
+
+.user-table td {
+    position: relative;
+}
+
+.user-table td a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.user-table td a:hover {
+    text-decoration: underline;
+}
+
+/* Thêm hình ảnh dạng icon đại diện cho vai trò */
+.user-table td.role-icon:before {
+    content: attr(data-role);
+    display: block;
+    background: #f1f1f1;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    margin: 0 auto;
+    font-weight: bold;
+}
+
+.form-actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.form-actions button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px; /* Bo tròn nút bấm */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng cho nút */
+}
+
+.form-actions button:hover {
+    background-color: #0056b3;
+}

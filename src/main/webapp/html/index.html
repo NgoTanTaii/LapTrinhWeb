@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../../../../untitled4/src/main/webapp/css/style.css">
+
+
+</head>
+<body>
+<header clas="header">
+    <div class="header-top">
+        <div class="header-left">
+            <div class="header-left">
+                <div class="contact-item">
+                    <img src="../jpg/phone-call.png" alt="Phone" class="icon">
+                    <span>0123 456 789</span>
+                </div>
+                <div class="contact-item">
+                    <img src="../jpg/email.png" alt="Email" class="icon">
+                    <span>info@company.com</span>
+                </div>
+                <div class="contact-item">
+
+                    <img src="../jpg/location.png" alt="Location" class="icon">
+                    <span>123 Đường ABC, Quận XYZ, TP.HCM</span>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <a href="login.html" class="btn login-btn">Đăng nhập</a>
+            <a href="register.html" class="btn register-btn">Đăng ký</a>
+        </div>
+        <a href="/cart" class="floating-cart">
+            <img src="../jpg/th.jpg" alt="Shopping Cart" class="cart-icon">
+        </a>
+    </div>
+    <div class="menu">
+        <div class="header-bottom">
+
+            <div class="store-name">
+                <h1><a href="">
+                    <span class="color1">VINA</span>
+                    <span class="color2">BOOK</span>
+                </a>
+                </h1>
+            </div>
+
+
+            <div class="search-bar">
+                <input type="text" placeholder="Tìm kiếm sản phẩm..." class="search-input">
+                <button class="search-btn">Tìm kiếm</button>
+            </div>
+            <div class="contact-info">
+                <img src="../jpg/phone-call.png" alt="Phone Icon" class="phone-icon">
+                <span class="phone-number">0123 456 789</span>
+            </div>
+        </div>
+
+
+    </div>
+
+</header>
+<div class="container">
+    <div class="sidebar">
+        <h2>Danh Mục Sách</h2>
+        <ul>
+            <li>
+                <strong>Sách Mới Nhất</strong>
+                <ul class="dropdown">
+                    <li>Sách mới phát hành</li>
+                    <li>Sách đang hot</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Thể Loại Sách</strong>
+                <ul class="dropdown">
+                    <li>Văn học
+                        <ul class="sub-dropdown">
+                            <li>Tiểu thuyết</li>
+                            <li>Truyện ngắn</li>
+                        </ul>
+                    </li>
+                    <li>Khoa học
+                        <ul class="sub-dropdown">
+                            <li>Khoa học tự nhiên</li>
+                            <li>Khoa học xã hội</li>
+                        </ul>
+                    </li>
+                    <li>Giáo dục
+                        <ul class="sub-dropdown">
+                            <li>Sách giáo khoa</li>
+                            <li>Sách tham khảo</li>
+                        </ul>
+                    </li>
+                    <li>Kinh doanh
+                        <ul class="sub-dropdown">
+                            <li>Quản trị</li>
+                            <li>Marketing</li>
+                        </ul>
+                    </li>
+                    <li>Sách Thiếu Nhi
+                        <ul class="sub-dropdown">
+                            <li>Truyện cổ tích</li>
+                            <li>Sách phát triển kỹ năng</li>
+                        </ul>
+                    </li>
+                    <li>Nghệ Thuật
+                        <ul class="sub-dropdown">
+                            <li>Họa sĩ</li>
+                            <li>Âm nhạc</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <strong>Sách Bán Chạy</strong>
+                <ul class="dropdown">
+                    <li>Top 10 sách bán chạy nhất</li>
+                    <li>Sách được yêu thích</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Khuyến Mãi</strong>
+                <ul class="dropdown">
+                    <li>Sách giảm giá</li>
+                    <li>Combo sách ưu đãi</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Tác Giả Nổi Bật</strong>
+                <ul class="dropdown">
+                    <li>Tác giả A</li>
+                    <li>Tác giả B</li>
+                    <li>Tác giả C</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Danh Mục Khác</strong>
+                <ul class="dropdown">
+                    <li>Sách điện tử</li>
+                    <li>Sách nói</li>
+                    <li>Sách học tiếng Anh</li>
+                </ul>
+            </li>
+        </ul>
+        <div class="bestseller-banner">
+
+            <div class="book-banner1">
+
+                <img src="../jpg/rectang.jpg" alt="Sách Bán Chạy">
+            </div>
+            <h2>Sách Mới Bán Chạy</h2>
+
+            <div class="bestseller-books">
+                <div class="book-item">
+                    <img src="đắc%20nhân%20tâm.jpg" alt="com.eshop.TenWeb.Entity.Book 1">
+                    <p class="book-title">Tên Sách 1</p>
+                    <span class="original-price">150,000đ</span>
+                    <span class="discount-price">100,000đ</span>
+                </div>
+
+                <div class="book-item">
+                    <img src="đắc%20nhân%20tâm.jpg" alt="com.eshop.TenWeb.Entity.Book 2">
+                    <p class="book-title">Tên Sách 2</p>
+                    <span class="original-price">180,000đ</span>
+                    <span class="discount-price">120,000đ</span>
+                </div>
+
+                <div class="book-item">
+                    <img src="đắc%20nhân%20tâm.jpg" alt="com.eshop.TenWeb.Entity.Book 3">
+                    <p class="book-title">Tên Sách 3</p>
+                    <span class="original-price">200,000đ</span>
+                    <span class="discount-price">150,000đ</span>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+    <div class="right-banner" alt="" width="100%">
+        <div class="banner">
+            <img src="../jpg/rectang.jpg" alt="" width="100%" height="303">
+
+        </div>
+        <div class="book-banners">
+            <div class="book-banner">
+                <img src="book1.jpg" alt="Sách 1">
+                <p>Cuốn sách 1 nổi bật</p>
+            </div>
+            <div class="book-banner">
+                <img src="book2.jpg" alt="Sách 2">
+                <p>Cuốn sách 2 nổi bật</p>
+            </div>
+
+        </div>
+
+        <div>
+            <h3 class="best-seller-title">Sản phẩm bán chạy nhất</h3>
+
+            <div class="product-display">
+
+                <div class="product">
+                    <img src="đắc%20nhân%20tâm.jpg" alt="Product 1">
+                    <p>Sản phẩm 1</p>
+                    <div class="item-price">
+
+                        <span class="original-price">169.000 đ</span>
+
+                    </div>
+                    <div class="icon-container">
+                        <a href="#" class="icon magnifier" title="Xem chi tiết">
+                            <img src="../jpg/zoom-in.png" alt="Kính lúp">
+                        </a>
+                        <a href="#" class="icon cart" title="Thêm vào giỏ hàng">
+                            <img src="../jpg/add-to-cart.png" alt="Giỏ hàng">
+                        </a>
+                        <a href="#" class="icon eye" title="Xem nhanh">
+                            <img src="../jpg/eye.png" alt="Con mắt">
+                        </a>
+
+
+                    </div>
+                </div>
+
+                <div class="product">
+                    <img src="https://via.placeholder.com/150" alt="Product 2">
+                    <p>Sản phẩm 2</p>
+                    <div class="item-price">
+                        <span class="current-price">100.000 đ</span>
+                        <span class="original-price">169.000 đ</span>
+
+                    </div>
+                    <div class="icon-container">
+                        <a href="#" class="icon magnifier" title="Xem chi tiết">
+                            <img src="../jpg/zoom-in.png" alt="Kính lúp">
+                        </a>
+                        <a href="#" class="icon cart" title="Thêm vào giỏ hàng">
+                            <img src="../jpg/add-to-cart.png" alt="Giỏ hàng">
+                        </a>
+                        <a href="#" class="icon eye" title="Xem nhanh">
+                            <img src="../jpg/eye.png" alt="Con mắt">
+                        </a>
+
+
+                    </div>
+                </div>
+
+                <div class="product">
+                    <img src="https://via.placeholder.com/150" alt="Product 3">
+                    <p>Sản phẩm 3</p>
+                    <div class="item-price">
+                        <span class="current-price">100.000 đ</span>
+                        <span class="original-price">169.000 đ</span>
+
+                    </div>
+                    <div class="icon-container">
+                        <a href="#" class="icon magnifier" title="Xem chi tiết">
+                            <img src="../jpg/zoom-in.png" alt="Kính lúp">
+                        </a>
+                        <a href="#" class="icon cart" title="Thêm vào giỏ hàng">
+                            <img src="../jpg/add-to-cart.png" alt="Giỏ hàng">
+                        </a>
+                        <a href="#" class="icon eye" title="Xem nhanh">
+                            <img src="../jpg/eye.png" alt="Con mắt">
+                        </a>
+
+
+                    </div>
+                </div>
+
+                <div class="product">
+                    <img src="https://via.placeholder.com/150" alt="Product 3">
+                    <p>Sản phẩm 3</p>
+                    <div class="item-price">
+                        <span class="current-price">100.000 đ</span>
+                        <span class="original-price">169.000 đ</span>
+
+                    </div>
+                    <div class="icon-container">
+                        <a href="#" class="icon magnifier" title="Xem chi tiết">
+                            <img src="../jpg/zoom-in.png" alt="Kính lúp">
+                        </a>
+                        <a href="#" class="icon cart" title="Thêm vào giỏ hàng">
+                            <img src="../jpg/add-to-cart.png" alt="Giỏ hàng">
+                        </a>
+                        <a href="#" class="icon eye" title="Xem nhanh">
+                            <img src="../jpg/eye.png" alt="Con mắt">
+                        </a>
+
+
+                    </div>
+                </div>
+
+                <div class="product">
+                    <img src="đắc%20nhân%20tâm.jpg" alt="Product 3">
+                    <p>Sản phẩm 3</p>
+                    <div class="item-price">
+                        <span class="current-price">100.000 đ</span>
+                        <span class="original-price">169.000 đ</span>
+
+                    </div>
+                    <div class="icon-container">
+                        <a href="#" class="icon magnifier" title="Xem chi tiết">
+                            <img src="../jpg/zoom-in.png" alt="Kính lúp">
+                        </a>
+                        <a href="#" class="icon cart" title="Thêm vào giỏ hàng">
+                            <img src="../jpg/add-to-cart.png" alt="Giỏ hàng">
+                        </a>
+                        <a href="#" class="icon eye" title="Xem nhanh">
+                            <img src="../jpg/eye.png" alt="Con mắt">
+                        </a>
+
+
+                    </div>
+                </div>
+            </div>
+            <h3 class="best-seller-title">Sản phẩm bán chạy nhất</h3>
+
+            <div class="product-display">
+                <div class="product">
+                    <img src="đắc%20nhân%20tâm.jpg" alt="Product 3">
+                    <p>Sản phẩm 3</p>
+                    <div class="item-price">
+                        <span class="current-price">100.000 đ</span>
+                        <span class="original-price">169.000 đ</span>
+
+                    </div>
+                    <div class="icon-container">
+                        <a href="#" class="icon magnifier" title="Xem chi tiết">
+                            <img src="../jpg/zoom-in.png" alt="Kính lúp">
+                        </a>
+                        <a href="#" class="icon cart" title="Thêm vào giỏ hàng">
+                            <img src="../jpg/add-to-cart.png" alt="Giỏ hàng">
+                        </a>
+                        <a href="#" class="icon eye" title="Xem nhanh">
+                            <img src="../jpg/eye.png" alt="Con mắt">
+                        </a>
+
+
+                    </div>
+                </div>
+                <div class="product">
+                    <img src="đắc%20nhân%20tâm.jpg" alt="Product 1">
+                    <p>Sản phẩm 1</p>
+                    <div class="item-price">
+                        <span class="current-price">100.000 đ</span>
+                        <span class="original-price">169.000 đ</span>
+
+                    </div>
+                    <div class="icon-container">
+                        <a href="#" class="icon magnifier" title="Xem chi tiết">
+                            <img src="../jpg/zoom-in.png" alt="Kính lúp">
+                        </a>
+                        <a href="#" class="icon cart" title="Thêm vào giỏ hàng">
+                            <img src="../jpg/add-to-cart.png" alt="Giỏ hàng">
+                        </a>
+                        <a href="#" class="icon eye" title="Xem nhanh">
+                            <img src="../jpg/eye.png" alt="Con mắt">
+                        </a>
+
+
+                    </div>
+                </div>
+
+                <div class="product">
+                    <img src="https://via.placeholder.com/150" alt="Product 2">
+                    <p>Sản phẩm 2</p>
+                    <div class="item-price">
+                        <span class="current-price">100.000 đ</span>
+                        <span class="original-price">169.000 đ</span>
+
+                    </div>
+                    <div class="icon-container">
+                        <a href="#" class="icon magnifier" title="Xem chi tiết">
+                            <img src="../jpg/zoom-in.png" alt="Kính lúp">
+                        </a>
+                        <a href="#" class="icon cart" title="Thêm vào giỏ hàng">
+                            <img src="../jpg/add-to-cart.png" alt="Giỏ hàng">
+                        </a>
+                        <a href="#" class="icon eye" title="Xem nhanh">
+                            <img src="../jpg/eye.png" alt="Con mắt">
+                        </a>
+
+
+                    </div>
+                </div>
+
+                <div class="product">
+                    <img src="https://via.placeholder.com/150" alt="Product 3">
+                    <p>Sản phẩm 3</p>
+                    <div class="item-price">
+                        <span class="current-price">100.000 đ</span>
+                        <span class="original-price">169.000 đ</span>
+
+                    </div>
+                    <div class="icon-container">
+                        <a href="#" class="icon magnifier" title="Xem chi tiết">
+                            <img src="../jpg/zoom-in.png" alt="Kính lúp">
+                        </a>
+                        <a href="#" class="icon cart" title="Thêm vào giỏ hàng">
+                            <img src="../jpg/add-to-cart.png" alt="Giỏ hàng">
+                        </a>
+                        <a href="#" class="icon eye" title="Xem nhanh">
+                            <img src="../jpg/eye.png" alt="Con mắt">
+                        </a>
+
+
+                    </div>
+                </div>
+
+                <div class="product">
+                    <img src="https://via.placeholder.com/150" alt="Product 3">
+                    <p>Sản phẩm 3</p>
+                    <div class="item-price">
+                        <span class="current-price">100.000 đ</span>
+                        <span class="original-price">169.000 đ</span>
+
+                    </div>
+                    <div class="icon-container">
+                        <a href="#" class="icon magnifier" title="Xem chi tiết">
+                            <img src="../jpg/zoom-in.png" alt="Kính lúp">
+                        </a>
+                        <a href="#" class="icon cart" title="Thêm vào giỏ hàng">
+                            <img src="../jpg/add-to-cart.png" alt="Giỏ hàng">
+                        </a>
+                        <a href="#" class="icon eye" title="Xem nhanh">
+                            <img src="../jpg/eye.png" alt="Con mắt">
+                        </a>
+
+
+                    </div>
+                </div>
+
+                <div class="product">
+                    <img src="đắc%20nhân%20tâm.jpg" alt="Product 3">
+                    <p>Sản phẩm 3</p>
+                    <div class="item-price">
+                        <span class="current-price">100.000 đ</span>
+                        <span class="original-price">169.000 đ</span>
+
+                    </div>
+                    <div class="icon-container">
+                        <a href="#" class="icon magnifier" title="Xem chi tiết">
+                            <img src="../jpg/zoom-in.png" alt="Kính lúp">
+                        </a>
+                        <a href="#" class="icon cart" title="Thêm vào giỏ hàng">
+                            <img src="../jpg/add-to-cart.png" alt="Giỏ hàng">
+                        </a>
+                        <a href="#" class="icon eye" title="Xem nhanh">
+                            <img src="../jpg/eye.png" alt="Con mắt">
+                        </a>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="footer-container">
+
+                <div class="footer-section">
+                    <h3>Giới thiệu</h3>
+
+                    <ul>
+
+                        <li><a href="#">Về Vinabook</a></li>
+
+                        <li><a href="#">Chính sách bảo mật</a></li>
+
+                        <li><a href="#">Điều khoản sử dụng</a></li>
+
+                        <li><a href="#">Liên hệ</a></li>
+
+                    </ul>
+
+                </div>
+
+
+                <div class="footer-section">
+                    <h3>Hỗ trợ khách hàng</h3>
+
+                    <ul>
+
+                        <li><a href="#">Câu hỏi thường gặp</a></li>
+
+                        <li><a href="#">Chính sách đổi trả</a></li>
+
+                        <li><a href="#">Phương thức thanh toán</a></li>
+
+                        <li><a href="#">Giao hàng</a></li>
+
+                    </ul>
+
+                </div>
+
+
+                <div class="footer-section">
+                    <h3>Kết nối với chúng tôi</h3>
+
+                    <ul class="social-media">
+
+                        <li><a href="#">Facebook</a></li>
+
+                        <li><a href="#">Instagram</a></li>
+
+                        <li><a href="#">YouTube</a></li>
+
+                    </ul>
+                </div>
+
+
+                <div class="footer-section">
+                    <h3>Đăng ký nhận tin</h3>
+
+                    <form>
+                        <input type="email" placeholder="Nhập email của bạn" required>
+
+                        <button type="submit">Đăng ký</button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-bottom">
+                <p>© 2024 Vinabook. Bảo lưu mọi quyền.</p>
+
+            </div>
+
+        </div>
+        <!--<main class="main">-->
+        <!--    <h1> Sách bán chạy nhất</h1>-->
+        <!--    <div class="list-product">-->
+        <!--        <section class="item">-->
+        <!--            <a href="" class="item-image">-->
+        <!--                <img src="rectang.jpg" alt="">-->
+        <!--            </a>-->
+        <!--            <h3>-->
+        <!--                <a href="" class="item-title">Sách kẻ tà dâm có quỷ theo sau-->
+
+        <!--                </a>-->
+        <!--            </h3>-->
+        <!--            <div class="item-price">-->
+        <!--                <span> 100.000 đ</span>-->
+        <!--                <span> 169.000 đ</span>-->
+        <!--            </div>-->
+        <!--            <div class="item-cmt">-->
+        <!--                <span>72 đánh giá</span>-->
+        <!--            </div>-->
+        <!--        </section>-->
+        <!--        <section class="item">-->
+        <!--            <a href="" class="item-image">-->
+        <!--                <img src="rectang.jpg" alt="">-->
+        <!--            </a>-->
+        <!--            <h3>-->
+        <!--                <a href="" class="item-title">Sách kẻ tà dâm có quỷ theo sau-->
+
+        <!--                </a>-->
+        <!--            </h3>-->
+        <!--            <div class="item-price">-->
+        <!--                <span> 100.000 đ</span>-->
+        <!--                <span> 169.000 đ</span>-->
+        <!--            </div>-->
+        <!--            <div class="item-cmt">-->
+        <!--                <span>72 đánh giá</span>-->
+        <!--            </div>-->
+        <!--        </section>-->
+        <!--        <section class="item">-->
+        <!--            <a href="" class="item-image">-->
+        <!--                <img src="rectang.jpg" alt="">-->
+        <!--            </a>-->
+        <!--            <h3>-->
+        <!--                <a href="" class="item-title">Sách kẻ tà dâm có quỷ theo sau-->
+
+        <!--                </a>-->
+        <!--            </h3>-->
+        <!--            <div class="item-price">-->
+        <!--                <span> 100.000 đ</span>-->
+        <!--                <span> 169.000 đ</span>-->
+        <!--            </div>-->
+        <!--            <div class="item-cmt">-->
+        <!--                <span>72 đánh giá</span>-->
+        <!--            </div>-->
+        <!--        </section>-->
+        <!--        <section class="item">-->
+        <!--            <a href="" class="item-image">-->
+        <!--                <img src="rectang.jpg" alt="">-->
+        <!--            </a>-->
+        <!--            <h3>-->
+        <!--                <a href="" class="item-title">Sách kẻ tà dâm có quỷ theo sau-->
+
+        <!--                </a>-->
+        <!--            </h3>-->
+        <!--            <div class="item-price">-->
+        <!--                <span> 100.000 đ</span>-->
+        <!--                <span> 169.000 đ</span>-->
+        <!--            </div>-->
+        <!--            <div class="item-cmt">-->
+        <!--                <span>72 đánh giá</span>-->
+        <!--            </div>-->
+        <!--        </section>-->
+        <!--        <section class="item">-->
+        <!--            <a href="" class="item-image">-->
+        <!--                <img src="rectang.jpg" alt="">-->
+        <!--            </a>-->
+        <!--            <h3>-->
+        <!--                <a href="" class="item-title">Sách kẻ tà dâm có quỷ theo sau-->
+
+        <!--                </a>-->
+        <!--            </h3>-->
+        <!--            <div class="item-price">-->
+        <!--                <span> 100.000 đ</span>-->
+        <!--                <span> 169.000 đ</span>-->
+        <!--            </div>-->
+        <!--            <div class="item-cmt">-->
+        <!--                <span>72 đánh giá</span>-->
+        <!--            </div>-->
+        <!--        </section>-->
+        <!--        <section class="item">-->
+        <!--            <a href="" class="item-image">-->
+        <!--                <img src="rectang.jpg" alt="">-->
+        <!--            </a>-->
+        <!--            <h3>-->
+        <!--                <a href="" class="item-title">Sách kẻ tà dâm có quỷ theo sau-->
+
+        <!--                </a>-->
+        <!--            </h3>-->
+        <!--            <div class="item-price">-->
+        <!--                <span> 100.000 đ</span>-->
+        <!--                <span> 169.000 đ</span>-->
+        <!--            </div>-->
+        <!--            <div class="item-cmt">-->
+        <!--                <span>72 đánh giá</span>-->
+        <!--            </div>-->
+        <!--        </section>-->
+
+        <!--    </div>-->
+        <!--</main>-->
+        <!--<footer class="footer">-->
+        <!--    <div class="footer-top">-->
+        <!--        <ul class="footer_top-list">-->
+        <!--            <li>Tìm cửa hàng</li>-->
+        <!--            <li>Tìm cửa hàng gần nhâất</li>-->
+        <!--            <li>Mua hàng</li>-->
+        <!--            <li>Gặp trực tiếp cửa hàng</li>-->
+        <!--        </ul>-->
+        <!--        <ul class="footer_top-list">-->
+        <!--            <li>Tìm cửa hàng</li>-->
+        <!--            <li>Tìm cửa hàng gần nhâất</li>-->
+        <!--            <li>Mua hàng</li>-->
+        <!--            <li>Gặp trực tiếp cửa hàng</li>-->
+        <!--        </ul>-->
+        <!--        <ul class="footer_top-list">-->
+        <!--            <li>Tìm cửa hàng</li>-->
+        <!--            <li>Tìm cửa hàng gần nhâất</li>-->
+        <!--            <li>Mua hàng</li>-->
+        <!--            <li>Gặp trực tiếp cửa hàng</li>-->
+        <!--        </ul>-->
+        <!--        <ul class="footer_top-list">-->
+        <!--            <li>Tìm cửa hàng</li>-->
+        <!--            <li>Tìm cửa hàng gần nhâất</li>-->
+        <!--            <li>Mua hàng</li>-->
+        <!--            <li>Gặp trực tiếp cửa hàng</li>-->
+        <!--        </ul>-->
+        <!--    </div>-->
+        <!--    <div class="footer-bottom"></div>-->
+        <!--</footer>--></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <link rel="stylesheet" href="../../../../../untitled4/src/main/webapp/css/login.css">
+
+</head>
+<body>
+
+<div class="login-form-container">
+    <div class="login-form">
+        <h2>Đăng nhập</h2>
+        <form action="/process-login" method="POST">
+            <label for="username">Tên đăng nhập:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Mật khẩu:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit" class="btn submit-btn">Đăng nhập</button>
+        </form>
+        <p>Bạn chưa có tài khoản? <a href="register.html">Đăng ký ngay</a></p>
+    </div>
+</div>
+
+</body>
+</html>
