@@ -1,13 +1,13 @@
 package Controller;
 
 import DBcontext.ConnectDB;
-import Dao.UserDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +15,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/users") // Ánh xạ URL để thay đổi từ /user.jsp thành /users
+@WebServlet("/users")
 public class UserServlet extends HttpServlet {
 
     @Override
@@ -27,6 +27,10 @@ public class UserServlet extends HttpServlet {
         ResultSet rs = null;
 
         try {
+            // Lấy thông tin tài khoản đăng nhập từ session
+            HttpSession session = request.getSession();
+            String loggedInUsername = (String) session.getAttribute("username"); // Giả sử username của admin đang đăng nhập có trong session
+
             // Kết nối cơ sở dữ liệu
             conn = ConnectDB.getConnection();
 
@@ -46,8 +50,9 @@ public class UserServlet extends HttpServlet {
                 users.add(user);
             }
 
-            // Đưa danh sách người dùng vào request attribute để gửi đến JSP
+            // Đưa danh sách người dùng và username admin vào request attribute để gửi đến JSP
             request.setAttribute("users", users);
+            request.setAttribute("loggedInUsername", loggedInUsername);
 
             // Chuyển tiếp request đến trang user.jsp
             request.getRequestDispatcher("user.jsp").forward(request, response);
@@ -56,28 +61,9 @@ public class UserServlet extends HttpServlet {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Lỗi trong quá trình truy xuất dữ liệu.");
         } finally {
-            // Đóng kết nối
             if (rs != null) try { rs.close(); } catch (Exception e) { e.printStackTrace(); }
             if (stmt != null) try { stmt.close(); } catch (Exception e) { e.printStackTrace(); }
             if (conn != null) try { conn.close(); } catch (Exception e) { e.printStackTrace(); }
-        }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String action = request.getParameter("action");
-        int userId = Integer.parseInt(request.getParameter("id"));
-        UserDAO userDAO = new UserDAO();
-
-        if ("update".equals(action)) {
-            // Chuyển vai trò về chữ thường
-            String newRole = request.getParameter("role").toLowerCase();
-            userDAO.updateUserRole(userId, newRole);
-            response.sendRedirect("users"); // Reload lại trang sau khi cập nhật
-        } else if ("delete".equals(action)) {
-            userDAO.deleteUser(userId);
-            response.sendRedirect("users"); // Reload lại trang sau khi xóa
         }
     }
 }

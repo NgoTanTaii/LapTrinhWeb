@@ -45,9 +45,9 @@
 <body>
 
 <div class="account-options">
-    <a href="change-password" class="btn">Đổi mật khẩu</a>
+    <a href="test.jsp" class="btn">Đổi mật khẩu</a>
    
-    <a href="update-address.jsp" class="btn">Cập nhật địa chỉ</a>
+
     <a href="welcome" class="btn">Quay trở lại trang chính</a> <!-- Nút quay lại trang chính -->
     <a href="login.jsp" class="btn">Đăng xuất</a>
 

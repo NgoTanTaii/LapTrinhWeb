@@ -1,38 +1,180 @@
-/* reset default margin and padding */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Đảm bảo footer luôn nằm ở dưới cùng */
-html, body {
-    height: 100%;
-}
-
 body {
+    max-width: 1256px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    background-color: cornsilk;
+}
+
+.header-bottom {
+    width: 100%;
+    height: 80px;
+    background-color: whitesmoke;
     display: flex;
-    flex-direction: column; /* Đặt hướng dọc cho body */
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
 }
 
-.header {
-    background-color: #f1f1f1; /* Màu nền của header */
-    padding: 20px 0; /* Padding cho header */
+
+.store-name h1 {
+    color: red;
+    font-size: 36px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 4px 4px 5px rgba(0, 0, 0, 0.5);
+    font-family: 'Impact', sans-serif;
+    padding-left: 50px;
 }
 
-.container {
-    flex: 1; /* Giãn nở để chiếm không gian còn lại */
-    padding: 20px; /* Padding cho body, tạo khoảng cách với header */
+.store-name a {
+    text-decoration: none;
 }
 
-.footer-container {
-    background-color: #f1f1f1; /* Màu nền cho footer */
-    padding: 20px;
-    text-align: center;
+.color1 {
+    color: #42c842;
 }
 
-.footer-bottom {
-    background-color: #e1e1e1; /* Màu nền cho footer-bottom */
+.color2 {
+    color: #c85656;
+}
+
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.search-input {
+    border: none;
     padding: 10px;
+    width: 500px;
+    font-size: 16px;
+    border-radius: 4px;
+    outline: none;
+}
+
+.search-btn {
+    background-color: black;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase; /* Chữ in hoa cho nút tìm kiếm */
+}
+
+.search-btn:hover {
+    background-color: #e65c00; /* Màu đậm hơn khi hover */
+}
+
+
+.contact-info {
+    display: flex;
+    align-items: center;
+    color: #f5f5f5;
+}
+
+.phone-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.phone-number {
+    font-size: 18px;
+    font-weight: bold;
+    color: #5c4f4f;
+}
+
+.menu {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+.menu h1 {
+    font-size: 34px;
+    font-family: "Montserrat", sans-serif;
+    color: #4b4848;
+    margin: 0 0 13px 0;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+
+.header-top {
+    width: 100%;
+    height: 48px;
+    background-color: #417505;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+
+
+}
+
+.header-left {
+    display: flex;
+    gap: 50px;
+
+}
+
+
+.header-left span {
+    font-size: 20px;
+    color: #333;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+}
+
+.icon {
+    width: 16px; /* Điều chỉnh kích thước icon */
+    height: 16px;
+    background: none; /* Không có nền */
+    border: none; /* Không viền */
+    display: block;
+    fill: #f5f5f5;
+}
+
+.header-right {
+    display: flex;
+    gap: 20px;
+}
+
+.header-right {
     text-align: center;
+    display: flex;
+    align-items: center; /* Đảm bảo nội dung căn giữa theo chiều dọc */
+    justify-content: center;
+    padding: 5px 10px;
+}
+
+
+.btn {
+    text-decoration: none;
+    color: #ffffff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
 }

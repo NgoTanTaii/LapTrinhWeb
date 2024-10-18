@@ -45,19 +45,24 @@ public class ForgotPasswordServlet extends HttpServlet {
                 // Tạo mật khẩu mới
                 String newPassword = generateNewPassword();
 
-                // Cập nhật mật khẩu trong CSDL
+                // Cập nhật mật khẩu trong CSDL (Không mã hóa)
                 String updateQuery = "UPDATE users SET password = ? WHERE username = ? AND email = ?";
                 PreparedStatement updateStmt = conn.prepareStatement(updateQuery);
-                updateStmt.setString(1, newPassword);
+                updateStmt.setString(1, newPassword);  // Save plain text password
                 updateStmt.setString(2, username);
                 updateStmt.setString(3, email);
-                updateStmt.executeUpdate();
+                int rowsUpdated = updateStmt.executeUpdate();
 
-                // Gửi email với mật khẩu mới
-                sendEmail(username, email, newPassword);
+                if (rowsUpdated > 0) {
+                    // Gửi email với mật khẩu mới
+                    sendEmail(username, email, newPassword);
 
-                // Phản hồi lại người dùng
-                response.getWriter().println("Mật khẩu mới đã được gửi đến email của bạn.");
+                    // Phản hồi lại người dùng
+                    response.getWriter().println("Mật khẩu mới đã được gửi đến email của bạn.");
+                } else {
+                    // Nếu cập nhật mật khẩu không thành công
+                    response.getWriter().println("Không thể cập nhật mật khẩu. Vui lòng thử lại sau.");
+                }
             } else {
                 // Nếu username hoặc email không đúng
                 response.getWriter().println("Tên tài khoản hoặc email không hợp lệ.");

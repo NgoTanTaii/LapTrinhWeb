@@ -1,0 +1,481 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    max-width: 100%;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    background-color: cornsilk;
+}
+
+.header-bottom {
+    width: 100%;
+    height: 80px;
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.store-name h1 {
+    color: red;
+    font-size: 36px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 4px 4px 5px rgba(0, 0, 0, 0.5);
+    font-family: 'Impact', sans-serif;
+    padding-left: 50px;
+}
+
+.store-name a {
+    text-decoration: none;
+}
+
+.color1 {
+    color: #42c842;
+}
+
+.color2 {
+    color: #c85656;
+}
+
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.search-input {
+    border: none;
+    padding: 10px;
+    width: 500px;
+    font-size: 16px;
+    border-radius: 4px;
+    outline: none;
+}
+
+.search-btn {
+    background-color: black;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase; /* Chữ in hoa cho nút tìm kiếm */
+}
+
+.search-btn:hover {
+    background-color: #e65c00; /* Màu đậm hơn khi hover */
+}
+
+
+.contact-info {
+    display: flex;
+    align-items: center;
+    color: #f5f5f5;
+}
+
+.phone-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.phone-number {
+    font-size: 18px;
+    font-weight: bold;
+    color: #5c4f4f;
+}
+
+.menu {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+.menu h1 {
+    font-size: 34px;
+    font-family: "Montserrat", sans-serif;
+    color: #4b4848;
+    margin: 0 0 13px 0;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+
+.header-top {
+    width: 100%;
+    height: 48px;
+    background-color: #417505;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+
+
+}
+
+.header-left {
+    display: flex;
+    gap: 50px;
+
+}
+
+
+.header-left span {
+    font-size: 20px;
+    color: #333;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+}
+
+.icon {
+    width: 16px; /* Điều chỉnh kích thước icon */
+    height: 16px;
+    background: none; /* Không có nền */
+    border: none; /* Không viền */
+    display: block;
+    fill: #f5f5f5;
+}
+
+.header-right {
+    display: flex;
+    gap: 20px;
+}
+
+.header-right {
+    text-align: center;
+    display: flex;
+    align-items: center; /* Đảm bảo nội dung căn giữa theo chiều dọc */
+    justify-content: center;
+    padding: 5px 10px;
+}
+
+
+.btn {
+    text-decoration: none;
+    color: #ffffff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.icon-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 10px;
+    opacity: 0; /* Ẩn ban đầu */
+    transition: opacity 0.3s ease;
+    pointer-events: none; /* Không tương tác khi ẩn */
+}
+
+/* Hiển thị icon-container khi hover vào product */
+.product:hover .icon-container {
+    opacity: 1;
+    pointer-events: auto; /* Cho phép tương tác khi hiển thị */
+}
+
+/* Các icon */
+.icon {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    padding: 8px;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+/* Thay đổi màu nền và kích thước khi hover vào icon */
+.icon:hover {
+    transform: scale(1.2);
+    background-color: rgba(255, 255, 255, 1);
+}
+
+/* Hình ảnh trong icon */
+.icon-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Responsive Design */
+
+/* Màn hình trung bình: 2 sản phẩm mỗi hàng */
+@media (max-width: 992px) {
+    .product {
+        width: 48%;
+    }
+}
+
+/* Màn hình nhỏ: 1 sản phẩm mỗi hàng */
+@media (max-width: 600px) {
+    .product {
+        width: 100%;
+    }
+
+    /* Điều chỉnh kích thước icon trên màn hình nhỏ */
+    .icon {
+        width: 30px;
+        height: 30px;
+        padding: 5px;
+    }
+}
+h1 {
+    margin: 20px 0;
+    font-size: 15px;
+}
+
+.footer {
+    background-color: #f8f8f8;
+    padding: 20px 0;
+    color: #333;
+    max-width: 100%;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    max-width: 100%;
+
+    margin-top: 20px;
+
+}
+
+.footer-section {
+    flex: 1;
+    margin: 0 10px;
+}
+
+.footer-section h3 {
+    margin-bottom: 15px;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin: 5px 0;
+}
+
+.footer-section ul li a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    background-color: #e1e1e1; /* Màu nền cho footer dưới cùng */
+}
+
+.footer-section form {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-section form input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+}
+
+.footer-section form button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+
+/* Container chính của trang */
+.main-content {
+    min-height: calc(100vh - 100px); /* Đảm bảo nội dung chính chiếm không gian còn lại */
+    padding: 20px; /* Padding cho nội dung chính */
+    box-sizing: border-box; /* Bao gồm padding vào chiều cao */
+}
+
+/* Footer */
+.footer-container {
+    display: flex; /* Sử dụng flexbox để dễ dàng căn chỉnh các phần tử */
+    justify-content: space-between; /* Căn giữa các phần tử trong footer */
+
+
+
+}
+
+/* Footer dưới cùng */
+.footer-bottom {
+    text-align: center; /* Căn giữa nội dung footer dưới cùng */
+    padding: 10px; /* Padding cho footer dưới cùng */
+
+}
+
+/* Định dạng cho các phần trong footer */
+.footer-section {
+    flex: 1; /* Để các phần trong footer chiếm đều không gian */
+    margin: 0 10px; /* Khoảng cách giữa các phần */
+}
+
+/* Thay đổi kích thước font cho footer */
+.footer-section h3 {
+    margin: 0 0 10px; /* Khoảng cách dưới tiêu đề */
+}
+
+/* Định dạng các liên kết trong footer */
+.footer-section a {
+    color: #333; /* Màu chữ */
+    text-decoration: none; /* Không gạch chân */
+}
+
+.footer-section a:hover {
+    text-decoration: underline; /* Gạch chân khi di chuột qua */
+}
+.main-content {
+    max-width: 800px; /* Giới hạn chiều rộng tối đa */
+    margin: auto; /* Căn giữa trang */
+    background: white; /* Nền trắng cho phần giỏ hàng */
+    padding: 20px; /* Padding cho nội dung chính */
+    border-radius: 10px; /* Bo góc cho phần giỏ hàng */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+}
+
+/* Căn giữa cho danh sách sản phẩm trong giỏ hàng */
+.cart-list {
+    list-style-type: none; /* Không hiển thị dấu chấm đầu dòng */
+    padding: 0; /* Xóa padding mặc định */
+    margin: 20px 0; /* Khoảng cách giữa danh sách và các phần tử khác */
+}
+
+/* Mỗi mục trong giỏ hàng */
+.cart-list li {
+    display: flex; /* Sử dụng flexbox để căn chỉnh các phần tử bên trong */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: space-between; /* Căn giữa theo chiều ngang với khoảng cách giữa các phần tử */
+    margin-bottom: 20px; /* Khoảng cách giữa các mục */
+    padding: 10px; /* Padding cho mỗi mục */
+    border: 1px solid #ddd; /* Viền cho mỗi mục */
+    border-radius: 5px; /* Bo góc */
+    background-color: #f9f9f9; /* Màu nền cho mục */
+}
+
+/* Định dạng cho hình ảnh sản phẩm */
+.cart-list img {
+    width: 80px; /* Chiều rộng hình ảnh */
+    height: auto; /* Chiều cao tự động */
+    margin-right: 15px; /* Khoảng cách bên phải hình ảnh */
+}
+
+/* Định dạng cho thông tin sản phẩm */
+.item-info {
+    flex: 1; /* Chiếm không gian còn lại */
+    display: flex; /* Sử dụng flexbox */
+    flex-direction: column; /* Sắp xếp theo chiều dọc */
+}
+
+/* Căn giữa cho tổng giá */
+.total-price {
+    margin: 20px 0; /* Khoảng cách với các phần tử khác */
+    font-size: 24px; /* Kích thước chữ lớn hơn */
+    text-align: right; /* Căn phải */
+}
+
+/* Định dạng cho nút đặt hàng */
+button {
+    padding: 10px 20px; /* Padding cho nút */
+    background-color: #4CAF50; /* Màu nền cho nút */
+    color: white; /* Màu chữ */
+    border: none; /* Không viền */
+    border-radius: 5px; /* Bo góc */
+    cursor: pointer; /* Con trỏ chuột thành hình tay */
+}
+
+/* Hiệu ứng hover cho nút */
+button:hover {
+    background-color: #45a049; /* Màu nền khi di chuột qua */
+}
+.cart-container {
+    margin: 20px auto;
+    max-width: 800px;
+    font-family: Arial, sans-serif; /* Chọn font chữ */
+}
+
+h2 {
+    text-align: center; /* Căn giữa tiêu đề */
+}
+
+#cart-items {
+    display: flex;
+    flex-direction: column; /* Sắp xếp theo chiều dọc */
+    gap: 10px; /* Khoảng cách giữa các mục */
+}
+
+.cart-item {
+    display: flex;
+    align-items: center; /* Căn giữa dọc */
+    justify-content: space-between; /* Căn giữa ngang */
+    padding: 10px;
+    border: 1px solid #ddd; /* Viền cho từng mục */
+    border-radius: 5px; /* Bo góc cho mục */
+}
+
+.item-image {
+    width: 50px; /* Độ rộng cho ảnh */
+    height: 75px; /* Chiều cao cho ảnh */
+    margin-right: 10px; /* Khoảng cách giữa ảnh và thông tin */
+}
+
+.item-details {
+    flex-grow: 1; /* Để nội dung chiếm không gian còn lại */
+}
+
+.item-quantity {
+    display: flex;
+    align-items: center; /* Căn giữa dọc */
+}
+
+.item-total {
+    min-width: 100px; /* Chiều rộng tối thiểu cho thành tiền */
+}
+
+.remove-button {
+    padding: 5px 10px;
+    background-color: #f44336; /* Màu đỏ cho nút xóa */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.remove-button:hover {
+    background-color: #e53935; /* Màu đỏ đậm khi di chuột qua */
+}
+
+.total-price {
+    text-align: right; /* Căn phải cho tổng tiền */
+    font-size: 20px; /* Kích thước chữ cho tổng tiền */
+    margin-top: 20px; /* Khoảng cách trên cho tổng tiền */
+}

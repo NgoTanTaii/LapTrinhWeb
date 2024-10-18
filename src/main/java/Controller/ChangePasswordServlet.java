@@ -1,105 +1,67 @@
 package Controller;
 
+import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 
 @WebServlet("/change-password")
 public class ChangePasswordServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
 
-    // Thông tin kết nối cơ sở dữ liệu
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/mysql"; // Thay thế bằng URL của CSDL
-    private static final String JDBC_USERNAME = "root"; // Tài khoản CSDL
-    private static final String JDBC_PASSWORD = ""; // Mật khẩu CSDL
+    // Kết nối đến CSDL
+    private Connection connect() throws SQLException {
+        String jdbcURL = "jdbc:mysql://localhost:3306/mysql"; // Thay thế bằng tên database của bạn
+        String dbUser = "root"; // Thay thế bằng username CSDL của bạn
+        String dbPassword = ""; // Thay thế bằng mật khẩu CSDL của bạn
+        return DriverManager.getConnection(jdbcURL, dbUser, dbPassword);
+    }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Lấy thông tin từ form
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
         String oldPassword = request.getParameter("oldPassword");
         String newPassword = request.getParameter("newPassword");
         String confirmPassword = request.getParameter("confirmPassword");
+        String username = (String) request.getSession().getAttribute("username"); // Assuming the username is stored in the session
 
-        // Lấy thông tin người dùng từ session (đã đăng nhập)
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("username");
-
-        // Kiểm tra nếu người dùng chưa đăng nhập
-        if (username == null) {
-            response.sendRedirect("login.jsp");
+        if (newPassword == null || !newPassword.equals(confirmPassword)) {
+            request.setAttribute("errorMessage", "Mật khẩu mới không khớp!");
+            request.getRequestDispatcher("change-password.jsp").forward(request, response);
             return;
         }
 
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String dbPassword = "";
+        try (Connection conn = connect()) {
+            // Kiểm tra mật khẩu cũ
+            String checkOldPasswordQuery = "SELECT * FROM users WHERE username = ? AND password = ?";
+            PreparedStatement checkStmt = conn.prepareStatement(checkOldPasswordQuery);
+            checkStmt.setString(1, username);
+            checkStmt.setString(2, oldPassword); // Setting old password here
+            ResultSet resultSet = checkStmt.executeQuery();
 
-        try {
-            // Tải driver MySQL
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            if (resultSet.next()) {
+                // Cập nhật mật khẩu mới
+                String updatePasswordQuery = "UPDATE users SET password = ? WHERE username = ?";
+                PreparedStatement updateStmt = conn.prepareStatement(updatePasswordQuery);
+                updateStmt.setString(1, newPassword); // New password
+                updateStmt.setString(2, username); // Username
+                updateStmt.executeUpdate();
 
-            // Kết nối tới cơ sở dữ liệu
-            conn = DriverManager.getConnection(JDBC_URL, JDBC_USERNAME, JDBC_PASSWORD);
-
-            // Truy vấn mật khẩu hiện tại của người dùng từ cơ sở dữ liệu
-            String query = "SELECT password FROM users WHERE username = ?";
-            ps = conn.prepareStatement(query);
-            ps.setString(1, username);
-            rs = ps.executeQuery();
-
-            if (rs.next()) {
-                dbPassword = rs.getString("password");
-            }
-
-            // Kiểm tra mật khẩu cũ có khớp không
-            if (!oldPassword.equals(dbPassword)) {
-                request.setAttribute("errorMessage", "Mật khẩu cũ không chính xác.");
-                request.getRequestDispatcher("change-password.jsp").forward(request, response);
-                return; // Thêm return để đảm bảo không thực hiện tiếp
-            } else if (!newPassword.equals(confirmPassword)) {
-                request.setAttribute("errorMessage", "Mật khẩu xác nhận không khớp.");
-                request.getRequestDispatcher("change-password.jsp").forward(request, response);
-                return; // Thêm return để đảm bảo không thực hiện tiếp
+                request.setAttribute("successMessage", "Mật khẩu đã được đổi thành công!");
             } else {
-                // Cập nhật mật khẩu mới trong cơ sở dữ liệu
-                query = "UPDATE users SET password = ? WHERE username = ?";
-                ps = conn.prepareStatement(query);
-
-                ps.setString(1, newPassword); // Lưu mật khẩu mới
-
-
-                int result = ps.executeUpdate();
-
-                if (result > 0) {
-                    request.setAttribute("successMessage", "Đổi mật khẩu thành công.");
-                    request.getRequestDispatcher("change-password.jsp").forward(request, response); // Chuyển hướng về trang đổi mật khẩu để hiển thị thông báo
-                } else {
-                    request.setAttribute("errorMessage", "Có lỗi xảy ra. Vui lòng thử lại.");
-                    request.getRequestDispatcher("change-password.jsp").forward(request, response);
-                }
+                request.setAttribute("errorMessage", "Mật khẩu cũ không đúng!");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            request.setAttribute("errorMessage", "Có lỗi xảy ra: " + e.getMessage());
+
             request.getRequestDispatcher("change-password.jsp").forward(request, response);
-        } finally {
-            // Đóng các tài nguyên
-            if (rs != null) try { rs.close(); } catch (Exception e) { e.printStackTrace(); }
-            if (ps != null) try { ps.close(); } catch (Exception e) { e.printStackTrace(); }
-            if (conn != null) try { conn.close(); } catch (Exception e) { e.printStackTrace(); }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Đã xảy ra lỗi trong quá trình đổi mật khẩu. Vui lòng thử lại.");
+            request.getRequestDispatcher("change-password.jsp").forward(request, response);
         }
     }
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("change-password.jsp");
-    }
+
 }

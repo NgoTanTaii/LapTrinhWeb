@@ -1,12 +1,3 @@
-<%
-    // Kiểm tra nếu người dùng không có session hoặc không phải admin
-    if (session == null || !"admin".equals(session.getAttribute("role"))) {
-        response.sendRedirect("login.jsp");
-        return;
-    }
-%>
-
-<!-- Nội dung của trang admin dành riêng cho admin -->
 <%@ page import="Dao.UserDAO" %>
 <%@ page import="Controller.User" %>
 <%@ page import="java.util.List" %>
@@ -117,6 +108,7 @@
             <%
                 // Lấy danh sách người dùng từ servlet
                 List<User> users = (ArrayList<User>) request.getAttribute("users");
+                String loggedInUsername = (String) request.getAttribute("loggedInUsername"); // Username của admin đang đăng nhập
 
                 if (users != null && !users.isEmpty()) {
                     for (User o : users) {
@@ -128,8 +120,7 @@
                     <td><input type="text" name="username" value="<%= o.getUsername() %>" readonly></td>
                     <td><input type="email" name="email" value="<%= o.getEmail() %>" readonly></td>
                     <td>
-                        <select name="role">
-                            <!-- Luôn dùng chữ thường cho vai trò -->
+                        <select name="role" <%= o.getUsername().equals(loggedInUsername) ? "disabled" : "" %> >
                             <option value="user" <%= o.getRole().equalsIgnoreCase("user") ? "selected" : "" %>>user
                             </option>
                             <option value="admin" <%= o.getRole().equalsIgnoreCase("admin") ? "selected" : "" %>>admin
@@ -137,8 +128,10 @@
                         </select>
                     </td>
                     <td>
-                        <button type="submit" name="action" value="update">Cập nhật</button>
+                        <button type="submit" name="action" value="update"
+                                <%= o.getUsername().equals(loggedInUsername) ? "disabled" : "" %> >Cập nhật</button>
                         <button type="submit" name="action" value="delete"
+                                <%= o.getUsername().equals(loggedInUsername) ? "disabled" : "" %>
                                 onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này không?')">Xóa
                         </button>
                     </td>
@@ -159,23 +152,5 @@
     </div>
 </div>
 
-<%
-    // Xử lý logic cập nhật và xóa người dùng trực tiếp trong trang JSP này
-    if (request.getMethod().equalsIgnoreCase("POST")) {
-        String action = request.getParameter("action");
-        int userId = Integer.parseInt(request.getParameter("id"));
-        UserDAO userDAO = new UserDAO();
-
-        if ("update".equals(action)) {
-            // Chuyển vai trò về chữ thường
-            String newRole = request.getParameter("role").toLowerCase(); // Chuyển thành chữ thường trước khi lưu vào DB
-            userDAO.updateUserRole(userId, newRole);
-            response.sendRedirect("users"); // Reload lại trang sau khi cập nhật
-        } else if ("delete".equals(action)) {
-            userDAO.deleteUser(userId);
-            response.sendRedirect("users"); // Reload lại trang sau khi xóa
-        }
-    }
-%>
 </body>
 </html>

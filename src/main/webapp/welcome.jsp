@@ -1,7 +1,7 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@page import="java.util.List" %>
 <%@page import="Entity.Book" %>
-<%@page session="true" %>
+
 <!-- Kích hoạt session trong JSP -->
 <link rel="stylesheet" href="css/style.css">
 <!DOCTYPE html>
@@ -48,8 +48,21 @@
                 }
             %>
         </div>
-        <a href="jpg/cart" class="floating-cart">
-            <img src="jpg/th.jpg" alt="Shopping Cart" class="cart-icon">
+        <a href="#" class="floating-cart" id="floating-cart">
+            <img src="jpg/th.jpg" alt="Giỏ hàng" class="cart-icon">
+            <div class="item-count">0</div> <!-- Số lượng sản phẩm trong giỏ hàng -->
+            <div class="mini-cart">
+                <h4>Giỏ hàng của bạn</h4>
+                <ul id="cart-items">
+
+                </ul>
+                <div class="total">
+                    <strong>Tổng: <span id="total-price">0</span>₫</strong>
+                </div>
+                <!-- Nút đi tới giỏ hàng -->
+                <button id="go-to-cart" onclick="goToCart()">Đi tới giỏ hàng của bạn</button>
+
+            </div>
         </a>
     </div>
     <div class="menu">
@@ -209,6 +222,49 @@
                     </li>
 
                 </ul>
+                <ul>
+                    <li>
+                        <div class="book-item">
+                            <img src="jpg/đắc%20nhân%20tâm.jpg" alt="Sách 1">
+                            <div>
+                                <h3 class="book-title">Chế Ngự Tâm Trí</h3>
+                                <p class="price"><span>199,000₫</span>
+                                <p class="old-price"><span> 259 ,000₫</span></p>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+                <ul>
+                    <li>
+                        <div class="book-item">
+                            <img src="jpg/đắc%20nhân%20tâm.jpg" alt="Sách 1">
+                            <div>
+                                <h3 class="book-title">Chế Ngự Tâm Trí</h3>
+                                <p class="price"><span>199,000₫</span>
+                                <p class="old-price"><span> 259 ,000₫</span></p>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+                <ul>
+                    <li>
+                        <div class="book-item">
+                            <img src="jpg/đắc%20nhân%20tâm.jpg" alt="Sách 1">
+                            <div>
+                                <h3 class="book-title">Chế Ngự Tâm Trí</h3>
+                                <p class="price"><span>199,000₫</span>
+                                <p class="old-price"><span> 259 ,000₫</span></p>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+
             </div>
 
         </ul>
@@ -229,17 +285,15 @@
 
 
         <h1>Danh sách sách</h1>
-
         <div class="product-row">
             <%
                 List<Book> books = (List<Book>) request.getAttribute("booksmain");
-                if (books != null) {
+                if (books != null && !books.isEmpty()) {
                     for (Book book : books) {
             %>
             <div class="product">
                 <img src="<%= book.getImageUrl() %>" alt="<%= book.getTitle() %>" class="product-image">
-                <p class="product-name"><%= book.getTitle() %>
-                </p>
+                <p class="product-name"><%= book.getTitle() %></p>
                 <div class="item-price">
                     <span class="price"><%= book.getPrice() %> đ</span>
                 </div>
@@ -247,25 +301,98 @@
                     <a href="#" class="icon magnifier" title="Xem chi tiết">
                         <img src="jpg/zoom-in.png" alt="Kính lúp" class="icon-image">
                     </a>
-                    <a href="#" class="icon cart" title="Thêm vào giỏ hàng">
-                        <img src="jpg/add-to-cart.png" alt="Giỏ hàng" class="icon-image">
-                    </a>
+
+                    <form id="addToCartForm1" method="post" action="add-to-cart" style="display:inline;">
+                        <input type="hidden" name="bookId" value="<%= book.getId() %>">
+                        <input type="hidden" name="bookName" value="<%= book.getTitle() %>">
+                        <input type="hidden" name="bookPrice" value="<%= book.getPrice() %>">
+                        <input type="hidden" name="bookImageUrl" value="<%= book.getImageUrl() %>">
+                        <button type="submit" class="icon cart" title="Thêm vào giỏ hàng">
+                            <img src="jpg/add-to-cart.png" alt="Giỏ hàng" class="icon-image">
+                        </button>
+                    </form>
+
                     <a href="#" class="icon eye" title="Xem nhanh">
                         <img src="jpg/eye.png" alt="Con mắt" class="icon-image">
                     </a>
+
+
                 </div>
+                <form id="addToCartForm" method="post" action="cart">
+                    <input type="hidden" name="bookId" value="<%= book.getId() %>">
+                    <input type="hidden" name="bookName" value="<%= book.getTitle() %>"> <!-- Tên sách -->
+                    <input type="hidden" name="bookPrice" value="<%= book.getPrice() %>"> <!-- Giá sách -->
+                    <input type="hidden" name="bookImageUrl" value="<%= book.getImageUrl() %>">
+                    <button type="submit" class="add-to-cart-button" title="Thêm vào giỏ hàng">
+                        Thêm vào giỏ hàng
+                    </button>
+                </form>
             </div>
             <%
                     }
                 } else {
-                    System.out.println("books == null");
+                    out.println("<p>Không có sản phẩm nào phù hợp với tìm kiếm.</p>");
                 }
             %>
         </div>
 
+        <%--        <div class="product-row">--%>
+        <%--            <%--%>
+        <%--                List<Book> books = (List<Book>) request.getAttribute("books");--%>
+        <%--                if (books != null) {--%>
+        <%--                    for (Book book : books) {--%>
+        <%--            %>--%>
+        <%--            <div class="product">--%>
+        <%--                <img src="<%= book.getImageUrl() %>" alt="<%= book.getTitle() %>" class="product-image">--%>
+        <%--                <p class="product-name"><%= book.getTitle() %>--%>
+        <%--                </p>--%>
+        <%--                <div class="item-price">--%>
+        <%--                    <span class="price"><%= book.getPrice() %> đ</span>--%>
+        <%--                </div>--%>
+        <%--                <div class="icon-container">--%>
+        <%--                    <a href="#" class="icon magnifier" title="Xem chi tiết">--%>
+        <%--                        <img src="jpg/zoom-in.png" alt="Kính lúp" class="icon-image">--%>
+        <%--                    </a>--%>
+
+        <%--                    <form id="addToCartForm" method="post" action="add-to-cart" style="display:inline;">--%>
+        <%--                        <input type="hidden" name="bookId" value="<%= book.getId() %>">--%>
+        <%--                        <input type="hidden" name="bookName" value="<%= book.getTitle() %>"> <!-- Tên sách -->--%>
+        <%--                        <input type="hidden" name="bookPrice" value="<%= book.getPrice() %>"> <!-- Giá sách -->--%>
+        <%--                        <input type="hidden" name="bookImageUrl" value="<%= book.getImageUrl() %>">--%>
+
+        <%--                        <button type="submit" class="icon cart" title="Thêm vào giỏ hàng">--%>
+        <%--                            <img src="jpg/add-to-cart.png" alt="Giỏ hàng" class="icon-image">--%>
+        <%--                        </button>--%>
+        <%--                    </form>--%>
+
+
+
+        <%--                    <a href="#" class="icon eye" title="Xem nhanh">--%>
+        <%--                        <img src="jpg/eye.png" alt="Con mắt" class="icon-image">--%>
+        <%--                    </a>--%>
+        <%--                </div>--%>
+        <%--                <form id="addToCartForm" method="post" action="cart">--%>
+        <%--                    <input type="hidden" name="bookId" value="<%= book.getId() %>">--%>
+        <%--                    <input type="hidden" name="bookName" value="<%= book.getTitle() %>"> <!-- Tên sách -->--%>
+        <%--                    <input type="hidden" name="bookPrice" value="<%= book.getPrice() %>"> <!-- Giá sách -->--%>
+        <%--                    <input type="hidden" name="bookImageUrl" value="<%= book.getImageUrl() %>">--%>
+        <%--                    <button type="submit" class="add-to-cart-button" title="Thêm vào giỏ hàng">--%>
+        <%--                        Thêm vào giỏ hàng--%>
+        <%--                    </button>--%>
+        <%--                </form>--%>
+        <%--            </div>--%>
+
+
+        <%--            <%--%>
+        <%--                    }--%>
+        <%--                } else {--%>
+        <%--                    System.out.println("books == null");--%>
+        <%--                }--%>
+        <%--            %>--%>
+        <%--        </div>--%>
+
     </div>
 </div>
-
 <div class="footer-container">
 
     <div class="footer-section">
@@ -338,7 +465,151 @@
     <p>© 2024 Vinabook. Bảo lưu mọi quyền.</p>
 
 </div>
+<script>
+    // Khôi phục dữ liệu giỏ hàng từ sessionStorage khi tải trang
+    let cartItems = JSON.parse(sessionStorage.getItem('cartItems')) || [];
+    let totalPrice = 0;
+    let miniCartVisible = false; // Biến để theo dõi trạng thái hiển thị của giỏ hàng
 
+    // Thêm sản phẩm vào giỏ hàng
+    function addToCart(bookId, bookName, bookPrice, bookImageUrl) {
+        const existingProductIndex = cartItems.findIndex(item => item.id === bookId);
+
+        if (existingProductIndex !== -1) {
+            cartItems[existingProductIndex].quantity += 1;
+        } else {
+            const product = {
+                id: bookId,
+                name: bookName,
+                price: parseInt(bookPrice),
+                imageUrl: bookImageUrl,
+                quantity: 1
+            };
+
+            cartItems.push(product);
+        }
+
+        updateSessionStorage(); // Cập nhật sessionStorage
+        updateCartDisplay();
+        showMiniCart(); // Hiện giỏ hàng mini
+    }
+
+    // Cập nhật sessionStorage
+    function updateSessionStorage() {
+        sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
+    }
+
+    // Cập nhật hiển thị giỏ hàng
+    // Cập nhật hiển thị giỏ hàng mà không ẩn mini-cart
+    // Cập nhật hiển thị giỏ hàng và giữ mini-cart hiển thị
+    function updateCartDisplay() {
+        const itemCount = document.querySelector('.item-count');
+        const cartList = document.getElementById('cart-items');
+        const totalPriceDisplay = document.getElementById('total-price');
+
+        cartList.innerHTML = '';
+        totalPrice = 0;
+
+        // Kiểm tra nếu không còn sản phẩm nào trong giỏ
+        if (cartItems.length === 0) {
+            cartList.innerHTML = '<li>Giỏ hàng của bạn đang trống</li>'; // Hiển thị khi giỏ hàng trống
+            document.querySelector('.mini-cart').style.display = 'none'; // Ẩn mini-cart nếu giỏ hàng trống
+            miniCartVisible = false;
+        } else {
+            cartItems.forEach((item, index) => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                <img src="${item.imageUrl}" alt="${item.name}" width="40" height="40">
+                <div class="item-info">
+                    <h4>${item.name}</h4>
+                    <span>${(item.price * item.quantity).toLocaleString()}₫</span>
+                    <div>
+                        <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${index}, this.value)">
+                    </div>
+                </div>
+                <button onclick="removeFromCart(${index})">Xóa</button> <!-- Xóa sản phẩm -->
+            `;
+                cartList.appendChild(listItem);
+                totalPrice += item.price * item.quantity;
+            });
+        }
+
+        // Cập nhật số lượng sản phẩm và tổng giá
+        itemCount.innerText = cartItems.reduce((total, item) => total + item.quantity, 0);
+        totalPriceDisplay.innerText = totalPrice.toLocaleString();
+
+        // Giữ mini-cart hiển thị nếu vẫn còn sản phẩm
+        if (miniCartVisible) {
+            document.querySelector('.mini-cart').style.display = 'block';
+        }
+    }
+
+    // Cập nhật số lượng sản phẩm từ input
+    function updateQuantity(index, newQuantity) {
+        if (newQuantity < 1) {
+            removeFromCart(index); // Nếu số lượng < 1, xóa sản phẩm
+        } else {
+            cartItems[index].quantity = parseInt(newQuantity);
+            updateSessionStorage(); // Cập nhật sessionStorage
+            updateCartDisplay(); // Cập nhật hiển thị mà không ẩn giỏ hàng
+        }
+    }
+
+    function removeFromCart(index) {
+        cartItems.splice(index, 1); // Xóa sản phẩm khỏi giỏ hàng
+        updateSessionStorage(); // Cập nhật sessionStorage
+        updateCartDisplay(); // Cập nhật hiển thị giỏ hàng
+
+        if (cartItems.length > 0) {
+            miniCartVisible = true; // Giữ mini-cart hiển thị nếu còn sản phẩm
+            document.querySelector('.mini-cart').style.display = 'block'; // Đảm bảo mini-cart vẫn hiển thị
+        } else {
+            miniCartVisible = false; // Ẩn mini-cart nếu giỏ hàng trống
+            document.querySelector('.mini-cart').style.display = 'none'; // Ẩn mini-cart khi giỏ hàng trống
+        }
+    }
+
+
+    // Hiển thị hoặc ẩn mini-cart
+    function toggleMiniCart() {
+        const miniCart = document.querySelector('.mini-cart');
+        miniCartVisible = !miniCartVisible; // Đảo ngược trạng thái hiển thị
+        miniCart.style.display = miniCartVisible ? 'block' : 'none'; // Hiện hoặc ẩn mini-cart
+    }
+
+    // Hiện giỏ hàng mini
+    function showMiniCart() {
+        const miniCart = document.querySelector('.mini-cart');
+        miniCart.style.display = 'block'; // Luôn hiện giỏ hàng mini
+        updateCartDisplay(); // Cập nhật hiển thị
+    }
+
+    function goToCart() {
+        // Chuyển hướng đến trang giỏ hàng
+        window.location.href = 'cart.jsp'; // Đảm bảo rằng đường dẫn đúng với trang giỏ hàng của bạn
+    }
+
+    // Thêm sự kiện khi form thêm vào giỏ hàng được submit
+    document.querySelectorAll('#addToCartForm').forEach(form => {
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const bookId = form.querySelector('input[name="bookId"]').value;
+            const bookName = form.querySelector('input[name="bookName"]').value;
+            const bookPrice = form.querySelector('input[name="bookPrice"]').value;
+            const bookImageUrl = form.querySelector('input[name="bookImageUrl"]').value;
+
+            addToCart(bookId, bookName, bookPrice, bookImageUrl);
+        });
+    });
+
+    // Thêm sự kiện cho giỏ hàng để hiển thị hoặc ẩn khi nhấn
+    const floatingCart = document.getElementById('floating-cart');
+    floatingCart.addEventListener('click', toggleMiniCart);
+
+    // Cập nhật hiển thị giỏ hàng khi tải lại trang
+    updateCartDisplay(); // Gọi hàm này để hiển thị giỏ hàng khi tải lại trang
+</script>
 
 </body>
 </html>

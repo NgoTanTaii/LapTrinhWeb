@@ -1,7 +1,7 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@page import="java.util.List" %>
 <%@page import="Entity.Book" %>
-<%@ page import="Entity.CartItem" %>
+
 <link rel="stylesheet" href="css/style.css">
 <!DOCTYPE html>
 
@@ -64,10 +64,14 @@
 
             <div class="menu">
                 <div class="search-bar">
-                    <input type="text" placeholder="Tìm kiếm sản phẩm..." class="search-input">
-                    <button class="search-btn">Tìm kiếm</button>
+                    <form id="searchForm" method="GET" action="search"> <!-- Gửi truy vấn tới endpoint 'search' -->
+                        <input type="text" name="query" placeholder="Tìm kiếm theo tên sách..." class="search-input" required>
+                        <button type="submit" class="search-btn">Tìm kiếm</button>
+                    </form>
                 </div>
             </div>
+
+
             <div class="contact-info">
                 <img src="jpg/phone-call.png" alt="Phone Icon" class="phone-icon">
                 <span class="phone-number">0123 456 789</span>
@@ -208,6 +212,49 @@
                     </li>
 
                 </ul>
+                <ul>
+                    <li>
+                        <div class="book-item">
+                            <img src="jpg/đắc%20nhân%20tâm.jpg" alt="Sách 1">
+                            <div>
+                                <h3 class="book-title">Chế Ngự Tâm Trí</h3>
+                                <p class="price"><span>199,000₫</span>
+                                <p class="old-price"><span> 259 ,000₫</span></p>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+                <ul>
+                    <li>
+                        <div class="book-item">
+                            <img src="jpg/đắc%20nhân%20tâm.jpg" alt="Sách 1">
+                            <div>
+                                <h3 class="book-title">Chế Ngự Tâm Trí</h3>
+                                <p class="price"><span>199,000₫</span>
+                                <p class="old-price"><span> 259 ,000₫</span></p>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+                <ul>
+                    <li>
+                        <div class="book-item">
+                            <img src="jpg/đắc%20nhân%20tâm.jpg" alt="Sách 1">
+                            <div>
+                                <h3 class="book-title">Chế Ngự Tâm Trí</h3>
+                                <p class="price"><span>199,000₫</span>
+                                <p class="old-price"><span> 259 ,000₫</span></p>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+             
             </div>
 
         </ul>
@@ -228,17 +275,15 @@
 
 
         <h1>Danh sách sách</h1>
-
         <div class="product-row">
             <%
                 List<Book> books = (List<Book>) request.getAttribute("books");
-                if (books != null) {
+                if (books != null && !books.isEmpty()) {
                     for (Book book : books) {
             %>
             <div class="product">
                 <img src="<%= book.getImageUrl() %>" alt="<%= book.getTitle() %>" class="product-image">
-                <p class="product-name"><%= book.getTitle() %>
-                </p>
+                <p class="product-name"><%= book.getTitle() %></p>
                 <div class="item-price">
                     <span class="price"><%= book.getPrice() %> đ</span>
                 </div>
@@ -247,22 +292,21 @@
                         <img src="jpg/zoom-in.png" alt="Kính lúp" class="icon-image">
                     </a>
 
-                    <form id="addToCartForm" method="post" action="add-to-cart" style="display:inline;">
+                    <form id="addToCartForm1" method="post" action="add-to-cart" style="display:inline;">
                         <input type="hidden" name="bookId" value="<%= book.getId() %>">
-                        <input type="hidden" name="bookName" value="<%= book.getTitle() %>"> <!-- Tên sách -->
-                        <input type="hidden" name="bookPrice" value="<%= book.getPrice() %>"> <!-- Giá sách -->
+                        <input type="hidden" name="bookName" value="<%= book.getTitle() %>">
+                        <input type="hidden" name="bookPrice" value="<%= book.getPrice() %>">
                         <input type="hidden" name="bookImageUrl" value="<%= book.getImageUrl() %>">
-
                         <button type="submit" class="icon cart" title="Thêm vào giỏ hàng">
                             <img src="jpg/add-to-cart.png" alt="Giỏ hàng" class="icon-image">
                         </button>
                     </form>
 
-
-
                     <a href="#" class="icon eye" title="Xem nhanh">
                         <img src="jpg/eye.png" alt="Con mắt" class="icon-image">
                     </a>
+
+
                 </div>
                 <form id="addToCartForm" method="post" action="cart">
                     <input type="hidden" name="bookId" value="<%= book.getId() %>">
@@ -274,15 +318,15 @@
                     </button>
                 </form>
             </div>
-
-
             <%
                     }
                 } else {
-                    System.out.println("books == null");
+                    out.println("<p>Không có sản phẩm nào phù hợp với tìm kiếm.</p>");
                 }
             %>
         </div>
+
+
 
     </div>
 </div>
@@ -359,9 +403,11 @@
 
 </div>
 <script>
-    let cartItems = [];
+    // Khôi phục dữ liệu giỏ hàng từ sessionStorage khi tải trang
+    let cartItems = JSON.parse(sessionStorage.getItem('cartItems')) || [];
     let totalPrice = 0;
     let miniCartVisible = false; // Biến để theo dõi trạng thái hiển thị của giỏ hàng
+    let isLoggedIn = false; // Thay đổi giá trị này theo trạng thái thực tế của người dùng
 
     // Thêm sản phẩm vào giỏ hàng
     function addToCart(bookId, bookName, bookPrice, bookImageUrl) {
@@ -380,10 +426,15 @@
 
             cartItems.push(product);
         }
-        sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
-        
+
+        updateSessionStorage(); // Cập nhật sessionStorage
         updateCartDisplay();
         showMiniCart(); // Hiện giỏ hàng mini
+    }
+
+    // Cập nhật sessionStorage
+    function updateSessionStorage() {
+        sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
     }
 
     // Cập nhật hiển thị giỏ hàng
@@ -427,6 +478,7 @@
             removeFromCart(index); // Nếu số lượng < 1, xóa sản phẩm
         } else {
             cartItems[index].quantity = parseInt(newQuantity);
+            updateSessionStorage(); // Cập nhật sessionStorage
             updateCartDisplay(); // Cập nhật hiển thị mà không ẩn giỏ hàng
         }
     }
@@ -434,6 +486,7 @@
     // Xóa sản phẩm khỏi giỏ hàng
     function removeFromCart(index) {
         cartItems.splice(index, 1); // Xóa sản phẩm khỏi giỏ hàng
+        updateSessionStorage(); // Cập nhật sessionStorage
         updateCartDisplay(); // Cập nhật hiển thị mà không ẩn giỏ hàng
     }
 
@@ -443,11 +496,29 @@
         miniCartVisible = !miniCartVisible; // Đảo ngược trạng thái hiển thị
         miniCart.style.display = miniCartVisible ? 'block' : 'none'; // Hiện hoặc ẩn mini-cart
     }
+
+    // Hiện giỏ hàng mini
+    function showMiniCart() {
+        const miniCart = document.querySelector('.mini-cart');
+        miniCart.style.display = 'block'; // Luôn hiện giỏ hàng mini
+        updateCartDisplay(); // Cập nhật hiển thị
+    }
+
+    // Chuyển hướng đến trang giỏ hàng
     function goToCart() {
-        // Chuyển hướng đến trang giỏ hàng
+        if (!isLoggedIn) {
+            alert("Bạn cần đăng nhập để truy cập giỏ hàng!");
+            goToLogin(); // Gọi hàm để chuyển hướng đến trang đăng nhập
+            return; // Dừng thực hiện hàm nếu người dùng chưa đăng nhập
+        }
+
         window.location.href = 'cart.jsp'; // Đảm bảo rằng đường dẫn đúng với trang giỏ hàng của bạn
     }
 
+    // Chuyển hướng đến trang đăng nhập
+    function goToLogin() {
+        window.location.href = 'login.jsp'; // Đảm bảo rằng đường dẫn đúng với trang đăng nhập của bạn
+    }
 
     // Thêm sự kiện khi form thêm vào giỏ hàng được submit
     document.querySelectorAll('#addToCartForm').forEach(form => {
@@ -466,6 +537,9 @@
     // Thêm sự kiện cho giỏ hàng để hiển thị hoặc ẩn khi nhấn
     const floatingCart = document.getElementById('floating-cart');
     floatingCart.addEventListener('click', toggleMiniCart);
+
+    // Cập nhật hiển thị giỏ hàng khi tải lại trang
+    updateCartDisplay(); // Gọi hàm này để hiển thị giỏ hàng khi tải lại trang
 </script>
 
 </body>

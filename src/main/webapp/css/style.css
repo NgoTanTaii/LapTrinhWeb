@@ -646,14 +646,11 @@ ul {
 }
 
 
-/* Sắp xếp sản phẩm theo hàng ngang */
-/* Đảm bảo tất cả các phần tử sử dụng box-sizing: border-box để dễ quản lý kích thước */
-/* Đảm bảo tất cả các phần tử sử dụng box-sizing: border-box để dễ quản lý kích thước */
-
 
 /* Container của phần trình bày sản phẩm */
 .product-display {
     padding: 20px;
+
     background-color: #f9f9f9; /* Nền nhẹ để phân biệt với phần khác */
 }
 
@@ -791,7 +788,7 @@ ul {
 }
 
 
-footer {
+.footer {
     background-color: #f8f8f8;
     padding: 20px 0;
     color: #333;
@@ -807,6 +804,7 @@ footer {
 .footer-section {
     flex: 1;
     margin: 0 10px;
+
 }
 
 .footer-section h3 {
