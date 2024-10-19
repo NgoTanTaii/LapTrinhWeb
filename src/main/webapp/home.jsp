@@ -62,14 +62,41 @@
                 </h1>
             </div>
 
-            <div class="menu">
-                <div class="search-bar">
-                    <form id="searchForm" method="GET" action="search"> <!-- Gửi truy vấn tới endpoint 'search' -->
-                        <input type="text" name="query" placeholder="Tìm kiếm theo tên sách..." class="search-input" required>
-                        <button type="submit" class="search-btn">Tìm kiếm</button>
-                    </form>
+            <div class="search-container">
+                <link href="css/search.css">
+                <form class="search-bar">
+                    <input type="text" placeholder="Tìm kiếm sách..." id="searchInput" />
+                </form>
+                <div class="search-results" id="searchResults">
+                    <!-- Kết quả tìm kiếm sẽ được hiển thị tại đây -->
                 </div>
             </div>
+
+
+            <script>
+                // Lắng nghe sự kiện 'input' để gửi yêu cầu AJAX khi người dùng gõ vào ô tìm kiếm
+                document.getElementById('searchInput').addEventListener('input', function () {
+                    const query = this.value.trim();
+                    const resultsContainer = document.getElementById('searchResults');
+
+                    if (query.length > 0) {
+                        // Gửi yêu cầu AJAX tới servlet
+                        const xhr = new XMLHttpRequest();
+                        xhr.open('GET', '/search?query=' + encodeURIComponent(query), true);
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState === 4 && xhr.status === 200) {
+                                // Nhận kết quả tìm kiếm từ Servlet
+                                resultsContainer.innerHTML = xhr.responseText; // Cập nhật nội dung
+                                resultsContainer.style.display = 'block'; // Hiển thị kết quả
+                            }
+                        };
+                        xhr.send();
+                    } else {
+                        resultsContainer.style.display = 'none'; // Ẩn kết quả khi không có từ khóa
+                    }
+                });
+
+            </script>
 
 
             <div class="contact-info">
@@ -254,7 +281,7 @@
                     </li>
 
                 </ul>
-             
+
             </div>
 
         </ul>

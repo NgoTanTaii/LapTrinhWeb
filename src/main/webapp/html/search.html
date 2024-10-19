@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../../../../untitled4/src/main/webapp/css/search.css">
+</head>
+<body>
+<div class="search-container">
+    <form class="search-bar">
+        <input type="text" placeholder="Tìm kiếm sản phẩm..." id="searchInput" />
+    </form>
+    <div class="search-results" id="searchResults">
+        <!-- Kết quả tìm kiếm sẽ được hiển thị tại đây -->
+    </div>
+</div>
+
+<script>
+    document.getElementById('searchInput').addEventListener('input', function() {
+        const query = this.value.trim().toLowerCase(); // Lấy giá trị nhập vào và chuyển thành chữ thường
+        const resultsContainer = document.getElementById('searchResults');
+
+
+        const products = [
+            { name: "Sản phẩm 1", image: "image1.jpg" },
+            { name: "Sản phẩm 2", image: "image2.jpg" },
+            { name: "Sản phẩm 3", image: "image3.jpg" },
+            { name: "Sách ABC", image: "image4.jpg" },
+            { name: "Sản phẩm XYZ", image: "image5.jpg" }
+        ];
+
+        // Lọc sản phẩm theo tên chứa ký tự tìm kiếm
+        const filteredProducts = products.filter(product => product.name.toLowerCase().includes(query));
+
+        // Hiển thị kết quả nếu có sản phẩm phù hợp
+        if (query.length > 0 && filteredProducts.length > 0) {
+            resultsContainer.innerHTML = filteredProducts.map(product => `
+      <div>
+        <img src="${product.image}" alt="${product.name}" class="product-image" />
+        <p>${product.name}</p>
+      </div>
+    `).join('');
+            resultsContainer.style.display = 'block'; // Hiển thị kết quả tìm kiếm
+        } else {
+
+            resultsContainer.style.display = 'none';
+        }
+    });
+
+
+</script>
+</body>
+</html>
