@@ -1,6 +1,7 @@
 package Controller;
 
 import DBcontext.ConnectDB;
+import Dao.UserDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -61,9 +62,45 @@ public class UserServlet extends HttpServlet {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Lỗi trong quá trình truy xuất dữ liệu.");
         } finally {
-            if (rs != null) try { rs.close(); } catch (Exception e) { e.printStackTrace(); }
-            if (stmt != null) try { stmt.close(); } catch (Exception e) { e.printStackTrace(); }
-            if (conn != null) try { conn.close(); } catch (Exception e) { e.printStackTrace(); }
+            if (rs != null) try {
+                rs.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (stmt != null) try {
+                stmt.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (conn != null) try {
+                conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String action = request.getParameter("action");
+        UserDAO userDAO = new UserDAO();
+        // Kiểm tra hành động: Cập nhật hay xóa
+        if ("update".equals(action)) {
+            int userId = Integer.parseInt(request.getParameter("id"));
+            String role = request.getParameter("role");
+
+            // Cập nhật quyền người dùng
+            userDAO.updateUserRole(userId, role);
+            response.sendRedirect("users");  // Sau khi cập nhật, điều hướng lại trang người dùng
+
+        } else if ("delete".equals(action)) {
+            int userId = Integer.parseInt(request.getParameter("id"));
+
+            // Xóa người dùng
+            userDAO.deleteUser(userId);
+            response.sendRedirect("users");  // Sau khi xóa, điều hướng lại trang người dùng
+        }
+    }
+
 }
