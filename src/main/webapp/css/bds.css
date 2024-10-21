@@ -1,0 +1,169 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+header .logo h1 {
+    font-size: 2.5em;
+}
+
+nav ul {
+    list-style: none;
+    margin-top: 10px;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+section {
+    padding: 50px 20px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.property-list {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.property-item {
+    width: 300px;
+    margin: 20px;
+    text-align: center;
+}
+
+.property-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.property-item h3 {
+    font-size: 1.5em;
+    margin: 10px 0;
+}
+
+.property-item p {
+    color: #555;
+}
+
+.property-item a {
+    text-decoration: none;
+    color: #007BFF;
+    font-weight: bold;
+}
+
+#contact form {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+#contact form label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+#contact form input,
+#contact form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+#contact form button {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+#contact form button:hover {
+    background-color: #555;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+/* Định dạng cho container chứa form tìm kiếm */
+.search-container {
+    width: 100%;
+    height: 300px; /* Chiều cao của khung tìm kiếm */
+    background-image: url('path/to/your/image.jpg'); /* Thay đổi đường dẫn đến hình ảnh bạn muốn làm nền */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    margin-top: 30px;
+}
+
+/* Định dạng cho hộp tìm kiếm */
+.search-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.7); /* Nền trong suốt để dễ nhìn */
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* Định dạng cho ô nhập liệu tìm kiếm */
+.search-input {
+    width: 250px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+}
+
+/* Định dạng cho nút tìm kiếm */
+.search-button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
+}

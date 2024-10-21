@@ -37,49 +37,12 @@ body {
 }
 
 .color1 {
-    color: #42c842;
+    color: darkred;
 }
 
 .color2 {
     color: #c85656;
 }
-
-
-.search-bar {
-    display: flex;
-    align-items: center;
-    background-color: #fff;
-    border-radius: 4px;
-    padding: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-.search-input {
-    border: none;
-    padding: 10px;
-    width: 500px;
-    font-size: 16px;
-    border-radius: 4px;
-    outline: none;
-}
-
-.search-btn {
-    background-color: black;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 4px;
-    font-size: 16px;
-    font-weight: bold;
-    text-transform: uppercase; /* Chữ in hoa cho nút tìm kiếm */
-}
-
-.search-btn:hover {
-    background-color: #e65c00; /* Màu đậm hơn khi hover */
-}
-
-
 
 .contact-info {
     display: flex;
@@ -179,6 +142,7 @@ body {
     border-radius: 4px;
     font-size: 14px;
 }
+
 /* Style cho floating-cart để làm gọn biểu tượng giỏ hàng */
 .floating-cart {
     position: fixed; /* Đảm bảo vị trí cố định trên trang */
@@ -267,6 +231,7 @@ body {
     color: #ff5722;
     font-weight: bold;
 }
+
 /* Style cho floating-cart để làm gọn biểu tượng giỏ hàng */
 .floating-cart {
     position: fixed; /* Đảm bảo vị trí cố định trên trang */
@@ -361,6 +326,7 @@ body {
     color: #ff5722;
     font-weight: bold;
 }
+
 /* Style cho số lượng sản phẩm trong giỏ hàng */
 .item-count {
     position: absolute;
@@ -377,6 +343,7 @@ body {
     font-size: 12px; /* Kích thước chữ */
     font-weight: bold; /* Đậm chữ */
 }
+
 .add-to-cart-button {
     background-color: #28a745; /* Màu nền của nút */
     color: white; /* Màu chữ */
@@ -393,9 +360,6 @@ body {
 .add-to-cart-button:hover {
     background-color: #218838; /* Màu nền khi hover */
 }
-
-
-
 
 
 .main-content-wrapper {
@@ -647,7 +611,6 @@ ul {
 }
 
 
-
 /* Container của phần trình bày sản phẩm */
 .product-display {
     padding: 20px;
@@ -865,6 +828,7 @@ h1 {
 .change-password-btn:hover {
     text-decoration: underline; /* Gạch chân khi hover */
 }
+
 @keyframes flyToCart {
     0% {
         opacity: 1;
