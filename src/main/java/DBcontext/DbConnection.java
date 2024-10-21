@@ -21,7 +21,7 @@ public class DbConnection {
     public static void main(String[] args) {
         try {
 
-            Connection conn = DbConnection.initializeDatabase();
+            Connection conn = DbConnection1.initializeDatabase();
             Statement stmt = conn.createStatement();
 
 

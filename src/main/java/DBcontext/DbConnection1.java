@@ -1,22 +1,17 @@
 package DBcontext;
 
-import Entity.User;
-
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
-
-public class DBUser {
+public class DbConnection1 {
     public static Connection initializeDatabase() throws SQLException, ClassNotFoundException {
         // Khai báo thông tin kết nối cơ sở dữ liệu
         String dbDriver = "com.mysql.cj.jdbc.Driver";
         String dbURL = "jdbc:mysql://localhost:3306/";
-        String dbName = "users";
+        String dbName = "mysql";
         String dbUsername = "root";  // Tài khoản MySQL của bạn
         String dbPassword = "";  // Mật khẩu MySQL của bạn
 
-        // Tải driver MySQL
+
         Class.forName(dbDriver);
 
 
@@ -30,18 +25,13 @@ public class DBUser {
             Statement stmt = conn.createStatement();
 
 
-            String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+            String query = "SELECT * FROM properties";
             ResultSet rs = stmt.executeQuery(query);
-            List<User> users = new ArrayList<>();
-            while (rs.next()) {
-                User u = new User();
+            if (rs.next()) {
                 System.out.println("Ket noi thanh cong");
-                System.out.println(rs.getString("username"));
-                System.out.println(rs.getString("password"));
-                users.add(u);
-                System.out.println(users);
+            } else {
+                System.out.println("Ket noi that bai");
             }
-
 
             rs.close();
             stmt.close();
@@ -52,8 +42,3 @@ public class DBUser {
 
     }
 }
-
-
-
-
-

@@ -1,6 +1,6 @@
 package Controller;
 
-import DBcontext.DbConnection;
+import DBcontext.DbConnection1;
 import Entity.Book;
 
 import javax.servlet.ServletException;
@@ -23,7 +23,7 @@ public class TestMain extends HttpServlet {
 
         try {
             // Kết nối tới cơ sở dữ liệu
-            Connection conn = DbConnection.initializeDatabase();
+            Connection conn = DbConnection1.initializeDatabase();
             Statement stmt = conn.createStatement();
 
             // Truy vấn dữ liệu

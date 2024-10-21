@@ -445,37 +445,45 @@ nav ul li a:hover {
 }
 
 .product-section {
-    background-color: #f7f7f7;
-    padding: 20px;
-    border-radius: 8px;
-    width: 100%;
+    width: 85%; /* Chiếm 90% chiều rộng của trang */
+    margin: 0 auto; /* Canh giữa */
+    padding: 20px 0; /* Khoảng cách trên và dưới */
 }
 
 .product-section h2 {
-    font-size: 28px;
-    color: #333;
-    text-align: center;
-    margin-bottom: 20px;
+    text-align: center; /* Căn giữa tiêu đề */
+    font-size: 24px; /* Kích thước chữ */
+    margin-bottom: 30px; /* Khoảng cách giữa tiêu đề và sản phẩm */
 }
 
+/* Lưới sản phẩm */
 .product-list {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    width: 90%; /* Đặt chiều rộng của sản phẩm chiếm 80% trang */
-    margin: 0 auto; /* Căn giữa sản phẩm trong trang */
+    display: grid; /* Sử dụng Grid Layout */
+    grid-template-columns: repeat(4, 1fr); /* Chia màn hình thành 4 cột */
+    gap: 20px; /* Khoảng cách giữa các sản phẩm */
 }
 
-
+/* Định dạng cho từng sản phẩm */
 .product-item {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    text-align: center;
-    padding: 15px;
-    transition: box-shadow 0.3s ease, transform 0.3s ease; /* Thêm hiệu ứng cho shadow và transform */
-    position: relative;
+    border: 1px solid #ddd; /* Thêm viền cho mỗi sản phẩm */
+    padding: 15px; /* Khoảng cách trong mỗi sản phẩm */
+    text-align: center; /* Canh giữa các nội dung */
+    border-radius: 8px; /* Bo góc cho các sản phẩm */
+    background-color: #fff; /* Màu nền cho mỗi sản phẩm */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Thêm bóng cho sản phẩm */
+    transition: transform 0.3s ease; /* Hiệu ứng khi hover */
+}
+
+/* Hiệu ứng hover cho sản phẩm */
+.product-item:hover {
+    transform: translateY(-10px); /* Di chuyển lên khi hover */
+}
+
+/* Ảnh sản phẩm */
+.product-image {
+    width: 100%; /* Đảm bảo ảnh chiếm hết chiều rộng của sản phẩm */
+    height: auto; /* Giữ tỷ lệ ảnh */
+    border-radius: 5px; /* Bo góc ảnh */
 }
 
 /* Cấu hình cho biểu tượng trái tim */
@@ -485,7 +493,7 @@ nav ul li a:hover {
     right: 5px; /* Đặt trái tim ở góc phải */
     z-index: 10; /* Đảm bảo trái tim nằm trên tất cả các phần tử khác */
     cursor: pointer;
-    margin-bottom:2px;
+    margin-bottom: 2px;
     margin-right: 10px;
 }
 
@@ -493,6 +501,8 @@ nav ul li a:hover {
     width: 20px !important; /* Kích thước nhỏ hơn của trái tim */
     height: 20px !important; /* Kích thước nhỏ hơn của trái tim */
     transition: transform 0.3s ease, filter 0.3s ease; /* Hiệu ứng chuyển động */
+
+
 }
 
 .heart-icon:hover img {
@@ -500,27 +510,6 @@ nav ul li a:hover {
     filter: brightness(1.5); /* Tăng độ sáng khi hover */
 }
 
-.heart-icon a {
-    display: block; /* Cho phép click vào vùng trái tim */
-    text-decoration: none; /* Loại bỏ gạch dưới nếu có */
-}
-
-.product-item:hover {
-    transform: translateY(-10px); /* Di chuyển sản phẩm lên 10px khi hover */
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2); /* Đổ bóng đậm hơn khi hover */
-}
-
-.product-item .image-container {
-    position: relative;
-    width: 100%;
-    height: 180px;
-}
-
-.product-item img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-}
 
 .image-count {
     position: absolute;
@@ -607,34 +596,6 @@ nav ul li a:hover {
 }
 
 
-
-.product-list {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    max-width: 90%;
-    margin: 0 auto;
-    overflow: hidden; /* Ẩn những phần vượt ngoài container */
-    position: relative;
-    animation: slide-right 10s infinite linear; /* Tạo hiệu ứng di chuyển */
-}
-
-.product-item {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    text-align: center;
-    padding: 15px;
-    transition: box-shadow 0.3s ease;
-}
-
-.product-item img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-}
-
 .image-count {
     position: absolute;
     top: 10px;
@@ -646,11 +607,6 @@ nav ul li a:hover {
     border-radius: 12px;
 }
 
-.product-item h3 {
-    font-size: 20px;
-    color: #333;
-    margin: 15px 0 5px;
-}
 
 .product-item .address {
     font-size: 16px;
@@ -727,7 +683,7 @@ nav ul li a:hover {
 .property-form {
     display: flex;
     justify-content: space-between;
-    width: 80%; /* Điều chỉnh diện tích chiếm 80% của trang */
+    width: 100%; /* Điều chỉnh diện tích chiếm 80% của trang */
     margin: 0 auto;
 }
 

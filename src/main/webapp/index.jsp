@@ -1,2 +1,2 @@
 
-<% response.sendRedirect("books"); %>  <!-- gọi đến URL được ánh xạ với servlet Test -->
+<% response.sendRedirect("homes"); %>  <!-- gọi đến URL được ánh xạ với servlet Test --

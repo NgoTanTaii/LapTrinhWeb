@@ -1,7 +1,6 @@
 package Controller;
 
-import DBcontext.Database;
-import DBcontext.DbConnection;
+import DBcontext.DbConnection1;
 import Entity.Book;
 
 import java.sql.Connection;
@@ -17,7 +16,7 @@ public class BookService {
         List<Book> books = new ArrayList<>();
         String sql = "SELECT * FROM book WHERE title LIKE ?"; // Câu truy vấn SQL
 
-        try (Connection conn = DbConnection.initializeDatabase();
+        try (Connection conn = DbConnection1.initializeDatabase();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, "%" + query + "%"); // Tìm kiếm bất kỳ vị trí nào
             ResultSet rs = stmt.executeQuery();

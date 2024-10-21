@@ -1,4 +1,3 @@
-<%@ page import="Dao.UserDAO" %>
 <%@ page import="Controller.User" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
@@ -115,18 +114,27 @@
             %>
             <tr>
                 <form action="users" method="POST">
-                    <td><input type="hidden" name="id" value="<%= o.getId() %>"><%= o.getId() %></td>
+                    <td><input type="hidden" name="id" value="<%= o.getId() %>"><%= o.getId() %>
+                    </td>
                     <td><input type="text" name="username" value="<%= o.getUsername() %>" readonly></td>
                     <td><input type="email" name="email" value="<%= o.getEmail() %>" readonly></td>
                     <td>
                         <select name="role" <%= o.getUsername().equals(loggedInUsername) ? "disabled" : "" %> >
-                            <option value="user" <%= o.getRole().equalsIgnoreCase("user") ? "selected" : "" %>>user</option>
-                            <option value="admin" <%= o.getRole().equalsIgnoreCase("admin") ? "selected" : "" %>>admin</option>
+                            <option value="user" <%= o.getRole().equalsIgnoreCase("user") ? "selected" : "" %>>user
+                            </option>
+                            <option value="admin" <%= o.getRole().equalsIgnoreCase("admin") ? "selected" : "" %>>admin
+                            </option>
                         </select>
                     </td>
                     <td>
-                        <button type="submit" name="action" value="update" <%= o.getUsername().equals(loggedInUsername) ? "disabled" : "" %>>Cập nhật</button>
-                        <button type="submit" name="action" value="delete" <%= o.getUsername().equals(loggedInUsername) ? "disabled" : "" %> onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này không?')">Xóa</button>
+                        <button type="submit" name="action"
+                                value="update" <%= o.getUsername().equals(loggedInUsername) ? "disabled" : "" %>>Cập
+                            nhật
+                        </button>
+                        <button type="submit" name="action"
+                                value="delete" <%= o.getUsername().equals(loggedInUsername) ? "disabled" : "" %>
+                                onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này không?')">Xóa
+                        </button>
                     </td>
                 </form>
 

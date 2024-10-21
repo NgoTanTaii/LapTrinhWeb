@@ -1,3 +1,5 @@
+<%@ page import="Entity.Property" %>
+<%@ page import="java.util.List" %>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <link rel="stylesheet" href="css/bds.css">
@@ -138,282 +140,75 @@
 
 </div>
 
+
 <div class="product-section">
     <h2>Bất động sản dành cho bạn</h2>
-
     <div class="product-list">
+        <%
+            List<Property> properties = (List<Property>) request.getAttribute("properties");
+            if (properties != null && !properties.isEmpty()) {
+                for (Property property : properties) {
+        %>
         <div class="product-item">
-            <img src="jpg/bat-dong-san-1732-670.jpg" alt="Product 1">
-            <div class="image-count">
-                +5 Hình ảnh
-            </div>
-            <h3>Tên sản phẩm 1</h3>
+            <img src="<%= property.getImageUrl() %>" alt="<%= property.getTitle() %>" class="product-image">
+            <h3><%= property.getTitle() %>
+            </h3>
             <p class="address">
                 <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">
-                Quận 1, TP.HCM
+                <%= property.getAddress() %>
             </p>
-
 
             <div class="details">
                 <div class="price-size">
-                    <p class="price">2 tỷ</p>
-                    <p class="size">100m²</p>
+                    <p class="price"><%= property.getPrice() %> tỷ</p>
+                    <p class="size"><%= property.getArea() %> m²</p>
                 </div>
             </div>
             <div class="heart-icon">
-                <a href="#"><img src="jpg/heartred.png" alt="Heart Icon"></a> <!-- Link có thể click -->
+                <img src="jpg/heartred.png" alt="Heart Icon" class="heart-image">
             </div>
         </div>
-        <div class="product-item">
-            <img src="jpg/bat-dong-san-1732-670.jpg" alt="Product 1">
-            <div class="image-count">
-                +5 Hình ảnh
-            </div>
-            <h3>Tên sản phẩm 1</h3>
-            <p class="address">
-                <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">
-                Quận 1, TP.HCM
-            </p>
-
-
-            <div class="details">
-                <div class="price-size">
-                    <p class="price">2 tỷ</p>
-                    <p class="size">100m²</p>
-                </div>
-            </div>
-            <div class="heart-icon">
-                <a href="#"><img src="jpg/heartred.png" alt="Heart Icon"></a> <!-- Link có thể click -->
-            </div>
-        </div>
-
-        <div class="product-item">
-            <img src="jpg/bat-dong-san-1732-670.jpg" alt="Product 1">
-            <div class="image-count">
-                +5 Hình ảnh
-            </div>
-            <h3>Tên sản phẩm 1</h3>
-            <p class="address">
-                <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">
-                Quận 1, TP.HCM
-            </p>
-
-
-            <div class="details">
-                <div class="price-size">
-                    <p class="price">2 tỷ</p>
-                    <p class="size">100m²</p>
-                </div>
-            </div>
-            <div class="heart-icon">
-                <a href="#"><img src="jpg/heartred.png" alt="Heart Icon"></a> <!-- Link có thể click -->
-            </div>
-        </div>
-
-        <div class="product-item">
-            <img src="jpg/bat-dong-san-1732-670.jpg" alt="Product 1">
-            <div class="image-count">
-                +5 Hình ảnh
-            </div>
-            <h3>Tên sản phẩm 1</h3>
-            <p class="address">
-                <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">
-                Quận 1, TP.HCM
-            </p>
-
-
-            <div class="details">
-                <div class="price-size">
-                    <p class="price">2 tỷ</p>
-                    <p class="size">100m²</p>
-                </div>
-            </div>
-            <div class="heart-icon">
-                <a href="#"><img src="jpg/heartred.png" alt="Heart Icon"></a> <!-- Link có thể click -->
-            </div>
-        </div>
-
-        <div class="product-item">
-            <img src="jpg/bat-dong-san-1732-670.jpg" alt="Product 1">
-            <div class="image-count">
-                +5 Hình ảnh
-            </div>
-            <h3>Tên sản phẩm 1</h3>
-            <p class="address">
-                <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">
-                Quận 1, TP.HCM
-            </p>
-
-
-            <div class="details">
-                <div class="price-size">
-                    <p class="price">2 tỷ</p>
-                    <p class="size">100m²</p>
-                </div>
-            </div>
-            <div class="heart-icon">
-                <a href="#"><img src="jpg/heartred.png" alt="Heart Icon"></a> <!-- Link có thể click -->
-            </div>
-        </div>
-        <div class="product-item">
-            <img src="jpg/bat-dong-san-1732-670.jpg" alt="Product 1">
-            <div class="image-count">
-                +5 Hình ảnh
-            </div>
-            <h3>Tên sản phẩm 1</h3>
-            <p class="address">
-                <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">
-                Quận 1, TP.HCM
-            </p>
-
-
-            <div class="details">
-                <div class="price-size">
-                    <p class="price">2 tỷ</p>
-                    <p class="size">100m²</p>
-                </div>
-            </div>
-            <div class="heart-icon">
-                <a href="#"><img src="jpg/heartred.png" alt="Heart Icon"></a> <!-- Link có thể click -->
-            </div>
-        </div>
-
-        <div class="product-item">
-            <img src="jpg/bat-dong-san-1732-670.jpg" alt="Product 1">
-            <div class="image-count">
-                +5 Hình ảnh
-            </div>
-            <h3>Tên sản phẩm 1</h3>
-            <p class="address">
-                <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">
-                Quận 1, TP.HCM
-            </p>
-
-
-            <div class="details">
-                <div class="price-size">
-                    <p class="price">2 tỷ</p>
-                    <p class="size">100m²</p>
-                </div>
-            </div>
-            <div class="heart-icon">
-                <a href="#"><img src="jpg/heartred.png" alt="Heart Icon"></a> <!-- Link có thể click -->
-            </div>
-        </div>
-
-        <div class="product-item">
-            <img src="jpg/bat-dong-san-1732-670.jpg" alt="Product 1">
-            <div class="image-count">
-                +5 Hình ảnh
-            </div>
-            <h3>Tên sản phẩm 1</h3>
-            <p class="address">
-                <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">
-                Quận 1, TP.HCM
-            </p>
-
-
-            <div class="details">
-                <div class="price-size">
-                    <p class="price">2 tỷ</p>
-                    <p class="size">100m²</p>
-                </div>
-            </div>
-            <div class="heart-icon">
-                <a href="#"><img src="jpg/heartred.png" alt="Heart Icon"></a> <!-- Link có thể click -->
-            </div>
-        </div>
-
-
+        <%
+                }
+            }
+        %>
 
     </div>
 
-
+    <!-- Link xem thêm -->
     <div class="view-more">
         <a href="#">Xem thêm</a>
     </div>
 </div>
 
+<%--<div class="product-section">--%>
+<%--    <h2>Dự án bất động sản nổi bật</h2>--%>
 
-<div class="product-section">
-    <h2>Dự án bất động sản nổi bật</h2>
+<%--    <div class="product-list">--%>
+<%--        <div class="product-item">--%>
+<%--            <img src="jpg/bat-dong-san-1732-670.jpg" alt="Product 1">--%>
+<%--            <div class="image-count">--%>
+<%--                +5 Hình ảnh--%>
 
-    <div class="product-list">
-        <div class="product-item">
-            <img src="jpg/bat-dong-san-1732-670.jpg" alt="Product 1">
-            <div class="image-count">
-                +5 Hình ảnh
+<%--            </div>--%>
 
-            </div>
+<%--            <h3>Tên sản phẩm 1</h3>--%>
+<%--            <p class="address">--%>
+<%--                <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">--%>
+<%--                Quận 1, TP.HCM--%>
+<%--            </p>--%>
+<%--            <div class="details">--%>
+<%--                <p class="price">2 tỷ</p>--%>
+<%--                <p class="size">100m²</p>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    --%>
+<%--    </div>--%>
 
-            <h3>Tên sản phẩm 1</h3>
-            <p class="address">
-                <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">
-                Quận 1, TP.HCM
-            </p>
-            <div class="details">
-                <p class="price">2 tỷ</p>
-                <p class="size">100m²</p>
-            </div>
-        </div>
-        <div class="product-item">
-            <img src="jpg/bat-dong-san-1732-670.jpg" alt="Product 1">
-            <div class="image-count">
-                +5 Hình ảnh
-
-            </div>
-
-            <h3>Tên sản phẩm 1</h3>
-            <p class="address">
-                <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">
-                Quận 1, TP.HCM
-            </p>
-            <div class="details">
-                <p class="price">2 tỷ</p>
-                <p class="size">100m²</p>
-            </div>
-        </div>
-        <div class="product-item">
-            <img src="jpg/bat-dong-san-1732-670.jpg" alt="Product 1">
-            <div class="image-count">
-                +5 Hình ảnh
-
-            </div>
-
-            <h3>Tên sản phẩm 1</h3>
-            <p class="address">
-                <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">
-                Quận 1, TP.HCM
-            </p>
-            <div class="details">
-                <p class="price">2 tỷ</p>
-                <p class="size">100m²</p>
-            </div>
-        </div>
-        <div class="product-item">
-            <img src="jpg/bat-dong-san-1732-670.jpg" alt="Product 1">
-            <div class="image-count">
-                +5 Hình ảnh
-
-            </div>
-
-            <h3>Tên sản phẩm 1</h3>
-            <p class="address">
-                <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">
-                Quận 1, TP.HCM
-            </p>
-            <div class="details">
-                <p class="price">2 tỷ</p>
-                <p class="size">100m²</p>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="view-more">
-        <a href="#">Xem thêm</a>
-    </div>
-</div>
+<%--    <div class="view-more">--%>
+<%--        <a href="#">Xem thêm</a>--%>
+<%--    </div>--%>
+<%--</div>--%>
 <div class="banner">
     <img src="jpg/2833732387999181063.gif" alt="Banner Image">
 </div>
@@ -623,78 +418,6 @@
 
 </style>
 
-<%--    </div>--%>
-<%--</div>--%>
-<%--<div class="footer-container">--%>
-
-<%--    <div class="footer-section">--%>
-<%--        <h3>Giới thiệu</h3>--%>
-
-<%--        <ul>--%>
-
-<%--            <li><a href="#">Về Vinabook</a></li>--%>
-
-<%--            <li><a href="#">Chính sách bảo mật</a></li>--%>
-
-<%--            <li><a href="#">Điều khoản sử dụng</a></li>--%>
-
-<%--            <li><a href="#">Liên hệ</a></li>--%>
-
-<%--        </ul>--%>
-
-<%--    </div>--%>
-
-
-<%--    <div class="footer-section">--%>
-<%--        <h3>Hỗ trợ khách hàng</h3>--%>
-
-<%--        <ul>--%>
-
-<%--            <li><a href="#">Câu hỏi thường gặp</a></li>--%>
-
-<%--            <li><a href="#">Chính sách đổi trả</a></li>--%>
-
-<%--            <li><a href="#">Phương thức thanh toán</a></li>--%>
-
-<%--            <li><a href="#">Giao hàng</a></li>--%>
-
-<%--        </ul>--%>
-
-<%--    </div>--%>
-
-
-<%--    <div class="footer-section">--%>
-<%--        <h3>Kết nối với chúng tôi</h3>--%>
-
-<%--        <ul class="social-media">--%>
-
-<%--            <li><a href="#">Facebook</a></li>--%>
-
-<%--            <li><a href="#">Instagram</a></li>--%>
-
-<%--            <li><a href="#">YouTube</a></li>--%>
-
-<%--        </ul>--%>
-<%--    </div>--%>
-
-
-<%--    <div class="footer-section">--%>
-<%--        <h3>Đăng ký nhận tin</h3>--%>
-
-<%--        <form>--%>
-<%--            <input type="email" placeholder="Nhập email của bạn" required>--%>
-
-<%--            <button type="submit">Đăng ký</button>--%>
-
-<%--        </form>--%>
-
-<%--    </div>--%>
-
-<%--</div>--%>
-
-
-<%--<div class="footer-bottom">--%>
-<%--    <p>© 2024 Vinabook. Bảo lưu mọi quyền.</p>--%>
 
 <%--</div>--%>
 <%--<script>--%>

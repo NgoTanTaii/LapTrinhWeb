@@ -5,11 +5,11 @@
 <web-app>
     <display-name>Archetype Created Web Application</display-name>
     <servlet>
-        <servlet-name>Test</servlet-name>
-        <servlet-class>Controller.Test</servlet-class>
+        <servlet-name>PropertyServlet</servlet-name>
+        <servlet-class>Controller.PropertyServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Test</servlet-name>
-        <url-pattern>/books</url-pattern>
+        <servlet-name>PropertyServlet</servlet-name>
+        <url-pattern>/homes</url-pattern>
     </servlet-mapping>
 </web-app>

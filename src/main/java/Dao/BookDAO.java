@@ -1,6 +1,7 @@
 package Dao;
 
 import Entity.Book;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,9 +10,6 @@ import java.sql.SQLException;
 public class BookDAO {
     private Connection connection;
 
-    public BookDAO(Connection connection) {
-        this.connection = connection;
-    }
 
     // Phương thức lấy sách theo ID
     public Book getBookById(int id) {

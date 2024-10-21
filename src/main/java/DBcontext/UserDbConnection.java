@@ -1,10 +1,6 @@
 package DBcontext;
 
-import Controller.User;
-
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class UserDbConnection {
 
@@ -29,7 +25,7 @@ public class UserDbConnection {
         // Kết nối và xử lý truy vấn trong try-with-resources để tự động đóng tài nguyên
         try {
 
-            Connection conn = DbConnection.initializeDatabase();
+            Connection conn = DbConnection1.initializeDatabase();
             Statement stmt = conn.createStatement();
 
 
