@@ -1,6 +1,6 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/bds.css">
 <!DOCTYPE html>
 
 <head>
@@ -32,18 +32,16 @@
             <a href="register.jsp" class="btn"><h3>Đăng ký</h3></a>
         </div>
         <a href="#" class="floating-cart" id="floating-cart">
-            <img src="jpg/th.jpg" alt="Giỏ hàng" class="cart-icon">
+            <img src="jpg/heart.png" alt="Giỏ hàng" class="cart-icon">
             <div class="item-count">0</div> <!-- Số lượng sản phẩm trong giỏ hàng -->
             <div class="mini-cart">
-                <h4>Giỏ hàng của bạn</h4>
+                <h4>Bất động sản quan tâm</h4>
                 <ul id="cart-items">
 
                 </ul>
-                <div class="total">
-                    <strong>Tổng: <span id="total-price">0</span>₫</strong>
-                </div>
+
                 <!-- Nút đi tới giỏ hàng -->
-                <button id="go-to-cart" onclick="goToCart()">Đi tới giỏ hàng của bạn</button>
+                <button id="go-to-cart" onclick="goToCart()">Đi tới xem bất động sản quan tâm</button>
 
             </div>
         </a>
@@ -69,42 +67,7 @@
                     <li><a href="#wikibds">Wiki BĐS</a></li>
                 </ul>
             </nav>
-            <style>
-                /* Định dạng chung cho menu */
-                nav {
-                    text-align: left; /* Căn trái cho toàn bộ nav */
-                    margin-left: 0; /* Loại bỏ margin trái */
-                }
 
-                nav ul {
-                    list-style-type: none; /* Xóa dấu chấm cho danh sách */
-                    margin: 0; /* Bỏ margin */
-                    padding: 0; /* Bỏ padding */
-                    display: flex; /* Sử dụng Flexbox để các mục nằm sát nhau */
-                    justify-content: flex-start; /* Căn các mục về phía bên trái */
-                }
-
-                nav ul li {
-                    margin-right: 20px; /* Khoảng cách giữa các mục */
-                }
-
-                nav ul li:last-child {
-                    margin-right: 0; /* Loại bỏ margin phải của mục cuối */
-                }
-
-                nav ul li a {
-                    text-decoration: none; /* Xóa gạch chân */
-                    color: #000; /* Màu chữ */
-                    font-size: 16px; /* Kích thước chữ */
-                }
-
-                nav ul li a:hover {
-                    color: darkred; /* Màu khi hover */
-                    text-decoration: underline;
-                }
-
-
-            </style>
 
             <div class="contact-info">
                 <img src="jpg/phone-call.png" alt="Phone Icon" class="phone-icon">
@@ -133,95 +96,7 @@
             <button type="submit">Tìm Kiếm</button>
         </form>
     </div>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
-        /* Slideshow Banner */
-        .slideshow-container {
-            position: relative;
-            width: 100%;
-            height: 300px; /* Chiều cao banner, có thể thay đổi */
-            overflow: hidden;
-        }
-
-        /* Các hình ảnh trong slideshow */
-        .mySlides {
-            display: none;
-        }
-
-        /* Ảnh trong banner */
-        .mySlides img {
-            width: 100%; /* Chiều rộng bằng 100% của container */
-            height: 100%; /* Chiều cao bằng 100% của container */
-            object-fit: cover; /* Đảm bảo ảnh bao phủ toàn bộ banner mà không bị biến dạng */
-        }
-
-        /* Hiệu ứng fade */
-        .fade {
-            animation: fade 1.5s ease-in-out;
-        }
-
-        @keyframes fade {
-            0% {
-                opacity: 0;
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-            }
-        }
-
-        /* Trung tâm form tìm kiếm */
-        .search-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
-
-        /* Kiểu dáng cho form tìm kiếm */
-        .search-form {
-            background-color: rgba(255, 255, 255, 0.7); /* Nền bán trong suốt */
-            padding: 20px;
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Kiểu dáng cho ô tìm kiếm */
-        .search-form input {
-            padding: 10px;
-            font-size: 16px;
-            margin-right: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        /* Kiểu dáng cho nút tìm kiếm */
-        .search-form button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: deeppink;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .search-form button:hover {
-            background-color: darkred;
-        }
-
-
-    </style>
     <script src="JS/script.js"></script>
 
     </div>
@@ -244,89 +119,509 @@
             <p class="summary">Tóm tắt ngắn gọn về nội dung bài viết...</p>
             <span class="date">Ngày đăng: 01/01/2024</span>
         </div>
-        <!-- Thêm các item tin tức khác ở đây -->
+        <div class="news-item">
+            <img src="jpg/banner-books.jpg" alt="Image">
+            <h3><a href="#">Tiêu đề bài viết</a></h3>
+            <p class="summary">Tóm tắt ngắn gọn về nội dung bài viết...</p>
+            <span class="date">Ngày đăng: 01/01/2024</span>
+        </div>
+        <div class="news-item">
+            <img src="jpg/banner-books.jpg" alt="Image">
+            <h3><a href="#">Tiêu đề bài viết</a></h3>
+            <p class="summary">Tóm tắt ngắn gọn về nội dung bài viết...</p>
+            <span class="date">Ngày đăng: 01/01/2024</span>
+        </div>
+
+
     </div>
 
 
 </div>
 
+<div class="product-section">
+    <h2>Bất động sản dành cho bạn</h2>
+
+    <div class="product-list">
+        <div class="product-item">
+            <img src="jpg/bat-dong-san-1732-670.jpg" alt="Product 1">
+            <div class="image-count">
+                +5 Hình ảnh
+            </div>
+            <h3>Tên sản phẩm 1</h3>
+            <p class="address">
+                <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">
+                Quận 1, TP.HCM
+            </p>
 
 
-<%--            <div class="banner">--%>
-<%--                <img src="jpg/DALL·E%202024-09-26%2012.40.53%20-%20A%20vertical%20banner%20designed%20for%20a%20bookstore%20website.%20The%20banner%20should%20have%20a%20dark,%20mysterious%20background%20featuring%20a%20full%20moon%20and%20a%20night%20sky%20filled%20.webp"--%>
-<%--                >--%>
-<%--            </div>--%>
-
-<%--        </ul>--%>
-<%--    </div>--%>
-
-<%--    <div class="main-banner">--%>
-<%--        <div class="large-banner">--%>
-<%--            <img src="jpg/805_acaac32dffab45978e11acb1ebcbe4ef_master.webp" alt="Large Banner">--%>
-<%--        </div>--%>
-<%--        <div class="small-banners">--%>
-<%--            <div class="small-banner">--%>
-<%--                <img src="jpg/805_acaac32dffab45978e11acb1ebcbe4ef_master.webp" alt="Small Banner 1">--%>
-<%--            </div>--%>
-<%--            <div class="small-banner">--%>
-<%--                <img src="jpg/805_acaac32dffab45978e11acb1ebcbe4ef_master.webp" alt="Small Banner 2">--%>
-<%--            </div>--%>
-<%--        </div>--%>
-
-
-<%--        <h1>Danh sách sách</h1>--%>
-<%--        <div class="product-row">--%>
-<%--            <%--%>
-<%--                List<Book> books = (List<Book>) request.getAttribute("books");--%>
-<%--                if (books != null && !books.isEmpty()) {--%>
-<%--                    for (Book book : books) {--%>
-<%--            %>--%>
-<%--            <div class="product">--%>
-<%--                <img src="<%= book.getImageUrl() %>" alt="<%= book.getTitle() %>" class="product-image">--%>
-<%--                <p class="product-name"><%= book.getTitle() %>--%>
-<%--                </p>--%>
-<%--                <div class="item-price">--%>
-<%--                    <span class="price"><%= book.getPrice() %> đ</span>--%>
-<%--                </div>--%>
-<%--                <div class="icon-container">--%>
-<%--                    <a href="#" class="icon magnifier" title="Xem chi tiết">--%>
-<%--                        <img src="jpg/zoom-in.png" alt="Kính lúp" class="icon-image">--%>
-<%--                    </a>--%>
-
-<%--                    <form id="addToCartForm1" method="post" action="add-to-cart" style="display:inline;">--%>
-<%--                        <input type="hidden" name="bookId" value="<%= book.getId() %>">--%>
-<%--                        <input type="hidden" name="bookName" value="<%= book.getTitle() %>">--%>
-<%--                        <input type="hidden" name="bookPrice" value="<%= book.getPrice() %>">--%>
-<%--                        <input type="hidden" name="bookImageUrl" value="<%= book.getImageUrl() %>">--%>
-<%--                        <button type="submit" class="icon cart" title="Thêm vào giỏ hàng">--%>
-<%--                            <img src="jpg/add-to-cart.png" alt="Giỏ hàng" class="icon-image">--%>
-<%--                        </button>--%>
-<%--                    </form>--%>
-
-<%--                    <a href="#" class="icon eye" title="Xem nhanh">--%>
-<%--                        <img src="jpg/eye.png" alt="Con mắt" class="icon-image">--%>
-<%--                    </a>--%>
+            <div class="details">
+                <div class="price-size">
+                    <p class="price">2 tỷ</p>
+                    <p class="size">100m²</p>
+                </div>
+            </div>
+            <div class="heart-icon">
+                <a href="#"><img src="jpg/heartred.png" alt="Heart Icon"></a> <!-- Link có thể click -->
+            </div>
+        </div>
+        <div class="product-item">
+            <img src="jpg/bat-dong-san-1732-670.jpg" alt="Product 1">
+            <div class="image-count">
+                +5 Hình ảnh
+            </div>
+            <h3>Tên sản phẩm 1</h3>
+            <p class="address">
+                <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">
+                Quận 1, TP.HCM
+            </p>
 
 
-<%--                </div>--%>
-<%--                <form id="addToCartForm" method="post" action="cart">--%>
-<%--                    <input type="hidden" name="bookId" value="<%= book.getId() %>">--%>
-<%--                    <input type="hidden" name="bookName" value="<%= book.getTitle() %>"> <!-- Tên sách -->--%>
-<%--                    <input type="hidden" name="bookPrice" value="<%= book.getPrice() %>"> <!-- Giá sách -->--%>
-<%--                    <input type="hidden" name="bookImageUrl" value="<%= book.getImageUrl() %>">--%>
-<%--                    <button type="submit" class="add-to-cart-button" title="Thêm vào giỏ hàng">--%>
-<%--                        Thêm vào giỏ hàng--%>
-<%--                    </button>--%>
-<%--                </form>--%>
-<%--            </div>--%>
-<%--            <%--%>
-<%--                    }--%>
-<%--                } else {--%>
-<%--                    out.println("<p>Không có sản phẩm nào phù hợp với tìm kiếm.</p>");--%>
-<%--                }--%>
-<%--            %>--%>
-<%--        </div>--%>
+            <div class="details">
+                <div class="price-size">
+                    <p class="price">2 tỷ</p>
+                    <p class="size">100m²</p>
+                </div>
+            </div>
+            <div class="heart-icon">
+                <a href="#"><img src="jpg/heartred.png" alt="Heart Icon"></a> <!-- Link có thể click -->
+            </div>
+        </div>
 
+        <div class="product-item">
+            <img src="jpg/bat-dong-san-1732-670.jpg" alt="Product 1">
+            <div class="image-count">
+                +5 Hình ảnh
+            </div>
+            <h3>Tên sản phẩm 1</h3>
+            <p class="address">
+                <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">
+                Quận 1, TP.HCM
+            </p>
+
+
+            <div class="details">
+                <div class="price-size">
+                    <p class="price">2 tỷ</p>
+                    <p class="size">100m²</p>
+                </div>
+            </div>
+            <div class="heart-icon">
+                <a href="#"><img src="jpg/heartred.png" alt="Heart Icon"></a> <!-- Link có thể click -->
+            </div>
+        </div>
+
+        <div class="product-item">
+            <img src="jpg/bat-dong-san-1732-670.jpg" alt="Product 1">
+            <div class="image-count">
+                +5 Hình ảnh
+            </div>
+            <h3>Tên sản phẩm 1</h3>
+            <p class="address">
+                <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">
+                Quận 1, TP.HCM
+            </p>
+
+
+            <div class="details">
+                <div class="price-size">
+                    <p class="price">2 tỷ</p>
+                    <p class="size">100m²</p>
+                </div>
+            </div>
+            <div class="heart-icon">
+                <a href="#"><img src="jpg/heartred.png" alt="Heart Icon"></a> <!-- Link có thể click -->
+            </div>
+        </div>
+
+        <div class="product-item">
+            <img src="jpg/bat-dong-san-1732-670.jpg" alt="Product 1">
+            <div class="image-count">
+                +5 Hình ảnh
+            </div>
+            <h3>Tên sản phẩm 1</h3>
+            <p class="address">
+                <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">
+                Quận 1, TP.HCM
+            </p>
+
+
+            <div class="details">
+                <div class="price-size">
+                    <p class="price">2 tỷ</p>
+                    <p class="size">100m²</p>
+                </div>
+            </div>
+            <div class="heart-icon">
+                <a href="#"><img src="jpg/heartred.png" alt="Heart Icon"></a> <!-- Link có thể click -->
+            </div>
+        </div>
+        <div class="product-item">
+            <img src="jpg/bat-dong-san-1732-670.jpg" alt="Product 1">
+            <div class="image-count">
+                +5 Hình ảnh
+            </div>
+            <h3>Tên sản phẩm 1</h3>
+            <p class="address">
+                <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">
+                Quận 1, TP.HCM
+            </p>
+
+
+            <div class="details">
+                <div class="price-size">
+                    <p class="price">2 tỷ</p>
+                    <p class="size">100m²</p>
+                </div>
+            </div>
+            <div class="heart-icon">
+                <a href="#"><img src="jpg/heartred.png" alt="Heart Icon"></a> <!-- Link có thể click -->
+            </div>
+        </div>
+
+        <div class="product-item">
+            <img src="jpg/bat-dong-san-1732-670.jpg" alt="Product 1">
+            <div class="image-count">
+                +5 Hình ảnh
+            </div>
+            <h3>Tên sản phẩm 1</h3>
+            <p class="address">
+                <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">
+                Quận 1, TP.HCM
+            </p>
+
+
+            <div class="details">
+                <div class="price-size">
+                    <p class="price">2 tỷ</p>
+                    <p class="size">100m²</p>
+                </div>
+            </div>
+            <div class="heart-icon">
+                <a href="#"><img src="jpg/heartred.png" alt="Heart Icon"></a> <!-- Link có thể click -->
+            </div>
+        </div>
+
+        <div class="product-item">
+            <img src="jpg/bat-dong-san-1732-670.jpg" alt="Product 1">
+            <div class="image-count">
+                +5 Hình ảnh
+            </div>
+            <h3>Tên sản phẩm 1</h3>
+            <p class="address">
+                <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">
+                Quận 1, TP.HCM
+            </p>
+
+
+            <div class="details">
+                <div class="price-size">
+                    <p class="price">2 tỷ</p>
+                    <p class="size">100m²</p>
+                </div>
+            </div>
+            <div class="heart-icon">
+                <a href="#"><img src="jpg/heartred.png" alt="Heart Icon"></a> <!-- Link có thể click -->
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+    <div class="view-more">
+        <a href="#">Xem thêm</a>
+    </div>
+</div>
+
+
+<div class="product-section">
+    <h2>Dự án bất động sản nổi bật</h2>
+
+    <div class="product-list">
+        <div class="product-item">
+            <img src="jpg/bat-dong-san-1732-670.jpg" alt="Product 1">
+            <div class="image-count">
+                +5 Hình ảnh
+
+            </div>
+
+            <h3>Tên sản phẩm 1</h3>
+            <p class="address">
+                <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">
+                Quận 1, TP.HCM
+            </p>
+            <div class="details">
+                <p class="price">2 tỷ</p>
+                <p class="size">100m²</p>
+            </div>
+        </div>
+        <div class="product-item">
+            <img src="jpg/bat-dong-san-1732-670.jpg" alt="Product 1">
+            <div class="image-count">
+                +5 Hình ảnh
+
+            </div>
+
+            <h3>Tên sản phẩm 1</h3>
+            <p class="address">
+                <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">
+                Quận 1, TP.HCM
+            </p>
+            <div class="details">
+                <p class="price">2 tỷ</p>
+                <p class="size">100m²</p>
+            </div>
+        </div>
+        <div class="product-item">
+            <img src="jpg/bat-dong-san-1732-670.jpg" alt="Product 1">
+            <div class="image-count">
+                +5 Hình ảnh
+
+            </div>
+
+            <h3>Tên sản phẩm 1</h3>
+            <p class="address">
+                <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">
+                Quận 1, TP.HCM
+            </p>
+            <div class="details">
+                <p class="price">2 tỷ</p>
+                <p class="size">100m²</p>
+            </div>
+        </div>
+        <div class="product-item">
+            <img src="jpg/bat-dong-san-1732-670.jpg" alt="Product 1">
+            <div class="image-count">
+                +5 Hình ảnh
+
+            </div>
+
+            <h3>Tên sản phẩm 1</h3>
+            <p class="address">
+                <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">
+                Quận 1, TP.HCM
+            </p>
+            <div class="details">
+                <p class="price">2 tỷ</p>
+                <p class="size">100m²</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="view-more">
+        <a href="#">Xem thêm</a>
+    </div>
+</div>
+<div class="banner">
+    <img src="jpg/2833732387999181063.gif" alt="Banner Image">
+</div>
+
+<div class="product-section">
+    <h2>Bất động sản theo địa điểm</h2>
+
+    <div class="property-form">
+        <div class="city hcm">
+            <img src="jpg/HCM.jpg" alt="TP.HCM">
+        </div>
+        <div class="other-cities">
+            <div class="city">
+                <img src="jpg/HaNoi.jpg" alt="Hà Nội">
+            </div>
+            <div class="city">
+                <img src="jpg/DaNang.jpg" alt="Đà Nẵng">
+            </div>
+            <div class="city">
+                <img src="jpg/binhduong.jpg" alt="Bình Dương">
+            </div>
+            <div class="city">
+                <img src="jpg/DongNai.jpg" alt="Đồng Nai">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div class="footer-content">
+        <!-- Thông tin công ty -->
+        <div class="company-info">
+            <h3>Công ty Bất Động Sản</h3>
+            <p>Địa chỉ: 123 Đường ABC, Quận 1, TP.HCM</p>
+            <p>Điện thoại: 0123 456 789</p>
+        </div>
+
+        <!-- Liên kết nhanh -->
+        <div class="quick-links">
+            <h3>Liên kết nhanh</h3>
+            <ul>
+                <li><a href="#">Trang chủ</a></li>
+                <li><a href="#">Dự án</a></li>
+                <li><a href="#">Tin tức</a></li>
+                <li><a href="#">Liên hệ</a></li>
+            </ul>
+        </div>
+
+        <!-- Mạng xã hội -->
+        <div class="social-media">
+            <h3>Mạng xã hội</h3>
+            <a href="#" class="social-icon">Facebook</a>
+            <a href="#" class="social-icon">Instagram</a>
+            <a href="#" class="social-icon">Twitter</a>
+        </div>
+
+        <!-- Form nhập email -->
+        <div class="newsletter">
+            <h3>Đăng ký nhận tin tức mới nhất</h3>
+            <form action="#" method="POST">
+                <input type="email" name="email" placeholder="Nhập email của bạn" required>
+                <button type="submit">Đăng ký</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2024 Công ty Bất Động Sản. Mọi quyền lợi thuộc về công ty.</p>
+    </div>
+</div>
+
+<style>
+    /* Footer */
+    .footer {
+        background-color: blanchedalmond;
+        color: black;
+        padding: 30px 50px; /* Thêm padding cho lề trái và phải */
+    }
+
+    /* Căn chỉnh các phần trong footer content thành một hàng */
+    .footer-content {
+        display: flex;
+        justify-content: space-between; /* Giãn cách đều giữa các phần tử */
+        align-items: flex-start; /* Căn chỉnh các phần tử theo chiều dọc */
+        flex-wrap: wrap; /* Cho phép xuống dòng khi cần thiết trên màn hình nhỏ */
+    }
+
+
+    /* Căn chỉnh mỗi phần tử trong footer */
+    .footer-content > div {
+        flex: 1;
+        margin-right: 20px;
+        min-width: 200px; /* Đảm bảo mỗi phần có ít nhất 200px */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start; /* Căn theo chiều dọc */
+        align-items: flex-start; /* Căn chỉnh nội dung theo lề trái */
+    }
+
+    .footer-content > div:last-child {
+        margin-right: 0;
+    }
+
+    /* Các phần trong footer */
+    .company-info, .quick-links, .social-media, .newsletter {
+        margin-bottom: 15px;
+    }
+
+    .quick-links ul li a:hover,
+    .social-media a:hover {
+        color: darkred; /* Màu khi hover vào liên kết */
+
+    }
+
+    h3 {
+        margin-bottom: 10px;
+        color: black;
+    }
+
+    ul {
+        padding-left: 20px;
+        color: black;
+    }
+
+    ul li {
+        list-style: none;
+        color: black;
+    }
+
+    ul li a {
+        text-decoration: none;
+
+        color: black;
+    }
+
+    .social-media a {
+        margin-right: 10px;
+        color: black;
+    }
+
+    /* Form nhập email */
+    .newsletter form {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .newsletter input[type="email"] {
+        padding: 8px;
+        font-size: 14px;
+        width: 220px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+    }
+
+    .newsletter input[type="email"]:focus {
+        border-color: #f4a261;
+    }
+
+    .newsletter button {
+        padding: 8px 15px; /* Làm cho nút nhỏ hơn */
+        font-size: 13px; /* Giảm kích thước chữ */
+        background-color: #f4a261;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .newsletter button:hover {
+        background-color: #e38e3e;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .footer-content {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .footer-content > div {
+            margin-right: 0;
+            margin-bottom: 20px;
+        }
+
+        .newsletter form {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .newsletter input[type="email"] {
+            width: 100%;
+        }
+
+        .newsletter button {
+            width: 100%;
+        }
+    }
+
+    .footer-bottom {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 18px;
+        color: black;
+    }
+
+</style>
 
 <%--    </div>--%>
 <%--</div>--%>

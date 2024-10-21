@@ -150,7 +150,7 @@ body {
     right: 20px; /* Khoảng cách với mép phải của trang */
     width: 60px; /* Giảm chiều rộng của biểu tượng giỏ hàng */
     height: 60px; /* Giảm chiều cao của biểu tượng giỏ hàng */
-    background-color: #ff5722; /* Màu nền của biểu tượng */
+    background-color: transparent; /* Màu nền của biểu tượng */
     border-radius: 50%; /* Biểu tượng có hình tròn */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng nhẹ để nổi bật */
     display: flex;
@@ -163,7 +163,8 @@ body {
 
 /* Khi hover vào floating-cart */
 .floating-cart:hover {
-    background-color: #e64a19; /* Đổi màu khi người dùng di chuột vào */
+    background-color: transparent; /* Đổi màu khi người dùng di chuột vào */
+    transform: scale(1.1);
 }
 
 /* Style cho biểu tượng giỏ hàng (cart-icon) */
@@ -233,30 +234,7 @@ body {
 }
 
 /* Style cho floating-cart để làm gọn biểu tượng giỏ hàng */
-.floating-cart {
-    position: fixed; /* Đảm bảo vị trí cố định trên trang */
-    bottom: 20px; /* Khoảng cách với mép dưới trang */
-    right: 20px; /* Khoảng cách với mép phải của trang */
-    width: 60px; /* Giảm chiều rộng của biểu tượng giỏ hàng */
-    height: 60px; /* Giảm chiều cao của biểu tượng giỏ hàng */
-    background-color: transparent; /* Màu nền xanh lá dễ nhìn, hiện đại */
-    border-radius: 50%; /* Biểu tượng có hình tròn */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Đổ bóng nổi bật hơn */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000; /* Đảm bảo nằm trên các thành phần khác */
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển màu và phóng to khi hover */
-}
 
-/* Khi hover vào floating-cart */
-.floating-cart:hover {
-    background-color: transparent; /* Màu nền khi hover */
-    transform: scale(1.1); /* Phóng to nhẹ khi hover */
-}
-
-/* Style cho biểu tượng giỏ hàng (cart-icon) */
 .floating-cart .cart-icon {
     width: 40px; /* Kích thước icon */
     height: 40px;
@@ -265,69 +243,11 @@ body {
     outline: none; /* Xóa outline khi focus */
 }
 
-/* Hiển thị mini-cart khi hover vào floating-cart */
+
 .floating-cart:hover .mini-cart {
     display: block; /* Hiển thị mini-cart khi hover */
 }
 
-/* Style cho mini-cart */
-.mini-cart {
-    display: none; /* Mặc định ẩn mini-cart */
-    position: absolute;
-    bottom: 80px; /* Đặt mini-cart ngay trên biểu tượng giỏ hàng */
-    right: 0;
-    width: 250px; /* Chiều rộng của mini-cart */
-    max-height: 400px; /* Giới hạn chiều cao để tránh quá dài */
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Đổ bóng mạnh hơn */
-    overflow-y: auto; /* Cho phép cuộn khi nội dung quá dài */
-    padding: 10px;
-    z-index: 999;
-}
-
-/* Style cho danh sách sản phẩm trong mini-cart */
-.mini-cart ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.mini-cart li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.mini-cart li img {
-    width: 40px; /* Kích thước hình ảnh */
-    height: 40px;
-    object-fit: cover;
-    border-radius: 4px; /* Hình ảnh bo tròn nhẹ */
-    margin-right: 10px;
-    border: none; /* Xóa viền */
-    outline: none; /* Xóa outline */
-}
-
-.mini-cart .item-info {
-    font-size: 14px;
-}
-
-.mini-cart .item-info h4 {
-    margin: 0;
-    font-size: 14px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; /* Thêm dấu "..." khi tên sách quá dài */
-}
-
-.mini-cart .item-info span {
-    color: #ff5722;
-    font-weight: bold;
-}
-
-/* Style cho số lượng sản phẩm trong giỏ hàng */
 .item-count {
     position: absolute;
     top: 5px; /* Vị trí từ đầu biểu tượng giỏ hàng */
