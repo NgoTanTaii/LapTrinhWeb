@@ -33,18 +33,13 @@
             <a href="login.jsp" class="btn"><h3>Đăng nhập</h3></a>
             <a href="register.jsp" class="btn"><h3>Đăng ký</h3></a>
         </div>
-        <a href="#" class="floating-cart" id="floating-cart">
+        <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()">
             <img src="jpg/heart.png" alt="Giỏ hàng" class="cart-icon">
-            <div class="item-count">0</div> <!-- Số lượng sản phẩm trong giỏ hàng -->
+            <div class="item-count">0</div>
             <div class="mini-cart">
-                <h4>Bất động sản quan tâm</h4>
-                <ul id="cart-items">
-
-                </ul>
-
-                <!-- Nút đi tới giỏ hàng -->
+                <h4>Bất động sản đã quan tâm</h4>
+                <ul id="cart-items"></ul>
                 <button id="go-to-cart" onclick="goToCart()">Đi tới xem bất động sản quan tâm</button>
-
             </div>
         </a>
 
@@ -95,6 +90,29 @@
     <div class="search-container">
         <form class="search-form">
             <input type="text" placeholder="Tìm kiếm..." name="search" required>
+
+            <fieldset class="price-group">
+                <legend>Giá <span class="arrow-down">▼</span></legend>
+                <div class="price-dropdown hidden">
+                    <label for="min-price">Giá tối thiểu (tỷ):</label>
+                    <input type="number" id="min-price" name="min-price" placeholder="Nhập giá tối thiểu">
+
+                    <label for="max-price">Giá tối đa (tỷ):</label>
+                    <input type="number" id="max-price" name="max-price" placeholder="Nhập giá tối đa">
+                </div>
+            </fieldset>
+
+            <fieldset class="area-group">
+                <legend>Diện Tích <span class="arrow-down">▼</span></legend>
+                <div class="area-dropdown hidden">
+                    <label for="min-area">Diện tích tối thiểu (m²):</label>
+                    <input type="number" id="min-area" name="min-area" placeholder="Nhập diện tích tối thiểu">
+
+                    <label for="max-area">Diện tích tối đa (m²):</label>
+                    <input type="number" id="max-area" name="max-area" placeholder="Nhập diện tích tối đa">
+                </div>
+            </fieldset>
+
             <button type="submit">Tìm Kiếm</button>
         </form>
     </div>
@@ -147,9 +165,10 @@
         <%
             List<Property> properties = (List<Property>) request.getAttribute("properties");
             if (properties != null && !properties.isEmpty()) {
+                int index = 0;
                 for (Property property : properties) {
         %>
-        <div class="product-item">
+        <div class="product-item" <%= index >= 8 ? "style='display: none;'" : "" %> >
             <img src="<%= property.getImageUrl() %>" alt="<%= property.getTitle() %>" class="product-image">
             <h3><%= property.getTitle() %>
             </h3>
@@ -164,23 +183,63 @@
                     <p class="size"><%= property.getArea() %> m²</p>
                 </div>
             </div>
-            <div class="heart-icon">
+            <div class="heart-icon"
+                 onclick="addToFavorites('<%= property.getId() %>', '<%= property.getTitle() %>', <%= property.getPrice() %>, <%= property.getArea() %>, '<%= property.getImageUrl() %>','<%= property.getAddress() %>')">
                 <img src="jpg/heartred.png" alt="Heart Icon" class="heart-image">
             </div>
+
         </div>
         <%
+                    index++;
                 }
             }
         %>
-
     </div>
 
-    <!-- Link xem thêm -->
+    <!-- Nút xem thêm và ẩn bớt -->
     <div class="view-more">
-        <a href="#">Xem thêm</a>
+        <a href="#" id="toggleButton">Xem thêm</a>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const toggleButton = document.getElementById('toggleButton');
+        const products = document.querySelectorAll('.product-item');
+        let isExpanded = false; // Trạng thái để theo dõi việc mở rộng hay thu gọn
 
+        // Ban đầu hiển thị 8 sản phẩm đầu tiên
+        products.forEach((product, index) => {
+            if (index < 8) {
+                product.style.display = 'block'; // Hiển thị 8 sản phẩm đầu tiên
+            } else {
+                product.style.display = 'none'; // Ẩn các sản phẩm còn lại
+            }
+        });
+
+        toggleButton.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            if (isExpanded) {
+                // Khi trạng thái đang mở rộng, thu gọn lại và chỉ hiển thị 8 sản phẩm
+                products.forEach((product, index) => {
+                    if (index >= 8) {
+                        product.style.display = 'none'; // Ẩn các sản phẩm ngoài 8 sản phẩm đầu tiên
+                    }
+                });
+                toggleButton.textContent = 'Xem thêm'; // Đổi lại thành "Xem thêm"
+            } else {
+                // Khi trạng thái đang thu gọn, hiển thị tất cả sản phẩm
+                products.forEach(product => product.style.display = 'block'); // Hiển thị tất cả sản phẩm
+                toggleButton.textContent = 'Ẩn bớt'; // Đổi thành "Ẩn bớt"
+            }
+
+            // Đảo trạng thái
+            isExpanded = !isExpanded;
+        });
+    });
+
+
+</script>
 <%--<div class="product-section">--%>
 <%--    <h2>Dự án bất động sản nổi bật</h2>--%>
 
@@ -280,7 +339,7 @@
 </div>
 
 <style>
-    /* Footer */
+
     .footer {
         background-color: blanchedalmond;
         color: black;
@@ -417,148 +476,105 @@
     }
 
 </style>
+<script>
+
+    let cartItems = JSON.parse(sessionStorage.getItem('cartItems')) || [];
+    let miniCartVisible = false; // Biến theo dõi trạng thái hiển thị của giỏ hàng
+
+    // Hàm thêm bất động sản vào giỏ hàng
+    function addToFavorites(id, title, price, area, imageUrl, address) {
+        const existingProductIndex = cartItems.findIndex(item => item.id === id);
+
+        if (existingProductIndex !== -1) {
+            alert("bất động sản này đã được quan tâm!"); // Thông báo cho người dùng
+        } else {
+            const product = {
+                id: id,
+                title: title,
+                price: parseFloat(price),
+                area: area,
+                imageUrl: imageUrl,
+                address: address,
+                quantity: 1 // Số lượng cố định là 1
+            };
+            cartItems.push(product);
+            updateSessionStorage();
+            updateCartDisplay();
+            showMiniCart();
+        }
+    }
+
+    // Cập nhật sessionStorage
+    function updateSessionStorage() {
+        sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
+    }
+
+    // Cập nhật hiển thị giỏ hàng
+    function updateCartDisplay() {
+        const itemCount = document.querySelector('.item-count');
+        const cartList = document.getElementById('cart-items');
+
+        cartList.innerHTML = '';
+
+        if (cartItems.length === 0) {
+            cartList.innerHTML = '<li>Bạn chưa có bất động sản quan tâm.</li>';
+            itemCount.innerText = 0; // Cập nhật số lượng sản phẩm
+            return; // Kết thúc hàm nếu giỏ hàng trống
+        }
+
+        cartItems.forEach((item) => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+            <img src="${item.imageUrl}" alt="${item.title}" width="40" height="40">
+            <div class="item-info">
+                <h4>${item.title}</h4>
+                <p>Địa chỉ: ${item.address}</p>
+                <p>Diện tích: ${item.area} m²</p>
+                <span>Giá: ${item.price.toLocaleString()} tỷ</span>
+                <div>
+                    <input type="number" value="1" min="1" readonly> <!-- Số lượng cố định là 1 -->
+                </div>
+            </div>
+            <button onclick="removeFromCart('${item.id}')">Xóa</button>
+        `;
+            cartList.appendChild(listItem);
+        });
+
+        itemCount.innerText = cartItems.length; // Cập nhật số lượng sản phẩm
+    }
+
+    // Xóa sản phẩm khỏi giỏ hàng
+    function removeFromCart(id) {
+        cartItems = cartItems.filter(item => item.id !== id);
+        updateSessionStorage();
+        updateCartDisplay();
+    }
+
+    // Hiện giỏ hàng mini
+    function showMiniCart() {
+        const miniCart = document.querySelector('.mini-cart');
+        miniCart.style.display = 'block';
+        updateCartDisplay();
+    }
+
+    // Chuyển hướng đến trang giỏ hàng
+    function goToCart() {
+        window.location.href = 'cart.jsp';
+    }
+
+    // Cập nhật hiển thị giỏ hàng khi tải lại trang
+    updateCartDisplay();
+
+    function toggleMiniCart() {
+        const miniCart = document.querySelector('.mini-cart');
+        miniCartVisible = !miniCartVisible; // Chuyển đổi trạng thái hiển thị
+        miniCart.style.display = miniCartVisible ? 'block' : 'none'; // Cập nhật hiển thị
+        updateCartDisplay(); // Cập nhật hiển thị giỏ hàng
+    }
 
 
-<%--</div>--%>
-<%--<script>--%>
-<%--    // Khôi phục dữ liệu giỏ hàng từ sessionStorage khi tải trang--%>
-<%--    let cartItems = JSON.parse(sessionStorage.getItem('cartItems')) || [];--%>
-<%--    let totalPrice = 0;--%>
-<%--    let miniCartVisible = false; // Biến để theo dõi trạng thái hiển thị của giỏ hàng--%>
-<%--    let isLoggedIn = false; // Thay đổi giá trị này theo trạng thái thực tế của người dùng--%>
+</script>
 
-<%--    // Thêm sản phẩm vào giỏ hàng--%>
-<%--    function addToCart(bookId, bookName, bookPrice, bookImageUrl) {--%>
-<%--        const existingProductIndex = cartItems.findIndex(item => item.id === bookId);--%>
-
-<%--        if (existingProductIndex !== -1) {--%>
-<%--            cartItems[existingProductIndex].quantity += 1;--%>
-<%--        } else {--%>
-<%--            const product = {--%>
-<%--                id: bookId,--%>
-<%--                name: bookName,--%>
-<%--                price: parseInt(bookPrice),--%>
-<%--                imageUrl: bookImageUrl,--%>
-<%--                quantity: 1--%>
-<%--            };--%>
-
-<%--            cartItems.push(product);--%>
-<%--        }--%>
-
-<%--        updateSessionStorage(); // Cập nhật sessionStorage--%>
-<%--        updateCartDisplay();--%>
-<%--        showMiniCart(); // Hiện giỏ hàng mini--%>
-<%--    }--%>
-
-<%--    // Cập nhật sessionStorage--%>
-<%--    function updateSessionStorage() {--%>
-<%--        sessionStorage.setItem('cartItems', JSON.stringify(cartItems));--%>
-<%--    }--%>
-
-<%--    // Cập nhật hiển thị giỏ hàng--%>
-<%--    function updateCartDisplay() {--%>
-<%--        const itemCount = document.querySelector('.item-count');--%>
-<%--        const cartList = document.getElementById('cart-items');--%>
-<%--        const totalPriceDisplay = document.getElementById('total-price');--%>
-
-<%--        cartList.innerHTML = '';--%>
-
-<%--        totalPrice = 0;--%>
-<%--        cartItems.forEach((item, index) => {--%>
-<%--            const listItem = document.createElement('li');--%>
-<%--            listItem.innerHTML = `--%>
-<%--                <img src="${item.imageUrl}" alt="${item.name}" width="40" height="40">--%>
-<%--                <div class="item-info">--%>
-<%--                    <h4>${item.name}</h4>--%>
-<%--                    <span>${(item.price * item.quantity).toLocaleString()}₫</span>--%>
-<%--                    <div>--%>
-<%--                        <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${index}, this.value)">--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--                <button onclick="removeFromCart(${index})">Xóa</button> <!-- Xóa sản phẩm -->--%>
-<%--            `;--%>
-<%--            cartList.appendChild(listItem);--%>
-<%--            totalPrice += item.price * item.quantity;--%>
-<%--        });--%>
-
-<%--        itemCount.innerText = cartItems.reduce((total, item) => total + item.quantity, 0);--%>
-<%--        totalPriceDisplay.innerText = totalPrice.toLocaleString();--%>
-
-<%--        // Giữ cho giỏ hàng mini hiển thị--%>
-<%--        if (miniCartVisible) {--%>
-<%--            showMiniCart();--%>
-<%--        }--%>
-<%--    }--%>
-
-<%--    // Cập nhật số lượng sản phẩm từ input--%>
-<%--    function updateQuantity(index, newQuantity) {--%>
-<%--        if (newQuantity < 1) {--%>
-<%--            removeFromCart(index); // Nếu số lượng < 1, xóa sản phẩm--%>
-<%--        } else {--%>
-<%--            cartItems[index].quantity = parseInt(newQuantity);--%>
-<%--            updateSessionStorage(); // Cập nhật sessionStorage--%>
-<%--            updateCartDisplay(); // Cập nhật hiển thị mà không ẩn giỏ hàng--%>
-<%--        }--%>
-<%--    }--%>
-
-<%--    // Xóa sản phẩm khỏi giỏ hàng--%>
-<%--    function removeFromCart(index) {--%>
-<%--        cartItems.splice(index, 1); // Xóa sản phẩm khỏi giỏ hàng--%>
-<%--        updateSessionStorage(); // Cập nhật sessionStorage--%>
-<%--        updateCartDisplay(); // Cập nhật hiển thị mà không ẩn giỏ hàng--%>
-<%--    }--%>
-
-<%--    // Hiển thị hoặc ẩn mini-cart--%>
-<%--    function toggleMiniCart() {--%>
-<%--        const miniCart = document.querySelector('.mini-cart');--%>
-<%--        miniCartVisible = !miniCartVisible; // Đảo ngược trạng thái hiển thị--%>
-<%--        miniCart.style.display = miniCartVisible ? 'block' : 'none'; // Hiện hoặc ẩn mini-cart--%>
-<%--    }--%>
-
-<%--    // Hiện giỏ hàng mini--%>
-<%--    function showMiniCart() {--%>
-<%--        const miniCart = document.querySelector('.mini-cart');--%>
-<%--        miniCart.style.display = 'block'; // Luôn hiện giỏ hàng mini--%>
-<%--        updateCartDisplay(); // Cập nhật hiển thị--%>
-<%--    }--%>
-
-<%--    // Chuyển hướng đến trang giỏ hàng--%>
-<%--    function goToCart() {--%>
-<%--        if (!isLoggedIn) {--%>
-<%--            alert("Bạn cần đăng nhập để truy cập giỏ hàng!");--%>
-<%--            goToLogin(); // Gọi hàm để chuyển hướng đến trang đăng nhập--%>
-<%--            return; // Dừng thực hiện hàm nếu người dùng chưa đăng nhập--%>
-<%--        }--%>
-
-<%--        window.location.href = 'cart.jsp'; // Đảm bảo rằng đường dẫn đúng với trang giỏ hàng của bạn--%>
-<%--    }--%>
-
-<%--    // Chuyển hướng đến trang đăng nhập--%>
-<%--    function goToLogin() {--%>
-<%--        window.location.href = 'login.jsp'; // Đảm bảo rằng đường dẫn đúng với trang đăng nhập của bạn--%>
-<%--    }--%>
-
-<%--    // Thêm sự kiện khi form thêm vào giỏ hàng được submit--%>
-<%--    document.querySelectorAll('#addToCartForm').forEach(form => {--%>
-<%--        form.addEventListener('submit', function (event) {--%>
-<%--            event.preventDefault();--%>
-
-<%--            const bookId = form.querySelector('input[name="bookId"]').value;--%>
-<%--            const bookName = form.querySelector('input[name="bookName"]').value;--%>
-<%--            const bookPrice = form.querySelector('input[name="bookPrice"]').value;--%>
-<%--            const bookImageUrl = form.querySelector('input[name="bookImageUrl"]').value;--%>
-
-<%--            addToCart(bookId, bookName, bookPrice, bookImageUrl);--%>
-<%--        });--%>
-<%--    });--%>
-
-<%--    // Thêm sự kiện cho giỏ hàng để hiển thị hoặc ẩn khi nhấn--%>
-<%--    const floatingCart = document.getElementById('floating-cart');--%>
-<%--    floatingCart.addEventListener('click', toggleMiniCart);--%>
-
-<%--    // Cập nhật hiển thị giỏ hàng khi tải lại trang--%>
-<%--    updateCartDisplay(); // Gọi hàm này để hiển thị giỏ hàng khi tải lại trang--%>
-<%--</script>--%>
 
 </body>
 </html>

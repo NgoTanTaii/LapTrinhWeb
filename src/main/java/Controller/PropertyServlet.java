@@ -25,12 +25,14 @@ public class PropertyServlet extends HttpServlet {
             Statement stmt = conn.createStatement();
 
             // Truy vấn dữ liệu từ bảng Properties
-            String query = "SELECT title, address, price, area, image_url FROM properties";
+            String query = "SELECT property_id,title, address, price, area, image_url FROM properties";
             ResultSet rs = stmt.executeQuery(query);
 
             // Lấy dữ liệu từ ResultSet và thêm vào danh sách properties
             while (rs.next()) {
                 Property property = new Property(
+                        rs.getInt(
+                                "property_id"),
                         rs.getString("title"),
                         rs.getString("address"),
                         rs.getDouble("price"),

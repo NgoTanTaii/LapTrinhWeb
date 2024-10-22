@@ -230,30 +230,88 @@ nav ul li a:hover {
     align-items: center;
 }
 
-/* Kiểu dáng cho ô tìm kiếm */
-.search-form input {
-    padding: 10px;
-    font-size: 16px;
-    margin-right: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+.search-form input[type="text"],
+.search-form input[type="number"] {
+    padding: 10px; /* Khoảng cách bên trong */
+    margin: 10px 0; /* Khoảng cách giữa các trường */
+    border: 1px solid #ccc; /* Viền xung quanh */
+    border-radius: 4px; /* Bo góc cho các trường nhập */
+    font-size: 16px; /* Kích thước chữ */
 }
 
-/* Kiểu dáng cho nút tìm kiếm */
+/* Styles for labels */
+.search-form label {
+    font-size: 14px; /* Kích thước chữ của label */
+    margin-bottom: 5px; /* Khoảng cách dưới label */
+}
+
+/* Styles for fieldsets */
+fieldset {
+    border: 1px solid #ccc; /* Viền cho fieldset */
+    border-radius: 4px; /* Bo góc cho fieldset */
+    padding: 10px; /* Khoảng cách bên trong */
+    margin-bottom: 20px; /* Khoảng cách giữa các fieldset */
+    background-color: #f1f1f1; /* Màu nền cho fieldset */
+    position: relative; /* Đặt vị trí cho fieldset để chứa dropdown */
+}
+
+/* Styles for legends */
+legend {
+    font-weight: bold; /* Làm đậm chữ legend */
+    padding: 0 10px; /* Khoảng cách bên trái và bên phải */
+    text-align: center; /* Căn giữa nội dung */
+}
+
+/* Styles for the arrow down */
+.arrow-down {
+    font-size: 14px; /* Kích thước chữ cho nút chỉ xuống */
+    margin-left: 5px; /* Khoảng cách bên trái cho nút chỉ xuống */
+}
+
+/* Hide dropdown by default */
+.hidden {
+    display: none; /* Ẩn dropdown */
+}
+
+/* Show dropdown when hovering over the price or area group */
+.price-group:hover .price-dropdown,
+.area-group:hover .area-dropdown {
+    display: block; /* Hiện dropdown khi hover */
+
+
+}
+
+/* Styles for dropdown */
+.price-dropdown,
+.area-dropdown {
+    display: none; /* Ẩn dropdown mặc định */
+    padding: 10px; /* Khoảng cách bên trong dropdown */
+    background-color: #ffffff; /* Màu nền của dropdown */
+    border: 1px solid #ccc; /* Viền cho dropdown */
+    border-radius: 4px; /* Bo góc cho dropdown */
+    margin-top: 5px; /* Khoảng cách trên dropdown */
+    position: absolute; /* Đặt vị trí tuyệt đối để nằm dưới tiêu đề */
+    z-index: 1; /* Đảm bảo dropdown nằm trên các phần tử khác */
+    left: 50%; /* Đặt vị trí từ bên trái 50% */
+    transform: translateX(-50%); /* Dịch chuyển về bên trái 50% để căn giữa */
+}
+
+/* Styles for the submit button */
 .search-form button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: deeppink;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    padding: 10px; /* Khoảng cách bên trong nút */
+    background-color: darkred; /* Màu nền của nút */
+    color: white; /* Màu chữ */
+    border: none; /* Bỏ viền */
+    border-radius: 4px; /* Bo góc cho nút */
+    font-size: 16px; /* Kích thước chữ của nút */
+    cursor: pointer; /* Hiển thị con trỏ chuột khi hover */
+    transition: background-color 0.3s; /* Hiệu ứng chuyển màu */
 }
 
+/* Styles for the button on hover */
 .search-form button:hover {
-    background-color: darkred;
+    background-color: brown; /* Đổi màu khi hover */
 }
-
 
 .floating-cart {
     position: fixed; /* Đảm bảo vị trí cố định trên trang */
@@ -472,7 +530,13 @@ nav ul li a:hover {
     background-color: #fff; /* Màu nền cho mỗi sản phẩm */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Thêm bóng cho sản phẩm */
     transition: transform 0.3s ease; /* Hiệu ứng khi hover */
+    display: none; /* Ẩn sản phẩm ngoài 8 cái đầu tiên */
 }
+
+.product-item.show {
+    display: block;
+}
+
 
 /* Hiệu ứng hover cho sản phẩm */
 .product-item:hover {
@@ -531,7 +595,7 @@ nav ul li a:hover {
 }
 
 .product-item h3 {
-    font-size: 20px;
+    font-size: 18px;
     color: #333;
     margin: 15px 0 5px;
 }

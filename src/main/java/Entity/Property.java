@@ -1,6 +1,7 @@
 package Entity;
 
 public class Property {
+    private int id;
     private String title;
     private String address;
     private double price;
@@ -8,7 +9,8 @@ public class Property {
     private String imageUrl;
 
     // Constructor
-    public Property(String title, String address, double price, double area, String imageUrl) {
+    public Property(int id, String title, String address, double price, double area, String imageUrl) {
+        this.id = id;
         this.title = title;
         this.address = address;
         this.price = price;
@@ -56,4 +58,9 @@ public class Property {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+    public int getId() {
+        return id;
+    }
+
 }
