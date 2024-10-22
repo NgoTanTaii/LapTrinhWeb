@@ -25,7 +25,7 @@
             <li><a href="users">Quản lý tài khoản</a></li>
 
             <!-- Thêm đường dẫn đến trang Quản lý sản phẩm -->
-            <li><a href="products">Quản lý sản phẩm</a></li>
+            <li><a href="home-manager">Quản lý sản phẩm</a></li>
             <li><a href="#">Top 10 sản phẩm</a></li>
             <li><a href="#">Top 5 khách hàng</a></li>
             <li><a href="product-display.jsp">Quản lý nhà cung cấp</a></li>

@@ -559,7 +559,14 @@
 
     // Chuyển hướng đến trang giỏ hàng
     function goToCart() {
-        window.location.href = 'cart.jsp';
+        const isLoggedIn = sessionStorage.getItem('isLoggedIn'); // Giả sử bạn kiểm tra trạng thái đăng nhập ở đây
+
+        if (!isLoggedIn) {
+            alert("Bạn cần đăng nhập để xem bất động sản đã quan tâm."); // Thông báo cho người dùng
+            window.location.href = 'login.jsp'; // Chuyển hướng đến trang đăng nhập
+        } else {
+            window.location.href = 'cart.jsp'; // Chuyển hướng đến trang giỏ hàng
+        }
     }
 
     // Cập nhật hiển thị giỏ hàng khi tải lại trang

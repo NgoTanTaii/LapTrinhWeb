@@ -38,7 +38,7 @@
             <h3>
                 <a href="account.jsp" style="color: black; text-decoration: none;">Hello, <%= username %></a>
             </h3>
-            <a href="books" class="btn"><h3>Đăng xuất</h3></a>
+            <a href="homes" class="btn"><h3>Đăng xuất</h3></a>
             <%
             } else {
             %>
