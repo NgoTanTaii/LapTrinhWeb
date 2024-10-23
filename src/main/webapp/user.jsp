@@ -7,9 +7,57 @@
     <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý tài khoản</title>
-    <link rel="stylesheet" href="css/admin.css">
+    <%--    <link rel="stylesheet" href="css/admin.css">--%>
     <style>
         /* Tùy chỉnh thêm cho trang user.jsp */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            border-radius: 5px 0 0 5px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 15px;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .sidebar ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .main-content {
+            flex: 1;
+            background: white;
+            padding: 20px;
+            border-radius: 0 5px 5px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
         .dashboard-header {
             display: flex;
             justify-content: space-between;
@@ -24,7 +72,6 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            background-color: #ffffff;
         }
 
         .user-table th, .user-table td {
@@ -63,10 +110,20 @@
             color: white;
             border: none;
             cursor: pointer;
+            border-radius: 5px;
         }
 
         .form-actions button:hover {
             background-color: #0056b3;
+        }
+
+        .user-table td input,
+        .user-table td select {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 5px;
+            width: calc(100% - 10px);
+            box-sizing: border-box;
         }
     </style>
 </head>
@@ -76,14 +133,14 @@
     <div class="sidebar">
         <ul>
             <li><a href="admin.jsp">Main Dashboard</a></li>
-            <li><a href="">Doanh thu thứ</a></li>
-            <li><a href="">Doanh thu tháng</a></li>
-            <li><a href="#">Hóa đơn</a></li>
+<%--            <li><a href="">Doanh thu thứ</a></li>--%>
+<%--            <li><a href="">Doanh thu tháng</a></li>--%>
+<%--            <li><a href="#">Hóa đơn</a></li>--%>
             <li><a href="users">Quản lý tài khoản</a></li>
-            <li><a href="products">Quản lý sản phẩm</a></li>
+            <li><a href="home-manager">Quản lý sản phẩm</a></li>
             <li><a href="">Top 10 sản phẩm</a></li>
-            <li><a href="#">Top 5 khách hàng</a></li>
-            <li><a href="#">Quản lý nhà cung cấp</a></li>
+<%--            <li><a href="#">Top 5 khách hàng</a></li>--%>
+<%--            <li><a href="#">Quản lý nhà cung cấp</a></li>--%>
         </ul>
     </div>
 
@@ -119,7 +176,7 @@
                     <td><input type="text" name="username" value="<%= o.getUsername() %>" readonly></td>
                     <td><input type="email" name="email" value="<%= o.getEmail() %>" readonly></td>
                     <td>
-                        <select name="role" <%= o.getUsername().equals(loggedInUsername) ? "disabled" : "" %> >
+                        <select name="role" <%= o.getUsername().equals(loggedInUsername) ? "disabled" : "" %>>
                             <option value="user" <%= o.getRole().equalsIgnoreCase("user") ? "selected" : "" %>>user
                             </option>
                             <option value="admin" <%= o.getRole().equalsIgnoreCase("admin") ? "selected" : "" %>>admin
@@ -137,7 +194,6 @@
                         </button>
                     </td>
                 </form>
-
             </tr>
             <%
                 }

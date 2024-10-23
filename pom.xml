@@ -10,9 +10,6 @@
     <url>http://maven.apache.org</url>
 
     <dependencies>
-        <!-- JUnit để test -->
-
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

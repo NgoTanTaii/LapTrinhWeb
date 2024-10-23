@@ -1,8 +1,7 @@
-<%@ page import="Entity.Property" %>
+
 <%@ page import="java.util.List" %>
 <%@ page import="Entity.Property1" %>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%--<link rel="stylesheet" href="css/admin.css">--%>
 
 <head>
     <meta charset="UTF-8">
@@ -16,7 +15,7 @@
     <div class="sidebar">
         <ul>
             <li><a href="admin.jsp">Main Dashboard</a></li>
-            <li><a href="users.jsp">Quản lý tài khoản</a></li>
+            <li><a href="users">Quản lý tài khoản</a></li>
             <li><a href="properties.jsp">Quản lý bất động sản</a></li>
             <li><a href="#">Top 10 bất động sản</a></li>
         </ul>
@@ -28,7 +27,8 @@
         <h2>Danh sách bất động sản</h2>
         <div class="add-product">
             <h3>Thêm sản phẩm mới</h3>
-            <a href="add-property.jsp" class="add-button">Thêm</a>
+            <a href="add-property.jsp?title=&price=&address=&area=&imageUrl=" class="add-button">Thêm</a>
+
         </div>
         <table class="property-table">
             <thead>

@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PropertyDAO {
-
-    // Phương thức cập nhật thông tin bất động sản
     public void updateProperty(Property1 property) {
         String sql = "UPDATE properties SET title = ?, price = ?, area = ?, address = ?, type = ?, status = ?, imageUrl = ? WHERE id = ?";
         try (Connection conn = getConnection();

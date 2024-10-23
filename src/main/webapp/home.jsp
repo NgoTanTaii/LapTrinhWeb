@@ -341,7 +341,7 @@
 <style>
 
     .footer {
-        background-color: blanchedalmond;
+        background-color: whitesmoke;
         color: black;
         padding: 30px 50px; /* Thêm padding cho lề trái và phải */
     }

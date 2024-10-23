@@ -1,50 +1,91 @@
-/* Thiết kế form đăng nhập */
+
 .login-form-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f5f5f5;
+    max-width: 500px; /* Kích thước tối đa */
+    margin: auto;
+    padding: 30px; /* Padding */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .login-form {
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    width: 300px;
-    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
 }
 
 .login-form h2 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px; /* Khoảng cách dưới tiêu đề */
 }
 
 .login-form label {
-    margin-top: 10spx;
+    margin-bottom: 5px;
 }
 
 .login-form input {
-    padding: 8px;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    width: 100%;
+    padding: 12px; /* Padding */
+    margin-bottom: 10px; /* Khoảng cách giữa các trường */
     border: 1px solid #ccc;
     border-radius: 4px;
+    font-size: 16px; /* Kích thước chữ */
 }
 
 .btn {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    text-align: center;
-    border: none;
+    padding: 12px; /* Padding */
+    background-color: white; /* Nền trắng */
+    color: black; /* Chữ màu đen */
+    border: 1px solid #ccc; /* Viền */
     border-radius: 4px;
     cursor: pointer;
-    margin-top: 10px;
+    font-size: 16px; /* Kích thước chữ */
+    display: flex; /* Để căn giữa icon và chữ */
+    align-items: center;
 }
 
 .btn:hover {
-    opacity: 0.8;
+    background-color: #f0f0f0; /* Nền khi hover */
+}
+
+.social-login {
+    text-align: center;
+    margin: 20px 0; /* Khoảng cách */
+}
+
+.social-login button {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+
+.btn-facebook {
+    background-color: white; /* Nền trắng */
+    color: black; /* Chữ màu đen */
+}
+
+.btn-google {
+    background-color: white; /* Nền trắng */
+    color: black; /* Chữ màu đen */
+}
+
+.btn-facebook i {
+    color: #3b5998; /* Màu xanh cho Facebook */
+}
+
+.btn-google i {
+    color: #db4437; /* Màu đỏ cho Google */
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+}
+
+.link {
+    text-align: center;
+    margin-top: 20px; /* Khoảng cách trên cùng */
 }

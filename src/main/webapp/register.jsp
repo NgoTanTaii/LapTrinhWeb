@@ -6,6 +6,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng ký</title>
     <link rel="stylesheet" href="css/register.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Màu nền */
+            color: #333; /* Màu chữ */
+        }
+
+        .register-form-container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            background-color: white; /* Nền trắng cho form */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .register-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+
+        }
+
+        .register-form label {
+            margin-bottom: 5px;
+            color: #555; /* Màu chữ cho nhãn */
+        }
+
+        .register-form input {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            width: 280px;
+        }
+
+        .btn.submit-btn {
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            background-color: #ff5722; /* Màu nền nút */
+            color: white; /* Màu chữ nút */
+            border: none; /* Không viền */
+            width: 100%; /* Nút rộng 100% */
+        }
+
+        .btn.submit-btn:hover {
+            background-color: #e64a19; /* Màu nút khi hover */
+        }
+
+        p {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        a {
+            color: #ff5722; /* Màu chữ link */
+            text-decoration: none; /* Không gạch chân */
+        }
+
+        a:hover {
+            text-decoration: underline; /* Gạch chân khi hover */
+        }
+    </style>
 </head>
 <body>
 
