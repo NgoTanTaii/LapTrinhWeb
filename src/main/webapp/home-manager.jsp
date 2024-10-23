@@ -1,13 +1,14 @@
-<%@ page import="Entity.Property1" %>
+<%@ page import="Entity.Property" %>
 <%@ page import="java.util.List" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!DOCTYPE html>
-<html lang="en">
+<%@ page import="Entity.Property1" %>
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%--<link rel="stylesheet" href="css/admin.css">--%>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý Bất Động Sản</title>
-    <link rel="stylesheet" href="css/admin.css"> <!-- Thêm link đến CSS -->
+
 </head>
 <body>
 <div class="container">
@@ -21,10 +22,14 @@
         </ul>
     </div>
 
+
     <!-- Main content -->
     <div class="main-content">
         <h2>Danh sách bất động sản</h2>
-
+        <div class="add-product">
+            <h3>Thêm sản phẩm mới</h3>
+            <a href="add-property.jsp" class="add-button">Thêm</a>
+        </div>
         <table class="property-table">
             <thead>
             <tr>
@@ -39,30 +44,33 @@
             </thead>
             <tbody>
             <%
-                // Lấy danh sách bất động sản từ servlet
                 List<Property1> properties = (List<Property1>) request.getAttribute("properties");
 
                 if (properties != null && !properties.isEmpty()) {
                     for (Property1 property : properties) {
             %>
             <tr>
-                <form action="properties" method="POST">
-                    <td><%= property.getId() %></td>
-                    <td><input type="text" name="title" value="<%= property.getTitle() %>" readonly></td>
-                    <td><input type="text" name="price" value="<%= property.getPrice() %>" readonly> VND</td>
-                    <td><input type="text" name="address" value="<%= property.getAddress() %>" readonly></td>
-                    <td><%= property.getArea() %> m²</td>
-                    <td>
-                        <img src="<%= property.getImageUrl() != null ? property.getImageUrl() : "default.jpg" %>"
-                             alt="Image" width="100">
-                    </td>
-                    <td>
-                        <a href="edit-property.jsp?id=<%= property.getId() %>">Sửa</a> |
+                <td><%= property.getId() %>
+                </td>
+                <td><%= property.getTitle() %>
+                </td>
+                <td><%= property.getPrice() %> tỷ</td>
+                <td><%= property.getAddress() %>
+                </td>
+                <td><%= property.getArea() %> m²</td>
+                <td>
+                    <img src="<%= property.getImageUrl() != null ? property.getImageUrl() : "default.jpg" %>"
+                         alt="Image" width="100">
+                </td>
+                <td>
+                    <a href="edit-property.jsp?id=<%= property.getId() %>">Sửa</a> |
+                    <form action="properties" method="POST" style="display:inline;">
+                        <input type="hidden" name="id" value="<%= property.getId() %>">
                         <button type="submit" name="action" value="delete"
                                 onclick="return confirm('Bạn có chắc chắn muốn xóa bất động sản này không?')">Xóa
                         </button>
-                    </td>
-                </form>
+                    </form>
+                </td>
             </tr>
             <%
                 }
@@ -76,8 +84,153 @@
             %>
             </tbody>
         </table>
+
+        <div class="pagination">
+            <%
+                int currentPage = (Integer) request.getAttribute("currentPage");
+                int totalPages = (Integer) request.getAttribute("totalPages");
+
+                for (int i = 1; i <= totalPages; i++) {
+                    if (i == currentPage) {
+                        out.print("<span class='current-page'>" + i + "</span>");
+                    } else {
+                        out.print("<a href='home-manager?page=" + i + "'>" + i + "</a>");
+                    }
+                }
+            %>
+        </div>
+
     </div>
 </div>
+<style>
 
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        display: flex;
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    .sidebar {
+        width: 200px;
+        background-color: #333;
+        color: white;
+        padding: 20px;
+        border-radius: 5px 0 0 5px;
+    }
+
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .sidebar ul li {
+        margin-bottom: 15px;
+    }
+
+    .sidebar ul li a {
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+    }
+
+    .sidebar ul li a:hover {
+        text-decoration: underline;
+    }
+
+    .main-content {
+        flex: 1;
+        background: white;
+        padding: 20px;
+        border-radius: 0 5px 5px 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .property-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .property-table th, .property-table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .property-table th {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .property-table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .property-table img {
+        max-width: 100px;
+        height: auto;
+        border-radius: 5px;
+    }
+
+    .property-table .action-buttons a,
+    .property-table form button {
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 8px 12px;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .property-table .action-buttons a:hover,
+    .property-table form button:hover {
+        background-color: #0056b3;
+    }
+
+    .property-table form {
+        display: inline;
+    }
+
+    .pagination {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .pagination a,
+    .pagination .current-page {
+        margin: 0 5px;
+        padding: 8px 12px;
+        text-decoration: none;
+        color: #007BFF;
+        border: 1px solid #007BFF;
+        border-radius: 5px;
+    }
+
+    .pagination a:hover {
+        background-color: #007BFF;
+        color: white;
+    }
+
+    .current-page {
+        background-color: #007BFF;
+        color: white;
+        border: none;
+    }
+
+</style>
 </body>
 </html>
