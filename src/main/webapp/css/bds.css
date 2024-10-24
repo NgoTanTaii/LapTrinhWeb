@@ -742,13 +742,29 @@ legend {
     filter: brightness(100%) contrast(100%); /* Điều chỉnh độ sáng và độ tương phản nếu hình ảnh bị mờ */
 }
 
-/* Container cho toàn bộ form */
-/* Container cho toàn bộ form */
+
 .property-form {
     display: flex;
     justify-content: space-between;
     width: 100%; /* Điều chỉnh diện tích chiếm 80% của trang */
     margin: 0 auto;
+    position: relative;
+}
+
+.city-link {
+    position: relative;
+    display: inline-block;
+}
+
+.city-name {
+    position: absolute;
+    top: 10px; /* Khoảng cách từ đỉnh */
+    left: 10px; /* Khoảng cách từ bên trái */
+    color: white; /* Màu chữ */
+    background-color: rgba(0, 0, 0, 0.7); /* Nền bán trong suốt */
+    padding: 5px;
+    border-radius: 3px; /* Bo góc */
+    font-size: 14px; /* Kích thước chữ */
 }
 
 /* Thành phố TP.HCM */

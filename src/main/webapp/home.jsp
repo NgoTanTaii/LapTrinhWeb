@@ -242,34 +242,9 @@
 
 
 </script>
-<%--<div class="product-section">--%>
-<%--    <h2>Dự án bất động sản nổi bật</h2>--%>
-
-<%--    <div class="product-list">--%>
-<%--        <div class="product-item">--%>
-<%--            <img src="jpg/bat-dong-san-1732-670.jpg" alt="Product 1">--%>
-<%--            <div class="image-count">--%>
-<%--                +5 Hình ảnh--%>
-
-<%--            </div>--%>
-
-<%--            <h3>Tên sản phẩm 1</h3>--%>
-<%--            <p class="address">--%>
-<%--                <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">--%>
-<%--                Quận 1, TP.HCM--%>
-<%--            </p>--%>
-<%--            <div class="details">--%>
-<%--                <p class="price">2 tỷ</p>--%>
-<%--                <p class="size">100m²</p>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    --%>
-<%--    </div>--%>
-
-<%--    <div class="view-more">--%>
-<%--        <a href="#">Xem thêm</a>--%>
-<%--    </div>--%>
-<%--</div>--%>
+<div class="product-section">
+    <h2>Dự án bất động sản nổi bật</h2>
+</div>
 <div class="banner">
     <img src="jpg/2833732387999181063.gif" alt="Banner Image">
 </div>
@@ -279,24 +254,65 @@
 
     <div class="property-form">
         <div class="city hcm">
-            <img src="jpg/HCM.jpg" alt="TP.HCM">
+            <a href="#" class="city-link">
+                <img src="jpg/HCM.jpg" alt="TP.HCM">
+                <span class="city-name">TP.HCM</span>
+            </a>
         </div>
         <div class="other-cities">
             <div class="city">
-                <img src="jpg/HaNoi.jpg" alt="Hà Nội">
+                <a href="#" class="city-link">
+                    <img src="jpg/HaNoi.jpg" alt="Hà Nội">
+                    <span class="city-name">Hà Nội</span>
+                </a>
             </div>
             <div class="city">
-                <img src="jpg/DaNang.jpg" alt="Đà Nẵng">
+                <a href="#" class="city-link">
+                    <img src="jpg/DaNang.jpg" alt="Đà Nẵng">
+                    <span class="city-name">Đà Nẵng</span>
+                </a>
             </div>
             <div class="city">
-                <img src="jpg/binhduong.jpg" alt="Bình Dương">
+                <a href="#" class="city-link">
+                    <img src="jpg/binhduong.jpg" alt="Bình Dương">
+                    <span class="city-name" >Bình Dương</span>
+                </a>
             </div>
             <div class="city">
-                <img src="jpg/DongNai.jpg" alt="Đồng Nai">
+                <a href="#" class="city-link">
+                    <img src="jpg/DongNai.jpg" alt="Đồng Nai">
+                    <span class="city-name">Đồng Nai</span>
+                </a>
             </div>
         </div>
     </div>
+    <style>
+        .property-form {
+            position: relative;
+        }
+
+        .city-link {
+            position: relative;
+            display: inline-block;
+        }
+
+        .city-name {
+            position: absolute;
+            top: 10px; /* Khoảng cách từ đỉnh */
+            left: 10px; /* Khoảng cách từ bên trái */
+            color: white; /* Màu chữ */
+            background-color: transparent; /* Nền bán trong suốt */
+            padding: 5px;
+            border-radius: 3px; /* Bo góc */
+            font-size: 20px; /* Kích thước chữ */
+        }
+        .city-link:hover .city-name {
+            text-decoration: underline; /* Gạch chân khi hover */
+        }
+    </style>
+
 </div>
+
 <div class="footer">
     <div class="footer-content">
         <!-- Thông tin công ty -->
@@ -320,9 +336,9 @@
         <!-- Mạng xã hội -->
         <div class="social-media">
             <h3>Mạng xã hội</h3>
-            <a href="#" class="social-icon">Facebook</a>
-            <a href="#" class="social-icon">Instagram</a>
-            <a href="#" class="social-icon">Twitter</a>
+            <a href="https://www.facebook.com/khoa.ngo.562114/" class="social-icon">Facebook</a>
+            <a href="https://www.instagram.com/khoa5462/" class="social-icon">Instagram</a>
+            <a href="https://mail.google.com/mail/u/0/?hl=vi#inbox" class="social-icon">Mail</a>
         </div>
 
         <!-- Form nhập email -->
