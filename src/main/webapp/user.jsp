@@ -7,9 +7,9 @@
     <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý tài khoản</title>
-    <%--    <link rel="stylesheet" href="css/admin.css">--%>
+
     <style>
-        /* Tùy chỉnh thêm cho trang user.jsp */
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -29,6 +29,7 @@
             color: white;
             padding: 20px;
             border-radius: 5px 0 0 5px;
+            height: auto;
         }
 
         .sidebar ul {
@@ -58,15 +59,18 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
+
         .dashboard-header {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
+            justify-content: center; /* Căn giữa theo chiều ngang */
+            align-items: center; /* Căn giữa theo chiều dọc */
+            height: 100px; /* Chiều cao của phần tử cha (có thể điều chỉnh) */
         }
 
         .dashboard-header h2 {
-            margin-left: 20px;
+            margin: 0; /* Bỏ margin mặc định */
         }
+
 
         .user-table {
             width: 100%;
@@ -78,10 +82,11 @@
             padding: 12px 15px;
             text-align: left;
             border-bottom: 1px solid #ddd;
+            height: 50px;
         }
 
         .user-table th {
-            background-color: #007bff;
+            background-color: #4CAF50;
             color: white;
             text-transform: uppercase;
         }
@@ -104,17 +109,26 @@
             margin-top: 20px;
         }
 
-        .form-actions button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
+        .update-button {
+            text-decoration: underline; /* Gạch chân */
+
+            background-color: transparent; /* Không có nền */
+            border: none; /* Bỏ viền */
+            cursor: pointer; /* Con trỏ khi rê chuột */
         }
 
-        .form-actions button:hover {
-            background-color: #0056b3;
+        .update-button:hover {
+            color: blue;
+        }
+
+        .delete-button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            text-decoration: none;
+            cursor: pointer;
         }
 
         .user-table td input,
@@ -133,14 +147,14 @@
     <div class="sidebar">
         <ul>
             <li><a href="admin.jsp">Main Dashboard</a></li>
-<%--            <li><a href="">Doanh thu thứ</a></li>--%>
-<%--            <li><a href="">Doanh thu tháng</a></li>--%>
-<%--            <li><a href="#">Hóa đơn</a></li>--%>
+            <%--            <li><a href="">Doanh thu thứ</a></li>--%>
+            <%--            <li><a href="">Doanh thu tháng</a></li>--%>
+            <%--            <li><a href="#">Hóa đơn</a></li>--%>
             <li><a href="users">Quản lý tài khoản</a></li>
-            <li><a href="home-manager">Quản lý sản phẩm</a></li>
-            <li><a href="">Top 10 sản phẩm</a></li>
-<%--            <li><a href="#">Top 5 khách hàng</a></li>--%>
-<%--            <li><a href="#">Quản lý nhà cung cấp</a></li>--%>
+            <li><a href="home-manager">Quản lí bất động sản</a></li>
+            <li><a href="">Top 10 bất động sản</a></li>
+            <%--            <li><a href="#">Top 5 khách hàng</a></li>--%>
+            <%--            <li><a href="#">Quản lý nhà cung cấp</a></li>--%>
         </ul>
     </div>
 
@@ -149,7 +163,6 @@
         <div class="dashboard-header">
             <h2>Quản lý tài khoản</h2>
         </div>
-
         <table class="user-table">
             <thead>
             <tr>
@@ -185,12 +198,13 @@
                     </td>
                     <td>
                         <button type="submit" name="action"
-                                value="update" <%= o.getUsername().equals(loggedInUsername) ? "disabled" : "" %>>Cập
-                            nhật
+                                value="update" <%= o.getUsername().equals(loggedInUsername) ? "disabled" : "" %>
+                                class="update-button">Cập nhật
                         </button>
                         <button type="submit" name="action"
                                 value="delete" <%= o.getUsername().equals(loggedInUsername) ? "disabled" : "" %>
-                                onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này không?')">Xóa
+                                onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này không?')"
+                                class="delete-button">Xóa
                         </button>
                     </td>
                 </form>
