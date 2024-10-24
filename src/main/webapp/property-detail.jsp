@@ -52,7 +52,8 @@
 </head>
 <body>
 <div class="property-detail">
-    <h2><%= property.getTitle() %></h2>
+    <h2><%= property.getTitle() %>
+    </h2>
     <img id="mainImage" class="main-image"
          src="<%= property.getImageUrl() != null ? property.getImageUrl() : "default.jpg" %>"
          alt="<%= property.getTitle() %>">
@@ -64,7 +65,7 @@
                 for (String thumbnailUrl : thumbnailUrls) {
         %>
         <div class="thumbnail" onclick="changeMainImage('<%= thumbnailUrl %>')">
-            <img src="<%= thumbnailUrl %>" alt="Thumbnail"> <!-- Display thumbnail image -->
+            <img src="<%= thumbnailUrl %>" alt="Thumbnail">
         </div>
         <%
             }
@@ -76,10 +77,12 @@
         %>
     </div>
 
-    <p>Địa chỉ: <%= property.getAddress() %></p>
+    <p>Địa chỉ: <%= property.getAddress() %>
+    </p>
     <p>Giá: <%= property.getPrice() %> tỷ</p>
     <p>Diện tích: <%= property.getArea() %> m²</p>
-    <p>Mô tả: <%= property.getDescription() %></p>
+    <p>Mô tả: <%= property.getDescription() %>
+    </p>
 </div>
 </body>
 </html>

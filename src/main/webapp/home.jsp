@@ -169,7 +169,8 @@
                 for (Property property : properties) {
         %>
         <div class=" product-item" <%= index >= 8 ? "style='display: none;'" : "" %> >
-           <span onclick="location.href='property-detail.jsp?id=<%= property.getId() %>'" style="cursor: pointer; color: blue; text-decoration: none;">
+           <span onclick="location.href='property-detail.jsp?id=<%= property.getId() %>'"
+                 style="cursor: pointer; color: blue; text-decoration: none;">
                 <img src="<%= property.getImageUrl() %>" alt="<%= property.getTitle() %>" class="product-image">
                 <h3><%= property.getTitle() %>
                 </h3>

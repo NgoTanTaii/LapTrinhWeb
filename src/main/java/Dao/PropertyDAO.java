@@ -9,26 +9,48 @@ import java.util.List;
 
 public class PropertyDAO {
     public void updateProperty(Property1 property) {
-        String sql = "UPDATE properties SET title = ?, price = ?, area = ?, address = ?, type = ?, status = ?, imageUrl = ? WHERE id = ?";
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        String sql = "UPDATE properties SET title = ?, price = ?, address = ?, area = ?, image_url = ? WHERE property_id = ?";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, property.getTitle());
             stmt.setDouble(2, property.getPrice());
-            stmt.setDouble(3, property.getArea());
-            stmt.setString(4, property.getAddress());
-            stmt.setString(5, property.getType());
-            stmt.setString(6, property.getStatus());
-            stmt.setString(7, property.getImageUrl());
-            stmt.setInt(8, property.getId());
+            stmt.setString(3, property.getAddress());
+            stmt.setDouble(4, property.getArea());
+            stmt.setString(5, property.getImageUrl());
+            stmt.setInt(6, property.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Handle exceptions appropriately
         }
+
+
     }
+
+
+    public Property1 getPropertyById(int id) {
+        Property1 property = null;
+        String sql = "SELECT * FROM properties WHERE property_id = ?";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                property = new Property1();
+                property.setId(rs.getInt("property_id"));
+                property.setTitle(rs.getString("title"));
+                property.setPrice(rs.getDouble("price"));
+                property.setAddress(rs.getString("address"));
+                property.setArea(rs.getDouble("area"));
+                property.setImageUrl(rs.getString("image_url"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Xử lý lỗi
+        }
+        return property;
+    }
+
 
     // Phương thức xóa bất động sản
     public void deleteProperty(int propertyId) {
-        String sql = "DELETE FROM properties WHERE id = ?";
+        String sql = "DELETE FROM properties WHERE property_id = ?";
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, propertyId);
@@ -175,7 +197,7 @@ public class PropertyDAO {
                 property.setDescription(rs.getString("description"));
 
                 // Retrieve image URLs
-                property.setImageUrls(getImageUrlsByPropertyId(Integer.parseInt(propertyId)));
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -218,6 +240,7 @@ public class PropertyDAO {
 
         return thumbnails;
     }
+
     public void deleteProperty(String id) {
         String sql = "DELETE FROM properties WHERE property_id = ?\n"; // Thay "properties" bằng tên bảng thực tế
 
@@ -229,6 +252,8 @@ public class PropertyDAO {
             e.printStackTrace();
         }
     }
+
+
 }
 
 

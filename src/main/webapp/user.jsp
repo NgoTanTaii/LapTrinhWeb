@@ -83,12 +83,14 @@
             text-align: left;
             border-bottom: 1px solid #ddd;
             height: 50px;
+
         }
 
         .user-table th {
             background-color: #4CAF50;
             color: white;
             text-transform: uppercase;
+
         }
 
         .user-table tr:hover {
@@ -151,7 +153,7 @@
             <%--            <li><a href="">Doanh thu tháng</a></li>--%>
             <%--            <li><a href="#">Hóa đơn</a></li>--%>
             <li><a href="users">Quản lý tài khoản</a></li>
-            <li><a href="home-manager">Quản lí bất động sản</a></li>
+            <li><a href="home-manager">Quản lý bất động sản</a></li>
             <li><a href="">Top 10 bất động sản</a></li>
             <%--            <li><a href="#">Top 5 khách hàng</a></li>--%>
             <%--            <li><a href="#">Quản lý nhà cung cấp</a></li>--%>

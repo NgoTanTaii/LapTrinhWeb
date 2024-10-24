@@ -12,9 +12,9 @@ public class Property1 {
     private String status;        // Trạng thái của tài sản
     private String imageUrl;      // URL của hình ảnh
     private String description;
-    private List<String> imageUrls; // Danh sách hình ảnh khác
 
-    public Property1(int id, String title, double price, double area, String address, String type, String status, String imageUrl, String description, List<String> imageUrls) {
+
+    public Property1(int id, String title, double price, double area, String address, String type, String status, String imageUrl, String description) {
         this.id = id;
         this.title = title;
         this.price = price;
@@ -24,7 +24,7 @@ public class Property1 {
         this.status = status;
         this.imageUrl = imageUrl;
         this.description = description;
-        this.imageUrls = imageUrls;
+
     }
 
     public Property1() {
@@ -37,12 +37,14 @@ public class Property1 {
     public Property1(int propertyId, String title, double price, double area, String address, String type, String status, String imageUrl) {
     }
 
-    public List<String> getImageUrls() {
-        return imageUrls;
+    public Property1(int propertyId, String title, double price, String address, double area, String imageUrl) {
     }
 
-    public void setImageUrls(List<String> imageUrls) {
-        this.imageUrls = imageUrls;
+    public Property1(int id, String title, double price, String address, double area, String imageUrl, String description) {
+
+    }
+
+    public Property1(int propertyId, String title, double price, double area, String address, String type, String status, String imageUrl, String description, Object o) {
     }
 
     public int getId() {
@@ -77,20 +79,20 @@ public class Property1 {
         this.area = area;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getType() {
         return type;
     }
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getStatus() {
@@ -116,7 +118,6 @@ public class Property1 {
     public void setDescription(String description) {
         this.description = description;
     }
-
-
 }
+
 

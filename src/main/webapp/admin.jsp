@@ -15,20 +15,20 @@
 </head>
 <body>
 <div class="container">
-    <!-- Sidebar -->
+
     <div class="sidebar">
         <ul>
             <li><a href="admin.jsp">Main Dashboard</a></li>
-            <li><a href="#">Doanh thu thứ</a></li>
-            <li><a href="#">Doanh thu tháng</a></li>
-            <li><a href="#">Hóa đơn</a></li>
+<%--            <li><a href="#">Doanh thu thứ</a></li>--%>
+<%--            <li><a href="#">Doanh thu tháng</a></li>--%>
+<%--            <li><a href="#">Hóa đơn</a></li>--%>
             <li><a href="users">Quản lý tài khoản</a></li>
 
             <!-- Thêm đường dẫn đến trang Quản lý sản phẩm -->
             <li><a href="home-manager">Quản lý sản phẩm</a></li>
-            <li><a href="#">Top 10 sản phẩm</a></li>
-            <li><a href="#">Top 5 khách hàng</a></li>
-            <li><a href="product-display.jsp">Quản lý nhà cung cấp</a></li>
+<%--            <li><a href="#">Top 10 sản phẩm</a></li>--%>
+<%--            <li><a href="#">Top 5 khách hàng</a></li>--%>
+<%--            <li><a href="product-display.jsp">Quản lý nhà cung cấp</a></li>--%>
         </ul>
     </div>
 
