@@ -38,23 +38,6 @@ public class PropertyDAO {
         }
     }
 
-    // Phương thức thêm bất động sản mới
-    public void insertProperty(Property1 property) {
-        String sql = "INSERT INTO properties (title, price, area, address, type, status, imageUrl) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, property.getTitle());
-            stmt.setDouble(2, property.getPrice());
-            stmt.setDouble(3, property.getArea());
-            stmt.setString(4, property.getAddress());
-            stmt.setString(5, property.getType());
-            stmt.setString(6, property.getStatus());
-            stmt.setString(7, property.getImageUrl());
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public List<Property1> getPropertiesByPage(int start, int total) {
         List<Property1> list = new ArrayList<>();
@@ -107,7 +90,7 @@ public class PropertyDAO {
         return total;
     }
 
-    // Kết nối tới CSDL
+
     private Connection getConnection() throws SQLException {
         // Kết nối tới CSDL (cấu hình tùy thuộc vào hệ thống của bạn)
         // Ví dụ sử dụng JDBC với MySQL
@@ -170,6 +153,72 @@ public class PropertyDAO {
 
         return properties;
     }
+
+    public Property1 getPropertyById(String propertyId) {
+        Property1 property = null;
+        String query = "SELECT * FROM properties WHERE property_id = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, Integer.parseInt(propertyId));
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                property = new Property1();
+                property.setId(rs.getInt("property_id"));
+                property.setTitle(rs.getString("title"));
+                property.setPrice(rs.getDouble("price"));
+                property.setArea(rs.getDouble("area"));
+                property.setAddress(rs.getString("address"));
+                property.setType(rs.getString("type"));
+                property.setStatus(rs.getString("status"));
+                property.setImageUrl(rs.getString("image_url"));
+                property.setDescription(rs.getString("description"));
+
+                // Retrieve image URLs
+                property.setImageUrls(getImageUrlsByPropertyId(Integer.parseInt(propertyId)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return property;
+    }
+
+    public List<String> getImageUrlsByPropertyId(int propertyId) {
+        List<String> imageUrls = new ArrayList<>();
+        String query = "SELECT image_url FROM property_images WHERE property_id = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, propertyId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                imageUrls.add(rs.getString("image_url"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return imageUrls;
+    }
+
+    public List<String> getThumbnailUrls(String propertyId) {
+        List<String> thumbnails = new ArrayList<>();
+        // Implement database query to fetch thumbnail URLs based on propertyId
+        String sql = "SELECT image_url FROM property_images WHERE property_id = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, propertyId);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                thumbnails.add(rs.getString("image_url"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return thumbnails;
+    }
+
 }
 
 

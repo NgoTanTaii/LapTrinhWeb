@@ -1,6 +1,9 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="vi">
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id" content="160944412642-19q2brhebfkldu328eu3kji6il30vk0k.apps.googleusercontent.com">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -133,7 +136,7 @@
             <button class="btn btn-facebook">
                 <i class="fab fa-facebook-f"></i> Facebook
             </button>
-            <button class="btn btn-google">
+            <button class="btn btn-google" id="googleSignInBtn" onclick="onSignIn()">
                 <i class="fab fa-google"></i> Google
             </button>
         </div>
@@ -144,6 +147,31 @@
         </div>
     </div>
 </div>
+<script>
+    function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        var id_token = googleUser.getAuthResponse().id_token;
+
+        // Send the ID token to your server for verification
+        fetch('loginWithGoogle', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id_token: id_token })
+        }).then(response => {
+            return response.json();
+        }).then(data => {
+            if (data.success) {
+                // Redirect on successful login
+                window.location.href = 'dashboard.jsp'; // Change to your dashboard URL
+            } else {
+                // Handle errors (display an error message)
+                document.querySelector('.error-message').innerText = data.message;
+            }
+        });
+    }
+</script>
 
 </body>
 </html>

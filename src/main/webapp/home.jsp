@@ -168,27 +168,28 @@
                 int index = 0;
                 for (Property property : properties) {
         %>
-        <div class="product-item" <%= index >= 8 ? "style='display: none;'" : "" %> >
-            <img src="<%= property.getImageUrl() %>" alt="<%= property.getTitle() %>" class="product-image">
-            <h3><%= property.getTitle() %>
-            </h3>
-            <p class="address">
-                <img src="jpg/locatin.png" alt="Location Icon" class="location-icon">
-                <%= property.getAddress() %>
-            </p>
-
-            <div class="details">
-                <div class="price-size">
-                    <p class="price"><%= property.getPrice() %> tỷ</p>
-                    <p class="size"><%= property.getArea() %> m²</p>
+        <div class=" product-item" <%= index >= 8 ? "style='display: none;'" : "" %> >
+           <span onclick="location.href='property-detail.jsp?id=<%= property.getId() %>'" style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="<%= property.getImageUrl() %>" alt="<%= property.getTitle() %>" class="product-image">
+                <h3><%= property.getTitle() %>
+                </h3>
+                <p class="address">
+                    <img src="jpg/location.png" alt="Location Icon" class="location-icon">
+                    <%= property.getAddress() %>
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price"><%= property.getPrice() %> tỷ</p>
+                        <p class="size"><%= property.getArea() %> m²</p>
+                    </div>
                 </div>
-            </div>
+            </span>
             <div class="heart-icon"
                  onclick="addToFavorites('<%= property.getId() %>', '<%= property.getTitle() %>', <%= property.getPrice() %>, <%= property.getArea() %>, '<%= property.getImageUrl() %>','<%= property.getAddress() %>')">
                 <img src="jpg/heartred.png" alt="Heart Icon" class="heart-image">
             </div>
-
         </div>
+
         <%
                     index++;
                 }

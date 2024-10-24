@@ -1,5 +1,7 @@
 package Entity;
 
+import java.util.List;
+
 public class Property1 {
     private int id;               // ID của tài sản
     private String title;         // Tiêu đề tài sản
@@ -9,9 +11,10 @@ public class Property1 {
     private String type;          // Loại tài sản
     private String status;        // Trạng thái của tài sản
     private String imageUrl;      // URL của hình ảnh
+    private String description;
+    private List<String> imageUrls; // Danh sách hình ảnh khác
 
-
-    public Property1(int id, String title, double price, double area, String address, String type, String status, String imageUrl) {
+    public Property1(int id, String title, double price, double area, String address, String type, String status, String imageUrl, String description, List<String> imageUrls) {
         this.id = id;
         this.title = title;
         this.price = price;
@@ -20,6 +23,8 @@ public class Property1 {
         this.type = type;
         this.status = status;
         this.imageUrl = imageUrl;
+        this.description = description;
+        this.imageUrls = imageUrls;
     }
 
     public Property1() {
@@ -27,6 +32,17 @@ public class Property1 {
     }
 
     public Property1(String title, double price, String address, double area, String imageUrl, String description) {
+    }
+
+    public Property1(int propertyId, String title, double price, double area, String address, String type, String status, String imageUrl) {
+    }
+
+    public List<String> getImageUrls() {
+        return imageUrls;
+    }
+
+    public void setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
     }
 
     public int getId() {
@@ -92,4 +108,15 @@ public class Property1 {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
 }
+
