@@ -11,7 +11,7 @@
     <title>Trang JSP với UTF-8</title>
 </head>
 <header class="header">
-    <div class="header-top">
+    <div class="header-top" style="width: 100%; position: sticky; top: 0; z-index: 1000;">
         <div class="header-left">
 
             <div class="contact-item">
@@ -29,17 +29,22 @@
             </div>
 
         </div>
-        <div class="header-right">
+        <div class="header-right" style="margin-top: 10px">
+
             <a href="login.jsp" class="btn"><h3>Đăng nhập</h3></a>
             <a href="register.jsp" class="btn"><h3>Đăng ký</h3></a>
+
         </div>
-        <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()">
-            <img src="jpg/heart.png" alt="Giỏ hàng" class="cart-icon">
+
+        <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()"
+           style="border: 1px solid #ccc; border-radius:100%;">
+            <img src="jpg/heart.png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng"
+                 class="cart-icon">
             <div class="item-count">0</div>
             <div class="mini-cart">
-                <h4>Bất động sản đã quan tâm</h4>
+                <h4>Bất động sản đã lưu</h4>
                 <ul id="cart-items"></ul>
-                <button id="go-to-cart" onclick="goToCart()">Đi tới xem bất động sản quan tâm</button>
+                <button id="go-to-cart" onclick="goToCart()">Đi tới xem bất động sản đã lưu</button>
             </div>
         </a>
 
@@ -275,7 +280,7 @@
             <div class="city">
                 <a href="#" class="city-link">
                     <img src="jpg/binhduong.jpg" alt="Bình Dương">
-                    <span class="city-name" >Bình Dương</span>
+                    <span class="city-name">Bình Dương</span>
                 </a>
             </div>
             <div class="city">
@@ -306,6 +311,7 @@
             border-radius: 3px; /* Bo góc */
             font-size: 20px; /* Kích thước chữ */
         }
+
         .city-link:hover .city-name {
             text-decoration: underline; /* Gạch chân khi hover */
         }
@@ -535,7 +541,7 @@
         cartList.innerHTML = '';
 
         if (cartItems.length === 0) {
-            cartList.innerHTML = '<li>Bạn chưa có bất động sản quan tâm.</li>';
+            cartList.innerHTML = '<li>Bạn chưa có bất động sản đã lưu.</li>';
             itemCount.innerText = 0; // Cập nhật số lượng sản phẩm
             return; // Kết thúc hàm nếu giỏ hàng trống
         }
@@ -549,9 +555,7 @@
                 <p>Địa chỉ: ${item.address}</p>
                 <p>Diện tích: ${item.area} m²</p>
                 <span>Giá: ${item.price.toLocaleString()} tỷ</span>
-                <div>
-                    <input type="number" value="1" min="1" readonly> <!-- Số lượng cố định là 1 -->
-                </div>
+
             </div>
             <button onclick="removeFromCart('${item.id}')">Xóa</button>
         `;

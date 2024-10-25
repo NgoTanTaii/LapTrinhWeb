@@ -317,8 +317,8 @@ legend {
     position: fixed; /* Đảm bảo vị trí cố định trên trang */
     bottom: 20px; /* Khoảng cách với mép dưới trang */
     right: 20px; /* Khoảng cách với mép phải của trang */
-    width: 60px; /* Giảm chiều rộng của biểu tượng giỏ hàng */
-    height: 60px; /* Giảm chiều cao của biểu tượng giỏ hàng */
+    width: 40px !important; /* Giảm chiều rộng của biểu tượng giỏ hàng */
+    height: 40px !important; /* Giảm chiều cao của biểu tượng giỏ hàng */
     background-color: transparent; /* Màu nền của biểu tượng */
     border-radius: 50%; /* Biểu tượng có hình tròn */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng nhẹ để nổi bật */

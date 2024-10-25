@@ -1,0 +1,38 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    justify-content: center; /* Căn giữa container */
+    width: 70%;
+}
+
+.property-detail, .sender-info {
+    width: 48%; /* Kích thước của từng phần */
+    margin: 0 10px; /* Tạo khoảng cách đều giữa hai phần */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Căn giữa nội dung */
+}
+
+.sender-info {
+    text-align: center; /* Căn giữa cho thông tin người đăng */
+}
+
+.sender-image {
+    margin-bottom: 15px;
+}
+
+.sender-avatar {
+    width: 60px; /* Kích thước của avatar */
+    height: 60px;
+    border-radius: 50%; /* Bo tròn hình ảnh */
+    border: 2px solid #ccc; /* Viền cho hình ảnh */
+}
