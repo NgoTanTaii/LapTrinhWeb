@@ -1,0 +1,217 @@
+.header-bottom {
+  width: 100%;
+  height: 80px;
+  background-color: whitesmoke;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.store-name h1 {
+  color: red;
+  font-size: 36px;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-shadow: 4px 4px 5px rgba(0, 0, 0, 0.5);
+  font-family: "Impact", sans-serif;
+  padding-left: 50px;
+}
+
+.store-name a {
+  text-decoration: none;
+}
+
+.color1 {
+  color: darkred;
+}
+
+.color2 {
+  color: #c85656;
+}
+
+.contact-info {
+  display: flex;
+  align-items: center;
+  color: #f5f5f5;
+}
+
+.phone-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.phone-number {
+  font-size: 18px;
+  font-weight: bold;
+  color: #5c4f4f;
+}
+
+.menu {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu h1 {
+  font-size: 34px;
+  font-family: "Montserrat", sans-serif;
+  color: #4b4848;
+  margin: 0 0 13px 0;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.header-top {
+  width: 100%;
+  height: 48px;
+  background-color: antiquewhite;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.header-left {
+  display: flex;
+  gap: 50px;
+}
+
+.header-left span {
+  font-size: 20px;
+  color: #333;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon {
+  width: 16px; /* Điều chỉnh kích thước icon */
+  height: 16px;
+  background: none; /* Không có nền */
+  border: none; /* Không viền */
+  display: block;
+  fill: #f5f5f5;
+}
+
+.header-right {
+  text-align: center;
+  display: flex;
+  align-items: center; /* Đảm bảo nội dung căn giữa theo chiều dọc */
+  justify-content: center;
+  padding: 5px 10px;
+  gap: 20px;
+  text-decoration: none;
+}
+
+.header-right a {
+  text-decoration: none;
+  color: black;
+}
+
+/* Định dạng chung cho menu */
+nav {
+  text-align: left; /* Căn trái cho toàn bộ nav */
+  margin-left: 0; /* Loại bỏ margin trái */
+}
+
+nav ul {
+  list-style-type: none; /* Xóa dấu chấm cho danh sách */
+  margin: 0; /* Bỏ margin */
+  padding: 0; /* Bỏ padding */
+  display: flex; /* Sử dụng Flexbox để các mục nằm sát nhau */
+  justify-content: flex-start; /* Căn các mục về phía bên trái */
+}
+
+nav ul li {
+  margin-right: 20px; /* Khoảng cách giữa các mục */
+}
+
+nav ul li:last-child {
+  margin-right: 0; /* Loại bỏ margin phải của mục cuối */
+}
+
+nav ul li a {
+  text-decoration: none; /* Xóa gạch chân */
+  color: #000; /* Màu chữ */
+  font-size: 16px; /* Kích thước chữ */
+}
+
+nav ul li a:hover {
+  color: darkred; /* Màu khi hover */
+  text-decoration: underline;
+}
+.footer {
+  background-color: #f8f8f8;
+  padding: 20px 0;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.footer-top {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  flex: 1;
+  margin: 0 10px;
+}
+
+.footer-content h3 {
+  margin-bottom: 15px;
+}
+
+.footer-content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-content ul li {
+  margin: 5px 0;
+}
+
+.footer-content ul li a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.footer-content form {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-content form input {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+}
+
+.footer-content form button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+}
+
+h1 {
+  margin: 20px 0;
+  font-size: 15px;
+}
