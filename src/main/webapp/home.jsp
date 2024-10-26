@@ -1,7 +1,7 @@
 <%@ page import="Entity.Property" %>
 <%@ page import="java.util.List" %>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="css/bds.css">
 <!DOCTYPE html>
 
@@ -320,6 +320,17 @@
 </div>
 
 <div class="footer">
+    <div class="footer-top">
+
+        <h1><a href="homes">
+            <span class="color1">HOME</span>
+            <span class="color2">LANDER</span>
+        </a></h1>
+        <span class="footer-item"><i class="fas fa-phone"></i> Hotline: 0123 456 789</span>
+        <span class="footer-item"><i class="fas fa-envelope"></i> Hỗ trợ: support@batdongsan.com</span>
+        <span class="footer-item"><i class="fas fa-headset"></i> Chăm sóc: 0987 654 321</span>
+    </div>
+
     <div class="footer-content">
         <!-- Thông tin công ty -->
         <div class="company-info">
@@ -342,9 +353,13 @@
         <!-- Mạng xã hội -->
         <div class="social-media">
             <h3>Mạng xã hội</h3>
-            <a href="https://www.facebook.com/khoa.ngo.562114/" class="social-icon">Facebook</a>
-            <a href="https://www.instagram.com/khoa5462/" class="social-icon">Instagram</a>
-            <a href="https://mail.google.com/mail/u/0/?hl=vi#inbox" class="social-icon">Mail</a>
+            <a href="https://www.facebook.com/khoa.ngo.562114/" class="social-icon"><i class="fab fa-facebook"></i>
+                Facebook</a>
+            <a href="https://www.instagram.com/khoa5462/" class="social-icon"><i class="fab fa-instagram"></i>
+                Instagram</a>
+            <a href="https://mail.google.com/mail/u/0/?hl=vi#inbox" class="social-icon"><i
+                    class="fas fa-envelope"></i>
+                Mail</a>
         </div>
 
         <!-- Form nhập email -->
@@ -360,8 +375,9 @@
     <div class="footer-bottom">
         <p>&copy; 2024 Công ty Bất Động Sản. Mọi quyền lợi thuộc về công ty.</p>
     </div>
-</div>
 
+
+</div>
 <style>
 
     .footer {
@@ -603,7 +619,158 @@
 
 
 </script>
+<style>
+    .footer-top {
+        display: flex; /* Sử dụng flexbox để căn chỉnh */
+        justify-content: space-around; /* Giãn cách đều giữa các mục */
+        padding: 10px 0; /* Khoảng cách trên và dưới */
+        margin-bottom: 20px; /* Khoảng cách dưới để tách khỏi nội dung footer */
+        text-align: center; /* Căn giữa nội dung */
 
+    }
+
+    .footer-top h1 a {
+        text-decoration: none;
+
+
+    }
+
+    .footer-item {
+        margin: 0 15px; /* Khoảng cách giữa các mục */
+        font-weight: bold; /* Chữ đậm */
+    }
+
+    /* Các phần khác của footer giữ nguyên */
+    .footer {
+        margin-top: 30px;
+        background-color: whitesmoke;
+        color: black;
+        padding: 30px 50px;
+    }
+
+    .footer-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .footer-content > div {
+        flex: 1;
+        margin-right: 20px;
+        min-width: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .footer-content > div:last-child {
+        margin-right: 0;
+    }
+
+    .company-info, .quick-links, .social-media, .newsletter {
+        margin-bottom: 15px;
+    }
+
+    .quick-links ul li a:hover,
+    .social-media a:hover {
+        color: darkred;
+    }
+
+    h3 {
+        margin-bottom: 10px;
+        color: black;
+    }
+
+    ul {
+        padding-left: 20px;
+        color: black;
+    }
+
+    ul li {
+        list-style: none;
+        color: black;
+    }
+
+    ul li a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .social-media a {
+        margin-right: 10px;
+        color: black;
+        text-decoration: none;
+    }
+
+    .newsletter form {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .newsletter input[type="email"] {
+        padding: 8px;
+        font-size: 14px;
+        width: 220px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+    }
+
+    .newsletter input[type="email"]:focus {
+        border-color: #f4a261;
+    }
+
+    .newsletter button {
+        padding: 8px 15px;
+        font-size: 13px;
+        background-color: #f4a261;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .newsletter button:hover {
+        background-color: #e38e3e;
+    }
+
+    @media (max-width: 768px) {
+        .footer-content {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .footer-content > div {
+            margin-right: 0;
+            margin-bottom: 20px;
+        }
+
+        .newsletter form {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .newsletter input[type="email"] {
+            width: 100%;
+        }
+
+        .newsletter button {
+            width: 100%;
+        }
+    }
+
+    .footer-bottom {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 18px;
+        color: black;
+    }
+
+</style>
 
 </body>
 </html>
