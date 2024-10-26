@@ -85,7 +85,7 @@ public class UserServlet extends HttpServlet {
             throws ServletException, IOException {
         String action = request.getParameter("action");
         UserDAO userDAO = new UserDAO();
-        // Kiểm tra hành động: Cập nhật hay xóa
+
         if ("update".equals(action)) {
             int userId = Integer.parseInt(request.getParameter("id"));
             String role = request.getParameter("role");

@@ -15,20 +15,26 @@
             max-width: 500px;
             margin: auto;
             padding: 30px;
-            border: 1px solid #ccc;
+            border: 1px solid #ccc; /* Viền bên ngoài */
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background: gainsboro;
         }
 
         .login-form {
             display: flex;
             flex-direction: column;
-
+            padding: 20px; /* Padding cho form nhỏ */
+            border: 1px solid #ccc; /* Viền cho form nhỏ */
+            border-radius: 8px; /* Bo góc cho form nhỏ */
+            background-color: #fff; /* Nền trắng cho form nhỏ */
+            width: 60%; /* Đặt chiều rộng cho form nhỏ */
+            margin: auto; /* Căn giữa */
         }
 
         .login-form h2 {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px; /* Giảm khoảng cách */
         }
 
         .login-form label {
@@ -36,46 +42,45 @@
         }
 
         .login-form input {
-            padding: 12px;
-            margin-bottom: 20px;
+            padding: 10px; /* Giảm padding */
+            margin-bottom: 15px; /* Giảm khoảng cách */
             border: 1px solid #ccc;
             border-radius: 4px;
-            font-size: 16px;
-            width: 280px;
+            font-size: 14px; /* Giảm kích thước chữ */
+            width: 95%;
         }
 
         .btn {
-            padding: 12px;
+            padding: 10px; /* Giảm padding */
             border-radius: 4px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px; /* Giảm kích thước chữ */
             display: flex;
             align-items: center;
             justify-content: center;
+            border: 1px solid #ccc; /* Thêm border cho các nút */
+            width: 100%; /* Đặt chiều rộng cho các nút */
         }
 
         .submit-btn {
-            background-color: red; /* Màu đỏ */
-            color: white; /* Chữ trắng */
-            border: none; /* Không viền */
+            background-color: red;
+            color: white;
+            border: none;
+            margin-bottom: 10px; /* Khoảng cách giữa nút Đăng nhập và các nút xã hội */
         }
 
         .submit-btn:hover {
-            background-color: darkred; /* Màu đỏ đậm khi hover */
+            background-color: darkred;
         }
 
         .btn-facebook, .btn-google {
-            background-color: white; /* Nền trắng */
-            color: black; /* Chữ đen */
-            border: 1px solid #ccc; /* Viền nhẹ */
-            margin: 5px 0; /* Khoảng cách giữa các nút */
-            display: flex; /* Sử dụng flexbox để căn chỉnh nội dung */
-            align-items: center; /* Căn giữa theo chiều dọc */
-            justify-content: center; /* Căn giữa theo chiều ngang */
+            background-color: white;
+            color: black;
+            margin: 5px 0;
         }
 
         .btn-facebook i, .btn-google i {
-            margin-right: 8px; /* Khoảng cách giữa biểu tượng và chữ */
+            margin-right: 8px;
         }
 
         .btn-facebook i {
@@ -91,17 +96,11 @@
             margin: 20px 0;
         }
 
-        .error-message {
-            color: red;
-            text-align: center;
-        }
-
         .link {
             text-align: center;
             margin-top: 20px;
         }
     </style>
-
 </head>
 <body>
 
@@ -158,7 +157,7 @@
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ id_token: id_token })
+            body: JSON.stringify({id_token: id_token})
         }).then(response => {
             return response.json();
         }).then(data => {
