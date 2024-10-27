@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href=" ../css/post-status.css">
+</head>
+<body>
+<header class="header">
+  <div class="header-top" style="width: 100%; position: sticky; top: 0; z-index: 1000;">
+    <div class="header-left">
+
+      <div class="contact-item">
+        <img src="../jpg/phone-call.png" class="icon">
+        <span>0123 456 789</span>
+      </div>
+      <div class="contact-item">
+        <img src="../jpg/email.png" class="icon">
+        <span>info@company.com</span>
+      </div>
+      <div class="contact-item">
+
+        <img src="../jpg/location.png" class="icon">
+        <span>123 Đường ABC, Quận XYZ, TP.HCM</span>
+      </div>
+
+    </div>
+    <div class="header-right" style="margin-top: 10px">
+      <img src="../jpg/heart%20(1).png" alt="Trái tim" class="heart-icon1">
+      <a href="login.html" class="btn"><h3>Đăng nhập</h3></a>
+      <a href="register.html" class="btn"><h3>Đăng ký</h3></a>
+      <a href="register.html" class="btn"><h3>Đăng tin</h3></a>
+    </div>
+    <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()"
+       style="border: 1px solid #ccc; border-radius:100%;">
+      <img src="../jpg/heart%20(1).png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng"
+           class="cart-icon">
+      <div class="item-count">0</div>
+      <div class="mini-cart">
+        <h4>Bất động sản đã lưu</h4>
+        <ul id="cart-items"></ul>
+        <button id="go-to-cart" onclick="goToCart()">Đi tới xem bất động sản đã lưu</button>
+      </div>
+    </a>
+
+  </div>
+  <div class="menu">
+    <div class="header-bottom" style="height:60px;margin-top: 0">
+
+      <div class="store-name">
+        <h1><a href="index.html">
+          <span class="color1">HOME</span>
+          <span class="color2">LANDER</span> <!-- Đổi từ VINA BOOK sang VINA BĐS -->
+        </a></h1>
+      </div>
+
+
+      <nav>
+        <ul>
+          <li><a href="property-for-sale.html">Nhà Đất Bán</a></li>
+          <li><a href="#nhadatchochue">Nhà Đất Cho Thuê</a></li>
+          <li><a href="#duan">Dự Án</a></li>
+          <li><a href="#tintuc">Tin Tức</a></li>
+          <li><a href="#wikibds">Wiki BĐS</a></li>
+        </ul>
+      </nav>
+
+
+      <div class="contact-info">
+        <img src="../jpg/phone-call.png" alt="Phone Icon" class="phone-icon">
+        <span class="phone-number">0123 456 789</span>
+      </div>
+
+    </div>
+  </div>
+
+
+  </div>
+  </div>
+  <div class="slideshow-container">
+    <div class="mySlides fade">
+      <img src="../jpg/1.webp" alt="Banner 1">
+    </div>
+    <div class="mySlides fade">
+      <img src="../jpg/1.webp" alt="Banner 2">
+    </div>
+
+  </div>
+
+  <!-- Form tìm kiếm ở giữa -->
+  <div class="search-container">
+    <form class="search-form">
+      <input type="text" placeholder="Tìm kiếm..." name="search" required>
+
+      <fieldset class="price-group">
+        <legend>Giá <span class="arrow-down">▼</span></legend>
+        <div class="price-dropdown hidden">
+          <label for="min-price">Giá tối thiểu (tỷ):</label>
+          <input type="number" id="min-price" name="min-price" placeholder="Nhập giá tối thiểu">
+
+          <label for="max-price">Giá tối đa (tỷ):</label>
+          <input type="number" id="max-price" name="max-price" placeholder="Nhập giá tối đa">
+        </div>
+      </fieldset>
+
+      <fieldset class="area-group">
+        <legend>Diện Tích <span class="arrow-down">▼</span></legend>
+        <div class="area-dropdown hidden">
+          <label for="min-area">Diện tích tối thiểu (m²):</label>
+          <input type="number" id="min-area" name="min-area" placeholder="Nhập diện tích tối thiểu">
+
+          <label for="max-area">Diện tích tối đa (m²):</label>
+          <input type="number" id="max-area" name="max-area" placeholder="Nhập diện tích tối đa">
+        </div>
+      </fieldset>
+
+      <button type="submit">Tìm Kiếm</button>
+    </form>
+  </div>
+  <script src="../JS/script.js"></script>
+
+</header>
+
+
+<div class="form-container">
+  <h2>Đăng Tin Mới</h2>
+  <form id="postForm">
+    <div class="form-group">
+      <label for="title">Tiêu đề:</label>
+      <input type="text" id="title" name="title" required>
+    </div>
+    <div class="form-group">
+      <label for="description">Mô tả:</label>
+      <textarea id="description" name="description" rows="4" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="price">Giá:</label>
+      <input type="number" id="price" name="price" required>
+    </div>
+    <div class="form-group">
+      <label for="area">Diện tích (m²):</label>
+      <input type="number" id="area" name="area" required>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="submit-btn">Đăng Tin</button>
+    </div>
+  </form>
+</div>
+
+
+<div class="footer">
+  <div class="footer-top">
+
+    <h1><a href="homes">
+      <span class="color1">HOME</span>
+      <span class="color2">LANDER</span>
+    </a></h1>
+    <span class="footer-item"><i class="fas fa-phone"></i> Hotline: 0123 456 789</span>
+    <span class="footer-item"><i class="fas fa-envelope"></i> Hỗ trợ: support@batdongsan.com</span>
+    <span class="footer-item"><i class="fas fa-headset"></i> Chăm sóc: 0987 654 321</span>
+  </div>
+
+  <div class="footer-content">
+    <!-- Thông tin công ty -->
+    <div class="company-info">
+      <h3>Công ty Bất Động Sản</h3>
+      <p>Địa chỉ: 123 Đường ABC, Quận 1, TP.HCM</p>
+      <p>Điện thoại: 0123 456 789</p>
+    </div>
+
+    <!-- Liên kết nhanh -->
+    <div class="quick-links">
+      <h3>Liên kết nhanh</h3>
+      <ul>
+        <li><a href="#">Trang chủ</a></li>
+        <li><a href="#">Dự án</a></li>
+        <li><a href="#">Tin tức</a></li>
+        <li><a href="#">Liên hệ</a></li>
+      </ul>
+    </div>
+
+    <!-- Mạng xã hội -->
+    <div class="social-media">
+      <h3>Mạng xã hội</h3>
+      <a href="https://www.facebook.com/khoa.ngo.562114/" class="social-icon"><i class="fab fa-facebook"></i>
+        Facebook</a>
+      <a href="https://www.instagram.com/khoa5462/" class="social-icon"><i class="fab fa-instagram"></i>
+        Instagram</a>
+      <a href="https://mail.google.com/mail/u/0/?hl=vi#inbox" class="social-icon"><i
+              class="fas fa-envelope"></i>
+        Mail</a>
+    </div>
+
+    <!-- Form nhập email -->
+    <div class="newsletter">
+      <h3>Đăng ký nhận tin tức mới nhất</h3>
+      <form action="#" method="POST">
+        <input type="email" name="email" placeholder="Nhập email của bạn" required>
+        <button type="submit">Đăng ký</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2024 Công ty Bất Động Sản. Mọi quyền lợi thuộc về công ty.</p>
+  </div>
+
+
+</div>
+</body>
+</html>

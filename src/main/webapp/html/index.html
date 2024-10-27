@@ -31,12 +31,12 @@
         <div class="header-right" style="margin-top: 10px">
             <img src="../jpg/heart%20(1).png" alt="Trái tim" class="heart-icon1">
             <a href="login.html" class="btn"><h3>Đăng nhập</h3></a>
-            <a href="register.jsp" class="btn"><h3>Đăng ký</h3></a>
-
+            <a href="register.html" class="btn"><h3>Đăng ký</h3></a>
+            <a href="register.html" class="btn"><h3>Đăng tin</h3></a>
         </div>
         <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()"
            style="border: 1px solid #ccc; border-radius:100%;">
-            <img src="../jpg/heart.png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng"
+            <img src="../jpg/heart%20(1).png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng"
                  class="cart-icon">
             <div class="item-count">0</div>
             <div class="mini-cart">
@@ -51,7 +51,7 @@
         <div class="header-bottom" style="height:60px;margin-top: 0">
 
             <div class="store-name">
-                <h1><a href="homes">
+                <h1><a href="index.html">
                     <span class="color1">HOME</span>
                     <span class="color2">LANDER</span> <!-- Đổi từ VINA BOOK sang VINA BĐS -->
                 </a></h1>
@@ -60,7 +60,7 @@
 
             <nav>
                 <ul>
-                    <li><a href="#nhadatban">Nhà Đất Bán</a></li>
+                    <li><a href="property-for-sale.html">Nhà Đất Bán</a></li>
                     <li><a href="#nhadatchochue">Nhà Đất Cho Thuê</a></li>
                     <li><a href="#duan">Dự Án</a></li>
                     <li><a href="#tintuc">Tin Tức</a></li>
@@ -558,8 +558,6 @@
             </div>
 
 
-
-
         </div>
     </div>
 </div>
@@ -645,14 +643,13 @@
         }
 
         .project-item:hover {
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Tạo bóng đổ cho khung */
-            transform: translateY(-5px); /* Nâng khung lên nhẹ nhàng */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
         }
 
         .project-item img {
             width: 100%; /* Chiều rộng hình ảnh bằng chiều rộng của thẻ */
             height: auto; /* Chiều cao tự động để giữ tỷ lệ */
-
             transition: transform 0.3s ease; /* Hiệu ứng chuyển động cho hình ảnh */
             padding: 0 10px;
         }

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký</title>
+    <link rel="stylesheet" href="../css/register.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Màu nền */
+            color: #333; /* Màu chữ */
+        }
+
+        .register-form-container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            background-color: white; /* Nền trắng cho form */
+            border-radius: 8px;
+            border: 1px solid #ccc; /* Viền cho container */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .register-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .register-form label {
+            margin-bottom: 5px;
+            color: #555; /* Màu chữ cho nhãn */
+        }
+
+        .register-form input {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            width: 100%; /* Đặt chiều rộng 100% */
+        }
+
+        .btn.submit-btn {
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            background-color: #ff5722; /* Màu nền nút */
+            color: white; /* Màu chữ nút */
+            border: none; /* Không viền */
+            width: 100%; /* Nút rộng 100% */
+        }
+
+        .btn.submit-btn:hover {
+            background-color: #e64a19; /* Màu nút khi hover */
+        }
+
+        p {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        a {
+            color: #ff5722; /* Màu chữ link */
+            text-decoration: none; /* Không gạch chân */
+        }
+
+        a:hover {
+            text-decoration: underline; /* Gạch chân khi hover */
+        }
+
+        .error-message {
+            color: red; /* Màu chữ thông báo lỗi */
+            text-align: center; /* Căn giữa thông báo lỗi */
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="register-form-container">
+    <div class="register-form">
+        <h2>Đăng ký</h2>
+        <form action="register" method="post" id="registerForm">
+            <label for="username">Tên đăng nhập:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Mật khẩu:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit" class="btn submit-btn">Đăng ký</button>
+        </form>
+
+        <p class="error-message" id="error-message" style="display: none;"></p>
+
+        <p>Đã có tài khoản? <a href="login.html">Đăng nhập ngay</a></p>
+    </div>
+</div>
+
+<script>
+    // Mã JavaScript để hiển thị thông báo lỗi
+    const urlParams = new URLSearchParams(window.location.search);
+    const errorMessage = urlParams.get('errorMessage');
+    if (errorMessage) {
+        document.getElementById('error-message').innerText = errorMessage;
+        document.getElementById('error-message').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
