@@ -93,8 +93,8 @@ body {
 }
 
 .heart-icon1 {
-    width: 20px; /* Kích thước hình ảnh */
-    height: 20px; /* Kích thước hình ảnh */
+    width: 15px; /* Kích thước hình ảnh */
+    height: 15px; /* Kích thước hình ảnh */
     margin-left: 10px; /* Khoảng cách bên trái */
     transition: transform 0.2s; /* Hiệu ứng chuyển động mượt mà */
     margin-bottom: 12px;
