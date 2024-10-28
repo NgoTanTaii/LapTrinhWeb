@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataTables with Ajax JSON</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+</head>
+<body>
+<table id="example" class="display" style="width:100%">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Position</th>
+        <th>Office</th>
+        <th>Extn.</th>
+        <th>Start date</th>
+        <th>Salary</th>
+    </tr>
+    </thead>
+</table>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            "ajax": {
+                "url": "../Json/data.json", // Đường dẫn tới tệp JSON
+                "dataSrc": "demo" // Thuộc tính trong JSON chứa dữ liệu bảng
+            },
+            "columns": [
+                {"title": "Name"},
+                {"title": "Position"},
+                {"title": "Office"},
+                {"title": "Extn."},
+                {"title": "Start date"},
+                {"title": "Salary"}
+            ]
+        });
+    });
+</script>
+</body>
+</html>
