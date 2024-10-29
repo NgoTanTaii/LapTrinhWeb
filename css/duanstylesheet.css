@@ -159,6 +159,10 @@ nav ul li a:hover {
   flex-direction: row;
   gap: 30px;
 }
+.main .du_an {
+  display: flex;
+  flex-direction: column;
+}
 .footer {
   background-color: #f8f8f8;
   padding: 20px 0;
