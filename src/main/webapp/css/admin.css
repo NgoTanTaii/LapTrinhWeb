@@ -1,10 +1,15 @@
-<style>
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
 }
+.main-content{
+    height: 600px;
+    width: 100%;
+}
+
 
 .container {
     display: flex;
@@ -125,4 +130,3 @@ h2 {
     color: white;
     border: none;
 }
-</style>
