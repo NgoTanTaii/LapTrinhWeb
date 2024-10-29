@@ -31,22 +31,25 @@
         </div>
         <div class="header-right" style="margin-top: 10px">
 
+
+
             <a href="login.jsp" class="btn"><h3>Đăng nhập</h3></a>
             <a href="register.jsp" class="btn"><h3>Đăng ký</h3></a>
-
+            <a href="post-status.html" class="btn"><h3>Đăng tin</h3></a>
         </div>
+    </div>
 
-        <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()"
-           style="border: 1px solid #ccc; border-radius:100%;">
-            <img src="jpg/heart.png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng"
-                 class="cart-icon">
-            <div class="item-count">0</div>
-            <div class="mini-cart">
-                <h4>Bất động sản đã lưu</h4>
-                <ul id="cart-items"></ul>
-                <button id="go-to-cart" onclick="goToCart()">Đi tới xem bất động sản đã lưu</button>
-            </div>
-        </a>
+    <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()"
+       style="border: 1px solid #ccc; border-radius:100%;">
+        <img src="jpg/heart%20(1).png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng"
+             class="cart-icon">
+        <div class="item-count">0</div>
+        <div class="mini-cart">
+            <h4>Bất động sản đã lưu</h4>
+            <ul id="cart-items"></ul>
+            <button id="go-to-cart" onclick="goToCart()">Đi tới xem bất động sản đã lưu</button>
+        </div>
+    </a>
 
     </div>
     <div class="menu">
@@ -61,13 +64,45 @@
 
 
             <nav>
-                <ul>
-                    <li><a href="#nhadatban">Nhà Đất Bán</a></li>
-                    <li><a href="#nhadatchochue">Nhà Đất Cho Thuê</a></li>
-                    <li><a href="#duan">Dự Án</a></li>
-                    <li><a href="#tintuc">Tin Tức</a></li>
-                    <li><a href="#wikibds">Wiki BĐS</a></li>
+                <ul class="u-lo">
+                    <li><a href="property-for-sale.html">Nhà Đất Bán</a>
+                        <ul>
+                            <li><a href="#">Thông tin bán nhà đất</a></li>
+                            <li><a href="#">Mua bán bất động sản</a></li>
+                            <li><a href="#">Nhà đất giá rẻ</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="property-for-rent.html">Nhà Đất Cho Thuê</a>
+                        <ul>
+                            <li><a href="#">Thông tin cho thuê nhà đất</a></li>
+                            <li><a href="#">Thuê nhà nguyên căn</a></li>
+                            <li><a href="#">Thuê căn hộ giá rẻ</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="project.html">Dự Án</a>
+                        <ul>
+                            <li><a href="#">Các dự án nổi bật</a></li>
+                            <li><a href="#">Dự án nhà ở</a></li>
+                            <li><a href="#">Dự án chung cư</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="news.html">Tin Tức</a>
+                        <ul>
+                            <li><a href="#">Tin thị trường</a></li>
+                            <li><a href="#">Xu hướng bất động sản</a></li>
+                            <li><a href="#">Phân tích và đánh giá</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="wiki.html">Wiki BĐS</a>
+                        <ul>
+                            <li><a href="#">Mua bán</a></li>
+                            <li><a href="#">Cho thuê</a></li>
+                            <li><a href="#">Tài chính</a></li>
+                            <li><a href="#">Phong thủy</a></li>
+                        </ul>
+                    </li>
                 </ul>
+
             </nav>
 
 
@@ -242,14 +277,158 @@
 
             // Đảo trạng thái
             isExpanded = !isExpanded;
+
+            // Thực hiện cuộn mượt mà về đầu phần sản phẩm
+            document.querySelector('.product-section').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
         });
     });
-
-
 </script>
-<div class="product-section">
+<style>
+    /* Basic styling */
+    .featured-properties-section {
+        max-width: 85%;
+        margin-left: 95px;
+        text-align: center;
+        overflow: hidden;
+        margin-bottom: 50px;
+    }
+
+    .property-list-container {
+        display: flex;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .property-card {
+        flex: 0 0 200px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        text-align: center;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .property-card p{
+        font-size: 16px;
+        font-family: Arial;
+    }
+    .property-card img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
+
+    .property-card:hover {
+        transform: translateY(-10px); /* Lift the card slightly */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Increase shadow */
+    }
+
+    /* Navigation buttons */
+    .navigation-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px;
+    }
+
+    .navigation-button {
+        background-color: #007bff;
+        color: white;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .navigation-button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
+    .property-list-container::-webkit-scrollbar {
+        display: none; /* For Chrome, Safari, and Edge */
+    }
+
+</style>
+<div class="featured-properties-section">
     <h2>Dự án bất động sản nổi bật</h2>
+    <div class="navigation-buttons">
+        <button class="navigation-button" id="prevButton">⬅️ Trước</button>
+        <button class="navigation-button" id="nextButton">Tiếp ➡️</button>
+    </div>
+    <div class="property-list-container" id="productList">
+        <!-- Product items (can be generated dynamically with JSP or JavaScript) -->
+        <div class="property-card">
+            <img src="jpg/binhduong.jpg" alt="BĐS 1">
+            <h3>BĐS 1</h3>
+            <p>Chung cư cao cấp view sông, nội thất đầy đủ</p>
+            <div style="display: flex; justify-content: space-between; color: red; margin-top: 5px;">
+                <span> 1.47 ha</span>
+                <span><i class="fas fa-map-marker-alt"></i> Bình Dương</span>
+            </div>
+
+        </div>
+        <div class="property-card">
+            <img src="jpg/binhduong.jpg" alt="BĐS 1">
+            <h3>BĐS 1</h3>
+            <p>Chung cư cao cấp view sông, nội thất đầy đủ</p>
+            <div style="display: flex; justify-content: space-between; color: red; margin-top: 5px;">
+                <span> 1.47 ha</span>
+                <span><i class="fas fa-map-marker-alt"></i> Bình Dương</span>
+            </div>
+
+        </div>
+        <div class="property-card">
+            <img src="jpg/binhduong.jpg" alt="BĐS 1">
+            <h3>BĐS 1</h3>
+            <p>Chung cư cao cấp view sông, nội thất đầy đủ</p>
+            <div style="display: flex; justify-content: space-between; color: red; margin-top: 5px;">
+                <span> 1.47 ha</span>
+                <span><i class="fas fa-map-marker-alt"></i> Bình Dương</span>
+            </div>
+
+        </div>
+        <div class="property-card">
+            <img src="jpg/binhduong.jpg" alt="BĐS 1">
+            <h3>BĐS 1</h3>
+            <p>Chung cư cao cấp view sông, nội thất đầy đủ</p>
+            <div style="display: flex; justify-content: space-between; color: red; margin-top: 5px;">
+                <span> 1.47 ha</span>
+                <span><i class="fas fa-map-marker-alt"></i> Bình Dương</span>
+            </div>
+
+        </div>
+
+
+
+
+    </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const productList = document.getElementById("productList");
+        const prevButton = document.getElementById("prevButton");
+        const nextButton = document.getElementById("nextButton");
+
+        // Function to scroll the product list by a set amount
+        function scrollProductList(amount) {
+            productList.scrollBy({
+                left: amount,
+                behavior: 'smooth'
+            });
+        }
+
+        // Event listeners for the buttons
+        prevButton.addEventListener("click", () => scrollProductList(-300));
+        nextButton.addEventListener("click", () => scrollProductList(300));
+    });
+</script>
+
 <div class="banner">
     <img src="jpg/2833732387999181063.gif" alt="Banner Image">
 </div>
@@ -427,19 +606,59 @@
     }
 
     ul {
-        padding-left: 20px;
-        color: black;
+        list-style-type: none;
+        padding: 0;
+        margin-right: 0;
+        border-radius: 10px;
     }
 
-    ul li {
-        list-style: none;
-        color: black;
+    .u-lo li {
+        position: relative;
+        display: inline-block;
+        margin-right: 20px;
+        z-index: 10; /* Đảm bảo menu cha hiển thị trên cùng */
     }
 
     ul li a {
         text-decoration: none;
+        display: inline-block;
+        color: #333;
+    }
 
-        color: black;
+    /* Thiết lập cho menu con */
+    ul li ul {
+        display: none; /* Ẩn menu con mặc định */
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #f9f9f9;
+        min-width: 200px;
+        padding: 10px 0;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 999; /* Đảm bảo menu con hiển thị trên các phần tử khác */
+    }
+
+    ul li ul li {
+        display: block;
+        margin: 0;
+    }
+
+    ul li ul li a {
+        padding: 10px 15px;
+        color: #333;
+        display: block;
+    }
+
+    /* Hiển thị menu con khi hover */
+    ul li:hover ul {
+        display: block;
+    }
+
+    /* Style cho menu con khi hover */
+    ul li ul li a:hover {
+        background-color: #eee;
+        text-decoration: none
+    ;
     }
 
     .social-media a {
@@ -770,6 +989,39 @@
         color: black;
     }
 
+    .heart-container {
+        position: relative;
+        display: inline-block;
+        padding-top: 1px;
+    }
+
+    .heart-icon1 {
+        width: 15px; /* Kích thước của biểu tượng trái tim */
+        height: 15px;
+        cursor: pointer;
+    }
+
+    /* Định dạng dòng chữ "Tin đăng đã lưu" */
+    .hover-text {
+        position: absolute;
+        top: 30px; /* Điều chỉnh vị trí theo ý muốn */
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0.7); /* Màu nền của dòng chữ */
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 14px;
+        white-space: nowrap;
+        opacity: 0; /* Ẩn dòng chữ */
+        transition: opacity 0.3s ease; /* Hiệu ứng hiển thị mượt */
+        pointer-events: none; /* Vô hiệu hóa sự kiện trên hover-text */
+    }
+
+    /* Khi hover vào biểu tượng trái tim, hiển thị dòng chữ */
+    .heart-container:hover .hover-text {
+        opacity: 1;
+    }
 </style>
 
 </body>

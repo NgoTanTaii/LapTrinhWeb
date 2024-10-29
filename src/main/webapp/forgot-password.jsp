@@ -17,6 +17,7 @@
             background-color: #f4f4f4; /* Màu nền trang */
             color: #333; /* Màu chữ */
         }
+
         .forgot-container {
             max-width: 500px;
             margin: auto;
@@ -25,28 +26,31 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
         .form-container {
-            max-width: 400px;
+            width: 60%; /* Đặt chiều rộng cho form nhỏ */
             border: 2px solid #ccc; /* Đường viền lớn hơn */
             padding: 30px;
             border-radius: 8px;
             background-color: white; /* Nền trắng cho form */
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            margin: 20px; /* Khoảng cách bên ngoài */
+            margin: auto; /* Căn giữa form nhỏ */
         }
-        h2 {
 
+        h2 {
             margin-bottom: 20px;
             text-align: center; /* Canh giữa tiêu đề */
         }
+
         input[type="text"], input[type="email"] {
-            width: 100%;
+            width: 95%;
             padding: 12px;
             margin: 10px 0;
             border-radius: 4px;
             border: 1px solid #ccc;
             font-size: 16px;
         }
+
         input[type="submit"] {
             background-color: #ff5722; /* Màu nút giống form đăng ký */
             color: white;
@@ -56,18 +60,27 @@
             cursor: pointer;
             font-size: 18px;
             transition: background-color 0.3s; /* Hiệu ứng chuyển màu */
-            width: 100%; /* Nút rộng 100% */
-            margin-top: 15px; /* Khoảng cách giữa nút và các trường nhập */
+            width: 95%; /* Nút rộng 95% */
+            margin: 15px auto 0; /* Căn giữa nút và khoảng cách bên trên */
+            display: block; /* Để căn giữa */
         }
+
         input[type="submit"]:hover {
             background-color: #e64a19; /* Màu khi hover */
         }
+
         .error-message {
             color: red; /* Màu chữ thông báo lỗi */
             margin-top: 10px;
             text-align: center; /* Canh giữa thông báo lỗi */
         }
+
+        .login-link {
+            text-align: center; /* Canh giữa link */
+            margin-top: 15px; /* Khoảng cách trên */
+        }
     </style>
+
 </head>
 <body>
 <div class="forgot-container">

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý BĐS</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+</head>
+<body>
+<table id="example" class="display" style="width:100%">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Tên bất động sản</th>
+        <th>Mô tả</th>
+        <th>Giá</th>
+        <th>Địa chỉ</th>
+        <th>Loại</th>
+        <th>Trạng thái</th>
+        <th>Hình ảnh</th>
+        <th>Diện tích</th>
+    </tr>
+    </thead>
+</table>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            "ajax": {
+                "url": "../Json/property-data.json", // Đường dẫn tới tệp JSON chứa dữ liệu
+                "dataSrc": "demo" // Thuộc tính trong JSON chứa dữ liệu bảng
+            },
+            "columns": [
+                {"title": "ID"},
+                {"title": "Tên bất động sản"},
+                {"title": "Mô tả"},
+                {"title": "Giá"},
+                {"title": "Địa chỉ"},
+                {"title": "Loại"},
+                {"title": "Trạng thái"},
+                {
+                    "title": "Hình ảnh",
+                    "data": null,
+                    "render": function (data, type, row) {
+                        return `<img src="${data[7]}" alt="Hình ảnh BĐS" style="width: 100px; height: auto;">`;
+                    }
+                },
+                {"title": "Diện tích"}
+            ]
+        });
+    });
+</script>
+</body>
+</html>

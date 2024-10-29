@@ -62,10 +62,6 @@
             margin-top: 15px;
         }
 
-        a {
-            color: #ff5722; /* Màu chữ link */
-            text-decoration: none; /* Không gạch chân */
-        }
 
         a:hover {
             text-decoration: underline; /* Gạch chân khi hover */

@@ -1,21 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DataTables with Ajax JSON</title>
+    <title>Quản Lý Người Dùng</title>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
 </head>
 <body>
 <table id="example" class="display" style="width:100%">
     <thead>
     <tr>
-        <th>Name</th>
-        <th>Position</th>
-        <th>Office</th>
-        <th>Extn.</th>
-        <th>Start date</th>
-        <th>Salary</th>
+        <th>ID</th>
+        <th>Tên Người Dùng</th>
+        <th>Email</th>
+        <th>Token</th>
+        <th>Vai Trò</th>
     </tr>
     </thead>
 </table>
@@ -30,12 +29,12 @@
                 "dataSrc": "demo" // Thuộc tính trong JSON chứa dữ liệu bảng
             },
             "columns": [
-                {"title": "Name"},
-                {"title": "Position"},
-                {"title": "Office"},
-                {"title": "Extn."},
-                {"title": "Start date"},
-                {"title": "Salary"}
+                {"title": "ID"},
+                {"title": "Tên Người Dùng"},
+                {"title": "Email"},
+
+                {"title": "Trạng Thái"},
+                {"title": "Vai Trò"}
             ]
         });
     });
