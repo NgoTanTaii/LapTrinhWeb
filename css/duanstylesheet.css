@@ -146,6 +146,19 @@ nav ul li a:hover {
   color: darkred; /* Màu khi hover */
   text-decoration: underline;
 }
+.main {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.main .menu {
+  width: 70%;
+  border-style: solid;
+  border-color: #ccc;
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
 .footer {
   background-color: #f8f8f8;
   padding: 20px 0;
