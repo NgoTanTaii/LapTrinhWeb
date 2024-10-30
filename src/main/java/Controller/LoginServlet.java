@@ -58,7 +58,7 @@ public class LoginServlet extends HttpServlet {
     // Kiểm tra thông tin đăng nhập và trạng thái tài khoản
     private String checkLogin(String username, String password) {
         String status = null;
-        String url = "jdbc:mysql://localhost:3306/mysql"; // Đảm bảo thay thế đúng tên cơ sở dữ liệu của bạn
+        String url = "jdbc:mysql://localhost:3306/webbds"; // Đảm bảo thay thế đúng tên cơ sở dữ liệu của bạn
         String dbUser = "root";
         String dbPassword = "";
 

@@ -18,90 +18,107 @@
     }
 %>
 
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Property</title>
+    <title>Chỉnh sửa Bất Động Sản</title>
     <style>
-        /* Add your styles here */
+        /* CSS styling giữ nguyên như bạn đã tạo */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }
+
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #007BFF;
+        }
     </style>
+    <script>
+        function toggleImageInput(type) {
+            document.getElementById('fileInput').style.display = type === 'file' ? 'block' : 'none';
+            document.getElementById('urlInput').style.display = type === 'url' ? 'block' : 'none';
+        }
+    </script>
 </head>
 <body>
-<h2>Edit Property</h2>
-<form action="properties" method="POST">
+<h2>Chỉnh sửa Bất Động Sản</h2>
+<form action="properties" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="property_id" value="<%= property.getId() %>">
 
-    <label for="title">Title:</label>
+    <label for="title">Tên:</label>
     <input type="text" id="title" name="title" value="<%= property.getTitle() %>" required><br>
 
-    <label for="price">Price (billion VND):</label>
+    <label for="price">Giá (tỷ VNĐ):</label>
     <input type="number" id="price" name="price" value="<%= property.getPrice() %>" step="0.01" required><br>
 
-    <label for="address">Address:</label>
+    <label for="address">Địa chỉ:</label>
     <input type="text" id="address" name="address" value="<%= property.getAddress() %>" required><br>
 
-    <label for="area">Area (m²):</label>
+    <label for="area">Diện tích (m²):</label>
     <input type="number" id="area" name="area" value="<%= property.getArea() %>" required><br>
 
-    <label for="imageUrl">Image URL:</label>
-    <input type="text" id="imageUrl" name="imageUrl" value="<%= property.getImageUrl() %>"><br>
+    <label>Cập nhật Hình Ảnh:</label>
+    <label>
+        <input type="radio" name="imageOption" value="file" onclick="toggleImageInput('file')" checked> Upload File
+    </label>
+    <label>
+        <input type="radio" name="imageOption" value="url" onclick="toggleImageInput('url')"> Nhập URL
+    </label>
+
+    <div id="fileInput">
+        <label for="imageFile">Chọn File Hình Ảnh:</label>
+        <input type="file" id="imageFile" name="imageFile" accept=".jpg, .jpeg, .png">
+    </div>
+
+    <div id="urlInput" style="display: none;">
+        <label for="imageUrl">URL Hình Ảnh:</label>
+        <input type="text" id="imageUrl" name="imageUrl" value="<%= property.getImageUrl() %>">
+    </div>
 
     <input type="hidden" name="action" value="update">
-    <button type="submit">Update Property</button>
+    <button type="submit">Cập nhật Bất Động Sản</button>
 </form>
-<a href="home-manager">Cancel</a>
-<style>
-
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        margin: 20px;
-    }
-
-    form {
-        background-color: white;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    label {
-        display: block;
-        margin-bottom: 5px;
-    }
-
-    input[type="text"], input[type="number"] {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-
-    button {
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        padding: 10px 15px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background-color: #45a049;
-    }
-
-    a {
-        display: inline-block;
-        margin-top: 10px;
-        text-decoration: none;
-        color: #007BFF;
-    }
-
-
-</style>
+<a href="home-manager">Hủy</a>
 </body>
 </html>

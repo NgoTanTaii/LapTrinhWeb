@@ -7,13 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thêm sản phẩm mới</title>
     <style>
+        /* CSS giữ nguyên */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
             background-color: #f9f9f9;
         }
-
         .container {
             max-width: 600px;
             margin: auto;
@@ -22,37 +22,37 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
         }
-
         h1 {
             text-align: center;
         }
-
         label {
             display: block;
             margin: 10px 0 5px;
         }
-
         input, textarea, button {
             width: 100%;
             padding: 10px;
             margin-bottom: 10px;
         }
-
         textarea {
             height: 100px;
         }
-
         button {
             background-color: #4CAF50;
             color: white;
             border: none;
             border-radius: 5px;
         }
-
         button:hover {
             background-color: #45a049;
         }
     </style>
+    <script>
+        function toggleImageInput(type) {
+            document.getElementById('fileInput').style.display = type === 'file' ? 'block' : 'none';
+            document.getElementById('urlInput').style.display = type === 'url' ? 'block' : 'none';
+        }
+    </script>
 </head>
 <body>
 
@@ -75,10 +75,27 @@
         <label for="area">Diện tích (m²):</label>
         <input type="number" id="area" name="area" required>
 
-        <label for="image">Hình ảnh:</label>
-        <input type="file" id="image" name="image" accept=".jpg, .jpeg, .png" required>
+        <label>Thêm Hình Ảnh:</label>
+        <label>
+            <input type="radio" name="imageOption" value="file" onclick="toggleImageInput('file')" checked> Upload File
+        </label>
+        <label>
+            <input type="radio" name="imageOption" value="url" onclick="toggleImageInput('url')"> Nhập URL
+        </label>
+
+        <div id="fileInput">
+            <label for="imageFile">Chọn File Hình Ảnh:</label>
+            <input type="file" id="imageFile" name="imageFile" accept=".jpg, .jpeg, .png">
+        </div>
+
+        <div id="urlInput" style="display: none;">
+            <label for="imageUrl">URL Hình Ảnh:</label>
+            <input type="text" id="imageUrl" name="imageUrl">
+        </div>
+
         <label for="description">Mô tả:</label>
         <textarea id="description" name="description" required></textarea>
+
         <label for="type">Loại sản phẩm:</label>
         <input type="text" id="type" name="type">
 

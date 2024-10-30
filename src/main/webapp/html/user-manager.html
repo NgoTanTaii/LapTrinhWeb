@@ -152,8 +152,8 @@
     $(document).ready(function () {
         $('#example').DataTable({
             "ajax": {
-                "url": "../Json/data.json", // Đường dẫn tới tệp JSON
-                "dataSrc": "demo"
+                "url": "getUsers", // URL của servlet vừa tạo
+                "dataSrc": "demo"  // Trường JSON trả về từ servlet
             },
             "columns": [
                 {"data": "ID"},

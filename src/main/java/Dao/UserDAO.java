@@ -105,7 +105,7 @@ public class UserDAO {
     private Connection getConnection() throws SQLException {
         // Kết nối tới CSDL (cấu hình tùy thuộc vào hệ thống của bạn)
         // Ví dụ sử dụng JDBC với MySQL
-        String url = "jdbc:mysql://localhost:3306/mysql";
+        String url = "jdbc:mysql://localhost:3306/webbds";
         String user = "root";
         String password = "";
         return DriverManager.getConnection(url, user, password);

@@ -9,52 +9,45 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-
 import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/home-manager")
 public class HomeManagerServlet extends HttpServlet {
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        try {
-            HttpSession session = request.getSession();
-            String role = (String) session.getAttribute("role");
+        HttpSession session = request.getSession();
+        String role = (String) session.getAttribute("role");
 
-            if (session == null || role == null || (!"admin".equals(role) && !"manager".equals(role))) {
-                response.sendRedirect("login.jsp");
-                return;
-            }
-
-            // Nhận số trang hiện tại từ request, mặc định là trang 1
-            int page = 1;
-            int recordsPerPage = 5; // Số sản phẩm hiển thị trên mỗi trang
-            if (request.getParameter("page") != null) {
-                page = Integer.parseInt(request.getParameter("page"));
-            }
-
-            PropertyDAO propertyDAO = new PropertyDAO();
-            List<Property1> properties = propertyDAO.getPropertiesByPage((page - 1) * recordsPerPage, recordsPerPage);
-            int totalRecords = propertyDAO.getTotalRecords();
-            int totalPages = (int) Math.ceil((double) totalRecords / recordsPerPage);
-
-            request.setAttribute("properties", properties);
-            request.setAttribute("currentPage", page);
-            request.setAttribute("totalPages", totalPages);
-
-            request.getRequestDispatcher("home-manager.jsp").forward(request, response);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Lỗi trong quá trình truy xuất dữ liệu.");
+        // Kiểm tra quyền truy cập
+        if (session == null || role == null || (!"admin".equals(role) && !"manager".equals(role))) {
+            response.sendRedirect("login.jsp");
+            return;
         }
+
+        // Lấy toàn bộ danh sách bất động sản từ DAO
+        PropertyDAO propertyDAO = new PropertyDAO();
+        List<Property1> properties = null;
+        try {
+            properties = propertyDAO.getAllProperties();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        // Đặt danh sách bất động sản vào request để truyền tới JSP
+        request.setAttribute("properties", properties);
+
+        // Chuyển tiếp yêu cầu tới JSP để hiển thị danh sách bất động sản
+        request.getRequestDispatcher("home-manager.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         String action = request.getParameter("action");
         PropertyDAO propertyDAO = new PropertyDAO();
 

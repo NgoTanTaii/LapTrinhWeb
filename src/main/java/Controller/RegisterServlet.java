@@ -40,7 +40,7 @@ public class RegisterServlet extends HttpServlet {
 
         // Lưu thông tin người dùng vào cơ sở dữ liệu với trạng thái 'inactive'
         try (Connection conn = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/mysql?useSSL=false&serverTimezone=UTC", "root", "")) { // Thay đổi thông tin kết nối
+                "jdbc:mysql://localhost:3306/webbds?useSSL=false&serverTimezone=UTC", "root", "")) { // Thay đổi thông tin kết nối
 
             String checkQuery = "SELECT COUNT(*) FROM users WHERE username =?";
             PreparedStatement checkStmt = conn.prepareStatement(checkQuery);
@@ -107,7 +107,7 @@ public class RegisterServlet extends HttpServlet {
         try {
             // Tạo thông điệp email
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(SMTP_USER, "App cc gi do khong biet cc gi ca")); // Thay đổi tên ứng dụng
+            message.setFrom(new InternetAddress(SMTP_USER, "HomeLander")); // Thay đổi tên ứng dụng
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
             message.setSubject("Xác nhận đăng ký tài khoản");
 

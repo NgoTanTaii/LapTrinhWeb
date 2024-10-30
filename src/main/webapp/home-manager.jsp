@@ -3,12 +3,17 @@
 <%@ page import="Dao.PropertyDAO" %>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
+<!DOCTYPE html>
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý Bất Động Sản</title>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
     <style>
-        /* CSS Styles here (you can keep the existing styles) */
+        /* CSS giữ nguyên như bạn đã tạo */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -58,8 +63,23 @@
         }
 
         h2 {
-            text-align: center;
+            text-align: left;
             color: #333;
+            margin-bottom: 20px;
+        }
+
+        .add-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-bottom: 50px;
+        }
+
+        a {
+            text-align: right;
             margin-bottom: 20px;
         }
 
@@ -85,46 +105,32 @@
             height: auto;
             border-radius: 5px;
         }
-
-        .edit-form {
-            display: none;
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100px;
         }
 
-        .pagination {
+        .dashboard-header h2 {
+            margin: 0;
+        }
+
+        .add-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
             text-align: center;
-            margin-top: 20px;
-        }
-
-        .pagination a,
-        .pagination .current-page {
-            margin: 0 5px;
-            padding: 8px 12px;
             text-decoration: none;
-            color: #007BFF;
-            border: 1px solid #007BFF;
-            border-radius: 5px;
+            border-radius: 4px;
+            margin-top: 55px;
         }
 
-        .pagination a:hover {
-            background-color: #007BFF;
-            color: white;
-        }
-
-        .current-page {
-            background-color: #007BFF;
-            color: white;
-            border: none;
-        }
     </style>
 </head>
 <body>
 <div class="container">
-
+    <!-- Sidebar -->
     <div class="sidebar">
         <ul>
             <li><a href="admin.jsp">Main Dashboard</a></li>
@@ -136,25 +142,12 @@
 
     <!-- Main content -->
     <div class="main-content">
-        <h2>Danh sách bất động sản</h2>
-
-        <div class="pagination">
-            <%
-                int currentPage = (Integer) request.getAttribute("currentPage");
-                int totalPages = (Integer) request.getAttribute("totalPages");
-                String searchQuery = request.getParameter("searchQuery");
-
-                for (int i = 1; i <= totalPages; i++) {
-                    if (i == currentPage) {
-                        out.print("<span class='current-page'>" + i + "</span>");
-                    } else {
-                        out.print("<a href='home-manager?page=" + i + (searchQuery != null ? "&searchQuery=" + searchQuery : "") + "'>" + i + "</a>");
-                    }
-                }
-            %>
+        <div class="dashboard-header">
+            <h2>Danh sách bất động sản</h2>
+            <a href="add-property.jsp" class="add-button">Thêm bất động sản mới</a>
         </div>
-
-        <table class="property-table">
+        <!-- Property Table with DataTables functionality -->
+        <table id="propertyTable" class="display property-table">
             <thead>
             <tr>
                 <th>ID</th>
@@ -186,7 +179,7 @@
                          alt="Image" width="100">
                 </td>
                 <td>
-                    <a href="edit-property.jsp?property_id=<%= property.getId() %>">Sửa</a>|
+                    <a href="edit-property.jsp?property_id=<%= property.getId() %>">Sửa</a> |
                     <form action="properties" method="POST" style="display:inline;">
                         <input type="hidden" name="id" value="<%= property.getId() %>">
                         <input type="hidden" name="action" value="delete">
@@ -208,12 +201,33 @@
             %>
             </tbody>
         </table>
-
-
     </div>
-
-
 </div>
-</body>
 
+<!-- jQuery and DataTables JavaScript -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Initialize DataTable with search and pagination
+        $('#propertyTable').DataTable({
+            "pageLength": 10, // Số mục hiển thị mỗi trang
+            "language": {
+                "search": "Tìm kiếm:",
+                "lengthMenu": "Hiển thị _MENU_ mục",
+                "info": "Hiển thị _START_ đến _END_ của _TOTAL_ mục",
+                "paginate": {
+                    "first": "Đầu",
+                    "last": "Cuối",
+                    "next": "Sau",
+                    "previous": "Trước"
+                },
+                "zeroRecords": "Không tìm thấy kết quả phù hợp",
+                "infoEmpty": "Không có dữ liệu",
+                "infoFiltered": "(lọc từ _MAX_ mục)"
+            }
+        });
+    });
+</script>
+</body>
 </html>

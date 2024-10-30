@@ -1,15 +1,17 @@
 <%@ page import="Controller.User" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-    <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản lý tài khoản</title>
+    <title>Quản Lý Tài Khoản</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/4.0.1/css/fixedHeader.dataTables.css">
 
     <style>
-
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -59,104 +61,69 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-
         .dashboard-header {
             display: flex;
-            justify-content: center; /* Căn giữa theo chiều ngang */
-            align-items: center; /* Căn giữa theo chiều dọc */
-            height: 100px; /* Chiều cao của phần tử cha (có thể điều chỉnh) */
+            justify-content: space-between;
+            align-items: center;
+            height: 100px;
         }
 
         .dashboard-header h2 {
-            margin: 0; /* Bỏ margin mặc định */
+            margin: 0;
         }
 
-
-        .user-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        .user-table th, .user-table td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-            height: 50px;
-
+        .add-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 4px;
         }
 
         .user-table th {
             background-color: #4CAF50;
             color: white;
             text-transform: uppercase;
-
-        }
-
-        .user-table tr:hover {
-            background-color: #f1f1f1;
-        }
-
-        .user-table td a {
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        .user-table td a:hover {
-            text-decoration: underline;
-        }
-
-        .form-actions {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .update-button {
-            text-decoration: underline; /* Gạch chân */
-
-            background-color: transparent; /* Không có nền */
-            border: none; /* Bỏ viền */
-            cursor: pointer; /* Con trỏ khi rê chuột */
-        }
-
-        .update-button:hover {
-            color: blue;
         }
 
         .delete-button {
-            background-color: #007BFF;
-            color: white;
+            background-color: #f8d7da;
+            color: #721c24;
             border: none;
-            border-radius: 5px;
-            padding: 8px 12px;
-            text-decoration: none;
+            border-radius: 4px;
+            padding: 5px 10px;
             cursor: pointer;
         }
 
-        .user-table td input,
-        .user-table td select {
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 5px;
-            width: calc(100% - 10px);
-            box-sizing: border-box;
+        .delete-button:hover {
+            background-color: #f5c6cb;
+        }
+
+        .update-button {
+            background-color: #e2e3e5;
+            color: #383d41;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .update-button:hover {
+            background-color: #d6d8db;
         }
     </style>
 </head>
 <body>
+
 <div class="container">
     <!-- Sidebar -->
     <div class="sidebar">
         <ul>
             <li><a href="admin.jsp">Main Dashboard</a></li>
-            <%--            <li><a href="">Doanh thu thứ</a></li>--%>
-            <%--            <li><a href="">Doanh thu tháng</a></li>--%>
-            <%--            <li><a href="#">Hóa đơn</a></li>--%>
-            <li><a href="users">Quản lý tài khoản</a></li>
-            <li><a href="home-manager">Quản lý bất động sản</a></li>
-            <li><a href="">Top 10 bất động sản</a></li>
-            <%--            <li><a href="#">Top 5 khách hàng</a></li>--%>
-            <%--            <li><a href="#">Quản lý nhà cung cấp</a></li>--%>
+            <li><a href="user-manager.jsp">Quản lý tài khoản</a></li>
+            <li><a href="home-manager.jsp">Quản lý bất động sản</a></li>
+            <li><a href="top-properties.jsp">Top 10 bất động sản</a></li>
         </ul>
     </div>
 
@@ -164,14 +131,16 @@
     <div class="main-content">
         <div class="dashboard-header">
             <h2>Quản lý tài khoản</h2>
+            <a href="add-user.jsp" class="add-button">Thêm Người Dùng Mới</a>
         </div>
-        <table class="user-table">
+
+        <table id="example" class="display user-table" style="width:100%">
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Tên đăng nhập</th>
+                <th>Tên Người Dùng</th>
                 <th>Email</th>
-                <th>Vai trò</th>
+                <th>Vai Trò</th>
                 <th>Thao tác</th>
             </tr>
             </thead>
@@ -186,28 +155,23 @@
             %>
             <tr>
                 <form action="users" method="POST">
-                    <td><input type="hidden" name="id" value="<%= o.getId() %>"><%= o.getId() %>
-                    </td>
-                    <td><input type="text" name="username" value="<%= o.getUsername() %>" readonly></td>
-                    <td><input type="email" name="email" value="<%= o.getEmail() %>" readonly></td>
+                    <td><input type="hidden" name="id" value="<%= o.getId() %>"><%= o.getId() %></td>
+                    <td><%= o.getUsername() %></td> <!-- Hiển thị tên người dùng dưới dạng văn bản -->
+                    <td><%= o.getEmail() %></td> <!-- Hiển thị email dưới dạng văn bản -->
                     <td>
                         <select name="role" <%= o.getUsername().equals(loggedInUsername) ? "disabled" : "" %>>
-                            <option value="user" <%= o.getRole().equalsIgnoreCase("user") ? "selected" : "" %>>user
-                            </option>
-                            <option value="admin" <%= o.getRole().equalsIgnoreCase("admin") ? "selected" : "" %>>admin
-                            </option>
+                            <option value="user" <%= o.getRole().equalsIgnoreCase("user") ? "selected" : "" %>>user</option>
+                            <option value="admin" <%= o.getRole().equalsIgnoreCase("admin") ? "selected" : "" %>>admin</option>
                         </select>
                     </td>
                     <td>
-                        <button type="submit" name="action"
-                                value="update" <%= o.getUsername().equals(loggedInUsername) ? "disabled" : "" %>
-                                class="update-button">Cập nhật
-                        </button>
-                        <button type="submit" name="action"
-                                value="delete" <%= o.getUsername().equals(loggedInUsername) ? "disabled" : "" %>
+                        <button type="submit" name="action" value="update"
+                                <%= o.getUsername().equals(loggedInUsername) ? "disabled" : "" %>
+                                class="update-button">Cập nhật</button>
+                        <button type="submit" name="action" value="delete"
+                                <%= o.getUsername().equals(loggedInUsername) ? "disabled" : "" %>
                                 onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này không?')"
-                                class="delete-button">Xóa
-                        </button>
+                                class="delete-button">Xóa</button>
                     </td>
                 </form>
             </tr>
@@ -225,6 +189,14 @@
         </table>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
 
 </body>
 </html>

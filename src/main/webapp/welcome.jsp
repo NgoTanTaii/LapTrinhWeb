@@ -36,7 +36,7 @@
 
         <div class="header-right" style="margin-top: 10px">
             <% if (isLoggedIn) { %>
-            <a href="#" class="btn"><h3>Hello, <%= username %>
+            <a href="account.jsp" class="btn"><h3>Hello, <%= username %>
             </h3></a>
             <a href="homes" class="btn"><h3>Đăng xuất</h3></a>
             <% } else { %>
@@ -822,15 +822,9 @@
     }
 
     // Chuyển hướng đến trang giỏ hàng
+    // Chuyển hướng đến trang giỏ hàng mà không cần kiểm tra đăng nhập
     function goToCart() {
-        const isLoggedIn = sessionStorage.getItem('isLoggedIn'); // Giả sử bạn kiểm tra trạng thái đăng nhập ở đây
-
-        if (!isLoggedIn) {
-            alert("Bạn cần đăng nhập để xem bất động sản đã quan tâm."); // Thông báo cho người dùng
-            window.location.href = 'login.jsp'; // Chuyển hướng đến trang đăng nhập
-        } else {
-            window.location.href = 'cart.jsp'; // Chuyển hướng đến trang giỏ hàng
-        }
+        window.location.href = 'cart.jsp'; // Chuyển hướng trực tiếp đến trang giỏ hàng
     }
 
     // Cập nhật hiển thị giỏ hàng khi tải lại trang

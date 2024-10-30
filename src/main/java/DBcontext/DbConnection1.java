@@ -7,7 +7,7 @@ public class DbConnection1 {
         // Khai báo thông tin kết nối cơ sở dữ liệu
         String dbDriver = "com.mysql.cj.jdbc.Driver";
         String dbURL = "jdbc:mysql://localhost:3306/";
-        String dbName = "mysql";
+        String dbName = "webbds";
         String dbUsername = "root";  // Tài khoản MySQL của bạn
         String dbPassword = "";  // Mật khẩu MySQL của bạn
 
