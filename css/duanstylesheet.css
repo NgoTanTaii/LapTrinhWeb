@@ -155,6 +155,7 @@ nav ul li a:hover {
   width: 70%;
   border-style: solid;
   border-color: #ccc;
+  background-color: gray;
   display: flex;
   flex-direction: row;
   gap: 30px;
