@@ -116,7 +116,7 @@ public class PropertyDAO {
     private Connection getConnection() throws SQLException {
         // Kết nối tới CSDL (cấu hình tùy thuộc vào hệ thống của bạn)
         // Ví dụ sử dụng JDBC với MySQL
-        String url = "jdbc:mysql://localhost:3306/mysql";  // Chỉnh sửa tên database nếu cần
+        String url = "jdbc:mysql://localhost:3306/webbds";  // Chỉnh sửa tên database nếu cần
         String user = "root";
         String password = "";  // Cập nhật mật khẩu nếu cần
         return DriverManager.getConnection(url, user, password);
@@ -253,7 +253,141 @@ public class PropertyDAO {
         }
     }
 
+    public void createProperty(Property1 property) {
+        String sql = "INSERT INTO properties (property_id, title, price, address, area, image_url) VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, property.getId());
+            stmt.setString(2, property.getTitle());
+            stmt.setDouble(3, property.getPrice());
+            stmt.setString(4, property.getAddress());
+            stmt.setDouble(5, property.getArea());
+            stmt.setString(6, property.getImageUrl());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public List<Property1> getPropertiesByCities(List<String> cities) {
+        List<Property1> properties = new ArrayList<>();
+
+        // Xây dựng câu truy vấn SQL động với các điều kiện LIKE cho từng thành phố
+        StringBuilder queryBuilder = new StringBuilder("SELECT property_id,title, description, address, area, image_url FROM properties WHERE ");
+        for (int i = 0; i < cities.size(); i++) {
+            queryBuilder.append("address LIKE ?");
+            if (i < cities.size() - 1) {
+                queryBuilder.append(" OR ");
+            }
+        }
+        String query = queryBuilder.toString();
+
+        try (Connection conn = DbConnection1.initializeDatabase();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            // Thiết lập giá trị cho từng dấu ? trong câu truy vấn
+            for (int i = 0; i < cities.size(); i++) {
+                stmt.setString(i + 1, "%" + cities.get(i) + "%"); // Tìm kiếm chuỗi có chứa tên thành phố
+            }
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Property1 property = new Property1();
+                property.setId(rs.getInt("property_id"));
+                property.setTitle(rs.getString("title"));
+                property.setDescription(rs.getString("description"));
+                property.setAddress(rs.getString("address"));
+                property.setArea(rs.getDouble("area"));
+                property.setImageUrl(rs.getString("image_url"));
+
+                properties.add(property);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return properties;
+    }
+
+    public List<Property1> getPropertiesByCity(String city) {
+        List<Property1> properties = new ArrayList<>();
+        String query = "SELECT title, description, address, area, image_url, price FROM properties WHERE address LIKE ?";
+
+        try (Connection conn = DbConnection1.initializeDatabase();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, "%" + city + "%");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Property1 property = new Property1();
+                property.setTitle(rs.getString("title"));
+                property.setDescription(rs.getString("description"));
+                property.setAddress(rs.getString("address"));
+                property.setArea(rs.getDouble("area"));
+                property.setImageUrl(rs.getString("image_url"));
+                property.setPrice(rs.getDouble("price"));
+                properties.add(property);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return properties;
+    }
+    public List<Property1> getLargestAreaProperties(String city, int limit) {
+        List<Property1> properties = new ArrayList<>();
+        String query = "SELECT title, description, address, area, image_url, price FROM properties " +
+                "WHERE address LIKE ? ORDER BY area DESC LIMIT ?"; // Lấy sản phẩm có diện tích lớn nhất
+
+        try (Connection conn = DbConnection1.initializeDatabase();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, "%" + city + "%");
+            stmt.setInt(2, limit); // Số lượng sản phẩm muốn lấy
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Property1 property = new Property1();
+                property.setTitle(rs.getString("title"));
+                property.setDescription(rs.getString("description"));
+                property.setAddress(rs.getString("address"));
+                property.setArea(rs.getDouble("area"));
+                property.setImageUrl(rs.getString("image_url"));
+                property.setPrice(rs.getDouble("price"));
+                properties.add(property);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return properties;
+    }
+    public List<Property1> getHighestPriceProperties(String city, int limit) {
+        List<Property1> properties = new ArrayList<>();
+        String query = "SELECT title, description, address, area, image_url, price FROM properties " +
+                "WHERE address LIKE ? ORDER BY price DESC LIMIT ?"; // Lấy sản phẩm có giá cao nhất
+
+        try (Connection conn = DbConnection1.initializeDatabase();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, "%" + city + "%");
+            stmt.setInt(2, limit); // Số lượng sản phẩm muốn lấy
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Property1 property = new Property1();
+                property.setTitle(rs.getString("title"));
+                property.setDescription(rs.getString("description"));
+                property.setAddress(rs.getString("address"));
+                property.setArea(rs.getDouble("area"));
+                property.setImageUrl(rs.getString("image_url"));
+                property.setPrice(rs.getDouble("price"));
+                properties.add(property);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return properties;
+    }
 }
+
+
 
 

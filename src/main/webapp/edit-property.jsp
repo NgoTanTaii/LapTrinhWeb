@@ -85,6 +85,7 @@
 <h2>Chỉnh sửa Bất Động Sản</h2>
 <form action="properties" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="property_id" value="<%= property.getId() %>">
+    <input type="hidden" name="action" value="update">
 
     <label for="title">Tên:</label>
     <input type="text" id="title" name="title" value="<%= property.getTitle() %>" required><br>
@@ -116,7 +117,6 @@
         <input type="text" id="imageUrl" name="imageUrl" value="<%= property.getImageUrl() %>">
     </div>
 
-    <input type="hidden" name="action" value="update">
     <button type="submit">Cập nhật Bất Động Sản</button>
 </form>
 <a href="home-manager">Hủy</a>

@@ -3,6 +3,7 @@
 <%@ page import="Entity.Property1" %>
 <%@ page import="java.util.List" %>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <header class="header">
     <div class="header-top" style="width: 100%; position: sticky; top: 0; z-index: 1000;">
@@ -258,7 +259,14 @@
                 }
             %>
         </div>
+        <%
+            // Lấy địa chỉ từ property
+            String address2 = property.getAddress();
+            String formattedAddress = address2.replace(" ", "+"); // Thay khoảng trắng bằng dấu +
 
+            // Tạo URL nhúng Google Maps không có API key
+            String mapUrl = "https://www.google.com/maps?q=" + formattedAddress + "&output=embed";
+        %>
         <p>Địa chỉ: <%= property.getAddress() %>
         </p>
         <p>Giá: <%= property.getPrice() %> tỷ</p>
@@ -365,13 +373,14 @@
 <div class="map-container">
     <h3>Bản đồ vị trí bất động sản</h3>
     <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.3602677852815!2d-122.4009425846817!3d37.79281677975801!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085808cbd76b6bb%3A0xf1390594e40361b1!2sSalesforce%20Tower!5e0!3m2!1sen!2sus!4v1614694698710!5m2!1sen!2sus"
+            src="<%=mapUrl%>"
             width="100%"
-            height="200"
+            height="300"
             style="border:5px;"
             allowfullscreen=""
             loading="lazy"></iframe>
 </div>
+
 
 
 <div class="additional-info">
@@ -396,110 +405,52 @@
     </div>
 </div>
 
+<%
+    // Giả sử bạn đã có thông tin chi tiết của bất động sản
+    // Lấy địa chỉ để tìm các sản phẩm cùng thành phố
+    String address = property.getAddress();
+    String[] addressParts = address.split(","); // Tách địa chỉ theo dấu phẩy
+    String city = addressParts[addressParts.length - 1].trim(); // Lấy tên thành phố (phần cuối cùng)
 
+    // Lấy các sản phẩm cùng thành phố
+    PropertyDAO propertyDAO1 = new PropertyDAO();
+    List<Property1> relatedProperties = propertyDAO1.getPropertiesByCity(city); // Phương thức để lấy các sản phẩm cùng thành phố
+%>
 
 <div class="related-properties" style="width:63%">
     <h3>Các sản phẩm liên quan</h3>
     <div class="related-properties-container" id="relatedProductsContainer">
+        <%
+            if (relatedProperties != null && !relatedProperties.isEmpty()) {
+                for (Property1 relatedProperty : relatedProperties) {
+        %>
         <div class="related-property">
-            <img src="jpg/HCM.jpg" ; alt="Sản phẩm 1">
-            <h4>Sản phẩm 1</h4>
+            <img src="<%= relatedProperty.getImageUrl() %>" alt="Sản phẩm <%= relatedProperty.getTitle() %>">
+            <h4><%= relatedProperty.getTitle() %></h4>
             <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: 1.5 tỷ</span>
-                <span>Diện tích: 100m²</span>
+                <span>Giá: <%= relatedProperty.getPrice() %> tỷ</span>
+                <span>Diện tích: <%= relatedProperty.getArea() %> m²</span>
             </p>
             <p style="display: flex; align-items: center;">
                 <img src="jpg/location.png" alt="Location Icon" class="location-icon"
                      style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: HCM
+                Địa chỉ: <%= relatedProperty.getAddress() %>
             </p>
         </div>
-        <div class="related-property">
-            <img src="jpg/HCM.jpg" alt="Sản phẩm 2">
-            <h4>Sản phẩm 2</h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: 2 tỷ</span>
-                <span>Diện tích: 120m²</span>
-            </p>
-            <p style="display: flex; align-items: center;text-align: left">
-                <img src="jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: HCM
-            </p>
-        </div>
-        <div class="related-property">
-            <img src="jpg/HCM.jpg" alt="Sản phẩm 3">
-            <h4>Sản phẩm 3</h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: 2.5 tỷ</span>
-                <span>Diện tích: 150m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: HCM
-            </p>
-        </div>
+        <%
+            }
+        } else {
+        %>
+        <p>Không có sản phẩm nào liên quan từ cùng thành phố.</p>
+        <%
+            }
+        %>
 
         <div class="more-products">
             <button id="scrollLeftBtn"> <</button>
             <button id="scrollRightBtn">️ ></button>
         </div>
     </div>
-</div>
-<div class="related-properties" style="width:63%">
-    <h3>Các sản phẩm liên quan</h3>
-    <div class="related-properties-container" id="relatedProductsContainer">
-        <div class="related-property">
-            <img src="jpg/HCM.jpg" alt="Sản phẩm 1">
-            <h4>Sản phẩm 1</h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: 1.5 tỷ</span>
-                <span>Diện tích: 100m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: HCM
-            </p>
-        </div>
-        <div class="related-property">
-            <img src="jpg/HCM.jpg" alt="Sản phẩm 2">
-            <h4>Sản phẩm 2</h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: 2 tỷ</span>
-                <span>Diện tích: 120m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: HCM
-            </p>
-        </div>
-        <div class="related-property">
-            <img src="jpg/HCM.jpg" alt="Sản phẩm 3">
-            <h4>Sản phẩm 3</h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: 2.5 tỷ</span>
-                <span>Diện tích: 150m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: HCM
-            </p>
-        </div>
-
-        <div class="more-products">
-            <button id="scrollLeftBtn"> <</button>
-            <button id="scrollRightBtn">️ ></button>
-        </div>
-    </div>
-</div>
-
-
-<div class="copyright">
-    <p>© Mọi quyền thuộc về Homelander. Mọi thông tin liên quan vui lòng liên hệ với chúng tôi.</p>
 </div>
 
 <script>
@@ -520,8 +471,99 @@
             behavior: 'smooth'
         });
     });
-
 </script>
+
+<%
+    // Lấy địa chỉ để tìm các sản phẩm cùng thành phố
+    String address1 = property.getAddress();
+    String[] addressParts1 = address1.split(",");
+    String city1 = addressParts1[addressParts1.length - 1].trim(); // Lấy tên thành phố (phần cuối cùng)
+
+    // Khởi tạo DAO
+    PropertyDAO propertyDAO2 = new PropertyDAO();
+    List<Property1> highestPriceProperties = propertyDAO2.getHighestPriceProperties(city1, 3); // Lấy 3 sản phẩm có giá cao nhất
+    List<Property1> largestAreaProperties = propertyDAO2.getLargestAreaProperties(city1, 3); // Lấy 3 sản phẩm có diện tích lớn nhất
+%>
+
+<div class="related-properties" style="width:63%">
+    <h3>Các sản phẩm bạn có thể sẽ quan tâm</h3>
+    <div class="related-properties-container" id="relatedProductsContainer1">
+
+        <%
+            for (Property1 property1 : highestPriceProperties) {
+        %>
+        <div class="related-property">
+            <img src="<%= property1.getImageUrl() %>" alt="Sản phẩm <%= property1.getTitle() %>">
+            <h4><%= property1.getTitle() %></h4>
+            <p style="display: flex; justify-content: space-between; color: red;">
+                <span>Giá: <%= property1.getPrice() %> tỷ</span>
+                <span>Diện tích: <%= property1.getArea() %> m²</span>
+            </p>
+            <p style="display: flex; align-items: center;">
+                <img src="jpg/location.png" alt="Location Icon" class="location-icon"
+                     style="width: 16px; height: 16px; margin-right: 5px;">
+                Địa chỉ: <%= property1.getAddress() %>
+            </p>
+        </div>
+        <%
+            }
+        %>
+
+        <%
+            for (Property1 property2 : largestAreaProperties) {
+        %>
+        <div class="related-property">
+            <img src="<%= property2.getImageUrl() %>" alt="Sản phẩm <%= property2.getTitle() %>">
+            <h4><%= property2.getTitle() %></h4>
+            <p style="display: flex; justify-content: space-between; color: red;">
+                <span>Giá: <%= property2.getPrice() %> tỷ</span>
+                <span>Diện tích: <%= property2.getArea() %> m²</span>
+            </p>
+            <p style="display: flex; align-items: center;">
+                <img src="jpg/location.png" alt="Location Icon" class="location-icon"
+                     style="width: 16px; height: 16px; margin-right: 5px;">
+                Địa chỉ: <%= property2.getAddress() %>
+            </p>
+        </div>
+        <%
+            }
+        %>
+
+        <div class="more-products">
+            <button id="scrollLeftBtn1"> <</button>
+            <button id="scrollRightBtn1">️ ></button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const container1 = document.getElementById('relatedProductsContainer1');
+
+    document.getElementById('scrollLeftBtn1').addEventListener('click', function () {
+        container1.scrollBy({
+            top: 0,
+            left: -200, // Cuộn 200px sang trái
+            behavior: 'smooth'
+        });
+    });
+
+    document.getElementById('scrollRightBtn1').addEventListener('click', function () {
+        container1.scrollBy({
+            top: 0,
+            left: 200, // Cuộn 200px sang phải
+            behavior: 'smooth'
+        });
+    });
+</script>
+
+
+
+
+
+<div class="copyright">
+    <p>© Mọi quyền thuộc về Homelander. Mọi thông tin liên quan vui lòng liên hệ với chúng tôi.</p>
+</div>
+
 
 <style>
     .related-properties {

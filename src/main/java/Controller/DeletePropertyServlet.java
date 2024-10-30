@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.List;
+
 @WebServlet("/properties")
 public class DeletePropertyServlet extends HttpServlet {
 
@@ -71,4 +72,6 @@ public class DeletePropertyServlet extends HttpServlet {
         // Chuyển tiếp đến trang home-manager để hiển thị danh sách bất động sản
         request.getRequestDispatcher("home-manager").forward(request, response);
     }
+
+
 }

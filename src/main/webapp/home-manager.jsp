@@ -1,7 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="Entity.Property1" %>
-<%@ page import="Dao.PropertyDAO" %>
-<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -20,13 +19,11 @@
             margin: 0;
             padding: 0;
         }
-
         .container {
             display: flex;
             max-width: 1200px;
             margin: auto;
         }
-
         .sidebar {
             width: 200px;
             background-color: #333;
@@ -34,26 +31,21 @@
             padding: 20px;
             border-radius: 5px 0 0 5px;
         }
-
         .sidebar ul {
             list-style: none;
             padding: 0;
         }
-
         .sidebar ul li {
             margin-bottom: 15px;
         }
-
         .sidebar ul li a {
             color: white;
             text-decoration: none;
             font-size: 16px;
         }
-
         .sidebar ul li a:hover {
             text-decoration: underline;
         }
-
         .main-content {
             flex: 1;
             background: white;
@@ -61,13 +53,11 @@
             border-radius: 0 5px 5px 0;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-
         h2 {
             text-align: left;
             color: #333;
             margin-bottom: 20px;
         }
-
         .add-button {
             padding: 10px 20px;
             background-color: #4CAF50;
@@ -77,55 +67,29 @@
             border-radius: 4px;
             margin-bottom: 50px;
         }
-
         a {
             text-align: right;
             margin-bottom: 20px;
         }
-
         .property-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
-
         .property-table th, .property-table td {
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
-
         .property-table th {
             background-color: #4CAF50;
             color: white;
         }
-
         .property-table img {
             max-width: 100px;
             height: auto;
             border-radius: 5px;
         }
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 100px;
-        }
-
-        .dashboard-header h2 {
-            margin: 0;
-        }
-
-        .add-button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 4px;
-            margin-top: 55px;
-        }
-
     </style>
 </head>
 <body>
@@ -142,11 +106,10 @@
 
     <!-- Main content -->
     <div class="main-content">
-        <div class="dashboard-header">
-            <h2>Danh sách bất động sản</h2>
-            <a href="add-property.jsp" class="add-button">Thêm bất động sản mới</a>
-        </div>
-        <!-- Property Table with DataTables functionality -->
+        <h2>Danh sách bất động sản</h2>
+        <a href="add-property.jsp" class="add-button">Thêm bất động sản mới</a>
+
+        <!-- Property Table -->
         <table id="propertyTable" class="display property-table">
             <thead>
             <tr>
@@ -166,26 +129,20 @@
                     for (Property1 property : properties) {
             %>
             <tr>
-                <td><%= property.getId() %>
-                </td>
-                <td><%= property.getTitle() %>
-                </td>
+                <td><%= property.getId() %></td>
+                <td><%= property.getTitle() %></td>
                 <td><%= property.getPrice() %> tỷ</td>
-                <td><%= property.getAddress() %>
-                </td>
+                <td><%= property.getAddress() %></td>
                 <td><%= property.getArea() %> m²</td>
                 <td>
-                    <img src="<%= property.getImageUrl() != null ? property.getImageUrl() : "default.jpg" %>"
-                         alt="Image" width="100">
+                    <img src="<%= property.getImageUrl() != null ? property.getImageUrl() : "default.jpg" %>" alt="Image" width="100">
                 </td>
                 <td>
                     <a href="edit-property.jsp?property_id=<%= property.getId() %>">Sửa</a> |
-                    <form action="properties" method="POST" style="display:inline;">
+                    <form action="properties" method="POST" style="display: inline;">
                         <input type="hidden" name="id" value="<%= property.getId() %>">
                         <input type="hidden" name="action" value="delete">
-                        <button type="submit"
-                                onclick="return confirm('Bạn có chắc chắn muốn xóa bất động sản này không?')">Xóa
-                        </button>
+                        <button type="submit" onclick="return confirm('Bạn có chắc chắn muốn xóa bất động sản này không?')">Xóa</button>
                     </form>
                 </td>
             </tr>
@@ -209,9 +166,8 @@
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function () {
-        // Initialize DataTable with search and pagination
         $('#propertyTable').DataTable({
-            "pageLength": 10, // Số mục hiển thị mỗi trang
+            "pageLength": 10,
             "language": {
                 "search": "Tìm kiếm:",
                 "lengthMenu": "Hiển thị _MENU_ mục",
