@@ -1,5 +1,7 @@
 <%@ page import="Entity.Property" %>
 <%@ page import="java.util.List" %>
+<%@ page import="Dao.PropertyDAO" %>
+<%@ page import="Entity.Property1" %>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="css/bds.css">
@@ -364,6 +366,15 @@
     }
 
 </style>
+<%
+    // Tạo danh sách các thành phố lớn
+    List<String> majorCities = List.of("TP.HCM", "Hà Nội", "Đà Nẵng", "Vũng Tàu");
+
+    // Lấy danh sách bất động sản từ các thành phố này
+    PropertyDAO propertyDAO = new PropertyDAO();
+    List<Property1> properties1 = propertyDAO.getPropertiesByCities(majorCities);
+%>
+
 <div class="featured-properties-section">
     <h2>Dự án bất động sản nổi bật</h2>
     <div class="navigation-buttons">
@@ -371,49 +382,45 @@
         <button class="navigation-button" id="nextButton">Tiếp ➡️</button>
     </div>
     <div class="property-list-container" id="productList">
-        <!-- Product items (can be generated dynamically with JSP or JavaScript) -->
+        <!-- Hiển thị danh sách bất động sản -->
+        <%
+            if (properties1 != null && !properties1.isEmpty()) {
+                for (Property1 property : properties1) {
+                    // Tách địa chỉ theo dấu ','
+                    String[] addressParts = property.getAddress().split(",");
+                    String cityPart = "";
+                    String preCityWord = "";
+
+                    // Kiểm tra và lấy tên thành phố
+                    if (addressParts.length > 0) {
+                        cityPart = addressParts[addressParts.length - 1].trim(); // Thành phố
+                        // Kiểm tra và lấy từ trước thành phố
+                        if (addressParts.length > 1) {
+                            preCityWord = addressParts[addressParts.length - 2].trim(); // Từ trước thành phố
+                        }
+                    }
+        %>
         <div class="property-card">
-            <img src="jpg/binhduong.jpg" alt="BĐS 1">
-            <h3>BĐS 1</h3>
-            <p>Chung cư cao cấp view sông, nội thất đầy đủ</p>
-            <div style="display: flex; justify-content: space-between; color: red; margin-top: 5px;">
-                <span> 1.47 ha</span>
-                <span><i class="fas fa-map-marker-alt"></i> Bình Dương</span>
-            </div>
-
+            <a href="property-detail.jsp?id=<%= property.getId() %>" style="text-decoration: none; color: inherit;">
+                <img src="<%= property.getImageUrl() %>" alt="<%= property.getTitle() %>">
+                <h3><%= property.getTitle() %>
+                </h3>
+                <p><%= property.getDescription() %>
+                </p>
+                <div style="display: flex; justify-content: space-between; color: red; margin-top: 5px;">
+                    <span><%= property.getArea() %> m²</span>
+                    <span><i class="fas fa-map-marker-alt"></i> <%= preCityWord + ", " + cityPart %></span>
+                </div>
+            </a>
         </div>
-        <div class="property-card">
-            <img src="jpg/binhduong.jpg" alt="BĐS 1">
-            <h3>BĐS 1</h3>
-            <p>Chung cư cao cấp view sông, nội thất đầy đủ</p>
-            <div style="display: flex; justify-content: space-between; color: red; margin-top: 5px;">
-                <span> 1.47 ha</span>
-                <span><i class="fas fa-map-marker-alt"></i> Bình Dương</span>
-            </div>
-
-        </div>
-        <div class="property-card">
-            <img src="jpg/binhduong.jpg" alt="BĐS 1">
-            <h3>BĐS 1</h3>
-            <p>Chung cư cao cấp view sông, nội thất đầy đủ</p>
-            <div style="display: flex; justify-content: space-between; color: red; margin-top: 5px;">
-                <span> 1.47 ha</span>
-                <span><i class="fas fa-map-marker-alt"></i> Bình Dương</span>
-            </div>
-
-        </div>
-        <div class="property-card">
-            <img src="jpg/binhduong.jpg" alt="BĐS 1">
-            <h3>BĐS 1</h3>
-            <p>Chung cư cao cấp view sông, nội thất đầy đủ</p>
-            <div style="display: flex; justify-content: space-between; color: red; margin-top: 5px;">
-                <span> 1.47 ha</span>
-                <span><i class="fas fa-map-marker-alt"></i> Bình Dương</span>
-            </div>
-
-        </div>
-
-
+        <%
+            }
+        } else {
+        %>
+        <p>Không có bất động sản từ các thành phố lớn hiện tại.</p>
+        <%
+            }
+        %>
     </div>
 </div>
 
@@ -822,9 +829,10 @@
     }
 
     // Chuyển hướng đến trang giỏ hàng
-    // Chuyển hướng đến trang giỏ hàng mà không cần kiểm tra đăng nhập
     function goToCart() {
-        window.location.href = 'cart.jsp'; // Chuyển hướng trực tiếp đến trang giỏ hàng
+
+        window.location.href = 'cart.jsp'; // Chuyển hướng đến trang giỏ hàng
+
     }
 
     // Cập nhật hiển thị giỏ hàng khi tải lại trang
