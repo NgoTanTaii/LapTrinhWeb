@@ -1,17 +1,17 @@
+<%@ page import="Entity.Property" %>
+<%@ page import="java.util.List" %>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@page import="java.util.List" %>
-<%@page import="Entity.Book" %>
-
-<!-- Kích hoạt session trong JSP -->
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="css/bds.css">
 <!DOCTYPE html>
 
 <head>
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Trang JSP với UTF-8</title>
 </head>
 <header class="header">
-    <div class="header-top">
+    <div class="header-top" style="width: 100%; position: sticky; top: 0; z-index: 1000;">
         <div class="header-left">
 
             <div class="contact-item">
@@ -23,475 +23,751 @@
                 <span>info@company.com</span>
             </div>
             <div class="contact-item">
+
                 <img src="jpg/location.png" class="icon">
                 <span>123 Đường ABC, Quận XYZ, TP.HCM</span>
             </div>
 
         </div>
-        <div class="header-right">
-            <!-- Kiểm tra xem người dùng đã đăng nhập chưa -->
-            <%
-                String username = (String) session.getAttribute("username");
-                if (username != null) {
-            %>
+        <%
+            boolean isLoggedIn = session.getAttribute("username") != null;
+            String username = (String) session.getAttribute("username");
+        %>
 
-            <h3>
-                <a href="account.jsp" style="color: black; text-decoration: none;">Hello, <%= username %></a>
-            </h3>
+        <div class="header-right" style="margin-top: 10px">
+            <% if (isLoggedIn) { %>
+            <a href="#" class="btn"><h3>Hello, <%= username %>
+            </h3></a>
             <a href="homes" class="btn"><h3>Đăng xuất</h3></a>
-            <%
-            } else {
-            %>
+            <% } else { %>
             <a href="login.jsp" class="btn"><h3>Đăng nhập</h3></a>
             <a href="register.jsp" class="btn"><h3>Đăng ký</h3></a>
-            <%
-                }
-            %>
+            <% } %>
+            <a href="post-status.html" class="btn"><h3>Đăng tin</h3></a>
         </div>
-        <a href="#" class="floating-cart" id="floating-cart">
-            <img src="jpg/th.jpg" alt="Giỏ hàng" class="cart-icon">
-            <div class="item-count">0</div> <!-- Số lượng sản phẩm trong giỏ hàng -->
-            <div class="mini-cart">
-                <h4>Giỏ hàng của bạn</h4>
-                <ul id="cart-items">
+    </div>
 
-                </ul>
-                <div class="total">
-                    <strong>Tổng: <span id="total-price">0</span>₫</strong>
-                </div>
-                <!-- Nút đi tới giỏ hàng -->
-                <button id="go-to-cart" onclick="goToCart()">Đi tới giỏ hàng của bạn</button>
+    <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()"
+       style="border: 1px solid #ccc; border-radius:100%;">
+        <img src="jpg/heart%20(1).png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng"
+             class="cart-icon">
+        <div class="item-count">0</div>
+        <div class="mini-cart">
+            <h4>Bất động sản đã lưu</h4>
+            <ul id="cart-items"></ul>
+            <button id="go-to-cart" onclick="goToCart()">Đi tới xem bất động sản đã lưu</button>
+        </div>
+    </a>
 
-            </div>
-        </a>
     </div>
     <div class="menu">
         <div class="header-bottom">
 
             <div class="store-name">
                 <h1><a href="">
-                    <span class="color1">VINA</span>
-                    <span class="color2">BOOK</span>
-                </a>
-                </h1>
+                    <span class="color1">HOME</span>
+                    <span class="color2">LANDER</span> <!-- Đổi từ VINA BOOK sang VINA BĐS -->
+                </a></h1>
             </div>
 
-            <div class="menu">
-                <div class="search-bar">
-                    <input type="text" placeholder="Tìm kiếm sản phẩm..." class="search-input">
-                    <button class="search-btn">Tìm kiếm</button>
-                </div>
-            </div>
+
+            <nav>
+                <ul class="u-lo">
+                    <li><a href="property-for-sale.html">Nhà Đất Bán</a>
+                        <ul>
+                            <li><a href="#">Thông tin bán nhà đất</a></li>
+                            <li><a href="#">Mua bán bất động sản</a></li>
+                            <li><a href="#">Nhà đất giá rẻ</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="property-for-rent.html">Nhà Đất Cho Thuê</a>
+                        <ul>
+                            <li><a href="#">Thông tin cho thuê nhà đất</a></li>
+                            <li><a href="#">Thuê nhà nguyên căn</a></li>
+                            <li><a href="#">Thuê căn hộ giá rẻ</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="project.html">Dự Án</a>
+                        <ul>
+                            <li><a href="#">Các dự án nổi bật</a></li>
+                            <li><a href="#">Dự án nhà ở</a></li>
+                            <li><a href="#">Dự án chung cư</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="news.html">Tin Tức</a>
+                        <ul>
+                            <li><a href="#">Tin thị trường</a></li>
+                            <li><a href="#">Xu hướng bất động sản</a></li>
+                            <li><a href="#">Phân tích và đánh giá</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="wiki.html">Wiki BĐS</a>
+                        <ul>
+                            <li><a href="#">Mua bán</a></li>
+                            <li><a href="#">Cho thuê</a></li>
+                            <li><a href="#">Tài chính</a></li>
+                            <li><a href="#">Phong thủy</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </nav>
+
+
             <div class="contact-info">
                 <img src="jpg/phone-call.png" alt="Phone Icon" class="phone-icon">
                 <span class="phone-number">0123 456 789</span>
             </div>
 
         </div>
+    </div>
+
 
     </div>
+    <div class="slideshow-container">
+        <div class="mySlides fade">
+            <img src="jpg/1.webp" alt="Banner 1">
+        </div>
+        <div class="mySlides fade">
+            <img src="jpg/1.webp" alt="Banner 2">
+        </div>
+
+    </div>
+
+    <!-- Form tìm kiếm ở giữa -->
+    <div class="search-container">
+        <form class="search-form">
+            <input type="text" placeholder="Tìm kiếm..." name="search" required>
+
+            <fieldset class="price-group">
+                <legend>Giá <span class="arrow-down">▼</span></legend>
+                <div class="price-dropdown hidden">
+                    <label for="min-price">Giá tối thiểu (tỷ):</label>
+                    <input type="number" id="min-price" name="min-price" placeholder="Nhập giá tối thiểu">
+
+                    <label for="max-price">Giá tối đa (tỷ):</label>
+                    <input type="number" id="max-price" name="max-price" placeholder="Nhập giá tối đa">
+                </div>
+            </fieldset>
+
+            <fieldset class="area-group">
+                <legend>Diện Tích <span class="arrow-down">▼</span></legend>
+                <div class="area-dropdown hidden">
+                    <label for="min-area">Diện tích tối thiểu (m²):</label>
+                    <input type="number" id="min-area" name="min-area" placeholder="Nhập diện tích tối thiểu">
+
+                    <label for="max-area">Diện tích tối đa (m²):</label>
+                    <input type="number" id="max-area" name="max-area" placeholder="Nhập diện tích tối đa">
+                </div>
+            </fieldset>
+
+            <button type="submit">Tìm Kiếm</button>
+        </form>
+    </div>
+
+    <script src="JS/script.js"></script>
+
     </div>
 </header>
-<div class="container">
-    <div class="sidebar">
-        <h2>Danh Mục Sách</h2>
-        <ul>
-            <li>
-                <strong>Sách Mới Nhất</strong>
-                <ul class="dropdown">
-                    <li>Sách mới phát hành</li>
-                    <li>Sách đang hot</li>
-                </ul>
-            </li>
-            <li>
-                <strong>Thể Loại Sách</strong>
-                <ul class="dropdown">
-                    <li>Văn học
-                        <ul class="sub-dropdown">
-                            <li>Tiểu thuyết</li>
-                            <li>Truyện ngắn</li>
-                        </ul>
-                    </li>
-                    <li>Khoa học
-                        <ul class="sub-dropdown">
-                            <li>Khoa học tự nhiên</li>
-                            <li>Khoa học xã hội</li>
-                        </ul>
-                    </li>
-                    <li>Giáo dục
-                        <ul class="sub-dropdown">
-                            <li>Sách giáo khoa</li>
-                            <li>Sách tham khảo</li>
-                        </ul>
-                    </li>
-                    <li>Kinh doanh
-                        <ul class="sub-dropdown">
-                            <li>Quản trị</li>
-                            <li>Marketing</li>
-                        </ul>
-                    </li>
-                    <li>Sách Thiếu Nhi
-                        <ul class="sub-dropdown">
-                            <li>Truyện cổ tích</li>
-                            <li>Sách phát triển kỹ năng</li>
-                        </ul>
-                    </li>
-                    <li>Nghệ Thuật
-                        <ul class="sub-dropdown">
-                            <li>Họa sĩ</li>
-                            <li>Âm nhạc</li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <strong>Sách Bán Chạy</strong>
-                <ul class="dropdown">
-                    <li>Top 10 sách bán chạy nhất</li>
-                    <li>Sách được yêu thích</li>
-                </ul>
-            </li>
-            <li>
-                <strong>Khuyến Mãi</strong>
-                <ul class="dropdown">
-                    <li>Sách giảm giá</li>
-                    <li>Combo sách ưu đãi</li>
-                </ul>
-            </li>
-            <li>
-                <strong>Tác Giả Nổi Bật</strong>
-                <ul class="dropdown">
-                    <li>Tác giả A</li>
-                    <li>Tác giả B</li>
-                    <li>Tác giả C</li>
-                </ul>
-            </li>
-            <li>
-                <strong>Danh Mục Khác</strong>
-                <ul class="dropdown">
-                    <li>Sách điện tử</li>
-                    <li>Sách nói</li>
-                    <li>Sách học tiếng Anh</li>
-                </ul>
-            </li>
-            <div class="banner">
-                <img src="jpg/DALL·E%202024-09-26%2012.40.53%20-%20A%20vertical%20banner%20designed%20for%20a%20bookstore%20website.%20The%20banner%20should%20have%20a%20dark,%20mysterious%20background%20featuring%20a%20full%20moon%20and%20a%20night%20sky%20filled%20.webp"
-                >
-            </div>
-            <div class="book-list">
-                <h3>Sách Mới Bán Chạy</h3>
-                <ul>
-                    <li>
-                        <div class="book-item">
-                            <img src="jpg/đắc%20nhân%20tâm.jpg" alt="Sách 1">
-                            <div>
-                                <h3 class="book-title">Chế Ngự Tâm Trí</h3>
-                                <p class="price"><span>199,000₫</span>
-                                <p class="old-price"><span> 259 ,000₫</span></p>
-                                </p>
-                            </div>
-                        </div>
-                    </li>
+<div class="news-section">
+    <h2>Tin Tức Bất Động Sản</h2>
 
-                </ul>
-                <ul>
-                    <li>
-                        <div class="book-item">
-                            <img src="jpg/đắc%20nhân%20tâm.jpg" alt="Sách 1">
-                            <div>
-                                <h3 class="book-title">Chế Ngự Tâm Trí</h3>
-                                <p class="price"><span>199,000₫</span>
-                                <p class="old-price"><span> 259 ,000₫</span></p></p>
+    <!-- Danh mục -->
+    <ul class="news-categories">
+        <li><a href="#">Tin nổi bật</a></li>
+        <li><a href="#">BĐS TP.HCM</a></li>
+        <li><a href="#">BĐS Hà Nội</a></li>
+    </ul>
 
-                            </div>
-                        </div>
-                    </li>
+    <!-- List các tin tức -->
+    <div class="news-list">
+        <div class="news-item">
+            <img src="jpg/banner-books.jpg" alt="Image">
+            <h3><a href="#">Tiêu đề bài viết</a></h3>
+            <p class="summary">Tóm tắt ngắn gọn về nội dung bài viết...</p>
+            <span class="date">Ngày đăng: 01/01/2024</span>
+        </div>
+        <div class="news-item">
+            <img src="jpg/banner-books.jpg" alt="Image">
+            <h3><a href="#">Tiêu đề bài viết</a></h3>
+            <p class="summary">Tóm tắt ngắn gọn về nội dung bài viết...</p>
+            <span class="date">Ngày đăng: 01/01/2024</span>
+        </div>
+        <div class="news-item">
+            <img src="jpg/banner-books.jpg" alt="Image">
+            <h3><a href="#">Tiêu đề bài viết</a></h3>
+            <p class="summary">Tóm tắt ngắn gọn về nội dung bài viết...</p>
+            <span class="date">Ngày đăng: 01/01/2024</span>
+        </div>
 
-                </ul>
-                <ul>
-                    <li>
-                        <div class="book-item">
-                            <img src="jpg/đắc%20nhân%20tâm.jpg" alt="Sách 1">
-                            <div>
-                                <h3 class="book-title">Chế Ngự Tâm Trí</h3>
-                                <p class="price"><span>199,000₫</span>
-                                <p class="old-price"><span> 259 ,000₫</span></p>
-                                </p>
-                            </div>
-                        </div>
-                    </li>
 
-                </ul>
-                <ul>
-                    <li>
-                        <div class="book-item">
-                            <img src="jpg/đắc%20nhân%20tâm.jpg" alt="Sách 1">
-                            <div>
-                                <h3 class="book-title">Chế Ngự Tâm Trí</h3>
-                                <p class="price"><span>199,000₫</span>
-                                <p class="old-price"><span> 259 ,000₫</span></p>
-                                </p>
-                            </div>
-                        </div>
-                    </li>
-
-                </ul>
-                <ul>
-                    <li>
-                        <div class="book-item">
-                            <img src="jpg/đắc%20nhân%20tâm.jpg" alt="Sách 1">
-                            <div>
-                                <h3 class="book-title">Chế Ngự Tâm Trí</h3>
-                                <p class="price"><span>199,000₫</span>
-                                <p class="old-price"><span> 259 ,000₫</span></p>
-                                </p>
-                            </div>
-                        </div>
-                    </li>
-
-                </ul>
-                <ul>
-                    <li>
-                        <div class="book-item">
-                            <img src="jpg/đắc%20nhân%20tâm.jpg" alt="Sách 1">
-                            <div>
-                                <h3 class="book-title">Chế Ngự Tâm Trí</h3>
-                                <p class="price"><span>199,000₫</span>
-                                <p class="old-price"><span> 259 ,000₫</span></p>
-                                </p>
-                            </div>
-                        </div>
-                    </li>
-
-                </ul>
-
-            </div>
-
-        </ul>
     </div>
 
-    <div class="main-banner">
-        <div class="large-banner">
-            <img src="jpg/805_acaac32dffab45978e11acb1ebcbe4ef_master.webp" alt="Large Banner">
-        </div>
-        <div class="small-banners">
-            <div class="small-banner">
-                <img src="jpg/805_acaac32dffab45978e11acb1ebcbe4ef_master.webp" alt="Small Banner 1">
-            </div>
-            <div class="small-banner">
-                <img src="jpg/805_acaac32dffab45978e11acb1ebcbe4ef_master.webp" alt="Small Banner 2">
-            </div>
-        </div>
+
+</div>
 
 
-        <h1>Danh sách sách</h1>
-        <div class="product-row">
-            <%
-                List<Book> books = (List<Book>) request.getAttribute("booksmain");
-                if (books != null && !books.isEmpty()) {
-                    for (Book book : books) {
-            %>
-            <div class="product">
-                <img src="<%= book.getImageUrl() %>" alt="<%= book.getTitle() %>" class="product-image">
-                <p class="product-name"><%= book.getTitle() %></p>
-                <div class="item-price">
-                    <span class="price"><%= book.getPrice() %> đ</span>
+<div class="product-section">
+    <h2>Bất động sản dành cho bạn</h2>
+    <div class="product-list">
+        <%
+            List<Property> properties = (List<Property>) request.getAttribute("properties");
+            if (properties != null && !properties.isEmpty()) {
+                int index = 0;
+                for (Property property : properties) {
+        %>
+        <div class=" product-item" <%= index >= 8 ? "style='display: none;'" : "" %> >
+           <span onclick="location.href='property-detail.jsp?id=<%= property.getId() %>'"
+                 style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="<%= property.getImageUrl() %>" alt="<%= property.getTitle() %>" class="product-image">
+                <h3><%= property.getTitle() %>
+                </h3>
+                <p class="address">
+                    <img src="jpg/location.png" alt="Location Icon" class="location-icon">
+                    <%= property.getAddress() %>
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price"><%= property.getPrice() %> tỷ</p>
+                        <p class="size"><%= property.getArea() %> m²</p>
+                    </div>
                 </div>
-                <div class="icon-container">
-                    <a href="#" class="icon magnifier" title="Xem chi tiết">
-                        <img src="jpg/zoom-in.png" alt="Kính lúp" class="icon-image">
-                    </a>
-
-                    <form id="addToCartForm1" method="post" action="add-to-cart" style="display:inline;">
-                        <input type="hidden" name="bookId" value="<%= book.getId() %>">
-                        <input type="hidden" name="bookName" value="<%= book.getTitle() %>">
-                        <input type="hidden" name="bookPrice" value="<%= book.getPrice() %>">
-                        <input type="hidden" name="bookImageUrl" value="<%= book.getImageUrl() %>">
-                        <button type="submit" class="icon cart" title="Thêm vào giỏ hàng">
-                            <img src="jpg/add-to-cart.png" alt="Giỏ hàng" class="icon-image">
-                        </button>
-                    </form>
-
-                    <a href="#" class="icon eye" title="Xem nhanh">
-                        <img src="jpg/eye.png" alt="Con mắt" class="icon-image">
-                    </a>
-
-
-                </div>
-                <form id="addToCartForm" method="post" action="cart">
-                    <input type="hidden" name="bookId" value="<%= book.getId() %>">
-                    <input type="hidden" name="bookName" value="<%= book.getTitle() %>"> <!-- Tên sách -->
-                    <input type="hidden" name="bookPrice" value="<%= book.getPrice() %>"> <!-- Giá sách -->
-                    <input type="hidden" name="bookImageUrl" value="<%= book.getImageUrl() %>">
-                    <button type="submit" class="add-to-cart-button" title="Thêm vào giỏ hàng">
-                        Thêm vào giỏ hàng
-                    </button>
-                </form>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('<%= property.getId() %>', '<%= property.getTitle() %>', <%= property.getPrice() %>, <%= property.getArea() %>, '<%= property.getImageUrl() %>','<%= property.getAddress() %>')">
+                <img src="jpg/heartred.png" alt="Heart Icon" class="heart-image">
             </div>
-            <%
-                    }
-                } else {
-                    out.println("<p>Không có sản phẩm nào phù hợp với tìm kiếm.</p>");
+        </div>
+
+        <%
+                    index++;
                 }
-            %>
-        </div>
-
-        <%--        <div class="product-row">--%>
-        <%--            <%--%>
-        <%--                List<Book> books = (List<Book>) request.getAttribute("books");--%>
-        <%--                if (books != null) {--%>
-        <%--                    for (Book book : books) {--%>
-        <%--            %>--%>
-        <%--            <div class="product">--%>
-        <%--                <img src="<%= book.getImageUrl() %>" alt="<%= book.getTitle() %>" class="product-image">--%>
-        <%--                <p class="product-name"><%= book.getTitle() %>--%>
-        <%--                </p>--%>
-        <%--                <div class="item-price">--%>
-        <%--                    <span class="price"><%= book.getPrice() %> đ</span>--%>
-        <%--                </div>--%>
-        <%--                <div class="icon-container">--%>
-        <%--                    <a href="#" class="icon magnifier" title="Xem chi tiết">--%>
-        <%--                        <img src="jpg/zoom-in.png" alt="Kính lúp" class="icon-image">--%>
-        <%--                    </a>--%>
-
-        <%--                    <form id="addToCartForm" method="post" action="add-to-cart" style="display:inline;">--%>
-        <%--                        <input type="hidden" name="bookId" value="<%= book.getId() %>">--%>
-        <%--                        <input type="hidden" name="bookName" value="<%= book.getTitle() %>"> <!-- Tên sách -->--%>
-        <%--                        <input type="hidden" name="bookPrice" value="<%= book.getPrice() %>"> <!-- Giá sách -->--%>
-        <%--                        <input type="hidden" name="bookImageUrl" value="<%= book.getImageUrl() %>">--%>
-
-        <%--                        <button type="submit" class="icon cart" title="Thêm vào giỏ hàng">--%>
-        <%--                            <img src="jpg/add-to-cart.png" alt="Giỏ hàng" class="icon-image">--%>
-        <%--                        </button>--%>
-        <%--                    </form>--%>
-
-
-
-        <%--                    <a href="#" class="icon eye" title="Xem nhanh">--%>
-        <%--                        <img src="jpg/eye.png" alt="Con mắt" class="icon-image">--%>
-        <%--                    </a>--%>
-        <%--                </div>--%>
-        <%--                <form id="addToCartForm" method="post" action="cart">--%>
-        <%--                    <input type="hidden" name="bookId" value="<%= book.getId() %>">--%>
-        <%--                    <input type="hidden" name="bookName" value="<%= book.getTitle() %>"> <!-- Tên sách -->--%>
-        <%--                    <input type="hidden" name="bookPrice" value="<%= book.getPrice() %>"> <!-- Giá sách -->--%>
-        <%--                    <input type="hidden" name="bookImageUrl" value="<%= book.getImageUrl() %>">--%>
-        <%--                    <button type="submit" class="add-to-cart-button" title="Thêm vào giỏ hàng">--%>
-        <%--                        Thêm vào giỏ hàng--%>
-        <%--                    </button>--%>
-        <%--                </form>--%>
-        <%--            </div>--%>
-
-
-        <%--            <%--%>
-        <%--                    }--%>
-        <%--                } else {--%>
-        <%--                    System.out.println("books == null");--%>
-        <%--                }--%>
-        <%--            %>--%>
-        <%--        </div>--%>
-
-    </div>
-</div>
-<div class="footer-container">
-
-    <div class="footer-section">
-        <h3>Giới thiệu</h3>
-
-        <ul>
-
-            <li><a href="#">Về Vinabook</a></li>
-
-            <li><a href="#">Chính sách bảo mật</a></li>
-
-            <li><a href="#">Điều khoản sử dụng</a></li>
-
-            <li><a href="#">Liên hệ</a></li>
-
-        </ul>
-
+            }
+        %>
     </div>
 
-
-    <div class="footer-section">
-        <h3>Hỗ trợ khách hàng</h3>
-
-        <ul>
-
-            <li><a href="#">Câu hỏi thường gặp</a></li>
-
-            <li><a href="#">Chính sách đổi trả</a></li>
-
-            <li><a href="#">Phương thức thanh toán</a></li>
-
-            <li><a href="#">Giao hàng</a></li>
-
-        </ul>
-
+    <!-- Nút xem thêm và ẩn bớt -->
+    <div class="view-more">
+        <a href="#" id="toggleButton">Xem thêm</a>
     </div>
-
-
-    <div class="footer-section">
-        <h3>Kết nối với chúng tôi</h3>
-
-        <ul class="social-media">
-
-            <li><a href="#">Facebook</a></li>
-
-            <li><a href="#">Instagram</a></li>
-
-            <li><a href="#">YouTube</a></li>
-
-        </ul>
-    </div>
-
-
-    <div class="footer-section">
-        <h3>Đăng ký nhận tin</h3>
-
-        <form>
-            <input type="email" placeholder="Nhập email của bạn" required>
-
-            <button type="submit">Đăng ký</button>
-
-        </form>
-
-    </div>
-
-</div>
-
-
-<div class="footer-bottom">
-    <p>© 2024 Vinabook. Bảo lưu mọi quyền.</p>
-
 </div>
 <script>
-    // Khôi phục dữ liệu giỏ hàng từ sessionStorage khi tải trang
-    let cartItems = JSON.parse(sessionStorage.getItem('cartItems')) || [];
-    let totalPrice = 0;
-    let miniCartVisible = false; // Biến để theo dõi trạng thái hiển thị của giỏ hàng
+    document.addEventListener("DOMContentLoaded", function () {
+        const toggleButton = document.getElementById('toggleButton');
+        const products = document.querySelectorAll('.product-item');
+        let isExpanded = false; // Trạng thái để theo dõi việc mở rộng hay thu gọn
 
-    // Thêm sản phẩm vào giỏ hàng
-    function addToCart(bookId, bookName, bookPrice, bookImageUrl) {
-        const existingProductIndex = cartItems.findIndex(item => item.id === bookId);
+        // Ban đầu hiển thị 8 sản phẩm đầu tiên
+        products.forEach((product, index) => {
+            if (index < 8) {
+                product.style.display = 'block'; // Hiển thị 8 sản phẩm đầu tiên
+            } else {
+                product.style.display = 'none'; // Ẩn các sản phẩm còn lại
+            }
+        });
 
-        if (existingProductIndex !== -1) {
-            cartItems[existingProductIndex].quantity += 1;
-        } else {
-            const product = {
-                id: bookId,
-                name: bookName,
-                price: parseInt(bookPrice),
-                imageUrl: bookImageUrl,
-                quantity: 1
-            };
+        toggleButton.addEventListener('click', function (e) {
+            e.preventDefault();
 
-            cartItems.push(product);
+            if (isExpanded) {
+                // Khi trạng thái đang mở rộng, thu gọn lại và chỉ hiển thị 8 sản phẩm
+                products.forEach((product, index) => {
+                    if (index >= 8) {
+                        product.style.display = 'none'; // Ẩn các sản phẩm ngoài 8 sản phẩm đầu tiên
+                    }
+                });
+                toggleButton.textContent = 'Xem thêm'; // Đổi lại thành "Xem thêm"
+            } else {
+                // Khi trạng thái đang thu gọn, hiển thị tất cả sản phẩm
+                products.forEach(product => product.style.display = 'block'); // Hiển thị tất cả sản phẩm
+                toggleButton.textContent = 'Ẩn bớt'; // Đổi thành "Ẩn bớt"
+            }
+
+            // Đảo trạng thái
+            isExpanded = !isExpanded;
+
+            // Thực hiện cuộn mượt mà về đầu phần sản phẩm
+            document.querySelector('.product-section').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        });
+    });
+</script>
+<style>
+    /* Basic styling */
+    .featured-properties-section {
+        max-width: 85%;
+        margin-left: 95px;
+        text-align: center;
+        overflow: hidden;
+        margin-bottom: 50px;
+    }
+
+    .property-list-container {
+        display: flex;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .property-card {
+        flex: 0 0 200px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        text-align: center;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .property-card p {
+        font-size: 16px;
+        font-family: Arial;
+    }
+
+    .property-card img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
+
+    .property-card:hover {
+        transform: translateY(-10px); /* Lift the card slightly */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Increase shadow */
+    }
+
+    /* Navigation buttons */
+    .navigation-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px;
+    }
+
+    .navigation-button {
+        background-color: #007bff;
+        color: white;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .navigation-button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
+    .property-list-container::-webkit-scrollbar {
+        display: none; /* For Chrome, Safari, and Edge */
+    }
+
+</style>
+<div class="featured-properties-section">
+    <h2>Dự án bất động sản nổi bật</h2>
+    <div class="navigation-buttons">
+        <button class="navigation-button" id="prevButton">⬅️ Trước</button>
+        <button class="navigation-button" id="nextButton">Tiếp ➡️</button>
+    </div>
+    <div class="property-list-container" id="productList">
+        <!-- Product items (can be generated dynamically with JSP or JavaScript) -->
+        <div class="property-card">
+            <img src="jpg/binhduong.jpg" alt="BĐS 1">
+            <h3>BĐS 1</h3>
+            <p>Chung cư cao cấp view sông, nội thất đầy đủ</p>
+            <div style="display: flex; justify-content: space-between; color: red; margin-top: 5px;">
+                <span> 1.47 ha</span>
+                <span><i class="fas fa-map-marker-alt"></i> Bình Dương</span>
+            </div>
+
+        </div>
+        <div class="property-card">
+            <img src="jpg/binhduong.jpg" alt="BĐS 1">
+            <h3>BĐS 1</h3>
+            <p>Chung cư cao cấp view sông, nội thất đầy đủ</p>
+            <div style="display: flex; justify-content: space-between; color: red; margin-top: 5px;">
+                <span> 1.47 ha</span>
+                <span><i class="fas fa-map-marker-alt"></i> Bình Dương</span>
+            </div>
+
+        </div>
+        <div class="property-card">
+            <img src="jpg/binhduong.jpg" alt="BĐS 1">
+            <h3>BĐS 1</h3>
+            <p>Chung cư cao cấp view sông, nội thất đầy đủ</p>
+            <div style="display: flex; justify-content: space-between; color: red; margin-top: 5px;">
+                <span> 1.47 ha</span>
+                <span><i class="fas fa-map-marker-alt"></i> Bình Dương</span>
+            </div>
+
+        </div>
+        <div class="property-card">
+            <img src="jpg/binhduong.jpg" alt="BĐS 1">
+            <h3>BĐS 1</h3>
+            <p>Chung cư cao cấp view sông, nội thất đầy đủ</p>
+            <div style="display: flex; justify-content: space-between; color: red; margin-top: 5px;">
+                <span> 1.47 ha</span>
+                <span><i class="fas fa-map-marker-alt"></i> Bình Dương</span>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const productList = document.getElementById("productList");
+        const prevButton = document.getElementById("prevButton");
+        const nextButton = document.getElementById("nextButton");
+
+        // Function to scroll the product list by a set amount
+        function scrollProductList(amount) {
+            productList.scrollBy({
+                left: amount,
+                behavior: 'smooth'
+            });
         }
 
-        updateSessionStorage(); // Cập nhật sessionStorage
-        updateCartDisplay();
-        showMiniCart(); // Hiện giỏ hàng mini
+        // Event listeners for the buttons
+        prevButton.addEventListener("click", () => scrollProductList(-300));
+        nextButton.addEventListener("click", () => scrollProductList(300));
+    });
+</script>
+
+<div class="banner">
+    <img src="jpg/2833732387999181063.gif" alt="Banner Image">
+</div>
+
+<div class="product-section">
+    <h2>Bất động sản theo địa điểm</h2>
+
+    <div class="property-form">
+        <div class="city hcm">
+            <a href="#" class="city-link">
+                <img src="jpg/HCM.jpg" alt="TP.HCM">
+                <span class="city-name">TP.HCM</span>
+            </a>
+        </div>
+        <div class="other-cities">
+            <div class="city">
+                <a href="#" class="city-link">
+                    <img src="jpg/HaNoi.jpg" alt="Hà Nội">
+                    <span class="city-name">Hà Nội</span>
+                </a>
+            </div>
+            <div class="city">
+                <a href="#" class="city-link">
+                    <img src="jpg/DaNang.jpg" alt="Đà Nẵng">
+                    <span class="city-name">Đà Nẵng</span>
+                </a>
+            </div>
+            <div class="city">
+                <a href="#" class="city-link">
+                    <img src="jpg/binhduong.jpg" alt="Bình Dương">
+                    <span class="city-name">Bình Dương</span>
+                </a>
+            </div>
+            <div class="city">
+                <a href="#" class="city-link">
+                    <img src="jpg/DongNai.jpg" alt="Đồng Nai">
+                    <span class="city-name">Đồng Nai</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <style>
+        .property-form {
+            position: relative;
+        }
+
+        .city-link {
+            position: relative;
+            display: inline-block;
+        }
+
+        .city-name {
+            position: absolute;
+            top: 10px; /* Khoảng cách từ đỉnh */
+            left: 10px; /* Khoảng cách từ bên trái */
+            color: white; /* Màu chữ */
+            background-color: transparent; /* Nền bán trong suốt */
+            padding: 5px;
+            border-radius: 3px; /* Bo góc */
+            font-size: 20px; /* Kích thước chữ */
+        }
+
+        .city-link:hover .city-name {
+            text-decoration: underline; /* Gạch chân khi hover */
+        }
+    </style>
+
+</div>
+
+<div class="footer">
+    <div class="footer-top">
+
+        <h1><a href="homes">
+            <span class="color1">HOME</span>
+            <span class="color2">LANDER</span>
+        </a></h1>
+        <span class="footer-item"><i class="fas fa-phone"></i> Hotline: 0123 456 789</span>
+        <span class="footer-item"><i class="fas fa-envelope"></i> Hỗ trợ: support@batdongsan.com</span>
+        <span class="footer-item"><i class="fas fa-headset"></i> Chăm sóc: 0987 654 321</span>
+    </div>
+
+    <div class="footer-content">
+        <!-- Thông tin công ty -->
+        <div class="company-info">
+            <h3>Công ty Bất Động Sản</h3>
+            <p>Địa chỉ: 123 Đường ABC, Quận 1, TP.HCM</p>
+            <p>Điện thoại: 0123 456 789</p>
+        </div>
+
+        <!-- Liên kết nhanh -->
+        <div class="quick-links">
+            <h3>Liên kết nhanh</h3>
+            <ul>
+                <li><a href="#">Trang chủ</a></li>
+                <li><a href="#">Dự án</a></li>
+                <li><a href="#">Tin tức</a></li>
+                <li><a href="#">Liên hệ</a></li>
+            </ul>
+        </div>
+
+        <!-- Mạng xã hội -->
+        <div class="social-media">
+            <h3>Mạng xã hội</h3>
+            <a href="https://www.facebook.com/khoa.ngo.562114/" class="social-icon"><i class="fab fa-facebook"></i>
+                Facebook</a>
+            <a href="https://www.instagram.com/khoa5462/" class="social-icon"><i class="fab fa-instagram"></i>
+                Instagram</a>
+            <a href="https://mail.google.com/mail/u/0/?hl=vi#inbox" class="social-icon"><i
+                    class="fas fa-envelope"></i>
+                Mail</a>
+        </div>
+
+        <!-- Form nhập email -->
+        <div class="newsletter">
+            <h3>Đăng ký nhận tin tức mới nhất</h3>
+            <form action="#" method="POST">
+                <input type="email" name="email" placeholder="Nhập email của bạn" required>
+                <button type="submit">Đăng ký</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2024 Công ty Bất Động Sản. Mọi quyền lợi thuộc về công ty.</p>
+    </div>
+
+
+</div>
+<style>
+
+    .footer {
+        background-color: whitesmoke;
+        color: black;
+        padding: 30px 50px; /* Thêm padding cho lề trái và phải */
+    }
+
+    /* Căn chỉnh các phần trong footer content thành một hàng */
+    .footer-content {
+        display: flex;
+        justify-content: space-between; /* Giãn cách đều giữa các phần tử */
+        align-items: flex-start; /* Căn chỉnh các phần tử theo chiều dọc */
+        flex-wrap: wrap; /* Cho phép xuống dòng khi cần thiết trên màn hình nhỏ */
+    }
+
+
+    /* Căn chỉnh mỗi phần tử trong footer */
+    .footer-content > div {
+        flex: 1;
+        margin-right: 20px;
+        min-width: 200px; /* Đảm bảo mỗi phần có ít nhất 200px */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start; /* Căn theo chiều dọc */
+        align-items: flex-start; /* Căn chỉnh nội dung theo lề trái */
+    }
+
+    .footer-content > div:last-child {
+        margin-right: 0;
+    }
+
+    /* Các phần trong footer */
+    .company-info, .quick-links, .social-media, .newsletter {
+        margin-bottom: 15px;
+    }
+
+    .quick-links ul li a:hover,
+    .social-media a:hover {
+        color: darkred; /* Màu khi hover vào liên kết */
+
+    }
+
+    h3 {
+        margin-bottom: 10px;
+        color: black;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin-right: 0;
+        border-radius: 10px;
+    }
+
+    .u-lo li {
+        position: relative;
+        display: inline-block;
+        margin-right: 20px;
+        z-index: 10; /* Đảm bảo menu cha hiển thị trên cùng */
+    }
+
+    ul li a {
+        text-decoration: none;
+        display: inline-block;
+        color: #333;
+    }
+
+    /* Thiết lập cho menu con */
+    ul li ul {
+        display: none; /* Ẩn menu con mặc định */
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #f9f9f9;
+        min-width: 200px;
+        padding: 10px 0;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 999; /* Đảm bảo menu con hiển thị trên các phần tử khác */
+    }
+
+    ul li ul li {
+        display: block;
+        margin: 0;
+    }
+
+    ul li ul li a {
+        padding: 10px 15px;
+        color: #333;
+        display: block;
+    }
+
+    /* Hiển thị menu con khi hover */
+    ul li:hover ul {
+        display: block;
+    }
+
+    /* Style cho menu con khi hover */
+    ul li ul li a:hover {
+        background-color: #eee;
+        text-decoration: none;
+    }
+
+    .social-media a {
+        margin-right: 10px;
+        color: black;
+    }
+
+    /* Form nhập email */
+    .newsletter form {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .newsletter input[type="email"] {
+        padding: 8px;
+        font-size: 14px;
+        width: 220px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+    }
+
+    .newsletter input[type="email"]:focus {
+        border-color: #f4a261;
+    }
+
+    .newsletter button {
+        padding: 8px 15px; /* Làm cho nút nhỏ hơn */
+        font-size: 13px; /* Giảm kích thước chữ */
+        background-color: #f4a261;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .newsletter button:hover {
+        background-color: #e38e3e;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .footer-content {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .footer-content > div {
+            margin-right: 0;
+            margin-bottom: 20px;
+        }
+
+        .newsletter form {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .newsletter input[type="email"] {
+            width: 100%;
+        }
+
+        .newsletter button {
+            width: 100%;
+        }
+    }
+
+    .footer-bottom {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 18px;
+        color: black;
+    }
+
+</style>
+<script>
+
+    let cartItems = JSON.parse(sessionStorage.getItem('cartItems')) || [];
+    let miniCartVisible = false; // Biến theo dõi trạng thái hiển thị của giỏ hàng
+
+    // Hàm thêm bất động sản vào giỏ hàng
+    function addToFavorites(id, title, price, area, imageUrl, address) {
+        const existingProductIndex = cartItems.findIndex(item => item.id === id);
+
+        if (existingProductIndex !== -1) {
+            alert("bất động sản này đã được quan tâm!"); // Thông báo cho người dùng
+        } else {
+            const product = {
+                id: id,
+                title: title,
+                price: parseFloat(price),
+                area: area,
+                imageUrl: imageUrl,
+                address: address,
+                quantity: 1 // Số lượng cố định là 1
+            };
+            cartItems.push(product);
+            updateSessionStorage();
+            updateCartDisplay();
+            showMiniCart();
+        }
     }
 
     // Cập nhật sessionStorage
@@ -500,116 +776,260 @@
     }
 
     // Cập nhật hiển thị giỏ hàng
-    // Cập nhật hiển thị giỏ hàng mà không ẩn mini-cart
-    // Cập nhật hiển thị giỏ hàng và giữ mini-cart hiển thị
     function updateCartDisplay() {
         const itemCount = document.querySelector('.item-count');
         const cartList = document.getElementById('cart-items');
-        const totalPriceDisplay = document.getElementById('total-price');
 
         cartList.innerHTML = '';
-        totalPrice = 0;
 
-        // Kiểm tra nếu không còn sản phẩm nào trong giỏ
         if (cartItems.length === 0) {
-            cartList.innerHTML = '<li>Giỏ hàng của bạn đang trống</li>'; // Hiển thị khi giỏ hàng trống
-            document.querySelector('.mini-cart').style.display = 'none'; // Ẩn mini-cart nếu giỏ hàng trống
-            miniCartVisible = false;
-        } else {
-            cartItems.forEach((item, index) => {
-                const listItem = document.createElement('li');
-                listItem.innerHTML = `
-                <img src="${item.imageUrl}" alt="${item.name}" width="40" height="40">
-                <div class="item-info">
-                    <h4>${item.name}</h4>
-                    <span>${(item.price * item.quantity).toLocaleString()}₫</span>
-                    <div>
-                        <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${index}, this.value)">
-                    </div>
-                </div>
-                <button onclick="removeFromCart(${index})">Xóa</button> <!-- Xóa sản phẩm -->
-            `;
-                cartList.appendChild(listItem);
-                totalPrice += item.price * item.quantity;
-            });
+            cartList.innerHTML = '<li>Bạn chưa có bất động sản đã lưu.</li>';
+            itemCount.innerText = 0; // Cập nhật số lượng sản phẩm
+            return; // Kết thúc hàm nếu giỏ hàng trống
         }
 
-        // Cập nhật số lượng sản phẩm và tổng giá
-        itemCount.innerText = cartItems.reduce((total, item) => total + item.quantity, 0);
-        totalPriceDisplay.innerText = totalPrice.toLocaleString();
+        cartItems.forEach((item) => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+            <img src="${item.imageUrl}" alt="${item.title}" width="40" height="40">
+            <div class="item-info">
+                <h4>${item.title}</h4>
+                <p>Địa chỉ: ${item.address}</p>
+                <p>Diện tích: ${item.area} m²</p>
+                <span>Giá: ${item.price.toLocaleString()} tỷ</span>
 
-        // Giữ mini-cart hiển thị nếu vẫn còn sản phẩm
-        if (miniCartVisible) {
-            document.querySelector('.mini-cart').style.display = 'block';
-        }
+            </div>
+            <button onclick="removeFromCart('${item.id}')">Xóa</button>
+        `;
+            cartList.appendChild(listItem);
+        });
+
+        itemCount.innerText = cartItems.length; // Cập nhật số lượng sản phẩm
     }
 
-    // Cập nhật số lượng sản phẩm từ input
-    function updateQuantity(index, newQuantity) {
-        if (newQuantity < 1) {
-            removeFromCart(index); // Nếu số lượng < 1, xóa sản phẩm
-        } else {
-            cartItems[index].quantity = parseInt(newQuantity);
-            updateSessionStorage(); // Cập nhật sessionStorage
-            updateCartDisplay(); // Cập nhật hiển thị mà không ẩn giỏ hàng
-        }
-    }
-
-    function removeFromCart(index) {
-        cartItems.splice(index, 1); // Xóa sản phẩm khỏi giỏ hàng
-        updateSessionStorage(); // Cập nhật sessionStorage
-        updateCartDisplay(); // Cập nhật hiển thị giỏ hàng
-
-        if (cartItems.length > 0) {
-            miniCartVisible = true; // Giữ mini-cart hiển thị nếu còn sản phẩm
-            document.querySelector('.mini-cart').style.display = 'block'; // Đảm bảo mini-cart vẫn hiển thị
-        } else {
-            miniCartVisible = false; // Ẩn mini-cart nếu giỏ hàng trống
-            document.querySelector('.mini-cart').style.display = 'none'; // Ẩn mini-cart khi giỏ hàng trống
-        }
-    }
-
-
-    // Hiển thị hoặc ẩn mini-cart
-    function toggleMiniCart() {
-        const miniCart = document.querySelector('.mini-cart');
-        miniCartVisible = !miniCartVisible; // Đảo ngược trạng thái hiển thị
-        miniCart.style.display = miniCartVisible ? 'block' : 'none'; // Hiện hoặc ẩn mini-cart
+    // Xóa sản phẩm khỏi giỏ hàng
+    function removeFromCart(id) {
+        cartItems = cartItems.filter(item => item.id !== id);
+        updateSessionStorage();
+        updateCartDisplay();
     }
 
     // Hiện giỏ hàng mini
     function showMiniCart() {
         const miniCart = document.querySelector('.mini-cart');
-        miniCart.style.display = 'block'; // Luôn hiện giỏ hàng mini
-        updateCartDisplay(); // Cập nhật hiển thị
+        miniCart.style.display = 'block';
+        updateCartDisplay();
     }
 
+    // Chuyển hướng đến trang giỏ hàng
     function goToCart() {
-        // Chuyển hướng đến trang giỏ hàng
-        window.location.href = 'cart.jsp'; // Đảm bảo rằng đường dẫn đúng với trang giỏ hàng của bạn
+        const isLoggedIn = sessionStorage.getItem('isLoggedIn'); // Giả sử bạn kiểm tra trạng thái đăng nhập ở đây
+
+        if (!isLoggedIn) {
+            alert("Bạn cần đăng nhập để xem bất động sản đã quan tâm."); // Thông báo cho người dùng
+            window.location.href = 'login.jsp'; // Chuyển hướng đến trang đăng nhập
+        } else {
+            window.location.href = 'cart.jsp'; // Chuyển hướng đến trang giỏ hàng
+        }
     }
-
-    // Thêm sự kiện khi form thêm vào giỏ hàng được submit
-    document.querySelectorAll('#addToCartForm').forEach(form => {
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            const bookId = form.querySelector('input[name="bookId"]').value;
-            const bookName = form.querySelector('input[name="bookName"]').value;
-            const bookPrice = form.querySelector('input[name="bookPrice"]').value;
-            const bookImageUrl = form.querySelector('input[name="bookImageUrl"]').value;
-
-            addToCart(bookId, bookName, bookPrice, bookImageUrl);
-        });
-    });
-
-    // Thêm sự kiện cho giỏ hàng để hiển thị hoặc ẩn khi nhấn
-    const floatingCart = document.getElementById('floating-cart');
-    floatingCart.addEventListener('click', toggleMiniCart);
 
     // Cập nhật hiển thị giỏ hàng khi tải lại trang
-    updateCartDisplay(); // Gọi hàm này để hiển thị giỏ hàng khi tải lại trang
+    updateCartDisplay();
+
+    function toggleMiniCart() {
+        const miniCart = document.querySelector('.mini-cart');
+        miniCartVisible = !miniCartVisible; // Chuyển đổi trạng thái hiển thị
+        miniCart.style.display = miniCartVisible ? 'block' : 'none'; // Cập nhật hiển thị
+        updateCartDisplay(); // Cập nhật hiển thị giỏ hàng
+    }
+
+
 </script>
+<style>
+    .footer-top {
+        display: flex; /* Sử dụng flexbox để căn chỉnh */
+        justify-content: space-around; /* Giãn cách đều giữa các mục */
+        padding: 10px 0; /* Khoảng cách trên và dưới */
+        margin-bottom: 20px; /* Khoảng cách dưới để tách khỏi nội dung footer */
+        text-align: center; /* Căn giữa nội dung */
+
+    }
+
+    .footer-top h1 a {
+        text-decoration: none;
+
+
+    }
+
+    .footer-item {
+        margin: 0 15px; /* Khoảng cách giữa các mục */
+        font-weight: bold; /* Chữ đậm */
+    }
+
+    /* Các phần khác của footer giữ nguyên */
+    .footer {
+        margin-top: 30px;
+        background-color: whitesmoke;
+        color: black;
+        padding: 30px 50px;
+    }
+
+    .footer-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .footer-content > div {
+        flex: 1;
+        margin-right: 20px;
+        min-width: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .footer-content > div:last-child {
+        margin-right: 0;
+    }
+
+    .company-info, .quick-links, .social-media, .newsletter {
+        margin-bottom: 15px;
+    }
+
+    .quick-links ul li a:hover,
+    .social-media a:hover {
+        color: darkred;
+    }
+
+    h3 {
+        margin-bottom: 10px;
+        color: black;
+    }
+
+    ul {
+        padding-left: 20px;
+        color: black;
+    }
+
+    ul li {
+        list-style: none;
+        color: black;
+    }
+
+    ul li a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .social-media a {
+        margin-right: 10px;
+        color: black;
+        text-decoration: none;
+    }
+
+    .newsletter form {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .newsletter input[type="email"] {
+        padding: 8px;
+        font-size: 14px;
+        width: 220px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+    }
+
+    .newsletter input[type="email"]:focus {
+        border-color: #f4a261;
+    }
+
+    .newsletter button {
+        padding: 8px 15px;
+        font-size: 13px;
+        background-color: #f4a261;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .newsletter button:hover {
+        background-color: #e38e3e;
+    }
+
+    @media (max-width: 768px) {
+        .footer-content {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .footer-content > div {
+            margin-right: 0;
+            margin-bottom: 20px;
+        }
+
+        .newsletter form {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .newsletter input[type="email"] {
+            width: 100%;
+        }
+
+        .newsletter button {
+            width: 100%;
+        }
+    }
+
+    .footer-bottom {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 18px;
+        color: black;
+    }
+
+    .heart-container {
+        position: relative;
+        display: inline-block;
+        padding-top: 1px;
+    }
+
+    .heart-icon1 {
+        width: 15px; /* Kích thước của biểu tượng trái tim */
+        height: 15px;
+        cursor: pointer;
+    }
+
+    /* Định dạng dòng chữ "Tin đăng đã lưu" */
+    .hover-text {
+        position: absolute;
+        top: 30px; /* Điều chỉnh vị trí theo ý muốn */
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0.7); /* Màu nền của dòng chữ */
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 14px;
+        white-space: nowrap;
+        opacity: 0; /* Ẩn dòng chữ */
+        transition: opacity 0.3s ease; /* Hiệu ứng hiển thị mượt */
+        pointer-events: none; /* Vô hiệu hóa sự kiện trên hover-text */
+    }
+
+    /* Khi hover vào biểu tượng trái tim, hiển thị dòng chữ */
+    .heart-container:hover .hover-text {
+        opacity: 1;
+    }
+</style>
 
 </body>
 </html>

@@ -32,7 +32,6 @@
         <div class="header-right" style="margin-top: 10px">
 
 
-
             <a href="login.jsp" class="btn"><h3>Đăng nhập</h3></a>
             <a href="register.jsp" class="btn"><h3>Đăng ký</h3></a>
             <a href="post-status.html" class="btn"><h3>Đăng tin</h3></a>
@@ -313,10 +312,12 @@
         background-color: #fff;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
-    .property-card p{
+
+    .property-card p {
         font-size: 16px;
         font-family: Arial;
     }
+
     .property-card img {
         width: 100%;
         height: auto;
@@ -402,8 +403,6 @@
             </div>
 
         </div>
-
-
 
 
     </div>
@@ -657,8 +656,7 @@
     /* Style cho menu con khi hover */
     ul li ul li a:hover {
         background-color: #eee;
-        text-decoration: none
-    ;
+        text-decoration: none;
     }
 
     .social-media a {

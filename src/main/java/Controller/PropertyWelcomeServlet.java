@@ -3,6 +3,7 @@ package Controller;
 import DBcontext.DbConnection1;
 import Entity.Property;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -11,8 +12,8 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
-public class PropertyServlet extends HttpServlet {
+@WebServlet("/welcome")
+public class PropertyWelcomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -51,7 +52,7 @@ public class PropertyServlet extends HttpServlet {
 
 
             // Chuyển tiếp tới trang home.jsp để hiển thị
-            request.getRequestDispatcher("home.jsp").forward(request, response);
+            request.getRequestDispatcher("welcome.jsp").forward(request, response);
 
         } catch (SQLException e) {
             e.printStackTrace();

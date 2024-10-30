@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@WebServlet("/welcome")
+//@WebServlet("/welcome")
 public class TestMain extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
