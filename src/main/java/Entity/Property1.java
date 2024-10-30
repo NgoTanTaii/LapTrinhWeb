@@ -40,12 +40,6 @@ public class Property1 {
     public Property1(int propertyId, String title, double price, String address, double area, String imageUrl) {
     }
 
-    public Property1(int id, String title, double price, String address, double area, String imageUrl, String description) {
-
-    }
-
-    public Property1(int propertyId, String title, double price, double area, String address, String type, String status, String imageUrl, String description, Object o) {
-    }
 
     public int getId() {
         return id;

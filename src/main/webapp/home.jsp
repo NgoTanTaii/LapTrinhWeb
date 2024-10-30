@@ -65,7 +65,7 @@
 
             <nav>
                 <ul class="u-lo">
-                    <li><a href="property-for-sale.html">Nhà Đất Bán</a>
+                    <li><a href="property-for-sale.jsp">Nhà Đất Bán</a>
                         <ul>
                             <li><a href="#">Thông tin bán nhà đất</a></li>
                             <li><a href="#">Mua bán bất động sản</a></li>
