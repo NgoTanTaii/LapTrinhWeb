@@ -13,8 +13,9 @@
         <th>ID</th>
         <th>Tên Người Dùng</th>
         <th>Email</th>
-        <th>Token</th>
+
         <th>Vai Trò</th>
+        <th>Thao tác</th>
     </tr>
     </thead>
 </table>
@@ -29,12 +30,12 @@
                 "dataSrc": "demo" // Thuộc tính trong JSON chứa dữ liệu bảng
             },
             "columns": [
-                {"title": "ID"},
-                {"title": "Tên Người Dùng"},
-                {"title": "Email"},
+                { "data": "ID", "title": "ID" },
+                { "data": "Tên Người Dùng", "title": "Tên Người Dùng" },
+                { "data": "Email", "title": "Email" },
+                { "data": "Vai Trò", "title": "Vai Trò" },
+                { "data": "Thao Tác", "title": "Thao Tác" }
 
-                {"title": "Trạng Thái"},
-                {"title": "Vai Trò"}
             ]
         });
     });

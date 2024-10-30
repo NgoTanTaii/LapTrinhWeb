@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm Bất Động Sản Mới</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 700px;
+            width: 100%;
+        }
+
+        .form-container h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+            flex: 1;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 3px;
+            color: #333;
+            font-size: 0.9em;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 0.9em;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .submit-btn, .cancel-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .cancel-btn {
+            background-color: #f44336;
+            color: white;
+        }
+
+        /* Đảm bảo trường ID và Tên rộng bằng nhau */
+        .form-group.full-width {
+            flex: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Thêm Bất Động Sản Mới</h2>
+    <form action="add-property.php" method="post" enctype="multipart/form-data">
+        <!-- Form hàng đầu tiên -->
+        <div class="form-row">
+            <!-- ID -->
+            <div class="form-group">
+                <label for="id">ID</label>
+                <input type="text" id="id" name="id" required>
+            </div>
+
+            <!-- Tên -->
+            <div class="form-group">
+                <label for="name">Tên Bất Động Sản</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+        </div>
+
+        <!-- Form hàng thứ hai -->
+        <div class="form-row">
+            <!-- Mô tả -->
+            <div class="form-group full-width">
+                <label for="description">Mô tả</label>
+                <textarea id="description" name="description" rows="3" required></textarea>
+            </div>
+        </div>
+
+        <!-- Form hàng thứ ba -->
+        <div class="form-row">
+            <!-- Giá -->
+            <div class="form-group">
+                <label for="price">Giá</label>
+                <input type="text" id="price" name="price" required>
+            </div>
+
+            <!-- Địa chỉ -->
+            <div class="form-group">
+                <label for="address">Địa chỉ</label>
+                <input type="text" id="address" name="address" required>
+            </div>
+        </div>
+
+        <!-- Form hàng thứ tư -->
+        <div class="form-row">
+            <!-- Loại -->
+            <div class="form-group">
+                <label for="type">Loại Bất Động Sản</label>
+                <select id="type" name="type" required>
+                    <option value="Căn hộ">Căn hộ</option>
+                    <option value="Biệt thự">Biệt thự</option>
+                    <option value="Nhà phố">Nhà phố</option>
+                    <option value="Đất nền">Đất nền</option>
+                </select>
+            </div>
+
+            <!-- Trạng thái -->
+            <div class="form-group">
+                <label for="status">Trạng thái</label>
+                <select id="status" name="status" required>
+                    <option value="Đang bán">Đang bán</option>
+                    <option value="Đã bán">Đã bán</option>
+                    <option value="Đang cho thuê">Đang cho thuê</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Form hàng thứ năm -->
+        <div class="form-row">
+            <!-- Hình ảnh (URL) -->
+            <div class="form-group">
+                <label for="image_url">Hình ảnh (URL)</label>
+                <input type="url" id="image_url" name="image_url">
+            </div>
+
+            <!-- Hình ảnh (Chọn từ máy tính) -->
+            <div class="form-group">
+                <label for="image_file">Hình ảnh (Tải từ máy tính)</label>
+                <input type="file" id="image_file" name="image_file[]" accept="image/*" multiple>
+            </div>
+        </div>
+
+        <!-- Form hàng cuối -->
+        <div class="form-row">
+            <!-- Diện tích -->
+            <div class="form-group">
+                <label for="area">Diện tích (m²)</label>
+                <input type="text" id="area" name="area" required>
+            </div>
+        </div>
+
+        <!-- Nút gửi và hủy -->
+        <div class="form-actions">
+            <button type="submit" class="submit-btn">Thêm</button>
+            <button type="button" class="cancel-btn" onclick="window.location.href='property-manager.html'">Hủy</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
