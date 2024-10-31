@@ -1,3 +1,15 @@
+
+<%
+
+    // Sử dụng biến session có sẵn trong JSP
+    String role = (String) session.getAttribute("role");
+
+    if (!"admin".equals(role)) {
+        // Nếu không phải admin, chuyển hướng đến trang không có quyền truy cập
+        response.sendRedirect("access-denied.jsp");
+        return;
+    }
+%>
 <%@ page import="Controller.User" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>

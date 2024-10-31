@@ -1,6 +1,3 @@
-<%@ page import="Entity.Property1" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -220,8 +217,8 @@
 
 <div class="container1">
     <div class="left-content">
-        <p class="breadcrumbs">Bán / Tất cả BĐS trên toàn quốc</p>
-        <h1>Mua bán nhà đất trên toàn quốc</h1>
+        <p class="breadcrumbs">Cho thuê / Tất cả BĐS trên toàn quốc</p>
+        <h1>Cho thuê nhà đất trên toàn quốc</h1>
         <p>Hiện có <strong>181.125</strong> bất động sản.</p>
 
         <div class="filter-group">
@@ -250,151 +247,76 @@
 
 </div>
 
-
-<%
-    List<Property1> properties = (List<Property1>) request.getAttribute("properties");
-
-    for (Property1 property : properties) {
-%>
 <div class="container1">
-    <div class="property-container">
-        <img src="<%= property.getImageUrl() %>" alt="Hình ảnh bất động sản" class="property-image">
-        <div class="property-details">
-            <h2 class="property-title"><%= property.getTitle() %>
-            </h2>
-            <p class="property-price">Giá: <%= property.getPrice() %> Tỷ</p>
-            <p class="property-size">Diện tích: <%= property.getArea() %> m²</p>
-            <p class="property-address">Địa chỉ: <%= property.getAddress() %>
-            </p>
-        </div>
+
+    <div class="filter-container">
+        <h4>Lọc Theo Khoảng Giá</h4>
+        <form id="priceFilterForm">
+            <div class="form-group">
+                <label>Chọn khoảng giá:</label>
+                <ul class="price-options">
+                    <li data-value="thoa-thuan" class="price-option">Thỏa thuận</li>
+                    <li data-value="duoi-500" class="price-option">Dưới 500 triệu</li>
+                    <li data-value="500-800" class="price-option">500 - 800 triệu</li>
+                    <li data-value="800-1ty" class="price-option">800 triệu - 1 tỷ</li>
+                    <li data-value="1-2ty" class="price-option">1 - 2 tỷ</li>
+                    <li data-value="2-3ty" class="price-option">2 - 3 tỷ</li>
+                    <li data-value="3-5ty" class="price-option">3 - 5 tỷ</li>
+                    <li data-value="5-7ty" class="price-option">5 - 7 tỷ</li>
+                    <li data-value="7-10ty" class="price-option">7 - 10 tỷ</li>
+                    <li data-value="10-20ty" class="price-option">10 - 20 tỷ</li>
+                    <li data-value="20-30ty" class="price-option">20 - 30 tỷ</li>
+                    <li data-value="30-40ty" class="price-option">30 - 40 tỷ</li>
+                    <li data-value="40-60ty" class="price-option">40 - 60 tỷ</li>
+                    <li data-value="tren-60" class="price-option">Trên 60 tỷ</li>
+                </ul>
+            </div>
+            <button type="submit">Lọc</button>
+        </form>
     </div>
-</div>
-<%
-    }
-%>
-
-<div class="filter-container">
-    <h4>Lọc Theo Khoảng Giá</h4>
-    <form id="priceFilterForm">
-        <div class="form-group">
-            <label>Chọn khoảng giá:</label>
-            <ul class="price-options">
-                <li data-value="thoa-thuan" class="price-option">Thỏa thuận</li>
-                <li data-value="duoi-500" class="price-option">Dưới 500 triệu</li>
-                <li data-value="500-800" class="price-option">500 - 800 triệu</li>
-                <li data-value="800-1ty" class="price-option">800 triệu - 1 tỷ</li>
-                <li data-value="1-2ty" class="price-option">1 - 2 tỷ</li>
-                <li data-value="2-3ty" class="price-option">2 - 3 tỷ</li>
-                <li data-value="3-5ty" class="price-option">3 - 5 tỷ</li>
-                <li data-value="5-7ty" class="price-option">5 - 7 tỷ</li>
-                <li data-value="7-10ty" class="price-option">7 - 10 tỷ</li>
-                <li data-value="10-20ty" class="price-option">10 - 20 tỷ</li>
-                <li data-value="20-30ty" class="price-option">20 - 30 tỷ</li>
-                <li data-value="30-40ty" class="price-option">30 - 40 tỷ</li>
-                <li data-value="40-60ty" class="price-option">40 - 60 tỷ</li>
-                <li data-value="tren-60" class="price-option">Trên 60 tỷ</li>
-            </ul>
-        </div>
-        <button type="submit">Lọc</button>
-    </form>
-</div>
-<div class="filter-container1">
-    <h4>Lọc Theo Diện Tích</h4>
-    <form id="areaFilterForm">
-        <div class="form-group">
-            <label>Chọn diện tích:</label>
-            <ul class="price-options">
-                <li data-value="duoi-30" class="price-option">Dưới 30 m²</li>
-                <li data-value="30-50" class="price-option">30 - 50 m²</li>
-                <li data-value="50-80" class="price-option">50 - 80 m²</li>
-                <li data-value="80-100" class="price-option">80 - 100 m²</li>
-                <li data-value="100-120" class="price-option">100 - 120 m²</li>
-                <li data-value="120-150" class="price-option">120 - 150 m²</li>
-                <li data-value="150-200" class="price-option">150 - 200 m²</li>
-                <li data-value="200-300" class="price-option">200 - 300 m²</li>
-                <li data-value="300-400" class="price-option">300 - 400 m²</li>
-                <li data-value="400-500" class="price-option">400 - 500 m²</li>
-                <li data-value="tren-500" class="price-option">Trên 500 m²</li>
-            </ul>
-        </div>
-        <button type="submit">Lọc</button>
-    </form>
-</div>
+    <div class="filter-container1">
+        <h4>Lọc Theo Diện Tích</h4>
+        <form id="areaFilterForm">
+            <div class="form-group">
+                <label>Chọn diện tích:</label>
+                <ul class="price-options">
+                    <li data-value="duoi-30" class="price-option">Dưới 30 m²</li>
+                    <li data-value="30-50" class="price-option">30 - 50 m²</li>
+                    <li data-value="50-80" class="price-option">50 - 80 m²</li>
+                    <li data-value="80-100" class="price-option">80 - 100 m²</li>
+                    <li data-value="100-120" class="price-option">100 - 120 m²</li>
+                    <li data-value="120-150" class="price-option">120 - 150 m²</li>
+                    <li data-value="150-200" class="price-option">150 - 200 m²</li>
+                    <li data-value="200-300" class="price-option">200 - 300 m²</li>
+                    <li data-value="300-400" class="price-option">300 - 400 m²</li>
+                    <li data-value="400-500" class="price-option">400 - 500 m²</li>
+                    <li data-value="tren-500" class="price-option">Trên 500 m²</li>
+                </ul>
+            </div>
+            <button type="submit">Lọc</button>
+        </form>
+    </div>
 
 
-<style>
-    /* Thiết lập form hiển thị sản phẩm */
-    .property-container {
-        display: flex;
-        align-items: flex-start;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        width: 100%;
 
-        padding: 16px;
-
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Thiết lập hình ảnh sản phẩm */
-    .property-image {
-        width: 200px;
-        height: 150px;
-        border-radius: 8px;
-        margin-right: 16px;
-        object-fit: cover;
-    }
-
-    /* Thiết lập nội dung bên phải */
-    .property-details {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-        max-width: 350px;
-    }
-
-    /* Thiết lập tiêu đề sản phẩm */
-    .property-title {
-        font-size: 20px;
-        font-weight: bold;
-        margin: 0;
-        color: #333;
-    }
-
-    /* Thiết lập các chi tiết sản phẩm */
-    .property-price,
-    .property-size,
-    .property-address {
-        font-size: 16px;
-        margin: 0;
-        color: #666;
-    }
-
-    .property-price {
-        color: #e74c3c;
-        font-weight: bold;
-    }
-</style>
-
-<script>
-    document.querySelectorAll('.price-option').forEach(item => {
-        item.addEventListener('click', event => {
+    <script>
+        document.querySelectorAll('.price-option').forEach(item => {
+            item.addEventListener('click', event => {
 // Bỏ chọn tất cả các mục trước đó
-            document.querySelectorAll('.price-option').forEach(option => {
-                option.classList.remove('selected'); // Xóa lớp 'selected'
-            });
+                document.querySelectorAll('.price-option').forEach(option => {
+                    option.classList.remove('selected'); // Xóa lớp 'selected'
+                });
 
 // Thêm lớp 'selected' cho tùy chọn hiện tại
-            item.classList.add('selected');
+                item.classList.add('selected');
 
 // Có thể lưu giá trị đã chọn nếu cần
-            const selectedValue = item.getAttribute('data-value');
-            console.log("Giá đã chọn:", selectedValue);
+                const selectedValue = item.getAttribute('data-value');
+                console.log("Giá đã chọn:", selectedValue);
+            });
         });
-    });
-</script>
-
+    </script>
+</div>
 
 <!-- Footer -->
 <div class="footer">

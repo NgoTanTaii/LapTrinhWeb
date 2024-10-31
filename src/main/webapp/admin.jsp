@@ -1,11 +1,19 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <%
-    // Kiểm tra nếu người dùng không có session hoặc không phải admin
-    if (session == null || !"admin".equals(session.getAttribute("role"))) {
-        response.sendRedirect("login.jsp");
+
+    // Sử dụng biến session có sẵn trong JSP
+    String role = (String) session.getAttribute("role");
+
+    if (!"admin".equals(role)) {
+        // Nếu không phải admin, chuyển hướng đến trang không có quyền truy cập
+        response.sendRedirect("access-denied.jsp");
         return;
     }
 %>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -28,6 +28,8 @@
                 <span>123 Đường ABC, Quận XYZ, TP.HCM</span>
             </div>
 
+
+
         </div>
         <div class="header-right" style="margin-top: 10px">
 
@@ -64,7 +66,7 @@
 
             <nav>
                 <ul class="u-lo">
-                    <li><a href="property-for-sale.jsp">Nhà Đất Bán</a>
+                    <li><a href="propertyforsale">Nhà Đất Bán</a>
                         <ul>
                             <li><a href="#">Thông tin bán nhà đất</a></li>
                             <li><a href="#">Mua bán bất động sản</a></li>

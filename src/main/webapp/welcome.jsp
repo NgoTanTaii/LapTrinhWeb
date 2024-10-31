@@ -40,7 +40,7 @@
             <% if (isLoggedIn) { %>
             <a href="account.jsp" class="btn"><h3>Hello, <%= username %>
             </h3></a>
-            <a href="homes" class="btn"><h3>Đăng xuất</h3></a>
+            <a href="logout" class="btn"><h3>Đăng xuất</h3></a>
             <% } else { %>
             <a href="login.jsp" class="btn"><h3>Đăng nhập</h3></a>
             <a href="register.jsp" class="btn"><h3>Đăng ký</h3></a>

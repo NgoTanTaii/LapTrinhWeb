@@ -41,6 +41,12 @@ public class Property1 {
     }
 
 
+
+
+    public Property1(String title, String price, String area, String address, String imageUrl) {
+    }
+
+
     public int getId() {
         return id;
     }
