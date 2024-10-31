@@ -3,23 +3,34 @@
 <head>
     <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thông tin đặt hàng</title>
+    <title>Thông tin đặt lịch</title>
     <link rel="stylesheet" href="css/style.css"> <!-- Liên kết CSS nếu có -->
 </head>
 <body>
-<h1>Nhập thông tin giao hàng</h1>
+<h1>Nhập thông tin đặt lịch</h1>
 
-<form id="checkout-form" method="post" action="place-order">
-    <label for="address">Địa chỉ giao hàng:</label>
+<form id="schedule-form" method="post" action="schedule-appointment">
+    <!-- Trường nhập địa chỉ -->
+    <label for="address">Địa chỉ:</label>
     <input type="text" id="address" name="address" required>
 
+    <!-- Trường nhập số điện thoại -->
     <label for="phone">Số điện thoại:</label>
     <input type="text" id="phone" name="phone" required>
 
-    <!-- Thêm các input hidden để chứa thông tin từng sản phẩm -->
+    <!-- Trường chọn ngày hẹn -->
+    <label for="appointment-date">Ngày hẹn:</label>
+    <input type="date" id="appointment-date" name="appointmentDate" required>
+
+    <!-- Trường chọn giờ hẹn -->
+    <label for="appointment-time">Giờ hẹn:</label>
+    <input type="time" id="appointment-time" name="appointmentTime" required>
+
+    <!-- Thêm các input hidden để chứa thông tin sản phẩm (bất động sản) -->
     <div id="product-list"></div>
 
-    <button type="submit">Xác nhận đặt hàng</button>
+    <!-- Nút xác nhận đặt lịch -->
+    <button type="submit">Xác nhận đặt lịch</button>
 </form>
 
 <script>
@@ -33,10 +44,11 @@
         productNameInput.name = 'productName' + index;
         productNameInput.value = item.name;
 
+        // Bất động sản chỉ có số lượng là 1
         const productQuantityInput = document.createElement('input');
         productQuantityInput.type = 'hidden';
         productQuantityInput.name = 'productQuantity' + index;
-        productQuantityInput.value = item.quantity;
+        productQuantityInput.value = 1;
 
         const productPriceInput = document.createElement('input');
         productPriceInput.type = 'hidden';
@@ -44,7 +56,6 @@
         productPriceInput.value = item.price;
 
         productListDiv.appendChild(productNameInput);
-        productListDiv.appendChild(productQuantityInput);
         productListDiv.appendChild(productPriceInput);
     });
 

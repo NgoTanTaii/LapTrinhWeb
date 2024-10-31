@@ -309,7 +309,7 @@ public class PropertyDAO {
 
     public List<Property1> getPropertiesByCity(String city) {
         List<Property1> properties = new ArrayList<>();
-        String query = "SELECT title, description, address, area, image_url, price FROM properties WHERE address LIKE ?";
+        String query = "SELECT property_id,title, description, address, area, image_url, price FROM properties WHERE address LIKE ?";
 
         try (Connection conn = DbConnection1.initializeDatabase();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -317,6 +317,7 @@ public class PropertyDAO {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Property1 property = new Property1();
+                property.setId(rs.getInt("property_id"));
                 property.setTitle(rs.getString("title"));
                 property.setDescription(rs.getString("description"));
                 property.setAddress(rs.getString("address"));
@@ -332,9 +333,10 @@ public class PropertyDAO {
         }
         return properties;
     }
+
     public List<Property1> getLargestAreaProperties(String city, int limit) {
         List<Property1> properties = new ArrayList<>();
-        String query = "SELECT title, description, address, area, image_url, price FROM properties " +
+        String query = "SELECT property_id,title, description, address, area, image_url, price FROM properties " +
                 "WHERE address LIKE ? ORDER BY area DESC LIMIT ?"; // Lấy sản phẩm có diện tích lớn nhất
 
         try (Connection conn = DbConnection1.initializeDatabase();
@@ -344,6 +346,7 @@ public class PropertyDAO {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Property1 property = new Property1();
+                property.setId(rs.getInt("property_id"));
                 property.setTitle(rs.getString("title"));
                 property.setDescription(rs.getString("description"));
                 property.setAddress(rs.getString("address"));
@@ -359,9 +362,10 @@ public class PropertyDAO {
         }
         return properties;
     }
+
     public List<Property1> getHighestPriceProperties(String city, int limit) {
         List<Property1> properties = new ArrayList<>();
-        String query = "SELECT title, description, address, area, image_url, price FROM properties " +
+        String query = "SELECT property_id,title, description, address, area, image_url, price FROM properties " +
                 "WHERE address LIKE ? ORDER BY price DESC LIMIT ?"; // Lấy sản phẩm có giá cao nhất
 
         try (Connection conn = DbConnection1.initializeDatabase();
@@ -371,6 +375,7 @@ public class PropertyDAO {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Property1 property = new Property1();
+                property.setId(rs.getInt("property_id"));
                 property.setTitle(rs.getString("title"));
                 property.setDescription(rs.getString("description"));
                 property.setAddress(rs.getString("address"));

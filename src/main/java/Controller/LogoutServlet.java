@@ -1,3 +1,4 @@
+// LogoutServlet.java
 package Controller;
 
 import jakarta.servlet.ServletException;
@@ -11,16 +12,15 @@ import java.io.IOException;
 
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        // Hủy bỏ session của người dùng
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Xóa session
         HttpSession session = request.getSession(false);
         if (session != null) {
-            session.invalidate(); // Hủy session
+            session.invalidate();
         }
-        // Chuyển hướng về trang đăng nhập
-        response.sendRedirect("login");
+
+        // Chuyển hướng về trang "homes"
+        response.sendRedirect("homes");
     }
 }

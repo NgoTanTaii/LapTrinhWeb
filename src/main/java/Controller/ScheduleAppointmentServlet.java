@@ -15,8 +15,8 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.Properties;
 
-@WebServlet("/place-order")
-public class PlaceOrderServlet extends HttpServlet {
+@WebServlet("/schedule-appointment")
+public class ScheduleAppointmentServlet extends HttpServlet {
 
     private static final String FROM_EMAIL = "khoangoquan@gmail.com";
     private static final String EMAIL_PASSWORD = "mzrs xvca qstr zegw";
@@ -28,15 +28,20 @@ public class PlaceOrderServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("username");
 
+        // Kiểm tra xem người dùng đã đăng nhập chưa
         if (username == null) {
             response.sendRedirect("login.jsp");
             return;
         }
 
+        // Lấy các tham số từ form đặt lịch
         String address = request.getParameter("address");
         String phone = request.getParameter("phone");
+        String appointmentDate = request.getParameter("appointmentDate");
+        String appointmentTime = request.getParameter("appointmentTime");
         int productCount = Integer.parseInt(request.getParameter("productCount"));
 
+        // Kiểm tra các thông tin nhập vào
         if (address == null || address.trim().isEmpty() || phone == null || phone.trim().isEmpty()) {
             request.setAttribute("message", "Vui lòng nhập đầy đủ địa chỉ và số điện thoại.");
             request.getRequestDispatcher("checkout.jsp").forward(request, response);
@@ -44,19 +49,16 @@ public class PlaceOrderServlet extends HttpServlet {
         }
 
         StringBuilder productDetails = new StringBuilder();
-        double totalAmount = 0;
 
-        // Duyệt qua các sản phẩm từ request
+        // Duyệt qua các sản phẩm từ request và thêm vào productDetails
         for (int i = 0; i < productCount; i++) {
             String productName = request.getParameter("productName" + i);
-            int quantity = Integer.parseInt(request.getParameter("productQuantity" + i));
             double price = Double.parseDouble(request.getParameter("productPrice" + i));
 
-            productDetails.append(productName).append(" (x").append(quantity).append("): ")
-                    .append(price * quantity).append("₫\n");
-            totalAmount += price * quantity;
+            productDetails.append(productName).append(": ").append(price).append("₫\n");
         }
 
+        // Lấy email người dùng từ cơ sở dữ liệu
         String userEmail = getUserEmailByUsername(username);
         if (userEmail == null) {
             request.setAttribute("message", "Không thể tìm thấy email của người dùng.");
@@ -64,9 +66,10 @@ public class PlaceOrderServlet extends HttpServlet {
             return;
         }
 
-        boolean emailSent = sendOrderConfirmationEmail(userEmail, username, address, phone, productDetails.toString(), totalAmount);
+        // Gửi email xác nhận đặt lịch
+        boolean emailSent = sendAppointmentConfirmationEmail(userEmail, username, address, phone, appointmentDate, appointmentTime, productDetails.toString());
         if (emailSent) {
-            request.setAttribute("message", "Đặt hàng thành công! Thông tin xác nhận đã được gửi đến email của bạn.");
+            request.setAttribute("message", "Đặt lịch thành công! Thông tin xác nhận đã được gửi đến email của bạn.");
         } else {
             request.setAttribute("message", "Đã xảy ra lỗi khi gửi email xác nhận. Vui lòng thử lại.");
         }
@@ -74,6 +77,7 @@ public class PlaceOrderServlet extends HttpServlet {
         request.getRequestDispatcher("cart.jsp").forward(request, response);
     }
 
+    // Phương thức lấy email người dùng dựa trên username
     private String getUserEmailByUsername(String username) {
         String email = null;
         String query = "SELECT email FROM users WHERE username = ?";
@@ -92,7 +96,8 @@ public class PlaceOrderServlet extends HttpServlet {
         return email;
     }
 
-    private boolean sendOrderConfirmationEmail(String toEmail, String username, String address, String phone, String productDetails, double totalAmount) {
+    // Phương thức gửi email xác nhận đặt lịch
+    private boolean sendAppointmentConfirmationEmail(String toEmail, String username, String address, String phone, String appointmentDate, String appointmentTime, String productDetails) {
         Properties props = new Properties();
         props.put("mail.smtp.host", SMTP_HOST);
         props.put("mail.smtp.port", SMTP_PORT);
@@ -109,18 +114,19 @@ public class PlaceOrderServlet extends HttpServlet {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(FROM_EMAIL));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
-            message.setSubject("Xác nhận đơn hàng từ Vinabook");
+            message.setSubject("Xác nhận đặt lịch từ Homelander");
 
             String emailContent = "Xin chào " + username + ",\n\n"
-                    + "Cảm ơn bạn đã đặt hàng tại Vinabook.\n"
-                    + "Thông tin đặt hàng của bạn:\n"
+                    + "Cảm ơn bạn đã đặt lịch tại Homelander.\n"
+                    + "Thông tin lịch hẹn của bạn:\n"
                     + "- Địa chỉ: " + address + "\n"
-                    + "- Số điện thoại: " + phone + "\n\n"
-                    + "Chi tiết sản phẩm:\n" + productDetails
-                    + "\nTổng cộng: " + totalAmount + "₫\n\n"
-                    + "Chúng tôi sẽ liên hệ sớm với bạn để giao hàng.\n\n"
+                    + "- Số điện thoại: " + phone + "\n"
+                    + "- Ngày hẹn: " + appointmentDate + "\n"
+                    + "- Giờ hẹn: " + appointmentTime + "\n\n"
+
+                    + "\nChúng tôi sẽ liên hệ sớm với bạn để xác nhận lịch hẹn.\n\n"
                     + "Trân trọng,\n"
-                    + "Đội ngũ Vinabook.";
+                    + "Đội ngũ Homelander.";
 
             message.setText(emailContent);
 

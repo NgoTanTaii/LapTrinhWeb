@@ -4,88 +4,134 @@
 <%@ page import="java.util.List" %>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-<header class="header">
-    <div class="header-top" style="width: 100%; position: sticky; top: 0; z-index: 1000;">
-        <div class="header-left">
-
-            <div class="contact-item">
-                <img src="jpg/phone-call.png" class="icon">
-                <span>0123 456 789</span>
-            </div>
-            <div class="contact-item">
-                <img src="jpg/email.png" class="icon">
-                <span>info@company.com</span>
-            </div>
-            <div class="contact-item">
-
-                <img src="jpg/location.png" class="icon">
-                <span>123 Đường ABC, Quận XYZ, TP.HCM</span>
-            </div>
-
-        </div>
-        <div class="header-right" style="margin-top: 10px">
-
-            <a href="login.jsp" class="btn"><h3>Đăng nhập</h3></a>
-            <a href="register.jsp" class="btn"><h3>Đăng ký</h3></a>
-
-        </div>
-
-
-    </div>
-    <div class="menu">
-        <div class="header-bottom" style="height:60px;margin-top: 0">
-
-            <div class="store-name">
-                <h1><a href="homes">
-                    <span class="color1">HOME</span>
-                    <span class="color2">LANDER</span> <!-- Đổi từ VINA BOOK sang VINA BĐS -->
-                </a></h1>
-            </div>
-
-
-            <nav>
-                <ul>
-                    <li><a href="#nhadatban">Nhà Đất Bán</a></li>
-                    <li><a href="#nhadatchochue">Nhà Đất Cho Thuê</a></li>
-                    <li><a href="#duan">Dự Án</a></li>
-                    <li><a href="#tintuc">Tin Tức</a></li>
-                    <li><a href="#wikibds">Wiki BĐS</a></li>
-                </ul>
-            </nav>
-
-
-            <div class="contact-info">
-                <img src="jpg/phone-call.png" alt="Phone Icon" class="phone-icon">
-                <span class="phone-number">0123 456 789</span>
-            </div>
-
-        </div>
-    </div>
-
-
-    </div>
-</header>
-<%
-    String propertyId = request.getParameter("id");
-    PropertyDAO propertyDAO = new PropertyDAO();
-    Property1 property = propertyDAO.getPropertyById(propertyId);
-
-    // Fetch thumbnails from the property_images table
-    List<String> thumbnailUrls = propertyDAO.getThumbnailUrls(propertyId);
-
-    if (property == null) {
-        out.println("<h2>Property not found</h2>");
-    } else {
-%>
-
-<!DOCTYPE html>
-<html lang="en">
+<link rel="stylesheet" href="css/property-detail.css">
+<meta charset="UTF-8">
+<title>Property Details</title>
 <head>
-    <meta charset="UTF-8">
-    <title>Property Details</title>
-    <link rel="stylesheet" href="css/property-detail.css">
     <style>
+        .heart-icon {
+            position: absolute;
+            bottom: 5px; /* Di chuyển trái tim xuống góc dưới */
+            right: 5px; /* Đặt trái tim ở góc phải */
+            z-index: 10; /* Đảm bảo trái tim nằm trên tất cả các phần tử khác */
+            cursor: pointer;
+            margin-bottom: 2px;
+            margin-right: 10px;
+        }
+
+        .heart-icon img {
+            width: 20px !important; /* Kích thước nhỏ hơn của trái tim */
+            height: 20px !important; /* Kích thước nhỏ hơn của trái tim */
+            transition: transform 0.3s ease, filter 0.3s ease; /* Hiệu ứng chuyển động */
+
+
+        }
+
+        .heart-icon:hover img {
+            transform: scale(1.2); /* Phóng to biểu tượng trái tim khi hover */
+            filter: brightness(1.5); /* Tăng độ sáng khi hover */
+        }
+
+        .floating-cart {
+            position: fixed; /* Đảm bảo vị trí cố định trên trang */
+            bottom: 20px; /* Khoảng cách với mép dưới trang */
+            right: 20px; /* Khoảng cách với mép phải của trang */
+            width: 40px !important; /* Giảm chiều rộng của biểu tượng giỏ hàng */
+            height: 40px !important; /* Giảm chiều cao của biểu tượng giỏ hàng */
+            background-color: transparent; /* Màu nền của biểu tượng */
+            border-radius: 50%; /* Biểu tượng có hình tròn */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng nhẹ để nổi bật */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* Đảm bảo nằm trên các thành phần khác */
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu khi hover */
+        }
+
+        /* Khi hover vào floating-cart */
+        .floating-cart:hover {
+            background-color: transparent;
+            transform: scale(1.1);
+        }
+
+        /* Style cho biểu tượng giỏ hàng (cart-icon) */
+        .floating-cart .cart-icon {
+            width: 40px; /* Giảm kích thước icon */
+            height: 40px;
+            object-fit: contain; /* Đảm bảo ảnh vừa khung mà không bị méo */
+        }
+
+        /* Hiển thị mini-cart khi hover vào floating-cart */
+        .floating-cart:hover .mini-cart {
+            display: block; /* Hiển thị mini-cart khi hover */
+        }
+
+        /* Style cho mini-cart */
+        .mini-cart {
+            display: none; /* Mặc định ẩn mini-cart */
+            position: absolute;
+            bottom: 80px; /* Đặt mini-cart ngay trên biểu tượng giỏ hàng */
+            right: 0;
+            width: 250px; /* Giảm chiều rộng của mini-cart */
+            max-height: 400px; /* Giới hạn chiều cao để tránh quá dài */
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng nhẹ */
+            overflow-y: auto; /* Cho phép cuộn khi nội dung quá dài */
+            padding: 10px;
+        }
+
+        /* Style cho danh sách sản phẩm trong mini-cart */
+        .mini-cart ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .mini-cart li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .mini-cart li img {
+            width: 40px; /* Kích thước hình ảnh nhỏ hơn */
+            height: 40px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        .mini-cart .item-info {
+            font-size: 14px;
+        }
+
+        .mini-cart .item-info h4 {
+            margin: 0;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis; /* Thêm dấu "..." khi tên sách quá dài */
+        }
+
+        .item-count {
+            position: absolute;
+            top: 5px; /* Vị trí từ đầu biểu tượng giỏ hàng */
+            right: 5px; /* Vị trí từ bên phải biểu tượng giỏ hàng */
+            background-color: red; /* Màu nền */
+            color: white; /* Màu chữ */
+            border-radius: 50%; /* Hình tròn */
+            width: 20px; /* Chiều rộng */
+            height: 20px; /* Chiều cao */
+            display: flex;
+            justify-content: center; /* Canh giữa */
+            align-items: center; /* Canh giữa */
+            font-size: 12px; /* Kích thước chữ */
+            font-weight: bold; /* Đậm chữ */
+        }
+
         .bottom-banner {
             width: 56%; /* Kích thước của banner */
             margin-left: 135px; /* Canh giữa và tạo khoảng cách */
@@ -225,8 +271,100 @@
             background-color: #f9f9f9; /* Màu nền nhẹ cho phần bản quyền */
         }
     </style>
+
 </head>
-<body>
+<header class="header">
+    <div class="header-top" style="width: 100%; position: sticky; top: 0; z-index: 1000;">
+        <div class="header-left">
+            <div class="contact-item">
+                <img src="jpg/phone-call.png" class="icon">
+                <span>0123 456 789</span>
+            </div>
+            <div class="contact-item">
+                <img src="jpg/email.png" class="icon">
+                <span>info@company.com</span>
+            </div>
+            <div class="contact-item">
+                <img src="jpg/location.png" class="icon">
+                <span>123 Đường ABC, Quận XYZ, TP.HCM</span>
+            </div>
+        </div>
+
+        <%
+            boolean isLoggedIn = session.getAttribute("username") != null;
+            String username = (String) session.getAttribute("username");
+        %>
+        <script>
+            const isLoggedIn = <%= isLoggedIn %>; // Chuyển trạng thái đăng nhập thành biến JavaScript
+        </script>
+
+        <div class="header-right" style="margin-top: 10px">
+            <% if (isLoggedIn) { %>
+            <a href="account.jsp" class="btn"><h3>Hello, <%= username %></h3></a>
+            <a href="logout" class="btn"><h3>Đăng xuất</h3></a>
+            <% } else { %>
+            <a href="login.jsp" class="btn"><h3>Đăng nhập</h3></a>
+            <a href="register.jsp" class="btn"><h3>Đăng ký</h3></a>
+            <% } %>
+            <a href="post-status.html" class="btn"><h3>Đăng tin</h3></a>
+        </div>
+
+    </div>
+
+    <!-- Floating Cart Icon -->
+    <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()"
+       style="border:1px solid #ccc; border-radius:100%;">
+        <img src="jpg/heart%20(1).png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng"
+             class="cart-icon">
+        <div class="item-count">0</div>
+        <div class="mini-cart">
+            <h4>Bất động sản đã lưu</h4>
+            <ul id="cart-items"></ul>
+            <button id="go-to-cart" onclick="goToCart()">Đi tới xem bất động sản đã lưu</button>
+        </div>
+    </a>
+
+    <!-- Menu Section -->
+    <div class="menu">
+        <div class="header-bottom" style="height:60px;margin-top: 0">
+            <div class="store-name">
+                <h1><a href="homes">
+                    <span class="color1">HOME</span>
+                    <span class="color2">LANDER</span> <!-- Thương hiệu -->
+                </a></h1>
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="#nhadatban">Nhà Đất Bán</a></li>
+                    <li><a href="#nhadatchochue">Nhà Đất Cho Thuê</a></li>
+                    <li><a href="#duan">Dự Án</a></li>
+                    <li><a href="#tintuc">Tin Tức</a></li>
+                    <li><a href="#wikibds">Wiki BĐS</a></li>
+                </ul>
+            </nav>
+
+            <div class="contact-info">
+                <img src="jpg/phone-call.png" alt="Phone Icon" class="phone-icon">
+                <span class="phone-number">0123 456 789</span>
+            </div>
+        </div>
+    </div>
+</header>
+<%
+    String propertyId = request.getParameter("id");
+    PropertyDAO propertyDAO = new PropertyDAO();
+    Property1 property = propertyDAO.getPropertyById(propertyId);
+
+    // Fetch thumbnails from the property_images table
+    List<String> thumbnailUrls = propertyDAO.getThumbnailUrls(propertyId);
+
+    if (property == null) {
+        out.println("<h2>Property not found</h2>");
+    } else {
+%>
+
+
 <div class="container" style="max-width:80% ">
     <div class="property-detail">
         <h2><%= property.getTitle() %>
@@ -273,6 +411,12 @@
         <p>Diện tích: <%= property.getArea() %> m²</p>
         <p>Mô tả: <%= property.getDescription() %>
         </p>
+        <div class="heart-icon"
+             onclick="addToFavorites('<%= property.getId() %>', '<%= property.getTitle() %>', <%= property.getPrice() %>, <%= property.getArea() %>, '<%= property.getImageUrl() %>','<%= property.getAddress() %>')">
+            <img src="jpg/heartred.png" alt="Heart Icon" class="heart-image">
+        </div>
+
+
     </div>
 
     <style>
@@ -420,7 +564,6 @@
 </div>
 
 
-
 <div class="additional-info">
     <h3>Thông tin bổ sung</h3>
     <div class="info-container">
@@ -450,6 +593,7 @@
     String[] addressParts = address.split(","); // Tách địa chỉ theo dấu phẩy
     String city = addressParts[addressParts.length - 1].trim(); // Lấy tên thành phố (phần cuối cùng)
 
+
     // Lấy các sản phẩm cùng thành phố
     PropertyDAO propertyDAO1 = new PropertyDAO();
     List<Property1> relatedProperties = propertyDAO1.getPropertiesByCity(city); // Phương thức để lấy các sản phẩm cùng thành phố
@@ -457,23 +601,30 @@
 
 <div class="related-properties" style="width:63%">
     <h3>Các sản phẩm liên quan</h3>
+
     <div class="related-properties-container" id="relatedProductsContainer">
         <%
             if (relatedProperties != null && !relatedProperties.isEmpty()) {
                 for (Property1 relatedProperty : relatedProperties) {
+
         %>
         <div class="related-property">
-            <img src="<%= relatedProperty.getImageUrl() %>" alt="Sản phẩm <%= relatedProperty.getTitle() %>">
-            <h4><%= relatedProperty.getTitle() %></h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: <%= relatedProperty.getPrice() %> tỷ</span>
-                <span>Diện tích: <%= relatedProperty.getArea() %> m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: <%= relatedProperty.getAddress() %>
-            </p>
+            <a href="property-detail.jsp?id=<%= relatedProperty.getId() %>"
+               style="text-decoration: none; color: inherit;">
+
+                <img src="<%= relatedProperty.getImageUrl() %>" alt="Sản phẩm <%= relatedProperty.getTitle() %>">
+                <h4><%= relatedProperty.getTitle() %>
+                </h4>
+                <p style="display: flex; justify-content: space-between; color: red;">
+                    <span>Giá: <%= relatedProperty.getPrice() %> tỷ</span>
+                    <span>Diện tích: <%= relatedProperty.getArea() %> m²</span>
+                </p>
+                <p style="display: flex; align-items: center;">
+                    <img src="jpg/location.png" alt="Location Icon" class="location-icon"
+                         style="width: 16px; height: 16px; margin-right: 5px;">
+                    Địa chỉ: <%= relatedProperty.getAddress() %>
+                </p>
+            </a>
         </div>
         <%
             }
@@ -512,7 +663,7 @@
 </script>
 
 <%
-    // Lấy địa chỉ để tìm các sản phẩm cùng thành phố
+
     String address1 = property.getAddress();
     String[] addressParts1 = address1.split(",");
     String city1 = addressParts1[addressParts1.length - 1].trim(); // Lấy tên thành phố (phần cuối cùng)
@@ -531,17 +682,21 @@
             for (Property1 property1 : highestPriceProperties) {
         %>
         <div class="related-property">
-            <img src="<%= property1.getImageUrl() %>" alt="Sản phẩm <%= property1.getTitle() %>">
-            <h4><%= property1.getTitle() %></h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: <%= property1.getPrice() %> tỷ</span>
-                <span>Diện tích: <%= property1.getArea() %> m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: <%= property1.getAddress() %>
-            </p>
+            <a href="property-detail.jsp?id=<%= property1.getId() %>" style="text-decoration: none; color: inherit;">
+
+                <img src="<%= property1.getImageUrl() %>" alt="Sản phẩm <%= property1.getTitle() %>">
+                <h4><%= property1.getTitle() %>
+                </h4>
+                <p style="display: flex; justify-content: space-between; color: red;">
+                    <span>Giá: <%= property1.getPrice() %> tỷ</span>
+                    <span>Diện tích: <%= property1.getArea() %> m²</span>
+                </p>
+                <p style="display: flex; align-items: center;">
+                    <img src="jpg/location.png" alt="Location Icon" class="location-icon"
+                         style="width: 16px; height: 16px; margin-right: 5px;">
+                    Địa chỉ: <%= property1.getAddress() %>
+                </p>
+            </a>
         </div>
         <%
             }
@@ -551,17 +706,22 @@
             for (Property1 property2 : largestAreaProperties) {
         %>
         <div class="related-property">
-            <img src="<%= property2.getImageUrl() %>" alt="Sản phẩm <%= property2.getTitle() %>">
-            <h4><%= property2.getTitle() %></h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: <%= property2.getPrice() %> tỷ</span>
-                <span>Diện tích: <%= property2.getArea() %> m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: <%= property2.getAddress() %>
-            </p>
+            <a href="property-detail.jsp?id=<%= property2.getId() %>" style="text-decoration: none; color: inherit;">
+
+                <img src="<%= property2.getImageUrl() %>" alt="Sản phẩm <%= property2.getTitle() %>">
+                <h4><%= property2.getTitle() %>
+                </h4>
+                <p style="display: flex; justify-content: space-between; color: red;">
+                    <span>Giá: <%= property2.getPrice() %> tỷ</span>
+                    <span>Diện tích: <%= property2.getArea() %> m²</span>
+                </p>
+                <p style="display: flex; align-items: center;">
+                    <img src="jpg/location.png" alt="Location Icon" class="location-icon"
+                         style="width: 16px; height: 16px; margin-right: 5px;">
+                    Địa chỉ: <%= property2.getAddress() %>
+                </p>
+            </a>
+
         </div>
         <%
             }
@@ -594,9 +754,110 @@
     });
 </script>
 
+<script>
+
+    let cartItems = JSON.parse(sessionStorage.getItem('cartItems')) || [];
+    let miniCartVisible = false; // Biến theo dõi trạng thái hiển thị của giỏ hàng
+
+    // Hàm thêm bất động sản vào giỏ hàng
+    function addToFavorites(id, title, price, area, imageUrl, address) {
+        const existingProductIndex = cartItems.findIndex(item => item.id === id);
+
+        if (existingProductIndex !== -1) {
+            alert("bất động sản này đã được quan tâm!"); // Thông báo cho người dùng
+        } else {
+            const product = {
+                id: id,
+                title: title,
+                price: parseFloat(price),
+                area: area,
+                imageUrl: imageUrl,
+                address: address,
+                quantity: 1 // Số lượng cố định là 1
+            };
+            cartItems.push(product);
+            updateSessionStorage();
+            updateCartDisplay();
+            showMiniCart();
+        }
+    }
+
+    // Cập nhật sessionStorage
+    function updateSessionStorage() {
+        sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
+    }
+
+    // Cập nhật hiển thị giỏ hàng
+    function updateCartDisplay() {
+        const itemCount = document.querySelector('.item-count');
+        const cartList = document.getElementById('cart-items');
+
+        cartList.innerHTML = '';
+
+        if (cartItems.length === 0) {
+            cartList.innerHTML = '<li>Bạn chưa có bất động sản đã lưu.</li>';
+            itemCount.innerText = 0; // Cập nhật số lượng sản phẩm
+            return; // Kết thúc hàm nếu giỏ hàng trống
+        }
+
+        cartItems.forEach((item) => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+            <img src="${item.imageUrl}" alt="${item.title}" width="40" height="40">
+            <div class="item-info">
+                <h4>${item.title}</h4>
+                <p>Địa chỉ: ${item.address}</p>
+                <p>Diện tích: ${item.area} m²</p>
+                <span>Giá: ${item.price.toLocaleString()} tỷ</span>
+
+            </div>
+            <button onclick="removeFromCart('${item.id}')">Xóa</button>
+        `;
+            cartList.appendChild(listItem);
+        });
+
+        itemCount.innerText = cartItems.length; // Cập nhật số lượng sản phẩm
+    }
+
+    // Xóa sản phẩm khỏi giỏ hàng
+    function removeFromCart(id) {
+        cartItems = cartItems.filter(item => item.id !== id);
+        updateSessionStorage();
+        updateCartDisplay();
+    }
+
+    // Hiện giỏ hàng mini
+    function showMiniCart() {
+        const miniCart = document.querySelector('.mini-cart');
+        miniCart.style.display = 'block';
+        updateCartDisplay();
+    }
+
+    // Chuyển hướng đến trang giỏ hàng
+    function goToCart() {
+        if (!isLoggedIn) {
+            alert("Bạn cần đăng nhập để xem bất động sản đã quan tâm."); // Thông báo yêu cầu đăng nhập
+            window.location.href = 'login.jsp'; // Điều hướng đến trang đăng nhập
+        } else {
+            window.location.href = 'cart.jsp'; // Điều hướng đến trang giỏ hàng nếu đã đăng nhập
+        }
 
 
+        }
 
+
+        // Cập nhật hiển thị giỏ hàng khi tải lại trang
+    updateCartDisplay();
+
+    function toggleMiniCart() {
+        const miniCart = document.querySelector('.mini-cart');
+        miniCartVisible = !miniCartVisible; // Chuyển đổi trạng thái hiển thị
+        miniCart.style.display = miniCartVisible ? 'block' : 'none'; // Cập nhật hiển thị
+        updateCartDisplay(); // Cập nhật hiển thị giỏ hàng
+    }
+
+
+</script>
 
 <div class="copyright">
     <p>© Mọi quyền thuộc về Homelander. Mọi thông tin liên quan vui lòng liên hệ với chúng tôi.</p>

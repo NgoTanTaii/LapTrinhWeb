@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="css/bds.css">
 <!DOCTYPE html>
 <head>
-
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Trang JSP với UTF-8</title>
 </head>
@@ -51,7 +50,7 @@
         </div>
     </a>
 
-    </div>
+
     <div class="menu">
         <div class="header-bottom">
 
@@ -115,7 +114,7 @@
     </div>
 
 
-    </div>
+
     <div class="slideshow-container">
         <div class="mySlides fade">
             <img src="jpg/1.webp" alt="Banner 1">
@@ -159,7 +158,6 @@
 
     <script src="JS/script.js"></script>
 
-    </div>
 </header>
 <div class="news-section">
     <h2>Tin Tức Bất Động Sản</h2>

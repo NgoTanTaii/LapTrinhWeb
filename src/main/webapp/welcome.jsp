@@ -47,9 +47,8 @@
             <% } %>
             <a href="post-status.html" class="btn"><h3>Đăng tin</h3></a>
         </div>
-    </div>
 
-    <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()"
+        <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()"
        style="border: 1px solid #ccc; border-radius:100%;">
         <img src="jpg/heart%20(1).png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng"
              class="cart-icon">
@@ -60,6 +59,8 @@
             <button id="go-to-cart" onclick="goToCart()">Đi tới xem bất động sản đã lưu</button>
         </div>
     </a>
+
+
 
     </div>
     <div class="menu">
