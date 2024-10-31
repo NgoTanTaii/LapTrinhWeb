@@ -27,23 +27,6 @@ public class Property1 {
 
     }
 
-    public Property1() {
-
-    }
-
-    public Property1(String title, double price, String address, double area, String imageUrl, String description) {
-    }
-
-    public Property1(int propertyId, String title, double price, double area, String address, String type, String status, String imageUrl) {
-    }
-
-    public Property1(int propertyId, String title, double price, String address, double area, String imageUrl) {
-    }
-
-
-    public Property1(String title, double price, double area, String address, String imageUrl) {
-    }
-
     public int getId() {
         return id;
     }
@@ -76,20 +59,20 @@ public class Property1 {
         this.area = area;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public String getAddress() {
         return address;
     }
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getStatus() {
@@ -115,6 +98,24 @@ public class Property1 {
     public void setDescription(String description) {
         this.description = description;
     }
-}
 
+    public Property1() {
+
+    }
+
+    public Property1(String title, double price, String address, double area, String imageUrl, String description) {
+    }
+
+    public Property1(int propertyId, String title, double price, double area, String address, String type, String status, String imageUrl) {
+    }
+
+    public Property1(int propertyId, String title, double price, String address, double area, String imageUrl) {
+    }
+
+
+    public Property1(String title, double price, double area, String address, String imageUrl) {
+    }
+
+
+}
 

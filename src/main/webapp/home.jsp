@@ -73,14 +73,14 @@
                             <li><a href="#">Nhà đất giá rẻ</a></li>
                         </ul>
                     </li>
-                    <li><a href="property-for-rent.html">Nhà Đất Cho Thuê</a>
+                    <li><a href="property-for-rent.jsp">Nhà Đất Cho Thuê</a>
                         <ul>
                             <li><a href="#">Thông tin cho thuê nhà đất</a></li>
                             <li><a href="#">Thuê nhà nguyên căn</a></li>
                             <li><a href="#">Thuê căn hộ giá rẻ</a></li>
                         </ul>
                     </li>
-                    <li><a href="project.html">Dự Án</a>
+                    <li><a href="Project">Dự Án</a>
                         <ul>
                             <li><a href="#">Các dự án nổi bật</a></li>
                             <li><a href="#">Dự án nhà ở</a></li>

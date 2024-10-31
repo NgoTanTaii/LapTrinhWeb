@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/forsale")
-public class PropertyforsaleServlet extends HttpServlet {
+public class PfsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -21,21 +21,19 @@ public class PropertyforsaleServlet extends HttpServlet {
 
         List<Property1> properties = new ArrayList<>();
 
-        String url = "jdbc:mysql://localhost:3306/webbds"; // Replace with your database URL
+        String url = "jdbc:mysql://localhost:3306/webbds?useUnicode=true&characterEncoding=UTF-8"; // Thay thế với URL cơ sở dữ liệu của bạn
         String dbUser = "root";
         String dbPassword = "";
 
         try (Connection conn = DriverManager.getConnection(url, dbUser, dbPassword)) {
-            String sql = "SELECT * FROM properties WHERE status = 'for sale'";
-
+            String sql = "SELECT title, price, area, address, image_url FROM properties WHERE status = 'sold'";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-
                     String title = rs.getString("title");
-                    double price = rs.getDouble("price");  // Using getDouble for double type
-                    double area = rs.getDouble("area");    // Using getDouble for double type
+                    double price = rs.getDouble("price"); // Nếu giá trị không tồn tại, sẽ mặc định là 0.0
+                    double area = rs.getDouble("area");   // Tương tự cho area
                     String address = rs.getString("address");
                     String imageUrl = rs.getString("image_url");
 
@@ -45,11 +43,10 @@ public class PropertyforsaleServlet extends HttpServlet {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            request.setAttribute("errorMessage", "Failed to retrieve properties from database.");
+            request.setAttribute("errorMessage", "Không thể lấy dữ liệu từ cơ sở dữ liệu.");
         }
 
-        // Send the properties list to JSP
-        request.setAttribute("properties1", properties);
+        request.setAttribute("properties", properties);
         request.getRequestDispatcher("property-for-sale.jsp").forward(request, response);
     }
 }

@@ -212,55 +212,34 @@
 <script src="JS/script.js"></script>
 
 
-<%--<div class="container1">--%>
-<%--    <div class="left-content">--%>
-<%--        <p class="breadcrumbs">Bán / Tất cả BĐS trên toàn quốc</p>--%>
-<%--        <h1>Mua bán nhà đất trên toàn quốc</h1>--%>
-<%--        <p>Hiện có <strong>181.125</strong> bất động sản.</p>--%>
+<div class="container1">
+    <div class="left-content">
+        <p class="breadcrumbs">Bán / Tất cả BĐS trên toàn quốc</p>
+        <h1>Mua bán nhà đất trên toàn quốc</h1>
+        <p>Hiện có <strong>181.125</strong> bất động sản.</p>
+    </div>
+</div>
 
-<%--        <div class="filter-group">--%>
-<%--            <button class="filter-btn">--%>
-<%--                <i class="fas fa-map-marker-alt"></i> Bản đồ--%>
-<%--            </button>--%>
-<%--            <button class="filter-btn">--%>
-<%--                <i class="fas fa-user-tie"></i> Môi giới chuyên nghiệp--%>
-<%--                <label class="switch">--%>
-<%--                    <input type="checkbox">--%>
-<%--                    <span class="slider round"></span>--%>
-<%--                </label>--%>
-<%--            </button>--%>
-<%--            <button class="filter-btn">--%>
-<%--                <i class="fas fa-check-circle"></i> Tin xác thực--%>
-<%--                <label class="switch">--%>
-<%--                    <input type="checkbox">--%>
-<%--                    <span class="slider round"></span>--%>
-<%--                </label>--%>
-<%--            </button>--%>
-<%--            <button class="filter-btn">--%>
-<%--                Thông thường <i class="fas fa-chevron-down"></i>--%>
-<%--            </button>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-
-<%--</div>--%>
+</div>
 <div class="main">
     <%
-        List<Property1> properties1 = (List<Property1>) request.getAttribute("properties1");
+        List<Property1> properties = (List<Property1>) request.getAttribute("properties");
 
-        if (properties1 != null && !properties1.isEmpty()) {
+        if (properties != null && !properties.isEmpty()) {
     %>
     <div class="property-list">
         <%
-            for (Property1 property : properties1) {
+            for (Property1 property : properties) {
         %>
         <div class="container1">
             <div class="property-container">
-                <img src="<%= property.getImageUrl() %>" alt="Hình ảnh bất động sản" class="property-image">
+                <img src=" jpg/DaNang.jpg"
+                     alt="Hình ảnh bất động sản" class="property-image">
                 <div class="property-details">
                     <h2 class="property-title"><%= property.getTitle() %></h2>
-                    <p class="property-price">Giá: <%=  property.getPrice() %> Tỷ</p>
-                    <p class="property-area">Diện tích: <%=  property.getArea() %> m²</p>
-                    <p class="property-address">Địa chỉ: <%= property.getAddress() %></p>
+                    <p class="property-price">Giá: <%= property.getPrice() != 0.0 ? property.getPrice() + " Tỷ" : "Đang cập nhật" %></p>
+                    <p class="property-area">Diện tích: <%= property.getArea() != 0.0 ? property.getArea() + " m²" : "Đang cập nhật" %></p>
+                    <p class="property-address">Địa chỉ: <%= property.getAddress() != null ? property.getAddress() : "Không xác định" %></p>
                 </div>
             </div>
         </div>
@@ -276,7 +255,6 @@
         }
     %>
 </div>
-
 
 
 <div class="filter-container">
@@ -381,6 +359,7 @@
         color: #e74c3c;
         font-weight: bold;
     }
+
 </style>
 
 <script>

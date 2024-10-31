@@ -1,60 +1,58 @@
-import Controller.User;
-import DBcontext.UserDbConnection;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+package Controller;
 
+import Entity.PropertyProject;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+public class Main {
+    public static void main(String[] args) {
+        List<PropertyProject> properties = getProperties();
 
+        // In ra danh sách các dự án bất động sản
+        if (properties.isEmpty()) {
+            System.out.println("Không có dự án nào trong cơ sở dữ liệu.");
+        } else {
+            for (PropertyProject property : properties) {
+                System.out.println("ID: " + property.getId());
+                System.out.println("Title: " + property.getTitle());
+                System.out.println("Price: " + property.getPrice() + " tỷ");
+                System.out.println("Area: " + property.getArea() + " m²");
+                System.out.println("Address: " + property.getAddress());
+                System.out.println("Image URL: " + property.getImageUrl());
+                System.out.println("------------------------");
+            }
+        }
+    }
 
-    try {
-        // Kết nối cơ sở dữ liệu
-        Connection conn = UserDbConnection.initializeDatabase();
-        Statement stmt = conn.createStatement();
-        String query = "SELECT id, username, email, role FROM users";
-        ResultSet rs = stmt.executeQuery(query);
+    // Phương thức để kết nối và lấy danh sách dự án từ cơ sở dữ liệu
+    public static List<PropertyProject> getProperties() {
+        List<PropertyProject> properties = new ArrayList<>();
 
-        List<User> userList = new ArrayList<>();
+        String url = "jdbc:mysql://localhost:3306/webbds";
+        String user = "root";
+        String password = "";
 
-        // Lấy dữ liệu từ ResultSet và thêm vào danh sách userList
-        while (rs.next()) {
-            User user = new User();
-            user.setId(rs.getInt("id"));
-            user.setUsername(rs.getString("username"));
-            user.setEmail(rs.getString("email"));
-            user.setRole(rs.getString("role"));
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM properties")) {
 
-            // Kiểm tra dữ liệu được thêm vào danh sách
-            System.out.println("User: " + user.getUsername() + ", Email: " + user.getEmail() + ", Role: " + user.getRole());
+            while (rs.next()) {
+                PropertyProject property = new PropertyProject();
+                property.setId(rs.getInt("property_id"));
+                property.setTitle(rs.getString("title"));
+                property.setPrice(rs.getDouble("price"));
+                property.setArea(rs.getDouble("area"));
+                property.setImageUrl(rs.getString("image_url"));
+                property.setAddress(rs.getString("address"));
+                properties.add(property);
+            }
 
-            userList.add(user);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
-        // Đóng tài nguyên
-        rs.close();
-        stmt.close();
-        conn.close();
-
-        // Đưa danh sách người dùng vào request để chuyển sang JSP
-        request.setAttribute("userlist", userList);
-        request.getRequestDispatcher("user.jsp").forward(request, response);
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        // Xử lý lỗi phù hợp
-        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Đã xảy ra lỗi trong quá trình xử lý yêu cầu của bạn.");
+        return properties;
     }
 }
-
-public void main() {
-}
-
-

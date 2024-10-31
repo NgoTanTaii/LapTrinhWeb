@@ -221,29 +221,9 @@
         <h1>Cho thuê nhà đất trên toàn quốc</h1>
         <p>Hiện có <strong>181.125</strong> bất động sản.</p>
 
-        <div class="filter-group">
-            <button class="filter-btn">
-                <i class="fas fa-map-marker-alt"></i> Bản đồ
-            </button>
-            <button class="filter-btn">
-                <i class="fas fa-user-tie"></i> Môi giới chuyên nghiệp
-                <label class="switch">
-                    <input type="checkbox">
-                    <span class="slider round"></span>
-                </label>
-            </button>
-            <button class="filter-btn">
-                <i class="fas fa-check-circle"></i> Tin xác thực
-                <label class="switch">
-                    <input type="checkbox">
-                    <span class="slider round"></span>
-                </label>
-            </button>
-            <button class="filter-btn">
-                Thông thường <i class="fas fa-chevron-down"></i>
-            </button>
-        </div>
+
     </div>
+</div>
 
 </div>
 
@@ -296,7 +276,6 @@
             <button type="submit">Lọc</button>
         </form>
     </div>
-
 
 
     <script>
