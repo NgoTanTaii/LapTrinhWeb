@@ -1,5 +1,6 @@
 package Dao;
 
+import Controller.User;
 import DBcontext.ConnectDB;
 
 import java.sql.*;
@@ -32,36 +33,24 @@ public class UserDAO {
 
 
     // Phương thức thêm người dùng
-    public void addUser(String username, String email, String password, String role) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
+    public void addUser(User user) {
+        String sql = "INSERT INTO users (username, email, password, role, status, token) VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            System.out.println("Inserting username: " + user.getUsername());
 
-        try {
-            conn = ConnectDB.getConnection();
-            String query = "INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)";
-            stmt = conn.prepareStatement(query);
-            stmt.setString(1, username);
-            stmt.setString(2, email);
-            stmt.setString(3, password); // Mã hóa mật khẩu nếu cần
-            stmt.setString(4, role);
+            stmt.setString(1, user.getUsername());
+            stmt.setString(2, user.getEmail());
+            stmt.setString(3, user.getPassword());
+            stmt.setString(4, user.getRole());
+            stmt.setString(5, user.getStatus());
+            stmt.setString(6, user.getToken()); // Set token, could be null
             stmt.executeUpdate();
-
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-            // Xử lý ngoại lệ nếu cần
-        } finally {
-            if (stmt != null) try {
-                stmt.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            if (conn != null) try {
-                conn.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
     }
+
+
 
     public boolean userExists(String username) {
         Connection conn = null;

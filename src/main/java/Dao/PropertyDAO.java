@@ -1,5 +1,6 @@
 package Dao;
 
+import DBcontext.ConnectDB;
 import DBcontext.DbConnection1;
 import Entity.Property1;
 
@@ -9,17 +10,22 @@ import java.util.List;
 
 public class PropertyDAO {
     public void updateProperty(Property1 property) {
-        String sql = "UPDATE properties SET title = ?, price = ?, address = ?, area = ?, image_url = ? WHERE property_id = ?";
+        String sql = "UPDATE properties SET title = ?, price = ?, address = ?, area = ?, image_url = ?, description = ?, type = ?, status = ? WHERE property_id = ?";
         try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, property.getTitle());
             stmt.setDouble(2, property.getPrice());
             stmt.setString(3, property.getAddress());
             stmt.setDouble(4, property.getArea());
             stmt.setString(5, property.getImageUrl());
-            stmt.setInt(6, property.getId());
+            stmt.setString(6, property.getDescription());
+            stmt.setString(7, property.getType());
+            stmt.setString(8, property.getStatus());
+            stmt.setInt(9, property.getId());
+
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace(); // Handle exceptions appropriately
+            e.printStackTrace();
+
         }
 
 
@@ -28,7 +34,8 @@ public class PropertyDAO {
 
     public Property1 getPropertyById(int id) {
         Property1 property = null;
-        String sql = "SELECT * FROM properties WHERE property_id = ?";
+        String sql = "SELECT property_id, title, price, address, area, image_url, description, type, status FROM properties WHERE property_id = ?";
+
         try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -40,9 +47,12 @@ public class PropertyDAO {
                 property.setAddress(rs.getString("address"));
                 property.setArea(rs.getDouble("area"));
                 property.setImageUrl(rs.getString("image_url"));
+                property.setDescription(rs.getString("description")); // Retrieve description
+                property.setType(rs.getString("type"));               // Retrieve type
+                property.setStatus(rs.getString("status"));           // Retrieve status
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Xử lý lỗi
+            e.printStackTrace();
         }
         return property;
     }
@@ -254,17 +264,22 @@ public class PropertyDAO {
     }
 
     public void createProperty(Property1 property) {
-        String sql = "INSERT INTO properties (property_id, title, price, address, area, image_url) VALUES (?, ?, ?, ?, ?, ?)";
-        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, property.getId());
-            stmt.setString(2, property.getTitle());
-            stmt.setDouble(3, property.getPrice());
-            stmt.setString(4, property.getAddress());
-            stmt.setDouble(5, property.getArea());
-            stmt.setString(6, property.getImageUrl());
+        String sql = "INSERT INTO properties (title, price, address, area, image_url, description, type, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try (Connection conn = ConnectDB.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, property.getTitle());
+            stmt.setDouble(2, property.getPrice());
+            stmt.setString(3, property.getAddress());
+            stmt.setDouble(4, property.getArea());
+            stmt.setString(5, property.getImageUrl());
+            stmt.setString(6, property.getDescription());
+            stmt.setString(7, property.getType());
+            stmt.setString(8, property.getStatus());
+
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -391,8 +406,43 @@ public class PropertyDAO {
         }
         return properties;
     }
-}
+    public List<String> getThumbnailUrls(int propertyId) {
+        List<String> thumbnailUrls = new ArrayList<>();
+        String sql = "SELECT image_url FROM property_images WHERE property_id = ?";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, propertyId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                thumbnailUrls.add(rs.getString("image_url"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return thumbnailUrls;
+    }
+    public void addThumbnail(int propertyId, String imageUrl) {
+        String sql = "INSERT INTO property_images (property_id, image_url) VALUES (?, ?)";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, propertyId);
+            stmt.setString(2, imageUrl);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public void deleteThumbnail(int propertyId, String imageUrl) {
+        String sql = "DELETE FROM property_images WHERE property_id = ? AND image_url = ?";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, propertyId);
+            stmt.setString(2, imageUrl);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+}
+}
 
 
 

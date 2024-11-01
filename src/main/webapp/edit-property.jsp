@@ -25,41 +25,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chỉnh sửa Bất Động Sản</title>
     <style>
-        /* CSS styling giữ nguyên như bạn đã tạo */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
-            margin: 20px;
+            margin: 0;
+            padding: 20px;
         }
 
-        form {
+        .container {
+            max-width: 600px;
+            margin: auto;
             background-color: white;
             padding: 20px;
             border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: auto;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
         }
 
         label {
             display: block;
             margin-bottom: 5px;
+            color: #333;
         }
 
-        input[type="text"], input[type="number"] {
+        input[type="text"], input[type="number"], textarea {
             width: 100%;
             padding: 10px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 4px;
+            font-size: 14px;
+        }
+
+        textarea {
+            resize: vertical;
+            height: 100px;
         }
 
         button {
+            width: 100%;
+            padding: 10px;
             background-color: #4CAF50;
             color: white;
             border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
+            border-radius: 4px;
+            font-size: 16px;
             cursor: pointer;
         }
 
@@ -67,58 +82,56 @@
             background-color: #45a049;
         }
 
-        a {
-            display: inline-block;
+        .cancel-link {
+            display: block;
+            text-align: center;
             margin-top: 10px;
-            text-decoration: none;
             color: #007BFF;
+            text-decoration: none;
+        }
+
+        .cancel-link:hover {
+            text-decoration: underline;
         }
     </style>
-    <script>
-        function toggleImageInput(type) {
-            document.getElementById('fileInput').style.display = type === 'file' ? 'block' : 'none';
-            document.getElementById('urlInput').style.display = type === 'url' ? 'block' : 'none';
-        }
-    </script>
 </head>
 <body>
-<h2>Chỉnh sửa Bất Động Sản</h2>
-<form action="properties" method="POST" enctype="multipart/form-data">
-    <input type="hidden" name="property_id" value="<%= property.getId() %>">
-    <input type="hidden" name="action" value="update">
 
-    <label for="title">Tên:</label>
-    <input type="text" id="title" name="title" value="<%= property.getTitle() %>" required><br>
+<div class="container">
+    <h2>Chỉnh sửa Bất Động Sản</h2>
+    <form action="EditPropertyServlet" method="POST">
+        <!-- Hidden fields to pass property ID and action type -->
+        <input type="hidden" name="property_id" value="<%= property.getId() %>">
+        <input type="hidden" name="action" value="update">
 
-    <label for="price">Giá (tỷ VNĐ):</label>
-    <input type="number" id="price" name="price" value="<%= property.getPrice() %>" step="0.01" required><br>
+        <label for="title">Tên:</label>
+        <input type="text" id="title" name="title" value="<%= property.getTitle() %>" required>
 
-    <label for="address">Địa chỉ:</label>
-    <input type="text" id="address" name="address" value="<%= property.getAddress() %>" required><br>
+        <label for="price">Giá (tỷ VNĐ):</label>
+        <input type="number" id="price" name="price" value="<%= property.getPrice() %>" step="0.01" required>
 
-    <label for="area">Diện tích (m²):</label>
-    <input type="number" id="area" name="area" value="<%= property.getArea() %>" required><br>
+        <label for="address">Địa chỉ:</label>
+        <input type="text" id="address" name="address" value="<%= property.getAddress() %>" required>
 
-    <label>Cập nhật Hình Ảnh:</label>
-    <label>
-        <input type="radio" name="imageOption" value="file" onclick="toggleImageInput('file')" checked> Upload File
-    </label>
-    <label>
-        <input type="radio" name="imageOption" value="url" onclick="toggleImageInput('url')"> Nhập URL
-    </label>
+        <label for="area">Diện tích (m²):</label>
+        <input type="number" id="area" name="area" value="<%= property.getArea() %>" required>
 
-    <div id="fileInput">
-        <label for="imageFile">Chọn File Hình Ảnh:</label>
-        <input type="file" id="imageFile" name="imageFile" accept=".jpg, .jpeg, .png">
-    </div>
-
-    <div id="urlInput" style="display: none;">
         <label for="imageUrl">URL Hình Ảnh:</label>
-        <input type="text" id="imageUrl" name="imageUrl" value="<%= property.getImageUrl() %>">
-    </div>
+        <input type="text" id="imageUrl" name="imageUrl" value="<%= property.getImageUrl() %>" required>
 
-    <button type="submit">Cập nhật Bất Động Sản</button>
-</form>
-<a href="home-manager">Hủy</a>
+        <label for="description">Mô tả:</label>
+        <textarea id="description" name="description" required><%= property.getDescription() %></textarea>
+
+        <label for="type">Loại sản phẩm:</label>
+        <input type="text" id="type" name="type" value="<%= property.getType() %>" required>
+
+        <label for="status">Trạng thái:</label>
+        <input type="text" id="status" name="status" value="<%= property.getStatus() %>" required>
+
+        <button type="submit">Cập nhật Bất Động Sản</button>
+    </form>
+    <a href="home-manager" class="cancel-link">Hủy</a>
+</div>
+
 </body>
 </html>

@@ -198,22 +198,55 @@ nav ul li a:hover {
 }
 
 /* Cart list */
-.cart-list {
-    list-style: none;
-    padding: 0;
-    margin-bottom: 20px;
-}
-
-/* Cart item */
-.cart-item {
+/* Style for cart items */
+.cart-list li {
     display: flex;
     align-items: center;
-    padding: 15px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    transition: box-shadow 0.3s ease;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.cart-list img {
+    width: 50px; /* Smaller width */
+    height: 50px; /* Smaller height */
+    border-radius: 8px; /* Rounded corners for a smooth look */
+    margin-right: 15px; /* Spacing between image and text */
+}
+
+.item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.item-info h4 {
+    font-size: 1em; /* Standard font size for title */
+    margin: 0;
+}
+
+.item-info p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #666; /* Lighter color for descriptions */
+}
+
+.item-info span {
+    font-weight: bold;
+    color: #333;
+}
+
+.cart-list button {
+    background-color: #f4a261;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: auto; /* Push button to the far right */
+}
+
+.cart-list button:hover {
+    background-color: #e38e3e;
 }
 
 .cart-item:hover {

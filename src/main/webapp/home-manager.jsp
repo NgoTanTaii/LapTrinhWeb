@@ -1,5 +1,3 @@
-
-
 <%
 
     // Sử dụng biến session có sẵn trong JSP
@@ -32,11 +30,13 @@
             margin: 0;
             padding: 0;
         }
+
         .container {
             display: flex;
             max-width: 1200px;
             margin: auto;
         }
+
         .sidebar {
             width: 200px;
             background-color: #333;
@@ -44,21 +44,26 @@
             padding: 20px;
             border-radius: 5px 0 0 5px;
         }
+
         .sidebar ul {
             list-style: none;
             padding: 0;
         }
+
         .sidebar ul li {
             margin-bottom: 15px;
         }
+
         .sidebar ul li a {
             color: white;
             text-decoration: none;
             font-size: 16px;
         }
+
         .sidebar ul li a:hover {
             text-decoration: underline;
         }
+
         .main-content {
             flex: 1;
             background: white;
@@ -66,38 +71,48 @@
             border-radius: 0 5px 5px 0;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
+
         h2 {
             text-align: left;
             color: #333;
             margin-bottom: 20px;
         }
+
         .add-button {
             padding: 10px 20px;
+
             background-color: #4CAF50;
             color: white;
             text-align: center;
             text-decoration: none;
             border-radius: 4px;
-            margin-bottom: 50px;
+
+            margin-left: 700px;
+
         }
+
         a {
             text-align: right;
             margin-bottom: 20px;
         }
+
         .property-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
+
         .property-table th, .property-table td {
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
+
         .property-table th {
             background-color: #4CAF50;
             color: white;
         }
+
         .property-table img {
             max-width: 100px;
             height: auto;
@@ -142,22 +157,30 @@
                     for (Property1 property : properties) {
             %>
             <tr>
-                <td><%= property.getId() %></td>
-                <td><%= property.getTitle() %></td>
+                <td><%= property.getId() %>
+                </td>
+                <td><%= property.getTitle() %>
+                </td>
                 <td><%= property.getPrice() %> tỷ</td>
-                <td><%= property.getAddress() %></td>
+                <td><%= property.getAddress() %>
+                </td>
                 <td><%= property.getArea() %> m²</td>
                 <td>
-                    <img src="<%= property.getImageUrl() != null ? property.getImageUrl() : "default.jpg" %>" alt="Image" width="100">
+                    <img src="<%= property.getImageUrl() != null ? property.getImageUrl() : "default.jpg" %>"
+                         alt="Image" width="100">
                 </td>
                 <td>
+                    <a href="view-property.jsp?property_id=<%= property.getId() %>">Xem</a> |
                     <a href="edit-property.jsp?property_id=<%= property.getId() %>">Sửa</a> |
+                    <a href="add-thumbnail.jsp?property_id=<%= property.getId() %>">Thumbnails</a> |
                     <form action="properties" method="POST" style="display: inline;">
                         <input type="hidden" name="id" value="<%= property.getId() %>">
                         <input type="hidden" name="action" value="delete">
                         <button type="submit" onclick="return confirm('Bạn có chắc chắn muốn xóa bất động sản này không?')">Xóa</button>
                     </form>
                 </td>
+
+
             </tr>
             <%
                 }

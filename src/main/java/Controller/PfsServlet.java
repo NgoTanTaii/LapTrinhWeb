@@ -49,4 +49,6 @@ public class PfsServlet extends HttpServlet {
         request.setAttribute("properties", properties);
         request.getRequestDispatcher("property-for-sale.jsp").forward(request, response);
     }
+
+
 }

@@ -5,6 +5,34 @@ public class User {
     private String username;
     private String email;
     private String role;
+    private String password;
+    private String status;
+    private String token;
+
+    public User(String username, String email, String password, String role, String status) {
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public User(String username, String email, String role, String password) {
+    }
+
+    public User() {
+
+    }
+
+    public User(String username, String email, String defaultPassword, String role, String status, String token) {
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     // Getters và setters
     public int getId() {
@@ -37,5 +65,21 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getpassword() {
+        return password;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }

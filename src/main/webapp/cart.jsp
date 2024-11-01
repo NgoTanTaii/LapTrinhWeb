@@ -1,57 +1,18 @@
 <!DOCTYPE html>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html lang="vi">
 <head>
-    <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Giỏ hàng của bạn</title>
-    <link rel="stylesheet" href="css/test.css">
+    <link rel="stylesheet" href="css/bds.css">
     <style>
-
-        .footer {
-            background-color: whitesmoke;
-            color: black;
-            padding: 30px 50px; /* Thêm padding cho lề trái và phải */
-        }
-
-        /* Căn chỉnh các phần trong footer content thành một hàng */
-        .footer-content {
-            display: flex;
-            justify-content: space-between; /* Giãn cách đều giữa các phần tử */
-            align-items: flex-start; /* Căn chỉnh các phần tử theo chiều dọc */
-            flex-wrap: wrap; /* Cho phép xuống dòng khi cần thiết trên màn hình nhỏ */
-        }
-
-
-        /* Căn chỉnh mỗi phần tử trong footer */
-        .footer-content > div {
-            flex: 1;
-            margin-right: 20px;
-            min-width: 200px; /* Đảm bảo mỗi phần có ít nhất 200px */
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start; /* Căn theo chiều dọc */
-            align-items: flex-start; /* Căn chỉnh nội dung theo lề trái */
-        }
-
-        .footer-content > div:last-child {
-            margin-right: 0;
-        }
-
-        /* Các phần trong footer */
-        .company-info, .quick-links, .social-media, .newsletter {
-            margin-bottom: 15px;
-        }
-
-        .quick-links ul li a:hover,
-        .social-media a:hover {
-            color: darkred; /* Màu khi hover vào liên kết */
-
-        }
-
-        h3 {
-            margin-bottom: 10px;
-            color: black;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
         }
 
         ul {
@@ -109,79 +70,93 @@
             text-decoration: none;
         }
 
-        .social-media a {
-            margin-right: 10px;
-            color: black;
+        .main-content {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        /* Form nhập email */
-        .newsletter form {
+        h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
             display: flex;
-            flex-direction: row;
-            gap: 10px;
             align-items: center;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            margin-bottom: 15px;
+            position: relative;
         }
 
-        .newsletter input[type="email"] {
-            padding: 8px;
+        .cart-item img {
+            width: 200px;
+            height: 200px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+
+        .item-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .item-info h4 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .item-info p {
+            margin: 4px 0;
             font-size: 14px;
-            width: 220px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            outline: none;
+            color: #666;
         }
 
-        .newsletter input[type="email"]:focus {
-            border-color: #f4a261;
+        .item-info .price {
+            font-size: 16px;
+            font-weight: bold;
+            color: #d9534f;
         }
 
-        .newsletter button {
-            padding: 8px 15px; /* Làm cho nút nhỏ hơn */
-            font-size: 13px; /* Giảm kích thước chữ */
-            background-color: #f4a261;
+        .remove-button {
+            background-color: transparent;
             border: none;
-            color: #fff;
+            color: #d9534f;
+            font-size: 16px;
             cursor: pointer;
+        }
+
+        .remove-button:hover {
+            color: #a94442;
+        }
+
+        #checkout-button {
+            background-color: #5cb85c;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
             border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+            width: 100%;
         }
 
-        .newsletter button:hover {
-            background-color: #e38e3e;
+        #checkout-button:hover {
+            background-color: #4cae4c;
         }
-
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .footer-content {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .footer-content > div {
-                margin-right: 0;
-                margin-bottom: 20px;
-            }
-
-            .newsletter form {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .newsletter input[type="email"] {
-                width: 100%;
-            }
-
-            .newsletter button {
-                width: 100%;
-            }
-        }
-
-
     </style>
-
 </head>
-
-
-<body>
 <header class="header">
     <div class="header-top" style="width: 100%; position: sticky; top: 0; z-index: 1000;">
         <div class="header-left">
@@ -210,13 +185,15 @@
             <% if (isLoggedIn) { %>
             <a href="account.jsp" class="btn"><h3>Hello, <%= username %>
             </h3></a>
-            <a href="homes" class="btn"><h3>Đăng xuất</h3></a>
+            <a href="logout" class="btn"><h3>Đăng xuất</h3></a>
             <% } else { %>
             <a href="login.jsp" class="btn"><h3>Đăng nhập</h3></a>
             <a href="register.jsp" class="btn"><h3>Đăng ký</h3></a>
             <% } %>
             <a href="post-status.html" class="btn"><h3>Đăng tin</h3></a>
         </div>
+
+
 
 
     </div>
@@ -281,19 +258,96 @@
 
         </div>
     </div>
+
+
 </header>
 
-
+<body>
 <div class="main-content">
     <h1>Giỏ hàng bất động sản của bạn</h1>
     <ul id="cart-items" class="cart-list">
+        <!-- Cart items will be dynamically added here -->
     </ul>
-    <form id="order-form" method="post">
-        <button type="button" onclick="window.location.href='checkout.jsp'">Đặt lịch</button>
-    </form>
+    <button id="checkout-button" onclick="window.location.href='checkout.jsp'">Đặt lịch</button>
 </div>
 
+<script>
+    let cartItems = JSON.parse(sessionStorage.getItem('cartItems')) || [];
 
+    // Function to add items to the cart
+    function addToFavorites(id, title, price, area, imageUrl, address) {
+        const existingProductIndex = cartItems.findIndex(item => item.id === id);
+
+        if (existingProductIndex !== -1) {
+            alert("Bất động sản này đã được quan tâm!");
+        } else {
+            const product = {
+                id: id,
+                title: title,
+                price: parseFloat(price),
+                area: area,
+                imageUrl: imageUrl,
+                address: address,
+                quantity: 1 // Số lượng cố định là 1
+            };
+            cartItems.push(product);
+            updateSessionStorage();
+            updateCartDisplay();
+        }
+    }
+
+    // Update sessionStorage
+    function updateSessionStorage() {
+        sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
+    }
+
+    // Function to display cart items
+    function updateCartDisplay() {
+        const cartList = document.getElementById('cart-items');
+        const checkoutButton = document.getElementById('checkout-button'); // Reference to the button
+        cartList.innerHTML = ''; // Clear previous items
+
+        if (cartItems.length === 0) {
+            cartList.innerHTML = '<li>Giỏ hàng của bạn đang trống.</li>';
+            checkoutButton.disabled = true; // Disable button when cart is empty
+            checkoutButton.style.opacity = "0.5"; // Dim the button to indicate it's disabled
+            return;
+        }
+
+        // Enable the button if there are items in the cart
+        checkoutButton.disabled = false;
+        checkoutButton.style.opacity = "1";
+
+        // Render each item in the cart
+        cartItems.forEach((item) => {
+            const listItem = document.createElement('li');
+            listItem.classList.add('cart-item');
+            listItem.innerHTML = `
+            <img src="${item.imageUrl}" alt="${item.title}">
+            <div class="item-info">
+                <h4>${item.title}</h4>
+                <p>Địa chỉ: ${item.address}</p>
+                <p>Diện tích: ${item.area} m²</p>
+                <p class="price">Giá: ${item.price.toLocaleString()} tỷ</p>
+            </div>
+            <button class="remove-button" onclick="removeFromCart('${item.id}')">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        `;
+            cartList.appendChild(listItem);
+        });
+    }
+
+    // Remove item from cart
+    function removeFromCart(id) {
+        cartItems = cartItems.filter(item => item.id !== id);
+        updateSessionStorage();
+        updateCartDisplay();
+    }
+
+    // Initial display of cart items
+    updateCartDisplay();
+</script>
 <div class="footer">
     <div class="footer-top">
 
@@ -353,107 +407,6 @@
 
 
 </div>
-
-
-<script>
-    let cartItems = JSON.parse(sessionStorage.getItem('cartItems')) || [];
-    let miniCartVisible = false; // Biến theo dõi trạng thái hiển thị của giỏ hàng
-
-    // Hàm thêm bất động sản vào giỏ hàng
-    function addToFavorites(id, title, price, area, imageUrl, address) {
-        const existingProductIndex = cartItems.findIndex(item => item.id === id);
-
-        if (existingProductIndex !== -1) {
-            alert("bất động sản này đã được quan tâm!"); // Thông báo cho người dùng
-        } else {
-            const product = {
-                id: id,
-                title: title,
-                price: parseFloat(price),
-                area: area,
-                imageUrl: imageUrl,
-                address: address,
-                quantity: 1 // Số lượng cố định là 1
-            };
-            cartItems.push(product);
-            updateSessionStorage();
-            updateCartDisplay();
-            showMiniCart();
-        }
-    }
-
-    // Cập nhật sessionStorage
-    function updateSessionStorage() {
-        sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
-    }
-
-    // Cập nhật hiển thị giỏ hàng
-    function updateCartDisplay() {
-        const itemCount = document.querySelector('.item-count');
-        const cartList = document.getElementById('cart-items');
-
-        cartList.innerHTML = '';
-
-        if (cartItems.length === 0) {
-            cartList.innerHTML = '<li>Bạn chưa có bất động sản đã lưu.</li>';
-            itemCount.innerText = 0; // Cập nhật số lượng sản phẩm
-            return; // Kết thúc hàm nếu giỏ hàng trống
-        }
-
-        cartItems.forEach((item) => {
-            const listItem = document.createElement('li');
-            listItem.innerHTML = `
-            <img src="${item.imageUrl}" alt="${item.title}" width="40" height="40">
-            <div class="item-info">
-                <h4>${item.title}</h4>
-                <p>Địa chỉ: ${item.address}</p>
-                <p>Diện tích: ${item.area} m²</p>
-                <span>Giá: ${item.price.toLocaleString()} tỷ</span>
-
-            </div>
-            <button onclick="removeFromCart('${item.id}')">Xóa</button>
-        `;
-            cartList.appendChild(listItem);
-        });
-
-        itemCount.innerText = cartItems.length; // Cập nhật số lượng sản phẩm
-    }
-
-    // Xóa sản phẩm khỏi giỏ hàng
-    function removeFromCart(id) {
-        cartItems = cartItems.filter(item => item.id !== id);
-        updateSessionStorage();
-        updateCartDisplay();
-    }
-
-    // Hiện giỏ hàng mini
-    function showMiniCart() {
-        const miniCart = document.querySelector('.mini-cart');
-        miniCart.style.display = 'block';
-        updateCartDisplay();
-    }
-
-    // Chuyển hướng đến trang giỏ hàng
-    function goToCart() {
-        const isLoggedIn = sessionStorage.getItem('isLoggedIn'); // Giả sử bạn kiểm tra trạng thái đăng nhập ở đây
-
-
-        window.location.href = 'cart.jsp'; // Chuyển hướng đến trang giỏ hàng
-
-    }
-
-    // Cập nhật hiển thị giỏ hàng khi tải lại trang
-    updateCartDisplay();
-
-    function toggleMiniCart() {
-        const miniCart = document.querySelector('.mini-cart');
-        miniCartVisible = !miniCartVisible; // Chuyển đổi trạng thái hiển thị
-        miniCart.style.display = miniCartVisible ? 'block' : 'none'; // Cập nhật hiển thị
-        updateCartDisplay(); // Cập nhật hiển thị giỏ hàng
-    }
-
-
-</script>
 
 </body>
 </html>

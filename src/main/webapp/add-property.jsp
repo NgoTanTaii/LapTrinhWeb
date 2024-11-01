@@ -5,9 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thêm sản phẩm mới</title>
+    <title>Thêm Sản Phẩm Mới</title>
     <style>
-        /* CSS giữ nguyên */
+        /* Styling the form layout */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -24,50 +24,52 @@
         }
         h1 {
             text-align: center;
+            color: #4CAF50;
         }
         label {
             display: block;
-            margin: 10px 0 5px;
+            margin-top: 10px;
+            font-weight: bold;
         }
         input, textarea, button {
             width: 100%;
             padding: 10px;
-            margin-bottom: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
         }
         textarea {
             height: 100px;
+            resize: vertical;
         }
         button {
             background-color: #4CAF50;
             color: white;
             border: none;
             border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
         }
         button:hover {
             background-color: #45a049;
         }
     </style>
-    <script>
-        function toggleImageInput(type) {
-            document.getElementById('fileInput').style.display = type === 'file' ? 'block' : 'none';
-            document.getElementById('urlInput').style.display = type === 'url' ? 'block' : 'none';
-        }
-    </script>
 </head>
 <body>
 
 <div class="container">
-    <h1>Thêm sản phẩm mới</h1>
-    <form action="addProduct" method="POST" enctype="multipart/form-data">
-
-        <label for="property_id">Property ID:</label>
-        <input type="text" id="property_id" name="property_id" required>
+    <h1>Thêm Sản Phẩm Mới</h1>
+    <form action="AddPropertyServlet" method="POST">
+        <!-- Hidden input to set action type -->
+        <input type="hidden" name="action" value="create">
 
         <label for="title">Tên:</label>
         <input type="text" id="title" name="title" required>
 
         <label for="price">Giá:</label>
-        <input type="number" id="price" name="price" required>
+        <input type="number" id="price" name="price" step="0.01" required>
 
         <label for="address">Địa chỉ:</label>
         <input type="text" id="address" name="address" required>
@@ -75,37 +77,19 @@
         <label for="area">Diện tích (m²):</label>
         <input type="number" id="area" name="area" required>
 
-        <label>Thêm Hình Ảnh:</label>
-        <label>
-            <input type="radio" name="imageOption" value="file" onclick="toggleImageInput('file')" checked> Upload File
-        </label>
-        <label>
-            <input type="radio" name="imageOption" value="url" onclick="toggleImageInput('url')"> Nhập URL
-        </label>
-
-        <div id="fileInput">
-            <label for="imageFile">Chọn File Hình Ảnh:</label>
-            <input type="file" id="imageFile" name="imageFile" accept=".jpg, .jpeg, .png">
-        </div>
-
-        <div id="urlInput" style="display: none;">
-            <label for="imageUrl">URL Hình Ảnh:</label>
-            <input type="text" id="imageUrl" name="imageUrl">
-        </div>
+        <label for="imageUrl">URL Hình Ảnh:</label>
+        <input type="text" id="imageUrl" name="imageUrl" required>
 
         <label for="description">Mô tả:</label>
         <textarea id="description" name="description" required></textarea>
 
         <label for="type">Loại sản phẩm:</label>
-        <input type="text" id="type" name="type">
+        <input type="text" id="type" name="type" required>
 
         <label for="status">Trạng thái:</label>
         <input type="text" id="status" name="status">
 
-        <label for="agent_id">ID đại lý:</label>
-        <input type="number" id="agent_id" name="agent_id">
-
-        <button type="submit">Thêm sản phẩm</button>
+        <button type="submit">Thêm Sản Phẩm</button>
     </form>
 </div>
 
