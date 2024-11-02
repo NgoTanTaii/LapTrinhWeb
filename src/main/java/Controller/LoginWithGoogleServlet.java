@@ -50,7 +50,7 @@ public class LoginWithGoogleServlet extends HttpServlet {
                 String name = (String) payload.get("name");
 
                 // Lưu thông tin người dùng vào session
-                request.getSession().setAttribute("user", name);
+                request.getSession().setAttribute("username", name);
 
                 // Chuyển hướng đến trang welcome sau khi đăng nhập thành công
                 response.sendRedirect("http://localhost:8080/untitled4/welcome");

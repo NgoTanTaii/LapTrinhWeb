@@ -25,12 +25,12 @@
                 <span>info@company.com</span>
             </div>
             <div class="contact-item">
-
                 <img src="jpg/location.png" class="icon">
                 <span>123 Đường ABC, Quận XYZ, TP.HCM</span>
             </div>
 
         </div>
+
         <%
             boolean isLoggedIn = session.getAttribute("username") != null;
             String username = (String) session.getAttribute("username");
@@ -38,41 +38,47 @@
 
         <div class="header-right" style="margin-top: 10px">
             <% if (isLoggedIn) { %>
-            <a href="account.jsp" class="btn"><h3>Hello, <%= username %>
-            </h3></a>
-            <a href="logout" class="btn"><h3>Đăng xuất</h3></a>
+            <a href="account.jsp" class="btn">
+                <h3>Hello, <%= username %></h3>
+            </a>
+            <a href="logout" class="btn">
+                <h3>Đăng xuất</h3>
+            </a>
             <% } else { %>
-            <a href="login.jsp" class="btn"><h3>Đăng nhập</h3></a>
-            <a href="register.jsp" class="btn"><h3>Đăng ký</h3></a>
+            <a href="login.jsp" class="btn">
+                <h3>Đăng nhập</h3>
+            </a>
+            <a href="register.jsp" class="btn">
+                <h3>Đăng ký</h3>
+            </a>
             <% } %>
-            <a href="post-status.html" class="btn"><h3>Đăng tin</h3></a>
+            <a href="post-status.html" class="btn">
+                <h3>Đăng tin</h3>
+            </a>
         </div>
 
-        <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()"
-       style="border: 1px solid #ccc; border-radius:100%;">
-        <img src="jpg/heart%20(1).png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng"
-             class="cart-icon">
-        <div class="item-count">0</div>
-        <div class="mini-cart">
-            <h4>Bất động sản đã lưu</h4>
-            <ul id="cart-items"></ul>
-            <button id="go-to-cart" onclick="goToCart()">Đi tới xem bất động sản đã lưu</button>
-        </div>
-    </a>
-
-
+        <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()" style="border: 1px solid #ccc; border-radius:100%;">
+            <img src="jpg/heart%20(1).png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng" class="cart-icon">
+            <div class="item-count">0</div>
+            <div class="mini-cart">
+                <h4>Bất động sản đã lưu</h4>
+                <ul id="cart-items"></ul>
+                <button id="go-to-cart" onclick="goToCart()">Đi tới xem bất động sản đã lưu</button>
+            </div>
+        </a>
 
     </div>
+
     <div class="menu">
         <div class="header-bottom">
-
             <div class="store-name">
-                <h1><a href="">
-                    <span class="color1">HOME</span>
-                    <span class="color2">LANDER</span> <!-- Đổi từ VINA BOOK sang VINA BĐS -->
-                </a></h1>
+                <h1>
+                    <a href="">
+                        <span class="color1">HOME</span>
+                        <span class="color2">LANDER</span>
+                    </a>
+                </h1>
             </div>
-
 
             <nav>
                 <ul class="u-lo">
@@ -113,9 +119,7 @@
                         </ul>
                     </li>
                 </ul>
-
             </nav>
-
 
             <div class="contact-info">
                 <img src="jpg/phone-call.png" alt="Phone Icon" class="phone-icon">
@@ -125,8 +129,6 @@
         </div>
     </div>
 
-
-    </div>
     <div class="slideshow-container">
         <div class="mySlides fade">
             <img src="jpg/1.webp" alt="Banner 1">
@@ -134,12 +136,11 @@
         <div class="mySlides fade">
             <img src="jpg/1.webp" alt="Banner 2">
         </div>
-
     </div>
 
     <!-- Form tìm kiếm ở giữa -->
     <div class="search-container">
-        <form class="search-form">
+        <form class="search-form" action="search-results.html" method="get">
             <input type="text" placeholder="Tìm kiếm..." name="search" required>
 
             <fieldset class="price-group">
@@ -170,7 +171,6 @@
 
     <script src="JS/script.js"></script>
 
-    </div>
 </header>
 <div class="news-section">
     <h2>Tin Tức Bất Động Sản</h2>
