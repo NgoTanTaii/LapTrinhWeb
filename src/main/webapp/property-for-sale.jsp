@@ -236,10 +236,16 @@
                 <img src=" jpg/DaNang.jpg"
                      alt="Hình ảnh bất động sản" class="property-image">
                 <div class="property-details">
-                    <h2 class="property-title"><%= property.getTitle() %></h2>
-                    <p class="property-price">Giá: <%= property.getPrice() != 0.0 ? property.getPrice() + " Tỷ" : "Đang cập nhật" %></p>
-                    <p class="property-area">Diện tích: <%= property.getArea() != 0.0 ? property.getArea() + " m²" : "Đang cập nhật" %></p>
-                    <p class="property-address">Địa chỉ: <%= property.getAddress() != null ? property.getAddress() : "Không xác định" %></p>
+                    <h2 class="property-title"><%= property.getTitle() %>
+                    </h2>
+                    <p class="property-price">Giá: <%= property.getPrice() %>
+                    </p>
+                    <p class="property-area">Diện
+                        tích: <%= property.getArea() %>
+                    </p>
+                    <p class="property-address">Địa
+                        chỉ: <%= property.getAddress() %>
+                    </p>
                 </div>
             </div>
         </div>

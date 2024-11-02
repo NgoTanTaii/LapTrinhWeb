@@ -1,3 +1,6 @@
+<%@ page import="Entity.Property1" %>
+<%@ page import="java.util.List" %>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -173,7 +176,7 @@
     </div>
 </header>
 
-<!-- Slideshow -->
+
 <div class="slideshow-container">
     <div class="mySlides fade">
         <img src="jpg/1.webp" alt="Banner 1">
@@ -183,7 +186,7 @@
     </div>
 </div>
 
-<!-- Search Form -->
+
 <div class="search-container">
     <form class="search-form">
         <input type="text" placeholder="Tìm kiếm..." name="search" required>
@@ -224,6 +227,36 @@
 
     </div>
 </div>
+
+
+<div class="main">
+    <%
+        List<Property1> properties1 = (List<Property1>) request.getAttribute("properties1");
+        if (properties1 != null && !properties1.isEmpty()) {
+    %>
+    <h3>Bất động sản cho thuê:</h3>
+    <ul>
+        <%
+            for (Property1 property : properties1) {
+        %>
+        <li>
+            <h4><%= property.getTitle() %></h4>
+            <p>Giá: <%= property.getPrice() %> tỷ</p>
+            <p>Diện tích: <%= property.getArea() %> m²</p>
+            <p>Địa chỉ: <%= property.getAddress() %></p>
+            <img src="<%= property.getImageUrl() %>" alt="Property Image">
+        </li>
+        <%
+            }
+        %>
+    </ul>
+    <%
+    } else {
+    %>
+    <p>Chưa có bất động sản cho thuê nào.</p>
+    <%
+        }
+    %>
 
 </div>
 

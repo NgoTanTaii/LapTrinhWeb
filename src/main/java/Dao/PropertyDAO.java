@@ -2,6 +2,7 @@ package Dao;
 
 import DBcontext.ConnectDB;
 import DBcontext.DbConnection1;
+import Entity.Comment;
 import Entity.Property1;
 
 import java.sql.*;
@@ -128,7 +129,7 @@ public class PropertyDAO {
         // Ví dụ sử dụng JDBC với MySQL
         String url = "jdbc:mysql://localhost:3306/webbds";  // Chỉnh sửa tên database nếu cần
         String user = "root";
-        String password = "";  // Cập nhật mật khẩu nếu cần
+        String password = "123456";  // Cập nhật mật khẩu nếu cần
         return DriverManager.getConnection(url, user, password);
     }
 
@@ -433,15 +434,17 @@ public class PropertyDAO {
 
     public void deleteThumbnail(int propertyId, String imageUrl) {
         String sql = "DELETE FROM property_images WHERE property_id = ? AND image_url = ?";
-        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, propertyId);
-            stmt.setString(2, imageUrl);
-            stmt.executeUpdate();
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, propertyId);
+            ps.setString(2, imageUrl);
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 
-}
+
+
 }
 
 

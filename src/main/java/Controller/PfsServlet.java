@@ -1,5 +1,6 @@
 package Controller;
 
+import DBcontext.Database;
 import Entity.Property1;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -21,12 +22,8 @@ public class PfsServlet extends HttpServlet {
 
         List<Property1> properties = new ArrayList<>();
 
-        String url = "jdbc:mysql://localhost:3306/webbds?useUnicode=true&characterEncoding=UTF-8"; // Thay thế với URL cơ sở dữ liệu của bạn
-        String dbUser = "root";
-        String dbPassword = "";
-
-        try (Connection conn = DriverManager.getConnection(url, dbUser, dbPassword)) {
-            String sql = "SELECT title, price, area, address, image_url FROM properties WHERE status = 'sold'";
+        try (Connection conn = Database.getConnection()) { // Sử dụng phương thức getConnection() từ lớp Database
+            String sql = "SELECT title, price, area, address, image_url FROM properties WHERE status = 1";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             try (ResultSet rs = stmt.executeQuery()) {
@@ -49,6 +46,4 @@ public class PfsServlet extends HttpServlet {
         request.setAttribute("properties", properties);
         request.getRequestDispatcher("property-for-sale.jsp").forward(request, response);
     }
-
-
 }

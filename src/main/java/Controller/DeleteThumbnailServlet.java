@@ -7,6 +7,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import static DBcontext.Database.getConnection;
 
 @WebServlet("/DeleteThumbnailServlet")
 public class DeleteThumbnailServlet extends HttpServlet {
@@ -15,8 +20,9 @@ public class DeleteThumbnailServlet extends HttpServlet {
         String thumbnailUrl = request.getParameter("thumbnailUrl");
 
         PropertyDAO propertyDAO = new PropertyDAO();
-        propertyDAO.deleteThumbnail(propertyId, thumbnailUrl); // Delete the thumbnail
+        propertyDAO.deleteThumbnail(propertyId, thumbnailUrl); // Delete the specific thumbnail
 
-        response.sendRedirect("thumbnail.jsp?property_id=" + propertyId); // Redirect back to thumbnails page
+        response.sendRedirect("add-thumbnail.jsp?property_id=" + propertyId); // Redirect back to the thumbnails page
     }
+
 }

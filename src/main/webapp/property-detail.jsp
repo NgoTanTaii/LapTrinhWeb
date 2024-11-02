@@ -2,6 +2,9 @@
 <%@ page import="Dao.PropertyDAO" %>
 <%@ page import="Entity.Property1" %>
 <%@ page import="java.util.List" %>
+<%@ page import="Entity.Comment" %>
+<%@ page import="Controller.User" %>
+<%@ page import="Dao.CommentDAO" %>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="css/property-detail.css">
@@ -300,7 +303,8 @@
 
         <div class="header-right" style="margin-top: 10px">
             <% if (isLoggedIn) { %>
-            <a href="account.jsp" class="btn"><h3>Hello, <%= username %></h3></a>
+            <a href="account.jsp" class="btn"><h3>Hello, <%= username %>
+            </h3></a>
             <a href="logout" class="btn"><h3>Đăng xuất</h3></a>
             <% } else { %>
             <a href="login.jsp" class="btn"><h3>Đăng nhập</h3></a>
@@ -546,11 +550,10 @@
 <%--        </div>--%>
 <%--    </div>--%>
 <%--</div>--%>
+
 <div class="bottom-banner">
     <img src="jpg/bank-loan-offer-banner-web.jpg" alt="Banner quảng cáo" style="width: 100%; border-radius: 5px;">
 </div>
-
-<!-- Đặc điểm bất động sản -->
 
 <div class="map-container">
     <h3>Bản đồ vị trí bất động sản</h3>
@@ -734,6 +737,7 @@
     </div>
 </div>
 
+
 <script>
     const container1 = document.getElementById('relatedProductsContainer1');
 
@@ -843,10 +847,10 @@
         }
 
 
-        }
+    }
 
 
-        // Cập nhật hiển thị giỏ hàng khi tải lại trang
+    // Cập nhật hiển thị giỏ hàng khi tải lại trang
     updateCartDisplay();
 
     function toggleMiniCart() {
@@ -858,6 +862,7 @@
 
 
 </script>
+
 
 <div class="copyright">
     <p>© Mọi quyền thuộc về Homelander. Mọi thông tin liên quan vui lòng liên hệ với chúng tôi.</p>

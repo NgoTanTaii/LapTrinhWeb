@@ -14,7 +14,7 @@ public class DBUser {
         String dbURL = "jdbc:mysql://localhost:3306/";
         String dbName = "webbds";
         String dbUsername = "root";  // Tài khoản MySQL của bạn
-        String dbPassword = "";  // Mật khẩu MySQL của bạn
+        String dbPassword = "123456";  // Mật khẩu MySQL của bạn
 
         // Tải driver MySQL
         Class.forName(dbDriver);

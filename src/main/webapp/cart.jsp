@@ -91,6 +91,9 @@
             padding: 10px;
             margin-bottom: 15px;
             position: relative;
+            cursor: pointer; /* Con trỏ chuột sẽ thành dạng pointer khi hover */
+
+
         }
 
         .cart-item img {
@@ -264,9 +267,10 @@
 
 <body>
 <div class="main-content">
+
     <h1>Giỏ hàng bất động sản của bạn</h1>
     <ul id="cart-items" class="cart-list">
-        <!-- Cart items will be dynamically added here -->
+
     </ul>
     <button id="checkout-button" onclick="window.location.href='checkout.jsp'">Đặt lịch</button>
 </div>
@@ -301,7 +305,7 @@
         sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
     }
 
-    // Function to display cart items
+
     function updateCartDisplay() {
         const cartList = document.getElementById('cart-items');
         const checkoutButton = document.getElementById('checkout-button'); // Reference to the button
@@ -334,6 +338,12 @@
                 <i class="fas fa-trash-alt"></i>
             </button>
         `;
+
+            // Add event listener to redirect to property detail page when item is clicked
+            listItem.addEventListener('click', function () {
+                window.location.href = `property-detail.jsp?id=${item.id}`;
+            });
+
             cartList.appendChild(listItem);
         });
     }

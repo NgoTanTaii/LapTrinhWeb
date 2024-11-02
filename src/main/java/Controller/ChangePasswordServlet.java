@@ -16,9 +16,9 @@ public class ChangePasswordServlet extends HttpServlet {
 
     // Kết nối đến CSDL
     private Connection connect() throws SQLException {
-        String jdbcURL = "jdbc:mysql://localhost:3306/mysql"; // Thay thế bằng tên database của bạn
+        String jdbcURL = "jdbc:mysql://localhost:3306/webbds"; // Thay thế bằng tên database của bạn
         String dbUser = "root"; // Thay thế bằng username CSDL của bạn
-        String dbPassword = ""; // Thay thế bằng mật khẩu CSDL của bạn
+        String dbPassword = "123456"; // Thay thế bằng mật khẩu CSDL của bạn
         return DriverManager.getConnection(jdbcURL, dbUser, dbPassword);
     }
 

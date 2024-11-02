@@ -1,5 +1,6 @@
 package Controller;
 
+import DBcontext.Database;
 import Entity.Property1;
 
 import java.sql.*;
@@ -10,34 +11,29 @@ public class Main {
     public static void main(String[] args) {
         List<Property1> properties = new ArrayList<>();
 
-        // Database connection details
-        String url = "jdbc:mysql://localhost:3306/webbds?useUnicode=true&characterEncoding=UTF-8";
-        String dbUser = "root";
-        String dbPassword = "";
+        String sql = "SELECT title, price, area, address, image_url FROM properties WHERE status = 2";
+        try (Connection conn = Database.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-        // Database query and data retrieval
-        try (Connection conn = DriverManager.getConnection(url, dbUser, dbPassword)) {
-            String sql = "SELECT title, price, area, address, image_url FROM properties WHERE status =''";
-            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String title = rs.getString("title");
+                double price = rs.getDouble("price");
+                double area = rs.getDouble("area");
+                String address = rs.getString("address");
+                String imageUrl = rs.getString("image_url");
 
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-
-                    String title = rs.getString("title");
-                    double price = rs.getDouble("price");
-                    double area = rs.getDouble("area");
-                    String address = rs.getString("address");
-                    String imageUrl = rs.getString("image_url");
-
-                    // Create a new Property1 object and add it to the list
-                    Property1 property = new Property1(title, price, area, address, imageUrl);
-                    properties.add(property);
-                }
+                // Kiểm tra và in ra các giá trị
+                System.out.println("Title: " + title);
+                System.out.println("Price: " + price);
+                System.out.println("Area: " + area);
+                System.out.println("Address: " + address);
+                System.out.println("Image URL: " + imageUrl);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Could not retrieve data from the database.");
         }
+
 
         // Print out the retrieved properties
         if (properties.isEmpty()) {

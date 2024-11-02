@@ -40,7 +40,7 @@ public class VerifyServlet extends HttpServlet {
 
     // Xác thực token
     private boolean verifyToken(String token) throws Exception {
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webbds", "root", "");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webbds", "root", "123456");
         PreparedStatement stmt = conn.prepareStatement("UPDATE user SET status = 'ACTIVE' WHERE token = ?");
         stmt.setString(1, token);
         int rowsUpdated = stmt.executeUpdate();

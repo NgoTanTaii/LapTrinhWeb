@@ -96,7 +96,7 @@ public class UserDAO {
         // Ví dụ sử dụng JDBC với MySQL
         String url = "jdbc:mysql://localhost:3306/webbds";
         String user = "root";
-        String password = "";
+        String password = "123456";
         return DriverManager.getConnection(url, user, password);
     }
 }

@@ -63,6 +63,7 @@
         <% } %>
     </div>
 
+
     <a href="home-manager">Quay lại Quản lý Bất Động Sản</a>
 </div>
 

@@ -61,7 +61,7 @@ public class LoginServlet extends HttpServlet {
             String status = null;
             String url = "jdbc:mysql://localhost:3306/webbds"; // Đảm bảo thay thế đúng tên cơ sở dữ liệu của bạn
             String dbUser = "root";
-            String dbPassword = "";
+            String dbPassword = "123456";
 
             try (Connection conn = DriverManager.getConnection(url, dbUser, dbPassword)) {
                 // Truy vấn cơ sở dữ liệu

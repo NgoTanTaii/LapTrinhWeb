@@ -40,7 +40,7 @@ public class ConfirmServlet extends HttpServlet {
         }
 
         try (Connection conn = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/webbds?useSSL=false&serverTimezone=UTC", "root", "")) { // Thay đổi thông tin kết nối
+                "jdbc:mysql://localhost:3306/webbds?useSSL=false&serverTimezone=UTC", "root", "123456")) { // Thay đổi thông tin kết nối
 
             // Kiểm tra token có hợp lệ không
             String checkQuery = "SELECT * FROM users WHERE token = ?";
