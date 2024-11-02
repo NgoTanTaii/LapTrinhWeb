@@ -129,11 +129,11 @@
 
     <!-- Form tìm kiếm ở giữa -->
     <div class="search-container">
-        <form class="search-form">
+        <form class="search-form" action="SearchServlet" method="POST">
             <input type="text" placeholder="Tìm kiếm..." name="search" required>
 
             <fieldset class="price-group">
-                <legend>Giá <span class="arrow-down">▼</span></legend>
+                <legend onclick="toggleDropdown('price-dropdown')">Giá <span class="arrow-down">▼</span></legend>
                 <div class="price-dropdown hidden">
                     <label for="min-price">Giá tối thiểu (tỷ):</label>
                     <input type="number" id="min-price" name="min-price" placeholder="Nhập giá tối thiểu">
@@ -144,7 +144,7 @@
             </fieldset>
 
             <fieldset class="area-group">
-                <legend>Diện Tích <span class="arrow-down">▼</span></legend>
+                <legend onclick="toggleDropdown('area-dropdown')">Diện Tích <span class="arrow-down">▼</span></legend>
                 <div class="area-dropdown hidden">
                     <label for="min-area">Diện tích tối thiểu (m²):</label>
                     <input type="number" id="min-area" name="min-area" placeholder="Nhập diện tích tối thiểu">
@@ -157,6 +157,13 @@
             <button type="submit">Tìm Kiếm</button>
         </form>
     </div>
+
+    <script>
+        function toggleDropdown(dropdownClass) {
+            const dropdown = document.querySelector(`.${dropdownClass}`);
+            dropdown.classList.toggle('hidden');
+        }
+    </script>
 
     <script src="JS/script.js"></script>
 

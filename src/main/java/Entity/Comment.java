@@ -1,6 +1,8 @@
 package Entity;
 
-public class Comment {
+import java.io.Serializable;
+
+public class Comment implements Serializable {
     private int commentId;
     private int propertyId;
     private int userId;

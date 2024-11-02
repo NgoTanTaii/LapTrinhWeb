@@ -3,8 +3,8 @@
 <%@ page import="Entity.Property1" %>
 <%@ page import="java.util.List" %>
 <%@ page import="Entity.Comment" %>
-<%@ page import="Controller.User" %>
 <%@ page import="Dao.CommentDAO" %>
+<%@ page import="Entity.User" %>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="css/property-detail.css">
@@ -738,75 +738,82 @@
 </div>
 
 
-<script>
-    const container1 = document.getElementById('relatedProductsContainer1');
 
-    document.getElementById('scrollLeftBtn1').addEventListener('click', function () {
-        container1.scrollBy({
-            top: 0,
-            left: -200, // Cuộn 200px sang trái
-            behavior: 'smooth'
+
+
+
+
+
+
+    <script>
+        const container1 = document.getElementById('relatedProductsContainer1');
+
+        document.getElementById('scrollLeftBtn1').addEventListener('click', function () {
+            container1.scrollBy({
+                top: 0,
+                left: -200, // Cuộn 200px sang trái
+                behavior: 'smooth'
+            });
         });
-    });
 
-    document.getElementById('scrollRightBtn1').addEventListener('click', function () {
-        container1.scrollBy({
-            top: 0,
-            left: 200, // Cuộn 200px sang phải
-            behavior: 'smooth'
+        document.getElementById('scrollRightBtn1').addEventListener('click', function () {
+            container1.scrollBy({
+                top: 0,
+                left: 200, // Cuộn 200px sang phải
+                behavior: 'smooth'
+            });
         });
-    });
-</script>
+    </script>
 
-<script>
+    <script>
 
-    let cartItems = JSON.parse(sessionStorage.getItem('cartItems')) || [];
-    let miniCartVisible = false; // Biến theo dõi trạng thái hiển thị của giỏ hàng
+        let cartItems = JSON.parse(sessionStorage.getItem('cartItems')) || [];
+        let miniCartVisible = false; // Biến theo dõi trạng thái hiển thị của giỏ hàng
 
-    // Hàm thêm bất động sản vào giỏ hàng
-    function addToFavorites(id, title, price, area, imageUrl, address) {
-        const existingProductIndex = cartItems.findIndex(item => item.id === id);
+        // Hàm thêm bất động sản vào giỏ hàng
+        function addToFavorites(id, title, price, area, imageUrl, address) {
+            const existingProductIndex = cartItems.findIndex(item => item.id === id);
 
-        if (existingProductIndex !== -1) {
-            alert("bất động sản này đã được quan tâm!"); // Thông báo cho người dùng
-        } else {
-            const product = {
-                id: id,
-                title: title,
-                price: parseFloat(price),
-                area: area,
-                imageUrl: imageUrl,
-                address: address,
-                quantity: 1 // Số lượng cố định là 1
-            };
-            cartItems.push(product);
-            updateSessionStorage();
-            updateCartDisplay();
-            showMiniCart();
-        }
-    }
-
-    // Cập nhật sessionStorage
-    function updateSessionStorage() {
-        sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
-    }
-
-    // Cập nhật hiển thị giỏ hàng
-    function updateCartDisplay() {
-        const itemCount = document.querySelector('.item-count');
-        const cartList = document.getElementById('cart-items');
-
-        cartList.innerHTML = '';
-
-        if (cartItems.length === 0) {
-            cartList.innerHTML = '<li>Bạn chưa có bất động sản đã lưu.</li>';
-            itemCount.innerText = 0; // Cập nhật số lượng sản phẩm
-            return; // Kết thúc hàm nếu giỏ hàng trống
+            if (existingProductIndex !== -1) {
+                alert("bất động sản này đã được quan tâm!"); // Thông báo cho người dùng
+            } else {
+                const product = {
+                    id: id,
+                    title: title,
+                    price: parseFloat(price),
+                    area: area,
+                    imageUrl: imageUrl,
+                    address: address,
+                    quantity: 1 // Số lượng cố định là 1
+                };
+                cartItems.push(product);
+                updateSessionStorage();
+                updateCartDisplay();
+                showMiniCart();
+            }
         }
 
-        cartItems.forEach((item) => {
-            const listItem = document.createElement('li');
-            listItem.innerHTML = `
+        // Cập nhật sessionStorage
+        function updateSessionStorage() {
+            sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
+        }
+
+        // Cập nhật hiển thị giỏ hàng
+        function updateCartDisplay() {
+            const itemCount = document.querySelector('.item-count');
+            const cartList = document.getElementById('cart-items');
+
+            cartList.innerHTML = '';
+
+            if (cartItems.length === 0) {
+                cartList.innerHTML = '<li>Bạn chưa có bất động sản đã lưu.</li>';
+                itemCount.innerText = 0; // Cập nhật số lượng sản phẩm
+                return; // Kết thúc hàm nếu giỏ hàng trống
+            }
+
+            cartItems.forEach((item) => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
             <img src="${item.imageUrl}" alt="${item.title}" width="40" height="40">
             <div class="item-info">
                 <h4>${item.title}</h4>
@@ -817,193 +824,192 @@
             </div>
             <button onclick="removeFromCart('${item.id}')">Xóa</button>
         `;
-            cartList.appendChild(listItem);
-        });
+                cartList.appendChild(listItem);
+            });
 
-        itemCount.innerText = cartItems.length; // Cập nhật số lượng sản phẩm
-    }
+            itemCount.innerText = cartItems.length; // Cập nhật số lượng sản phẩm
+        }
 
-    // Xóa sản phẩm khỏi giỏ hàng
-    function removeFromCart(id) {
-        cartItems = cartItems.filter(item => item.id !== id);
-        updateSessionStorage();
-        updateCartDisplay();
-    }
+        // Xóa sản phẩm khỏi giỏ hàng
+        function removeFromCart(id) {
+            cartItems = cartItems.filter(item => item.id !== id);
+            updateSessionStorage();
+            updateCartDisplay();
+        }
 
-    // Hiện giỏ hàng mini
-    function showMiniCart() {
-        const miniCart = document.querySelector('.mini-cart');
-        miniCart.style.display = 'block';
-        updateCartDisplay();
-    }
+        // Hiện giỏ hàng mini
+        function showMiniCart() {
+            const miniCart = document.querySelector('.mini-cart');
+            miniCart.style.display = 'block';
+            updateCartDisplay();
+        }
 
-    // Chuyển hướng đến trang giỏ hàng
-    function goToCart() {
-        if (!isLoggedIn) {
-            alert("Bạn cần đăng nhập để xem bất động sản đã quan tâm."); // Thông báo yêu cầu đăng nhập
-            window.location.href = 'login.jsp'; // Điều hướng đến trang đăng nhập
-        } else {
-            window.location.href = 'cart.jsp'; // Điều hướng đến trang giỏ hàng nếu đã đăng nhập
+        // Chuyển hướng đến trang giỏ hàng
+        function goToCart() {
+            if (!isLoggedIn) {
+                alert("Bạn cần đăng nhập để xem bất động sản đã quan tâm."); // Thông báo yêu cầu đăng nhập
+                window.location.href = 'login.jsp'; // Điều hướng đến trang đăng nhập
+            } else {
+                window.location.href = 'cart.jsp'; // Điều hướng đến trang giỏ hàng nếu đã đăng nhập
+            }
+
+
         }
 
 
-    }
+        // Cập nhật hiển thị giỏ hàng khi tải lại trang
+        updateCartDisplay();
+
+        function toggleMiniCart() {
+            const miniCart = document.querySelector('.mini-cart');
+            miniCartVisible = !miniCartVisible; // Chuyển đổi trạng thái hiển thị
+            miniCart.style.display = miniCartVisible ? 'block' : 'none'; // Cập nhật hiển thị
+            updateCartDisplay(); // Cập nhật hiển thị giỏ hàng
+        }
 
 
-    // Cập nhật hiển thị giỏ hàng khi tải lại trang
-    updateCartDisplay();
-
-    function toggleMiniCart() {
-        const miniCart = document.querySelector('.mini-cart');
-        miniCartVisible = !miniCartVisible; // Chuyển đổi trạng thái hiển thị
-        miniCart.style.display = miniCartVisible ? 'block' : 'none'; // Cập nhật hiển thị
-        updateCartDisplay(); // Cập nhật hiển thị giỏ hàng
-    }
+    </script>
 
 
-</script>
-
-
-<div class="copyright">
-    <p>© Mọi quyền thuộc về Homelander. Mọi thông tin liên quan vui lòng liên hệ với chúng tôi.</p>
-</div>
-
-
-<style>
-    .related-properties {
-        margin-top: 10px; /* Giảm khoảng cách giữa các phần */
-        padding-left: 135px; /* Khoảng cách với lề trái */
-        position: relative; /* Để định vị các nút */
-
-    }
-
-
-    .related-properties-container {
-        display: flex;
-        overflow-x: auto; /* Ẩn thanh cuộn mặc định */
-        height: 250px; /* Chiều cao cố định cho sản phẩm liên quan */
-        padding-bottom: 10px; /* Khoảng cách cho nút cuộn */
-
-
-    }
-
-    .related-properties-container::-webkit-scrollbar {
-        height: 0px; /* Chiều cao của thanh cuộn */
-    }
-
-    .related-property {
-        flex: 0 0 auto; /* Không cho phép co lại */
-        width: 200px; /* Chiều rộng của mỗi sản phẩm liên quan */
-        margin-right: 10px;
-        text-align: left;
-        overflow: visible; /* Cho phép hình ảnh hiển thị bên ngoài */
-        border: 1px solid gainsboro;
-        border-radius: 10px;
-        position: relative; /* Để z-index có hiệu lực */
-        transition: transform 0.3s; /* Thêm hiệu ứng chuyển tiếp */
-    }
-
-    .related-property:hover {
-        transform: translateY(-5px); /* Nổi lên trên 5px */
-        z-index: 15; /* Đưa sản phẩm lên trên cùng để không bị che khuất */
-    }
-
-
-    .related-property img {
-        padding: 10px;
-        width: 100%; /* Đảm bảo hình ảnh phù hợp với kích thước chứa */
-        height: auto; /* Tự động điều chỉnh chiều cao */
-        border: 2px solid transparent; /* Border mặc định là trong suốt */
-        border-radius: 20px; /* Bo tròn góc cho hình ảnh */
-        transition: border-color 0.3s; /* Hiệu ứng chuyển tiếp cho border */
-    }
-
-    .more-products {
-        position: absolute; /* Định vị tuyệt đối */
-        top: 0; /* Căn lên cùng với tiêu đề */
-        right: 0; /* Căn bên phải */
-        padding-bottom: 5px;
-    }
-
-    #scrollLeftBtn, #scrollRightBtn {
-        background-color: whitesmoke; /* Màu nền cho nút */
-        color: black; /* Màu chữ */
-        border: none; /* Không có đường viền */
-        padding: 5px; /* Khoảng cách bên trong */
-        cursor: pointer; /* Con trỏ khi di chuột qua */
-        border-radius: 5px; /* Bo tròn góc */
-        font-size: 14px; /* Kích thước chữ */
-        margin-left: 5px; /* Khoảng cách giữa các nút */
-    }
-
-    #scrollLeftBtn:hover, #scrollRightBtn:hover {
-        background-color: wheat; /* Màu nền khi di chuột qua */
-    }
-</style>
-
-<div class="footer">
-    <div class="footer-top">
-
-        <h1><a href="homes">
-            <span class="color1">HOME</span>
-            <span class="color2">LANDER</span>
-        </a></h1>
-        <span class="footer-item"><i class="fas fa-phone"></i> Hotline: 0123 456 789</span>
-        <span class="footer-item"><i class="fas fa-envelope"></i> Hỗ trợ: support@batdongsan.com</span>
-        <span class="footer-item"><i class="fas fa-headset"></i> Chăm sóc: 0987 654 321</span>
-    </div>
-
-    <div class="footer-content">
-        <!-- Thông tin công ty -->
-        <div class="company-info">
-            <h3>Công ty Bất Động Sản</h3>
-            <p>Địa chỉ: 123 Đường ABC, Quận 1, TP.HCM</p>
-            <p>Điện thoại: 0123 456 789</p>
-        </div>
-
-        <!-- Liên kết nhanh -->
-        <div class="quick-links">
-            <h3>Liên kết nhanh</h3>
-            <ul>
-                <li><a href="#">Trang chủ</a></li>
-                <li><a href="#">Dự án</a></li>
-                <li><a href="#">Tin tức</a></li>
-                <li><a href="#">Liên hệ</a></li>
-            </ul>
-        </div>
-
-        <!-- Mạng xã hội -->
-        <div class="social-media">
-            <h3>Mạng xã hội</h3>
-            <a href="https://www.facebook.com/khoa.ngo.562114/" class="social-icon"><i class="fab fa-facebook"></i>
-                Facebook</a>
-            <a href="https://www.instagram.com/khoa5462/" class="social-icon"><i class="fab fa-instagram"></i>
-                Instagram</a>
-            <a href="https://mail.google.com/mail/u/0/?hl=vi#inbox" class="social-icon"><i
-                    class="fas fa-envelope"></i>
-                Mail</a>
-        </div>
-
-        <!-- Form nhập email -->
-        <div class="newsletter">
-            <h3>Đăng ký nhận tin tức mới nhất</h3>
-            <form action="#" method="POST">
-                <input type="email" name="email" placeholder="Nhập email của bạn" required>
-                <button type="submit">Đăng ký</button>
-            </form>
-        </div>
-    </div>
-
-    <div class="footer-bottom">
-        <p>&copy; 2024 Công ty Bất Động Sản. Mọi quyền lợi thuộc về công ty.</p>
+    <div class="copyright">
+        <p>© Mọi quyền thuộc về Homelander. Mọi thông tin liên quan vui lòng liên hệ với chúng tôi.</p>
     </div>
 
 
-</div>
-</body>
+    <style>
+        .related-properties {
+            margin-top: 10px; /* Giảm khoảng cách giữa các phần */
+            padding-left: 135px; /* Khoảng cách với lề trái */
+            position: relative; /* Để định vị các nút */
 
-</html>
+        }
 
-<%
+
+        .related-properties-container {
+            display: flex;
+            overflow-x: auto; /* Ẩn thanh cuộn mặc định */
+            height: 250px; /* Chiều cao cố định cho sản phẩm liên quan */
+            padding-bottom: 10px; /* Khoảng cách cho nút cuộn */
+
+
+        }
+
+        .related-properties-container::-webkit-scrollbar {
+            height: 0px; /* Chiều cao của thanh cuộn */
+        }
+
+        .related-property {
+            flex: 0 0 auto; /* Không cho phép co lại */
+            width: 200px; /* Chiều rộng của mỗi sản phẩm liên quan */
+            margin-right: 10px;
+            text-align: left;
+            overflow: visible; /* Cho phép hình ảnh hiển thị bên ngoài */
+            border: 1px solid gainsboro;
+            border-radius: 10px;
+            position: relative; /* Để z-index có hiệu lực */
+            transition: transform 0.3s; /* Thêm hiệu ứng chuyển tiếp */
+        }
+
+        .related-property:hover {
+            transform: translateY(-5px); /* Nổi lên trên 5px */
+            z-index: 15; /* Đưa sản phẩm lên trên cùng để không bị che khuất */
+        }
+
+
+        .related-property img {
+            padding: 10px;
+            width: 100%; /* Đảm bảo hình ảnh phù hợp với kích thước chứa */
+            height: auto; /* Tự động điều chỉnh chiều cao */
+            border: 2px solid transparent; /* Border mặc định là trong suốt */
+            border-radius: 20px; /* Bo tròn góc cho hình ảnh */
+            transition: border-color 0.3s; /* Hiệu ứng chuyển tiếp cho border */
+        }
+
+        .more-products {
+            position: absolute; /* Định vị tuyệt đối */
+            top: 0; /* Căn lên cùng với tiêu đề */
+            right: 0; /* Căn bên phải */
+            padding-bottom: 5px;
+        }
+
+        #scrollLeftBtn, #scrollRightBtn {
+            background-color: whitesmoke; /* Màu nền cho nút */
+            color: black; /* Màu chữ */
+            border: none; /* Không có đường viền */
+            padding: 5px; /* Khoảng cách bên trong */
+            cursor: pointer; /* Con trỏ khi di chuột qua */
+            border-radius: 5px; /* Bo tròn góc */
+            font-size: 14px; /* Kích thước chữ */
+            margin-left: 5px; /* Khoảng cách giữa các nút */
+        }
+
+        #scrollLeftBtn:hover, #scrollRightBtn:hover {
+            background-color: wheat; /* Màu nền khi di chuột qua */
+        }
+    </style>
+
+
+    <div class="footer">
+        <div class="footer-top">
+
+            <h1><a href="homes">
+                <span class="color1">HOME</span>
+                <span class="color2">LANDER</span>
+            </a></h1>
+            <span class="footer-item"><i class="fas fa-phone"></i> Hotline: 0123 456 789</span>
+            <span class="footer-item"><i class="fas fa-envelope"></i> Hỗ trợ: support@batdongsan.com</span>
+            <span class="footer-item"><i class="fas fa-headset"></i> Chăm sóc: 0987 654 321</span>
+        </div>
+
+        <div class="footer-content">
+            <!-- Thông tin công ty -->
+            <div class="company-info">
+                <h3>Công ty Bất Động Sản</h3>
+                <p>Địa chỉ: 123 Đường ABC, Quận 1, TP.HCM</p>
+                <p>Điện thoại: 0123 456 789</p>
+            </div>
+
+            <!-- Liên kết nhanh -->
+            <div class="quick-links">
+                <h3>Liên kết nhanh</h3>
+                <ul>
+                    <li><a href="#">Trang chủ</a></li>
+                    <li><a href="#">Dự án</a></li>
+                    <li><a href="#">Tin tức</a></li>
+                    <li><a href="#">Liên hệ</a></li>
+                </ul>
+            </div>
+
+            <!-- Mạng xã hội -->
+            <div class="social-media">
+                <h3>Mạng xã hội</h3>
+                <a href="https://www.facebook.com/khoa.ngo.562114/" class="social-icon"><i class="fab fa-facebook"></i>
+                    Facebook</a>
+                <a href="https://www.instagram.com/khoa5462/" class="social-icon"><i class="fab fa-instagram"></i>
+                    Instagram</a>
+                <a href="https://mail.google.com/mail/u/0/?hl=vi#inbox" class="social-icon"><i
+                        class="fas fa-envelope"></i>
+                    Mail</a>
+            </div>
+
+            <!-- Form nhập email -->
+            <div class="newsletter">
+                <h3>Đăng ký nhận tin tức mới nhất</h3>
+                <form action="#" method="POST">
+                    <input type="email" name="email" placeholder="Nhập email của bạn" required>
+                    <button type="submit">Đăng ký</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 Công ty Bất Động Sản. Mọi quyền lợi thuộc về công ty.</p>
+        </div>
+
+
+    </div>
+
+
+        <%
     }
 %>
