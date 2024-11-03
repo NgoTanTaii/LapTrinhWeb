@@ -1,4 +1,3 @@
-
 <%
 
     // Sử dụng biến session có sẵn trong JSP
@@ -13,7 +12,7 @@
 <%@ page import="Controller.User" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -133,9 +132,15 @@
     <div class="sidebar">
         <ul>
             <li><a href="admin.jsp">Main Dashboard</a></li>
-            <li><a href="user-manager.jsp">Quản lý tài khoản</a></li>
-            <li><a href="home-manager.jsp">Quản lý bất động sản</a></li>
-            <li><a href="top-properties.jsp">Top 10 bất động sản</a></li>
+            <li><a href="users">Quản lý tài khoản</a></li>
+            <li><a href="home-manager">Quản lý sản phẩm</a></li>
+            <li><a href="top-property.jsp">Quản lý sản phẩm bán chạy</a></li>
+            <li><a href="home-manager.jsp">Quản lý nhà phân phối</a></li>
+            <li><a href="top-user-manager.jsp">Quản lý top 5 khách</a></li>
+            <li><a href="top-employee-manager.jsp">Quản lý top 5 nhân viên</a></li>
+            <li><a href="booking-manager.jsp">Quản lý đơn đặt hàng</a></li>
+
+
         </ul>
     </div>
 
@@ -167,23 +172,30 @@
             %>
             <tr>
                 <form action="users" method="POST">
-                    <td><input type="hidden" name="id" value="<%= o.getId() %>"><%= o.getId() %></td>
-                    <td><%= o.getUsername() %></td> <!-- Hiển thị tên người dùng dưới dạng văn bản -->
-                    <td><%= o.getEmail() %></td> <!-- Hiển thị email dưới dạng văn bản -->
+                    <td><input type="hidden" name="id" value="<%= o.getId() %>"><%= o.getId() %>
+                    </td>
+                    <td><%= o.getUsername() %>
+                    </td> <!-- Hiển thị tên người dùng dưới dạng văn bản -->
+                    <td><%= o.getEmail() %>
+                    </td> <!-- Hiển thị email dưới dạng văn bản -->
                     <td>
                         <select name="role" <%= o.getUsername().equals(loggedInUsername) ? "disabled" : "" %>>
-                            <option value="user" <%= o.getRole().equalsIgnoreCase("user") ? "selected" : "" %>>user</option>
-                            <option value="admin" <%= o.getRole().equalsIgnoreCase("admin") ? "selected" : "" %>>admin</option>
+                            <option value="user" <%= o.getRole().equalsIgnoreCase("user") ? "selected" : "" %>>user
+                            </option>
+                            <option value="admin" <%= o.getRole().equalsIgnoreCase("admin") ? "selected" : "" %>>admin
+                            </option>
                         </select>
                     </td>
                     <td>
                         <button type="submit" name="action" value="update"
                                 <%= o.getUsername().equals(loggedInUsername) ? "disabled" : "" %>
-                                class="update-button">Cập nhật</button>
+                                class="update-button">Cập nhật
+                        </button>
                         <button type="submit" name="action" value="delete"
                                 <%= o.getUsername().equals(loggedInUsername) ? "disabled" : "" %>
                                 onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này không?')"
-                                class="delete-button">Xóa</button>
+                                class="delete-button">Xóa
+                        </button>
                     </td>
                 </form>
             </tr>

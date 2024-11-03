@@ -13,7 +13,6 @@
 %>
 
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,16 +26,15 @@
     <div class="sidebar">
         <ul>
             <li><a href="admin.jsp">Main Dashboard</a></li>
-<%--            <li><a href="#">Doanh thu thứ</a></li>--%>
-<%--            <li><a href="#">Doanh thu tháng</a></li>--%>
-<%--            <li><a href="#">Hóa đơn</a></li>--%>
             <li><a href="users">Quản lý tài khoản</a></li>
-
-            <!-- Thêm đường dẫn đến trang Quản lý sản phẩm -->
             <li><a href="home-manager">Quản lý sản phẩm</a></li>
-<%--            <li><a href="#">Top 10 sản phẩm</a></li>--%>
-<%--            <li><a href="#">Top 5 khách hàng</a></li>--%>
-<%--            <li><a href="product-display.jsp">Quản lý nhà cung cấp</a></li>--%>
+            <li><a href="top-property.jsp">Quản lý sản phẩm bán chạy</a></li>
+            <li><a href="home-manager.jsp">Quản lý nhà phân phối</a></li>
+            <li><a href="top-user-manager.jsp">Quản lý top 5 khách</a></li>
+            <li><a href="top-employee-manager.jsp">Quản lý top 5 nhân viên</a></li>
+            <li><a href="booking-manager.jsp">Quản lý đơn đặt hàng</a></li>
+
+
         </ul>
     </div>
 

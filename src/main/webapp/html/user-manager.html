@@ -8,53 +8,66 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/4.0.1/css/fixedHeader.dataTables.css">
 
     <style>
+        /* Cài đặt chung */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
+            display: flex;
             margin: 0;
-            padding: 0;
         }
 
         .container {
             display: flex;
-            max-width: 1200px;
-            margin: auto;
+            width: 100%;
         }
 
+        /* Sidebar */
         .sidebar {
             width: 200px;
             background-color: #333;
             color: white;
             padding: 20px;
-            border-radius: 5px 0 0 5px;
-            height: auto;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            border-radius: 0 5px 5px 0;
         }
 
         .sidebar ul {
-            list-style: none;
+            list-style-type: none;
             padding: 0;
         }
 
         .sidebar ul li {
-            margin-bottom: 15px;
+            margin: 10px 0;
         }
 
         .sidebar ul li a {
-            color: white;
+            color: #fff;
             text-decoration: none;
-            font-size: 16px;
+            padding: 10px;
+            display: block;
         }
 
         .sidebar ul li a:hover {
-            text-decoration: underline;
+            background-color: #555;
         }
 
+        /* Nội dung chính */
         .main-content {
-            flex: 1;
-            background: white;
+            margin-left: 220px;
+            width: calc(100% - 220px);
             padding: 20px;
-            border-radius: 0 5px 5px 0;
+            background: white;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 0 5px 5px 0;
         }
 
         .dashboard-header {
@@ -62,6 +75,7 @@
             justify-content: space-between;
             align-items: center;
             height: 100px;
+            margin-bottom: 20px;
         }
 
         .dashboard-header h2 {
@@ -108,7 +122,6 @@
         .update-button:hover {
             background-color: #d6d8db;
         }
-
     </style>
 </head>
 <body>
@@ -119,12 +132,19 @@
         <ul>
             <li><a href="admin.html">Main Dashboard</a></li>
             <li><a href="user-manager.html">Quản lý tài khoản</a></li>
-            <li><a href="home-manager.html">Quản lý bất động sản</a></li>
-            <li><a href="top-properties.html">Top 10 bất động sản</a></li>
+            <li><a href="home-manager.html">Quản lý sản phẩm</a></li>
+            <li><a href="top-property.html">Quản lý sản phẩm bán chạy</a></li>
+            <li><a href="home-manager.html">Quản lý nhà phân phối</a></li>
+            <li><a href="top-user-manager.html">Quản lý top 5 khách</a></li>
+            <li><a href="top-employee-manager.html">Quản lý top 5 nhân viên</a></li>
+            <li><a href="booking-manager.html">Quản lý đơn đặt hàng</a></li>
+
+
         </ul>
     </div>
 
-    <!-- Main content -->
+
+    <!-- Nội dung chính -->
     <div class="main-content">
         <div class="dashboard-header">
             <h2>Quản lý tài khoản</h2>
