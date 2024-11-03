@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    body {
+      display: flex;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    .sidebar {
+      width: 200px;
+      background-color: #333;
+      color: #fff;
+      position: fixed;
+      top: 0;
+      left: 10px; /* Thêm khoảng cách từ cạnh trái */
+      height: 100vh;
+      padding-top: 20px;
+      margin-left: 10px; /* Khoảng cách thêm để cách lệch khỏi cạnh trái */
+      border-radius: 8px; /* Thêm góc bo tròn cho sidebar nếu muốn */
+    }
+
+    .sidebar ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      margin: 10px 0;
+    }
+
+    .sidebar ul li a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px;
+      display: block;
+    }
+
+    .sidebar ul li a:hover {
+      background-color: #555;
+    }
+
+    .order-management {
+      margin-left: 220px; /* Space for the fixed sidebar */
+      padding: 20px;
+      width: calc(100% - 220px); /* Adjust width based on sidebar */
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table th, table td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .product-image {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+    .btn-view, .btn-edit, .btn-delete {
+      padding: 5px 10px;
+      margin-right: 5px;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      border-radius: 5px;
+    }
+
+    .btn-view {
+      background-color: #4CAF50;
+    }
+
+    .btn-edit {
+      background-color: #FFA500;
+    }
+
+    .btn-delete {
+      background-color: #f44336;
+    }
+  </style>
+</head>
+<body>
+
+<div class="sidebar">
+  <ul>
+    <li><a href="admin.html">Main Dashboard</a></li>
+    <li><a href="user-manager.html">Quản lý tài khoản</a></li>
+    <li><a href="home-manager.html">Quản lý sản phẩm</a></li>
+    <li><a href="home-manager.html">Quản lý sản phẩm bán chạy</a></li>
+    <li><a href="home-manager.html">Quản lý nhà phân phối</a></li>
+    <li><a href="home-manager.html">Quản lý top 5 khách</a></li>
+    <li><a href="home-manager.html">Quản lý top 5 nhân viên</a></li>
+    <li><a href="home-manager.html">Quản lý đơn đặt hàng</a></li>
+  </ul>
+</div>
+
+<div class="order-management">
+  <h2>Quản lý Đơn Đặt Hàng</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>Mã Đơn Hàng</th>
+      <th>Tên Khách Hàng</th>
+      <th>Số Điện Thoại</th>
+      <th>Địa Chỉ</th>
+      <th>Hình Ảnh Sản Phẩm</th>
+      <th>Tên Sản Phẩm</th>
+      <th>Số Lượng</th>
+      <th>Giá</th>
+      <th>Ngày & Giờ</th>
+      <th>Trạng Thái</th>
+      <th>Hành Động</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>001</td>
+      <td>Nguyễn Văn A</td>
+      <td>+84 123 456 789</td>
+      <td>123 Đường ABC, Hà Nội</td>
+      <td><img src="../jpg/DaNang.jpg" alt="Hình Sản Phẩm" class="product-image"></td>
+      <td>Sản Phẩm A</td>
+      <td>2</td>
+      <td>20$</td>
+      <td>2024-11-03 14:30</td>
+      <td>Chờ Xử Lý</td>
+      <td>
+        <button class="btn-view">Xem</button>
+        <button class="btn-edit">Sửa</button>
+        <button class="btn-delete">Xóa</button>
+      </td>
+    </tr>
+
+    </tbody>
+    <tbody>
+    <tr>
+      <td>001</td>
+      <td>Nguyễn Văn A</td>
+      <td>+84 123 456 789</td>
+      <td>123 Đường ABC, Hà Nội</td>
+      <td><img src="../jpg/DaNang.jpg" alt="Hình Sản Phẩm" class="product-image"></td>
+      <td>Sản Phẩm A</td>
+      <td>2</td>
+      <td>20$</td>
+      <td>2024-11-03 14:30</td>
+      <td>Chờ Xử Lý</td>
+      <td>
+        <button class="btn-view">Xem</button>
+        <button class="btn-edit">Sửa</button>
+        <button class="btn-delete">Xóa</button>
+      </td>
+    </tr>
+
+    </tbody>
+    <tbody>
+    <tr>
+      <td>001</td>
+      <td>Nguyễn Văn A</td>
+      <td>+84 123 456 789</td>
+      <td>123 Đường ABC, Hà Nội</td>
+      <td><img src="../jpg/DaNang.jpg" alt="Hình Sản Phẩm" class="product-image"></td>
+      <td>Sản Phẩm A</td>
+      <td>2</td>
+      <td>20$</td>
+      <td>2024-11-03 14:30</td>
+      <td>Chờ Xử Lý</td>
+      <td>
+        <button class="btn-view">Xem</button>
+        <button class="btn-edit">Sửa</button>
+        <button class="btn-delete">Xóa</button>
+      </td>
+    </tr>
+
+    </tbody>
+    <tbody>
+    <tr>
+      <td>001</td>
+      <td>Nguyễn Văn A</td>
+      <td>+84 123 456 789</td>
+      <td>123 Đường ABC, Hà Nội</td>
+      <td><img src="../jpg/DaNang.jpg" alt="Hình Sản Phẩm" class="product-image"></td>
+      <td>Sản Phẩm A</td>
+      <td>2</td>
+      <td>20$</td>
+      <td>2024-11-03 14:30</td>
+      <td>Chờ Xử Lý</td>
+      <td>
+        <button class="btn-view">Xem</button>
+        <button class="btn-edit">Sửa</button>
+        <button class="btn-delete">Xóa</button>
+      </td>
+    </tr>
+
+    </tbody>
+    <tbody>
+    <tr>
+      <td>001</td>
+      <td>Nguyễn Văn A</td>
+      <td>+84 123 456 789</td>
+      <td>123 Đường ABC, Hà Nội</td>
+      <td><img src="../jpg/DaNang.jpg" alt="Hình Sản Phẩm" class="product-image"></td>
+      <td>Sản Phẩm A</td>
+      <td>2</td>
+      <td>20$</td>
+      <td>2024-11-03 14:30</td>
+      <td>Chờ Xử Lý</td>
+      <td>
+        <button class="btn-view">Xem</button>
+        <button class="btn-edit">Sửa</button>
+        <button class="btn-delete">Xóa</button>
+      </td>
+    </tr>
+
+    </tbody>
+
+  </table>
+</div>
+
+
+</body>
+</html>

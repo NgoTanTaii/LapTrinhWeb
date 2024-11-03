@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh Sửa Bất Động Sản</title>
+    <style>
+
+        .container {
+            display: flex;
+            gap: 20px; /* Khoảng cách giữa main content và filter form */
+        }
+
+        .main-content {
+            flex: 3; /* Chiếm 3 phần không gian */
+            padding: 20px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-form {
+            flex: 1; /* Chiếm 1 phần không gian */
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 300px; /* Giới hạn chiều rộng của form lọc */
+        }
+
+        .filter-form h3 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .filter-form label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .filter-form select, .filter-form input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .filter-form button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .filter-form button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Form hiển thị bất động sản chính -->
+    <div class="main-content">
+        <h2>Danh sách bất động sản</h2>
+        <!-- Nội dung bảng hiển thị của bạn ở đây -->
+    </div>
+
+    <!-- Form bộ lọc -->
+    <div class="filter-form">
+        <form id="propertyFilterForm">
+            <h3>Bộ Lọc Bất Động Sản</h3>
+            <!-- Các trường lọc ở đây, giữ nguyên từ form bộ lọc ở phần trước -->
+            <label for="propertyType">Loại Bất Động Sản:</label>
+            <select id="propertyType" name="propertyType">
+                <option value="">Chọn loại</option>
+                <option value="canho">Căn Hộ</option>
+                <option value="nhapho">Nhà Phố</option>
+                <option value="bietthu">Biệt Thự</option>
+                <option value="datnen">Đất Nền</option>
+            </select>
+
+            <label for="priceMin">Giá Tối Thiểu (VNĐ):</label>
+            <input type="number" id="priceMin" name="priceMin" placeholder="1,000,000,000">
+
+            <label for="priceMax">Giá Tối Đa (VNĐ):</label>
+            <input type="number" id="priceMax" name="priceMax" placeholder="10,000,000,000">
+
+            <label for="areaMin">Diện Tích Tối Thiểu (m²):</label>
+            <input type="number" id="areaMin" name="areaMin" placeholder="50">
+
+            <label for="areaMax">Diện Tích Tối Đa (m²):</label>
+            <input type="number" id="areaMax" name="areaMax" placeholder="200">
+
+            <label for="locationCity">Tỉnh/Thành Phố:</label>
+            <select id="locationCity" name="locationCity">
+                <option value="">Chọn tỉnh/thành phố</option>
+                <option value="hanoi">Hà Nội</option>
+                <option value="hcm">TP. Hồ Chí Minh</option>
+                <option value="danang">Đà Nẵng</option>
+            </select>
+
+            <!-- Các trường khác của bộ lọc -->
+            <button type="submit">Tìm Kiếm</button>
+        </form>
+    </div>
+</div>
+

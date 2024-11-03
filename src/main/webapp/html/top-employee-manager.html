@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quản lý Admin</title>
+  <style>
+    /* CSS cho bố cục và sidebar cố định */
+    body {
+      display: flex;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .sidebar {
+      width: 200px;
+      background-color: #333;
+      color: #fff;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      padding-top: 20px;
+      padding-left: 10px; /* Tạo khoảng cách nhỏ bên trái */
+      border-radius: 0 8px 8px 0;
+    }
+
+    .sidebar ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      margin: 10px 0;
+    }
+
+    .sidebar ul li a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px;
+      display: block;
+    }
+
+    .sidebar ul li a:hover {
+      background-color: #555;
+    }
+
+    .content {
+      margin-left: 220px; /* Để chừa khoảng trống cho sidebar */
+      padding: 20px;
+      width: calc(100% - 220px); /* Tính toán chiều rộng để vừa màn hình */
+    }
+
+    .content h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table th, table td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    table th {
+      background-color: #f4f4f4;
+    }
+
+    table tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    .btn-view, .btn-delete {
+      padding: 5px 10px;
+      margin-right: 5px;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      border-radius: 5px;
+    }
+
+    .btn-view {
+      background-color: #4CAF50;
+    }
+
+    .btn-delete {
+      background-color: #f44336;
+    }
+  </style>
+</head>
+<body>
+
+<div class="sidebar">
+  <ul>
+    <li><a href="admin.html">Main Dashboard</a></li>
+    <li><a href="user-manager.html">Quản lý tài khoản</a></li>
+    <li><a href="home-manager.html">Quản lý sản phẩm</a></li>
+    <li><a href="top-property.html">Quản lý sản phẩm bán chạy</a></li>
+    <li><a href="home-manager.html">Quản lý nhà phân phối</a></li>
+    <li><a href="top-user-manager.html">Quản lý top 5 khách</a></li>
+    <li><a href="top-employee-manager.html">Quản lý top 5 nhân viên</a></li>
+    <li><a href="booking-manager.html">Quản lý đơn đặt hàng</a></li>
+
+
+  </ul>
+</div>
+
+
+<div class="content">
+  <h2>Quản lý Top 5 Nhân Viên</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>Mã Nhân Viên</th>
+      <th>Tên Nhân Viên</th>
+      <th>Phòng Ban</th>
+      <th>Số Lượng Đơn Đã Xử Lý</th>
+      <th>Tổng Doanh Thu Đạt Được</th>
+      <th>Hành Động</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>NV001</td>
+      <td>Phạm Văn C</td>
+      <td>Kinh Doanh</td>
+      <td>50</td>
+      <td>10,000,000₫</td>
+      <td>
+        <button class="btn-view">Xem</button>
+        <button class="btn-delete">Xóa</button>
+      </td>
+    </tr>
+    <tr>
+      <td>NV002</td>
+      <td>Trần Thị D</td>
+      <td>Marketing</td>
+      <td>45</td>
+      <td>8,500,000₫</td>
+      <td>
+        <button class="btn-view">Xem</button>
+        <button class="btn-delete">Xóa</button>
+      </td>
+    </tr>
+    <!-- Thêm các dòng khác để hiển thị đủ top 5 nhân viên -->
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>

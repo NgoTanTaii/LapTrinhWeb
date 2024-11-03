@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quản lý Sản Phẩm</title>
+  <style>
+    /* CSS cho bố cục và sidebar cố định */
+    body {
+      display: flex;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 200px;
+      background-color: #333;
+      color: #fff;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      padding-top: 20px;
+      padding-left: 10px;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .sidebar ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      margin: 10px 0;
+    }
+
+    .sidebar ul li a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px;
+      display: block;
+    }
+
+    .sidebar ul li a:hover {
+      background-color: #555;
+    }
+
+    /* Nội dung chính */
+    .content {
+      margin-left: 220px; /* Để chừa khoảng trống cho sidebar */
+      padding: 20px;
+      width: calc(100% - 220px); /* Tính toán chiều rộng để vừa với màn hình */
+    }
+
+    /* Tiêu đề */
+    .content h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    /* Bảng quản lý sản phẩm */
+    .product-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .product-table th, .product-table td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .product-table th {
+      background-color: #f4f4f4;
+    }
+
+    .product-table tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    /* Nút hành động */
+    .btn-view, .btn-edit, .btn-delete {
+      padding: 5px 10px;
+      margin-right: 5px;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      border-radius: 5px;
+    }
+
+    .btn-view {
+      background-color: #4CAF50;
+    }
+
+    .btn-edit {
+      background-color: #FFA500;
+    }
+
+    .btn-delete {
+      background-color: #f44336;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <ul>
+    <li><a href="admin.html">Main Dashboard</a></li>
+    <li><a href="user-manager.html">Quản lý tài khoản</a></li>
+    <li><a href="home-manager.html">Quản lý sản phẩm</a></li>
+    <li><a href="top-property.html">Quản lý sản phẩm bán chạy</a></li>
+    <li><a href="home-manager.html">Quản lý nhà phân phối</a></li>
+    <li><a href="top-user-manager.html">Quản lý top 5 khách</a></li>
+    <li><a href="top-employee-manager.html">Quản lý top 5 nhân viên</a></li>
+    <li><a href="booking-manager.html">Quản lý đơn đặt hàng</a></li>
+
+
+  </ul>
+</div>
+
+
+<!-- Nội dung chính -->
+<div class="content">
+  <h2>Quản lý Sản Phẩm</h2>
+  <table class="product-table">
+    <thead>
+    <tr>
+      <th>Mã Sản Phẩm</th>
+      <th>Tên Sản Phẩm</th>
+      <th>Danh Mục</th>
+      <th>Giá</th>
+      <th>Số Lượng Đã Bán</th>
+      <th>Trạng Thái</th>
+      <th>Hành Động</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>SP001</td>
+      <td>Sản Phẩm A</td>
+      <td>Điện Tử</td>
+      <td>500,000₫</td>
+      <td>120</td>
+      <td>Còn hàng</td>
+      <td>
+        <button class="btn-view">Xem</button>
+        <button class="btn-edit">Sửa</button>
+        <button class="btn-delete">Xóa</button>
+      </td>
+    </tr>
+    <tr>
+      <td>SP002</td>
+      <td>Sản Phẩm B</td>
+      <td>Gia Dụng</td>
+      <td>300,000₫</td>
+      <td>75</td>
+      <td>Hết hàng</td>
+      <td>
+        <button class="btn-view">Xem</button>
+        <button class="btn-edit">Sửa</button>
+        <button class="btn-delete">Xóa</button>
+      </td>
+    </tr>
+    <!-- Thêm các dòng sản phẩm khác nếu cần -->
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>
