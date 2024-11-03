@@ -199,9 +199,31 @@ nav ul li a:hover {
 }
 .main .tintuc .main1 .tintuc1 .text .bigtext {
   font-size: 25px;
+  margin-top: 40px;
 }
 .main .tintuc .main1 .tintuc1 .text .normaltext {
   color: #ccc;
+  margin-bottom: 40px;
+}
+.main .tintuc .main1 .tintuc2 {
+  display: flex;
+  flex-direction: row;
+  border-style: solid;
+  border-color: #ccc;
+  width: 1000px;
+}
+.main .tintuc .main1 .tintuc2 .text {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+}
+.main .tintuc .main1 .tintuc2 .text .bigtext {
+  font-size: 25px;
+  margin-top: 40px;
+}
+.main .tintuc .main1 .tintuc2 .text .normaltext {
+  color: #ccc;
+  margin-bottom: 40px;
 }
 .main .tintuc .main2 {
   margin-left: 30px;
