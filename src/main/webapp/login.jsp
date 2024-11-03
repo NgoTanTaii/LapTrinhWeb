@@ -8,72 +8,9 @@
     <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <!-- Google Sign-In -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <meta name="google-signin-client_id" content="160944412642-19q2brhebfkldu328eu3kji6il30vk0k.apps.googleusercontent.com">
-
-    <!-- Facebook SDK -->
-    <script>
-        window.fbAsyncInit = function() {
-            FB.init({
-                appId      : '1913420479156589',
-                cookie     : true,
-                xfbml      : true,
-                version    : 'v12.0'
-            });
-        };
-
-        // Load Facebook SDK
-        (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "https://connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-
-        // Handle Facebook login
-        function handleFacebookLogin() {
-            FB.getLoginStatus(function(response) {
-                if (response.status === 'connected') {
-                    statusChangeCallback(response);
-                } else {
-                    FB.login(function(response) {
-                        if (response.authResponse) {
-                            statusChangeCallback(response);
-                        } else {
-                            alert("Đăng nhập thất bại hoặc người dùng từ chối quyền truy cập.");
-                        }
-                    }, {scope: 'email'});
-                }
-            });
-        }
-
-        // Handle status change
-        function statusChangeCallback(response) {
-            if (response.status === 'connected') {
-                FB.api('/me', {fields: 'name, email'}, function(userInfo) {
-                    // Send user data to server
-                    fetch('loginWithFacebook', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(userInfo)
-                    }).then(res => res.json())
-                        .then(data => {
-                            if (data.success) {
-                                window.location.href = "welcome"; // Redirect on successful login
-                            } else {
-                                alert("Đăng nhập thất bại");
-                            }
-                        });
-                });
-            } else {
-                alert("Bạn chưa đăng nhập Facebook!");
-            }
-        }
-    </script>
+    <!-- Google Sign-In Meta -->
+    <meta name="google-signin-client_id"
+          content="161137938230-6h6mbfajcfra9avc0762peh4556202hq.apps.googleusercontent.com">
 
     <style>
         .login-form-container {
@@ -116,6 +53,7 @@
         }
 
         .btn {
+
             padding: 10px;
             border-radius: 4px;
             cursor: pointer;
@@ -128,10 +66,14 @@
         }
 
         .submit-btn {
+            border-radius:5px ;
+            height: 40px;
+            width: 100%;
             background-color: red;
             color: white;
             border: none;
             margin-bottom: 10px;
+            font-size: 16px;
         }
 
         .submit-btn:hover {
@@ -172,15 +114,16 @@
             <label for="password">Mật khẩu:</label>
             <input type="password" id="password" name="password" required>
 
-            <button type="submit" class="btn submit-btn">Đăng nhập</button>
+            <button type="submit" class="submit-btn">Đăng nhập</button>
         </form>
 
-        <!-- Thông báo lỗi nếu có -->
+        <!-- Error message display -->
         <%
             String errorMessage = (String) request.getAttribute("errorMessage");
             if (errorMessage != null) {
         %>
-        <p class="error-message" style="color: red;"><%= errorMessage %></p>
+        <p class="error-message" style="color: red;"><%= errorMessage %>
+        </p>
         <%
             }
         %>
@@ -191,18 +134,50 @@
                 <i class="fab fa-facebook-f"></i> Facebook
             </button>
             <div id="g_id_onload"
-                 data-client_id="160944412642-19q2brhebfkldu328eu3kji6il30vk0k.apps.googleusercontent.com"
-                 data-login_uri="http://localhost:8080/untitled4/loginWithGoogle"
-                 data-auto_select="true">
+                 data-client_id="161137938230-6h6mbfajcfra9avc0762peh4556202hq.apps.googleusercontent.com"
+                 data-login_uri="http://localhost:8080/untitled4/loginWithGoogle">
             </div>
             <div class="g_id_signin" data-type="standard"></div>
         </div>
 
         <div class="link">
-            <p>Bạn chưa có tài khoản? <a href="register.jsp">Đăng ký ngay</a> | <a href="forgot-password.jsp">Quên mật khẩu?</a></p>
+            <p>Bạn chưa có tài khoản? <a href="register.jsp">Đăng ký ngay</a> | <a href="forgot-password.jsp">Quên mật
+                khẩu?</a></p>
         </div>
     </div>
 </div>
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+    google.accounts.id.initialize({
+        client_id: "161137938230-6h6mbfajcfra9avc0762peh4556202hq.apps.googleusercontent.com",
+        callback: handleCredentialResponse
+    });
+
+    function handleCredentialResponse(response) {
+        // Send the credential to the server
+        fetch('/loginWithGoogle', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: `credential=${response.credential}`
+        })
+            .then(res => {
+                if (!res.ok) throw new Error('Authorization failed');
+                return res.text();
+            })
+            .then(data => console.log('Login successful:', data))
+            .catch(error => console.error(error));
+    }
+
+    // Render the Google Sign-In button
+    google.accounts.id.renderButton(
+        document.getElementById("g_id_onload"),
+        {theme: "outline", size: "large"}
+    );
+
+    // Optional: Display the One Tap prompt if desired
+    google.accounts.id.prompt();
+</script>
 
 </body>
 </html>
