@@ -155,6 +155,9 @@ nav ul li a:hover {
   flex-direction: column;
   align-items: center;
 }
+.main .tieude {
+  font-size: 40px;
+}
 .main .timkiem {
   display: flex;
   flex-direction: row;
@@ -173,6 +176,10 @@ nav ul li a:hover {
 .main .timkiem .search input {
   width: 270px;
   height: 30px;
+}
+.main .tintuc {
+  display: flex;
+  flex-direction: row;
 }
 .footer {
   background-color: #f8f8f8;
