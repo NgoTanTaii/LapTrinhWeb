@@ -92,5 +92,38 @@
         <button type="submit" class="submit-btn">Xác nhận đặt lịch</button>
     </form>
 </div>
+<script>
+    // Lấy giỏ hàng từ sessionStorage
+    const cartItems = JSON.parse(sessionStorage.getItem('cartItems')) || [];
+    const productListDiv = document.getElementById('product-list');
+
+    cartItems.forEach((item, index) => {
+        const productNameInput = document.createElement('input');
+        productNameInput.type = 'hidden';
+        productNameInput.name = 'productName' + index;
+        productNameInput.value = item.name;
+
+        // Bất động sản chỉ có số lượng là 1
+        const productQuantityInput = document.createElement('input');
+        productQuantityInput.type = 'hidden';
+        productQuantityInput.name = 'productQuantity' + index;
+        productQuantityInput.value = 1;
+
+        const productPriceInput = document.createElement('input');
+        productPriceInput.type = 'hidden';
+        productPriceInput.name = 'productPrice' + index;
+        productPriceInput.value = item.price;
+
+        productListDiv.appendChild(productNameInput);
+        productListDiv.appendChild(productPriceInput);
+    });
+
+    // Thêm một input ẩn để truyền số lượng sản phẩm
+    const productCountInput = document.createElement('input');
+    productCountInput.type = 'hidden';
+    productCountInput.name = 'productCount';
+    productCountInput.value = cartItems.length;
+    productListDiv.appendChild(productCountInput);
+</script>
 </body>
 </html>
