@@ -233,7 +233,7 @@
         %>
         <div class="container1">
             <div class="property-container">
-                <img src=" jpg/DaNang.jpg"
+                <img src="jpg/DaNang.jpg"
                      alt="Hình ảnh bất động sản" class="property-image">
                 <div class="property-details">
                     <h2 class="property-title"><%= property.getTitle() %>
