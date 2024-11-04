@@ -36,7 +36,7 @@
 
             <a href="login.jsp" class="btn"><h3>Đăng nhập</h3></a>
             <a href="register.jsp" class="btn"><h3>Đăng ký</h3></a>
-            <a href="post-status.html" class="btn"><h3>Đăng tin</h3></a>
+            <a href="post-status.jsp" class="btn"><h3>Đăng tin</h3></a>
         </div>
     </div>
 
@@ -233,7 +233,12 @@
                 </div>
             </span>
             <div class="heart-icon"
-                 onclick="addToFavorites('<%= property.getId() %>', '<%= property.getTitle() %>', <%= property.getPrice() %>, <%= property.getArea() %>, '<%= property.getImageUrl() %>','<%= property.getAddress() %>')">
+                 onclick="<% if (session.getAttribute("username") != null) { %>
+                         addToFavorites('<%= property.getId() %>', '<%= property.getTitle() %>', <%= property.getPrice() %>, <%= property.getArea() %>, '<%= property.getImageUrl() %>','<%= property.getAddress() %>');
+                     <% } else { %>
+                         alert('Vui lòng đăng nhập để thêm vào giỏ hàng.');
+                         window.location.href = 'login.jsp';
+                         <% } %>">
                 <img src="jpg/heartred.png" alt="Heart Icon" class="heart-image">
             </div>
         </div>

@@ -336,11 +336,14 @@
     <div class="menu">
         <div class="header-bottom" style="height:60px;margin-top: 0">
             <div class="store-name">
-                <h1><a href="homes">
-                    <span class="color1">HOME</span>
-                    <span class="color2">LANDER</span> <!-- Thương hiệu -->
-                </a></h1>
+                <h1>
+                    <a href="<%= isLoggedIn ? "welcome" : "homes" %>">
+                        <span class="color1">HOME</span>
+                        <span class="color2">LANDER</span>
+                    </a>
+                </h1>
             </div>
+
 
             <nav>
                 <ul>
@@ -420,9 +423,15 @@
         <p>Mô tả: <%= property.getDescription() %>
         </p>
         <div class="heart-icon"
-             onclick="addToFavorites('<%= property.getId() %>', '<%= property.getTitle() %>', <%= property.getPrice() %>, <%= property.getArea() %>, '<%= property.getImageUrl() %>','<%= property.getAddress() %>')">
+             onclick="<% if (session.getAttribute("username") != null) { %>
+                     addToFavorites('<%= property.getId() %>', '<%= property.getTitle() %>', <%= property.getPrice() %>, <%= property.getArea() %>, '<%= property.getImageUrl() %>','<%= property.getAddress() %>');
+                 <% } else { %>
+                     alert('Vui lòng đăng nhập để thêm vào giỏ hàng.');
+                     window.location.href = 'login.jsp';
+                     <% } %>">
             <img src="jpg/heartred.png" alt="Heart Icon" class="heart-image">
         </div>
+
 
 
     </div>

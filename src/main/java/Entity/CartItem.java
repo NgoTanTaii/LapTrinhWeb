@@ -1,40 +1,70 @@
 package Entity;
 
+import java.math.BigDecimal;
+
 public class CartItem {
-    private Book book; // Đối tượng Book
-    private int quantity;
+    private int propertyId;
+    private String title;
+    private BigDecimal price;
+    private BigDecimal area;
+    private String imageUrl;
+    private String address;
 
-    public CartItem(Book book) {
-        this.book = book;
-        this.quantity = 1; // Default quantity to 1
+    // Constructor, getters, and setters
+    public CartItem(int propertyId, String title, BigDecimal price, BigDecimal area, String imageUrl, String address) {
+        this.propertyId = propertyId;
+        this.title = title;
+        this.price = price;
+        this.area = area;
+        this.imageUrl = imageUrl;
+        this.address = address;
     }
 
-    public CartItem(Book book, int quantity) {
-        this.book = book;
-        this.quantity = quantity;
+    public int getPropertyId() {
+        return propertyId;
     }
 
-    public CartItem() {
-
+    public void setPropertyId(int propertyId) {
+        this.propertyId = propertyId;
     }
 
-    public Book getBook() {
-        return book;
+    public String getTitle() {
+        return title;
     }
 
-    public void setBook(Book book) {
-        this.book = book;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
-    public void incrementQuantity() {
-        this.quantity++;
+    public BigDecimal getArea() {
+        return area;
+    }
+
+    public void setArea(BigDecimal area) {
+        this.area = area;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
