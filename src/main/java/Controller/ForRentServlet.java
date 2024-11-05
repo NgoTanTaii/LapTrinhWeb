@@ -1,7 +1,6 @@
 package Controller;
 
-import DBcontext.Database;
-import Entity.Property1;
+import Entity.PropertyProject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,38 +14,37 @@ import java.util.List;
 
 @WebServlet("/forrent")
 public class ForRentServlet extends HttpServlet {
-
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<PropertyProject> properties = new ArrayList<>();
 
-        List<Property1> properties = new ArrayList<>();
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webbds", "root", "123456");
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM properties WHERE status= 2")) {
 
-        // Câu lệnh SQL để lấy các bất động sản có trạng thái là 2 (cho thuê)
-        String sql = "SELECT title, price, area, address, image_url FROM properties WHERE status = 2";
-
-        try (Connection conn = Database.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                String title = rs.getString("title");
-                double price = rs.getDouble("price");
-                double area = rs.getDouble("area");
-                String address = rs.getString("address");
-                String imageUrl = rs.getString("image_url");
+                PropertyProject property = new PropertyProject();
+                property.setId(rs.getInt("property_id"));
+                property.setTitle(rs.getString("title"));
+                property.setPrice(rs.getDouble("price"));
+                property.setArea(rs.getDouble("area"));
+                property.setImageUrl(rs.getString("image_url"));
+                property.setAddress(rs.getString("address"));
 
-                // Tạo đối tượng Property1 và thêm vào danh sách
-                Property1 property = new Property1(title, price, area, address, imageUrl);
+                // Kiểm tra và gán mô tả nếu có
+                String description = rs.getString("description");
+                if (description != null && !description.isEmpty()) {
+                    property.setDescription(description);
+                }
+
                 properties.add(property);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
-            request.setAttribute("errorMessage", "Không thể lấy dữ liệu từ cơ sở dữ liệu.");
         }
 
-        // Gán danh sách bất động sản vào request để hiển thị trên JSP
-        request.setAttribute("properties1", properties);
+        request.setAttribute("propertiesforrent", properties);
         request.getRequestDispatcher("property-for-rent.jsp").forward(request, response);
     }
 }

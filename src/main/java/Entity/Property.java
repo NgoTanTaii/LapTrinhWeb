@@ -8,7 +8,7 @@ public class Property {
     private double area;
     private String imageUrl;
 
-    // Constructor
+
     public Property(int id, String title, String address, double price, double area, String imageUrl) {
         this.id = id;
         this.title = title;

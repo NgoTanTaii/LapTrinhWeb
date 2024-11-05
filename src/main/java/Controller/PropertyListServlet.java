@@ -20,7 +20,7 @@ public class PropertyListServlet extends HttpServlet {
 
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webbds", "root", "123456");
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM properties")) {
+             ResultSet rs = stmt.executeQuery("SELECT * FROM properties WHERE type='project'")) {
 
             while (rs.next()) {
                 PropertyProject property = new PropertyProject();
