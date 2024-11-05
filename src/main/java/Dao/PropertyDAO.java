@@ -35,9 +35,9 @@ public class PropertyDAO {
 
     public Property1 getPropertyById(int id) {
         Property1 property = null;
-        String sql = "SELECT property_id, title, price, address, area, image_url, description, type, status FROM properties WHERE property_id = ?";
+        String query = "SELECT property_id, title, price, address, area, image_url, description, type, status, poster_id FROM properties WHERE property_id = ?";
 
-        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -48,16 +48,16 @@ public class PropertyDAO {
                 property.setAddress(rs.getString("address"));
                 property.setArea(rs.getDouble("area"));
                 property.setImageUrl(rs.getString("image_url"));
-                property.setDescription(rs.getString("description")); // Retrieve description
-                property.setType(rs.getString("type"));               // Retrieve type
-                property.setStatus(rs.getString("status"));           // Retrieve status
+                property.setDescription(rs.getString("description"));
+                property.setType(rs.getString("type"));
+                property.setStatus(rs.getString("status"));
+                property.setPosterId(rs.getInt("poster_id")); // Lưu poster_id vào property
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return property;
     }
-
 
     // Phương thức xóa bất động sản
     public void deleteProperty(int propertyId) {
