@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Bất Động Sản</title>
+    <style>
+        /* CSS cho menu */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            padding: 15px 30px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar a:hover {
+            background-color: #575757;
+        }
+
+        /* Hiệu ứng hover cho các mục Đăng Nhập, Đăng Ký, Đăng Tin */
+        .auth-links a {
+            background-color: transparent;
+            color: white;
+            border: 1px solid transparent;
+        }
+
+        .auth-links a:hover {
+            background-color: #888;
+            border: 1px solid #ccc;
+        }
+
+        /* Logo nằm bên trái */
+        .logo {
+            font-size: 24px;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Container chứa các mục menu chính */
+        .menu {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Căn chỉnh các mục menu chính */
+        .menu a {
+            margin-right: 20px;
+        }
+
+        /* Đặt không gian giữa menu chính và mục Đăng Nhập, Đăng Ký, Đăng Tin */
+        .auth-links {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Menu Bất Động Sản -->
+    <div class="navbar">
+        <!-- Logo -->
+        <div class="logo">Bất Động Sản</div>
+
+        <!-- Các mục menu chính -->
+        <div class="menu">
+            <a href="#">Nhà Đất Bán</a>
+            <a href="#">Nhà Đất Cho Thuê</a>
+            <a href="#">Dự Án</a>
+            <a href="#">Tin Tức</a>
+            <a href="#">Wiki BĐS</a>
+        </div>
+
+        <!-- Các mục Đăng Nhập, Đăng Ký, Đăng Tin -->
+        <div class="auth-links">
+            <a href="#">Đăng Nhập</a>
+            <a href="#">Đăng Ký</a>
+            <a href="#">Đăng Tin</a>
+        </div>
+    </div>
+
+</body>
+</html>
