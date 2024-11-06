@@ -1,7 +1,8 @@
 <%@ page import="Entity.Property1" %>
 <%@ page import="java.util.List" %>
-
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="Dao.PropertyDAO" %>
+<%@ page import="Dao.PropertyBystatusDAO" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -114,7 +115,6 @@
 
 
     </style>
-
 </head>
 <body>
 <header class="header">
@@ -133,11 +133,35 @@
                 <span>123 Đường ABC, Quận XYZ, TP.HCM</span>
             </div>
         </div>
+        <%
+            boolean isLoggedIn = session.getAttribute("username") != null;
+            String username = (String) session.getAttribute("username");
+        %>
+
         <div class="header-right" style="margin-top: 10px">
-            <a href="login.jsp" class="btn"><h3>Đăng nhập</h3></a>
-            <a href="register.jsp" class="btn"><h3>Đăng ký</h3></a>
-            <a href="post-status.jsp" class="btn"><h3>Đăng tin</h3></a>
+            <% if (isLoggedIn) { %>
+            <a href="account.jsp" class="btn">
+                <h3 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px;">
+                    Hello, <%= username %>
+                </h3>
+            </a>
+
+            <a href="logout" class="btn">
+                <h3>Đăng xuất</h3>
+            </a>
+            <% } else { %>
+            <a href="login.jsp" class="btn">
+                <h3>Đăng nhập</h3>
+            </a>
+            <a href="register.jsp" class="btn">
+                <h3>Đăng ký</h3>
+            </a>
+            <% } %>
+            <a href="post-status.html" class="btn">
+                <h3>Đăng tin</h3>
+            </a>
         </div>
+
         <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()"
            style="border: 1px solid #ccc; border-radius:100%;">
             <img src="jpg/heart%20(1).png" style="width: 30px; height: 30px;"
@@ -154,7 +178,7 @@
     <div class="menu">
         <div class="header-bottom" style="height:60px;margin-top: 0">
             <div class="store-name">
-                <h1><a href="homes">
+                <h1><a href="welcome">
                     <span class="color1">HOME</span>
                     <span class="color2">LANDER</span>
                 </a></h1>
@@ -175,8 +199,6 @@
         </div>
     </div>
 </header>
-
-
 <div class="slideshow-container">
     <div class="mySlides fade">
         <img src="jpg/1.webp" alt="Banner 1">
@@ -185,150 +207,202 @@
         <img src="jpg/1.webp" alt="Banner 2">
     </div>
 </div>
-
-
 <div class="search-container">
     <form class="search-form">
         <input type="text" placeholder="Tìm kiếm..." name="search" required>
 
-        <fieldset class="price-group">
-            <legend>Giá <span class="arrow-down">▼</span></legend>
-            <div class="price-dropdown hidden">
-                <label for="min-price">Giá tối thiểu (tỷ):</label>
-                <input type="number" id="min-price" name="min-price" placeholder="Nhập giá tối thiểu">
-
-                <label for="max-price">Giá tối đa (tỷ):</label>
-                <input type="number" id="max-price" name="max-price" placeholder="Nhập giá tối đa">
-            </div>
-        </fieldset>
-
-        <fieldset class="area-group">
-            <legend>Diện Tích <span class="arrow-down">▼</span></legend>
-            <div class="area-dropdown hidden">
-                <label for="min-area">Diện tích tối thiểu (m²):</label>
-                <input type="number" id="min-area" name="min-area" placeholder="Nhập diện tích tối thiểu">
-
-                <label for="max-area">Diện tích tối đa (m²):</label>
-                <input type="number" id="max-area" name="max-area" placeholder="Nhập diện tích tối đa">
-            </div>
-        </fieldset>
         <button type="submit">Tìm Kiếm</button>
     </form>
 </div>
-
 <script src="JS/script.js"></script>
+
 
 <div class="container1">
     <div class="left-content">
         <p class="breadcrumbs">Cho thuê / Tất cả BĐS trên toàn quốc</p>
-        <h1>Cho thuê nhà đất trên toàn quốc</h1>
+        <h1>Cho Thuê nhà đất trên toàn quốc</h1>
         <p>Hiện có <strong>181.125</strong> bất động sản.</p>
-
-
     </div>
 </div>
+<%
 
+    PropertyBystatusDAO propertyDAO = new PropertyBystatusDAO();
+
+
+    List<Property1> properties = propertyDAO.getPropertiesByStatus(2);
+%>
 
 <div class="main">
-    <%
-        List<Property1> properties1 = (List<Property1>) request.getAttribute("properties1");
-        if (properties1 != null && !properties1.isEmpty()) {
-    %>
-    <h3>Bất động sản cho thuê:</h3>
-    <ul>
-        <%
-            for (Property1 property : properties1) {
-        %>
-        <li>
-            <h4><%= property.getTitle() %></h4>
-            <p>Giá: <%= property.getPrice() %> tỷ</p>
-            <p>Diện tích: <%= property.getArea() %> m²</p>
-            <p>Địa chỉ: <%= property.getAddress() %></p>
-            <img src="<%= property.getImageUrl() %>" alt="Property Image">
-        </li>
-        <%
-            }
-        %>
-    </ul>
-    <%
-    } else {
-    %>
-    <p>Chưa có bất động sản cho thuê nào.</p>
-    <%
-        }
-    %>
+    <div class="main">
 
+
+        <div class="property-list">
+            <%
+                if (properties != null && !properties.isEmpty()) {
+                    for (Property1 property : properties) {
+            %>
+            <div class="container1">
+                <div class="property-container">
+                    <img src="<%= property.getImageUrl() %>" alt="Hình ảnh bất động sản" class="property-image">
+                    <div class="property-details">
+                        <h2 class="property-title">
+                            <i class="fas fa-building"></i> <%= property.getTitle() %>
+                        </h2>
+
+                        <p class="property-price">
+                            <i class="fas fa-dollar-sign"></i> <%= property.getPrice() %> tỷ
+                        </p>
+
+                        <p class="property-area">
+                            <i class="fas fa-ruler-combined"></i>  <%= property.getArea() %> m²
+                        </p>
+
+                        <p class="property-address">
+                            <i class="fas fa-map-marker-alt"></i>  <%= property.getAddress() %>
+                        </p>
+
+                        <p class="property-description">
+                            <i class="fas fa-info-circle"></i>  <%= property.getDescription() %>
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+            <%
+                }
+            } else {
+            %>
+            <p>Không có bất động sản nào đang được bán.</p>
+            <%
+                }
+            %>
+        </div>
+    </div>
 </div>
 
-<div class="container1">
-
-    <div class="filter-container">
-        <h4>Lọc Theo Khoảng Giá</h4>
-        <form id="priceFilterForm">
-            <div class="form-group">
-                <label>Chọn khoảng giá:</label>
-                <ul class="price-options">
-                    <li data-value="thoa-thuan" class="price-option">Thỏa thuận</li>
-                    <li data-value="duoi-500" class="price-option">Dưới 500 triệu</li>
-                    <li data-value="500-800" class="price-option">500 - 800 triệu</li>
-                    <li data-value="800-1ty" class="price-option">800 triệu - 1 tỷ</li>
-                    <li data-value="1-2ty" class="price-option">1 - 2 tỷ</li>
-                    <li data-value="2-3ty" class="price-option">2 - 3 tỷ</li>
-                    <li data-value="3-5ty" class="price-option">3 - 5 tỷ</li>
-                    <li data-value="5-7ty" class="price-option">5 - 7 tỷ</li>
-                    <li data-value="7-10ty" class="price-option">7 - 10 tỷ</li>
-                    <li data-value="10-20ty" class="price-option">10 - 20 tỷ</li>
-                    <li data-value="20-30ty" class="price-option">20 - 30 tỷ</li>
-                    <li data-value="30-40ty" class="price-option">30 - 40 tỷ</li>
-                    <li data-value="40-60ty" class="price-option">40 - 60 tỷ</li>
-                    <li data-value="tren-60" class="price-option">Trên 60 tỷ</li>
-                </ul>
-            </div>
-            <button type="submit">Lọc</button>
-        </form>
-    </div>
-    <div class="filter-container1">
-        <h4>Lọc Theo Diện Tích</h4>
-        <form id="areaFilterForm">
-            <div class="form-group">
-                <label>Chọn diện tích:</label>
-                <ul class="price-options">
-                    <li data-value="duoi-30" class="price-option">Dưới 30 m²</li>
-                    <li data-value="30-50" class="price-option">30 - 50 m²</li>
-                    <li data-value="50-80" class="price-option">50 - 80 m²</li>
-                    <li data-value="80-100" class="price-option">80 - 100 m²</li>
-                    <li data-value="100-120" class="price-option">100 - 120 m²</li>
-                    <li data-value="120-150" class="price-option">120 - 150 m²</li>
-                    <li data-value="150-200" class="price-option">150 - 200 m²</li>
-                    <li data-value="200-300" class="price-option">200 - 300 m²</li>
-                    <li data-value="300-400" class="price-option">300 - 400 m²</li>
-                    <li data-value="400-500" class="price-option">400 - 500 m²</li>
-                    <li data-value="tren-500" class="price-option">Trên 500 m²</li>
-                </ul>
-            </div>
-            <button type="submit">Lọc</button>
-        </form>
-    </div>
+<div class="filter-container">
+    <h4>Lọc Theo Khoảng Giá</h4>
+    <form id="priceFilterForm">
+        <div class="form-group">
+            <label>Chọn khoảng giá:</label>
+            <ul class="price-options">
+                <li data-value="thoa-thuan" class="price-option">Thỏa thuận</li>
+                <li data-value="duoi-500" class="price-option">Dưới 500 triệu</li>
+                <li data-value="500-800" class="price-option">500 - 800 triệu</li>
+                <li data-value="800-1ty" class="price-option">800 triệu - 1 tỷ</li>
+                <li data-value="1-2ty" class="price-option">1 - 2 tỷ</li>
+                <li data-value="2-3ty" class="price-option">2 - 3 tỷ</li>
+                <li data-value="3-5ty" class="price-option">3 - 5 tỷ</li>
+                <li data-value="5-7ty" class="price-option">5 - 7 tỷ</li>
+                <li data-value="7-10ty" class="price-option">7 - 10 tỷ</li>
+                <li data-value="10-20ty" class="price-option">10 - 20 tỷ</li>
+                <li data-value="20-30ty" class="price-option">20 - 30 tỷ</li>
+                <li data-value="30-40ty" class="price-option">30 - 40 tỷ</li>
+                <li data-value="40-60ty" class="price-option">40 - 60 tỷ</li>
+                <li data-value="tren-60" class="price-option">Trên 60 tỷ</li>
+            </ul>
+        </div>
+        <button type="submit">Lọc</button>
+    </form>
+</div>
+<div class="filter-container1">
+    <h4>Lọc Theo Diện Tích</h4>
+    <form id="areaFilterForm">
+        <div class="form-group">
+            <label>Chọn diện tích:</label>
+            <ul class="price-options">
+                <li data-value="duoi-30" class="price-option">Dưới 30 m²</li>
+                <li data-value="30-50" class="price-option">30 - 50 m²</li>
+                <li data-value="50-80" class="price-option">50 - 80 m²</li>
+                <li data-value="80-100" class="price-option">80 - 100 m²</li>
+                <li data-value="100-120" class="price-option">100 - 120 m²</li>
+                <li data-value="120-150" class="price-option">120 - 150 m²</li>
+                <li data-value="150-200" class="price-option">150 - 200 m²</li>
+                <li data-value="200-300" class="price-option">200 - 300 m²</li>
+                <li data-value="300-400" class="price-option">300 - 400 m²</li>
+                <li data-value="400-500" class="price-option">400 - 500 m²</li>
+                <li data-value="tren-500" class="price-option">Trên 500 m²</li>
+            </ul>
+        </div>
+        <button type="submit">Lọc</button>
+    </form>
+</div>
 
 
-    <script>
-        document.querySelectorAll('.price-option').forEach(item => {
-            item.addEventListener('click', event => {
+<style>
+    /* Thiết lập form hiển thị sản phẩm */
+    .property-container {
+        display: flex;
+        align-items: flex-start;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        width: 100%;
+
+        padding: 16px;
+
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Thiết lập hình ảnh sản phẩm */
+    .property-image {
+        width: 200px;
+        height: 150px;
+        border-radius: 8px;
+        margin-right: 16px;
+        object-fit: cover;
+    }
+
+    /* Thiết lập nội dung bên phải */
+    .property-details {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        max-width: 350px;
+    }
+
+    /* Thiết lập tiêu đề sản phẩm */
+    .property-title {
+        font-size: 20px;
+        font-weight: bold;
+        margin: 0;
+        color: #333;
+    }
+
+    /* Thiết lập các chi tiết sản phẩm */
+    .property-price,
+    .property-area,
+    .property-address {
+        font-size: 16px;
+        margin: 0;
+        color: #666;
+    }
+
+    .property-price {
+        color: #e74c3c;
+        font-weight: bold;
+    }
+
+</style>
+
+<script>
+    document.querySelectorAll('.price-option').forEach(item => {
+        item.addEventListener('click', event => {
 // Bỏ chọn tất cả các mục trước đó
-                document.querySelectorAll('.price-option').forEach(option => {
-                    option.classList.remove('selected'); // Xóa lớp 'selected'
-                });
+            document.querySelectorAll('.price-option').forEach(option => {
+                option.classList.remove('selected'); // Xóa lớp 'selected'
+            });
 
 // Thêm lớp 'selected' cho tùy chọn hiện tại
-                item.classList.add('selected');
+            item.classList.add('selected');
 
 // Có thể lưu giá trị đã chọn nếu cần
-                const selectedValue = item.getAttribute('data-value');
-                console.log("Giá đã chọn:", selectedValue);
-            });
+            const selectedValue = item.getAttribute('data-value');
+            console.log("Giá đã chọn:", selectedValue);
         });
-    </script>
-</div>
+    });
+</script>
+
 
 <!-- Footer -->
 <div class="footer">
@@ -390,6 +464,5 @@
 
 
 </div>
-
 </body>
 </html>

@@ -1,5 +1,7 @@
 <%@ page import="Entity.Property1" %>
 <%@ page import="java.util.List" %>
+<%@ page import="Dao.PropertyDAO" %>
+<%@ page import="Dao.PropertyBystatusDAO" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -131,11 +133,35 @@
                 <span>123 Đường ABC, Quận XYZ, TP.HCM</span>
             </div>
         </div>
+        <%
+            boolean isLoggedIn = session.getAttribute("username") != null;
+            String username = (String) session.getAttribute("username");
+        %>
+
         <div class="header-right" style="margin-top: 10px">
-            <a href="login.jsp" class="btn"><h3>Đăng nhập</h3></a>
-            <a href="register.jsp" class="btn"><h3>Đăng ký</h3></a>
-            <a href="post-status.jsp" class="btn"><h3>Đăng tin</h3></a>
+            <% if (isLoggedIn) { %>
+            <a href="account.jsp" class="btn">
+                <h3 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px;">
+                    Hello, <%= username %>
+                </h3>
+            </a>
+
+            <a href="logout" class="btn">
+                <h3>Đăng xuất</h3>
+            </a>
+            <% } else { %>
+            <a href="login.jsp" class="btn">
+                <h3>Đăng nhập</h3>
+            </a>
+            <a href="register.jsp" class="btn">
+                <h3>Đăng ký</h3>
+            </a>
+            <% } %>
+            <a href="post-status.html" class="btn">
+                <h3>Đăng tin</h3>
+            </a>
         </div>
+
         <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()"
            style="border: 1px solid #ccc; border-radius:100%;">
             <img src="jpg/heart%20(1).png" style="width: 30px; height: 30px;"
@@ -185,27 +211,6 @@
     <form class="search-form">
         <input type="text" placeholder="Tìm kiếm..." name="search" required>
 
-        <fieldset class="price-group">
-            <legend>Giá <span class="arrow-down">▼</span></legend>
-            <div class="price-dropdown hidden">
-                <label for="min-price">Giá tối thiểu (tỷ):</label>
-                <input type="number" id="min-price" name="min-price" placeholder="Nhập giá tối thiểu">
-
-                <label for="max-price">Giá tối đa (tỷ):</label>
-                <input type="number" id="max-price" name="max-price" placeholder="Nhập giá tối đa">
-            </div>
-        </fieldset>
-
-        <fieldset class="area-group">
-            <legend>Diện Tích <span class="arrow-down">▼</span></legend>
-            <div class="area-dropdown hidden">
-                <label for="min-area">Diện tích tối thiểu (m²):</label>
-                <input type="number" id="min-area" name="min-area" placeholder="Nhập diện tích tối thiểu">
-
-                <label for="max-area">Diện tích tối đa (m²):</label>
-                <input type="number" id="max-area" name="max-area" placeholder="Nhập diện tích tối đa">
-            </div>
-        </fieldset>
         <button type="submit">Tìm Kiếm</button>
     </form>
 </div>
@@ -219,49 +224,61 @@
         <p>Hiện có <strong>181.125</strong> bất động sản.</p>
     </div>
 </div>
+<%
 
-</div>
+    PropertyBystatusDAO propertyDAO = new PropertyBystatusDAO();
+
+
+    List<Property1> properties = propertyDAO.getPropertiesByStatus(1);
+%>
+
 <div class="main">
-    <%
-        List<Property1> properties = (List<Property1>) request.getAttribute("properties");
+    <div class="main">
 
-        if (properties != null && !properties.isEmpty()) {
-    %>
-    <div class="property-list">
-        <%
-            for (Property1 property : properties) {
-        %>
-        <div class="container1">
-            <div class="property-container">
-                <img src="jpg/DaNang.jpg"
-                     alt="Hình ảnh bất động sản" class="property-image">
-                <div class="property-details">
-                    <h2 class="property-title"><%= property.getTitle() %>
-                    </h2>
-                    <p class="property-price">Giá: <%= property.getPrice() %>
-                    </p>
-                    <p class="property-area">Diện
-                        tích: <%= property.getArea() %>
-                    </p>
-                    <p class="property-address">Địa
-                        chỉ: <%= property.getAddress() %>
-                    </p>
+
+        <div class="property-list">
+            <%
+                if (properties != null && !properties.isEmpty()) {
+                    for (Property1 property : properties) {
+            %>
+            <div class="container1">
+                <div class="property-container">
+                    <img src="<%= property.getImageUrl() %>" alt="Hình ảnh bất động sản" class="property-image">
+                    <div class="property-details">
+                        <h2 class="property-title">
+                            <i class="fas fa-building"></i> <%= property.getTitle() %>
+                        </h2>
+
+                        <p class="property-price">
+                            <i class="fas fa-dollar-sign"></i> <%= property.getPrice() %> tỷ
+                        </p>
+
+                        <p class="property-area">
+                            <i class="fas fa-ruler-combined"></i>  <%= property.getArea() %> m²
+                        </p>
+
+                        <p class="property-address">
+                            <i class="fas fa-map-marker-alt"></i>  <%= property.getAddress() %>
+                        </p>
+
+                        <p class="property-description">
+                            <i class="fas fa-info-circle"></i>  <%= property.getDescription() %>
+                        </p>
+
+                    </div>
                 </div>
             </div>
+            <%
+                }
+            } else {
+            %>
+            <p>Không có bất động sản nào đang được bán.</p>
+            <%
+                }
+            %>
         </div>
-        <%
-            }
-        %>
     </div>
-    <%
-    } else {
-    %>
-    <p>Không có bất động sản nào đang được bán.</p>
-    <%
-        }
-    %>
 </div>
-
 
 <div class="filter-container">
     <h4>Lọc Theo Khoảng Giá</h4>
@@ -391,7 +408,7 @@
 <div class="footer">
     <div class="footer-top">
 
-        <h1><a href="homes">
+        <h1><a href="welcome">
             <span class="color1">HOME</span>
             <span class="color2">LANDER</span>
         </a></h1>
@@ -447,6 +464,5 @@
 
 
 </div>
-
 </body>
 </html>

@@ -1,6 +1,8 @@
 package Controller;
 
-import Entity.PropertyProject;
+import DBcontext.Database;
+import Dao.PropertyBystatusDAO;
+import Entity.Property1;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,37 +16,44 @@ import java.util.List;
 
 @WebServlet("/forrent")
 public class ForRentServlet extends HttpServlet {
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<PropertyProject> properties = new ArrayList<>();
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webbds", "root", "123456");
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM properties WHERE status= 2")) {
+        List<Property1> properties = new ArrayList<>();
 
-            while (rs.next()) {
-                PropertyProject property = new PropertyProject();
-                property.setId(rs.getInt("property_id"));
-                property.setTitle(rs.getString("title"));
-                property.setPrice(rs.getDouble("price"));
-                property.setArea(rs.getDouble("area"));
-                property.setImageUrl(rs.getString("image_url"));
-                property.setAddress(rs.getString("address"));
+        try (Connection conn = Database.getConnection()) { // Sử dụng phương thức getConnection() từ lớp Database
+            String sql = "SELECT title, price, area, address, image_url FROM properties WHERE status = 2";
+            PreparedStatement stmt = conn.prepareStatement(sql);
 
-                // Kiểm tra và gán mô tả nếu có
-                String description = rs.getString("description");
-                if (description != null && !description.isEmpty()) {
-                    property.setDescription(description);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    // Lấy thông tin từ ResultSet
+                    String title = rs.getString("title");
+                    double price = rs.getDouble("price");
+                    double area = rs.getDouble("area");
+                    String address = rs.getString("address");
+                    String imageUrl = rs.getString("image_url");
+
+                    // Tạo đối tượng Property1 với các thuộc tính lấy từ cơ sở dữ liệu
+                    Property1 property = new Property1();
+                    property.setTitle(title);
+                    property.setPrice(price);
+                    property.setArea(area);
+                    property.setAddress(address);
+                    property.setImageUrl(imageUrl);
+
+                    properties.add(property);
                 }
-
-                properties.add(property);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
+            request.setAttribute("errorMessage", "Không thể lấy dữ liệu từ cơ sở dữ liệu.");
         }
 
-        request.setAttribute("propertiesforrent", properties);
+        // Gán danh sách properties cho request attribute để truyền đến JSP
+        request.setAttribute("properties", properties);
         request.getRequestDispatcher("property-for-rent.jsp").forward(request, response);
     }
 }

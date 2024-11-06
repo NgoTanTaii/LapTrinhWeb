@@ -60,8 +60,10 @@
             </a>
         </div>
 
-        <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()" style="border: 1px solid #ccc; border-radius:100%;">
-            <img src="jpg/heart%20(1).png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng" class="cart-icon">
+        <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()"
+           style="border: 1px solid #ccc; border-radius:100%;">
+            <img src="jpg/heart%20(1).png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng"
+                 class="cart-icon">
             <div class="item-count">0</div>
             <div class="mini-cart">
                 <h4>Bất động sản đã lưu</h4>
@@ -85,21 +87,21 @@
 
             <nav>
                 <ul class="u-lo">
-                    <li><a href="property-for-sale.html">Nhà Đất Bán</a>
+                    <li><a href="forsale">Nhà Đất Bán</a>
                         <ul>
                             <li><a href="#">Thông tin bán nhà đất</a></li>
                             <li><a href="#">Mua bán bất động sản</a></li>
                             <li><a href="#">Nhà đất giá rẻ</a></li>
                         </ul>
                     </li>
-                    <li><a href="property-for-rent.html">Nhà Đất Cho Thuê</a>
+                    <li><a href="forrent">Nhà Đất Cho Thuê</a>
                         <ul>
                             <li><a href="#">Thông tin cho thuê nhà đất</a></li>
                             <li><a href="#">Thuê nhà nguyên căn</a></li>
                             <li><a href="#">Thuê căn hộ giá rẻ</a></li>
                         </ul>
                     </li>
-                    <li><a href="project.html">Dự Án</a>
+                    <li><a href="Project">Dự Án</a>
                         <ul>
                             <li><a href="#">Các dự án nổi bật</a></li>
                             <li><a href="#">Dự án nhà ở</a></li>
@@ -146,27 +148,6 @@
         <form class="search-form" action="search-results.html" method="get">
             <input type="text" placeholder="Tìm kiếm..." name="search" required>
 
-            <fieldset class="price-group">
-                <legend>Giá <span class="arrow-down">▼</span></legend>
-                <div class="price-dropdown hidden">
-                    <label for="min-price">Giá tối thiểu (tỷ):</label>
-                    <input type="number" id="min-price" name="min-price" placeholder="Nhập giá tối thiểu">
-
-                    <label for="max-price">Giá tối đa (tỷ):</label>
-                    <input type="number" id="max-price" name="max-price" placeholder="Nhập giá tối đa">
-                </div>
-            </fieldset>
-
-            <fieldset class="area-group">
-                <legend>Diện Tích <span class="arrow-down">▼</span></legend>
-                <div class="area-dropdown hidden">
-                    <label for="min-area">Diện tích tối thiểu (m²):</label>
-                    <input type="number" id="min-area" name="min-area" placeholder="Nhập diện tích tối thiểu">
-
-                    <label for="max-area">Diện tích tối đa (m²):</label>
-                    <input type="number" id="max-area" name="max-area" placeholder="Nhập diện tích tối đa">
-                </div>
-            </fieldset>
 
             <button type="submit">Tìm Kiếm</button>
         </form>

@@ -5,11 +5,14 @@ public class Poster {
     private String name;
     private String mail;
     private String phone;
+    private String imgUrl;
 
-    public Poster(int id, String name, String mail, String phone) {
+    public Poster(int id, String name, String mail, String phone, String imgUrl) {
         this.name = name;
         this.mail = mail;
         this.phone = phone;
+        this.imgUrl = imgUrl;
+
     }
 
     public String getName() {
@@ -32,6 +35,18 @@ public class Poster {
         return phone;
     }
 
+
+    @Override
+    public String toString() {
+        return "Poster{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", mail='" + mail + '\'' +
+                ", phone='" + phone + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
+                '}';
+    }
+
     public void setPhone(String phone) {
         this.phone = phone;
     }
@@ -42,6 +57,14 @@ public class Poster {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
 }

@@ -15,24 +15,30 @@ public class PosterDAO {
         return Database.getConnection();
     }
 
-    // Phương thức lấy thông tin người đăng dựa trên id
-    public Poster getPosterById(int id) {
+
+    public Poster getPosterByPropertyId(int propertyId) {
         Poster poster = null;
-        String query = "SELECT * FROM posters WHERE poster_id = ?";
+        String query = "SELECT p.image_url,p.poster_id, p.name, p.email, p.phone " +
+                "FROM posters p " +
+                "JOIN properties pr ON p.poster_id = pr.poster_id " +
+                "WHERE pr.property_id = ?";
 
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, id);
+            stmt.setInt(1, propertyId);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                // Khởi tạo đối tượng Poster từ dữ liệu trong ResultSet
+                // Initialize the Poster object with data from the ResultSet
                 poster = new Poster(
+
                         rs.getInt("poster_id"),
                         rs.getString("name"),
-                        rs.getString("mail"),
-                        rs.getString("phone")
+                        rs.getString("email"),
+                        rs.getString("phone"),
+                        rs.getString("image_url")
                 );
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -40,4 +46,8 @@ public class PosterDAO {
 
         return poster;
     }
+
+//    public static void main(String[] args) {
+//        System.out.println(new PosterDAO().getPosterByPropertyId(5));
+//    }
 }

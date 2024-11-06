@@ -28,12 +28,7 @@ public class PropertyDAO {
             e.printStackTrace();
 
         }
-
-
-    }
-
-
-    public Property1 getPropertyById(int id) {
+    }public Property1 getPropertyById(int id) {
         Property1 property = null;
         String query = "SELECT property_id, title, price, address, area, image_url, description, type, status, poster_id FROM properties WHERE property_id = ?";
 
@@ -125,8 +120,7 @@ public class PropertyDAO {
 
 
     private Connection getConnection() throws SQLException {
-        // Kết nối tới CSDL (cấu hình tùy thuộc vào hệ thống của bạn)
-        // Ví dụ sử dụng JDBC với MySQL
+
         String url = "jdbc:mysql://localhost:3306/webbds";  // Chỉnh sửa tên database nếu cần
         String user = "root";
         String password = "123456";  // Cập nhật mật khẩu nếu cần
@@ -407,6 +401,7 @@ public class PropertyDAO {
         }
         return properties;
     }
+
     public List<String> getThumbnailUrls(int propertyId) {
         List<String> thumbnailUrls = new ArrayList<>();
         String sql = "SELECT image_url FROM property_images WHERE property_id = ?";
@@ -421,6 +416,7 @@ public class PropertyDAO {
         }
         return thumbnailUrls;
     }
+
     public void addThumbnail(int propertyId, String imageUrl) {
         String sql = "INSERT INTO property_images (property_id, image_url) VALUES (?, ?)";
         try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -442,7 +438,6 @@ public class PropertyDAO {
             e.printStackTrace();
         }
     }
-
 
 
 }

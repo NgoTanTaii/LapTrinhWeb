@@ -109,6 +109,10 @@ public class Property1 {
         return posterId;
     }
 
+    public void setPosterId(int posterId) {
+        this.posterId = posterId;
+    }
+
     public Property1() {
 
     }
@@ -123,7 +127,5 @@ public class Property1 {
     }
 
 
-    public void setPosterId(int posterId) {
-    }
 }
 

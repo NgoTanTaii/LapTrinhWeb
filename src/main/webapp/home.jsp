@@ -29,7 +29,6 @@
             </div>
 
 
-
         </div>
         <div class="header-right" style="margin-top: 10px">
 
@@ -73,7 +72,7 @@
                             <li><a href="#">Nhà đất giá rẻ</a></li>
                         </ul>
                     </li>
-                    <li><a href="property-for-rent.jsp">Nhà Đất Cho Thuê</a>
+                    <li><a href="forrent">Nhà Đất Cho Thuê</a>
                         <ul>
                             <li><a href="#">Thông tin cho thuê nhà đất</a></li>
                             <li><a href="#">Thuê nhà nguyên căn</a></li>
@@ -116,7 +115,6 @@
     </div>
 
 
-
     <div class="slideshow-container">
         <div class="mySlides fade">
             <img src="jpg/1.webp" alt="Banner 1">
@@ -132,27 +130,6 @@
         <form class="search-form" action="SearchServlet" method="POST">
             <input type="text" placeholder="Tìm kiếm..." name="search" required>
 
-            <fieldset class="price-group">
-                <legend onclick="toggleDropdown('price-dropdown')">Giá <span class="arrow-down">▼</span></legend>
-                <div class="price-dropdown hidden">
-                    <label for="min-price">Giá tối thiểu (tỷ):</label>
-                    <input type="number" id="min-price" name="min-price" placeholder="Nhập giá tối thiểu">
-
-                    <label for="max-price">Giá tối đa (tỷ):</label>
-                    <input type="number" id="max-price" name="max-price" placeholder="Nhập giá tối đa">
-                </div>
-            </fieldset>
-
-            <fieldset class="area-group">
-                <legend onclick="toggleDropdown('area-dropdown')">Diện Tích <span class="arrow-down">▼</span></legend>
-                <div class="area-dropdown hidden">
-                    <label for="min-area">Diện tích tối thiểu (m²):</label>
-                    <input type="number" id="min-area" name="min-area" placeholder="Nhập diện tích tối thiểu">
-
-                    <label for="max-area">Diện tích tối đa (m²):</label>
-                    <input type="number" id="max-area" name="max-area" placeholder="Nhập diện tích tối đa">
-                </div>
-            </fieldset>
 
             <button type="submit">Tìm Kiếm</button>
         </form>
@@ -206,7 +183,7 @@
 </div>
 
 
-<div class="product-section"    >
+<div class="product-section">
     <h2>Bất động sản dành cho bạn</h2>
     <div class="product-list">
         <%
@@ -370,7 +347,6 @@
 </style>
 
 
-
 <%
     // Tạo danh sách các thành phố lớn
     List<String> majorCities = List.of("TP.HCM", "Hà Nội", "Đà Nẵng", "Vũng Tàu");
@@ -408,8 +384,10 @@
         <div class="property-card">
             <a href="property-detail.jsp?id=<%= property.getId() %>" style="text-decoration: none; color: inherit;">
                 <img src="<%= property.getImageUrl() %>" alt="<%= property.getTitle() %>">
-                <h3><%= property.getTitle() %></h3>
-                <p><%= property.getDescription() %></p>
+                <h3><%= property.getTitle() %>
+                </h3>
+                <p><%= property.getDescription() %>
+                </p>
                 <div style="display: flex; justify-content: space-between; color: red; margin-top: 5px;">
                     <span><%= property.getArea() %> m²</span>
                     <span><i class="fas fa-map-marker-alt"></i> <%= preCityWord + ", " + cityPart %></span>
