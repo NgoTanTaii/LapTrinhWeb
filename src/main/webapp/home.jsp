@@ -125,15 +125,18 @@
 
     </div>
 
-    <!-- Form tìm kiếm ở giữa -->
+
+
     <div class="search-container">
-        <form class="search-form" action="SearchServlet" method="POST">
-            <input type="text" placeholder="Tìm kiếm..." name="search" required>
-
-
+        <form class="search-form" id="search-form">
+            <input type="text" id="search" placeholder="Tìm kiếm sản phẩm..." name="search" required>
+            <input type="text" id="city" placeholder="Tìm kiếm theo địa chỉ..." name="city">
             <button type="submit">Tìm Kiếm</button>
         </form>
     </div>
+
+
+
 
     <script>
         function toggleDropdown(dropdownClass) {
@@ -143,8 +146,48 @@
     </script>
 
     <script src="JS/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Khi form tìm kiếm được submit
+        $('#search-form').submit(function(event) {
+            event.preventDefault(); // Ngừng gửi form theo cách thông thường
+
+            // Lấy giá trị tìm kiếm từ form
+            var searchText = $('#search').val();
+            var city = $('#city').val();
+
+            // Gửi yêu cầu Ajax đến SearchServlet
+            $.ajax({
+                url: 'SearchServlet',  // Địa chỉ servlet xử lý tìm kiếm
+                type: 'POST',
+                data: { search: searchText, city: city }, // Gửi dữ liệu tìm kiếm
+                success: function(response) {
+                    // Hiển thị kết quả trả về trong phần product-list
+                    $('#search-results').html(response);
+                },
+                error: function() {
+                    $('#search-results').html('<p>Lỗi trong quá trình tìm kiếm.</p>');
+                }
+            });
+        });
+    </script>
+
 
 </header>
+
+<div class="product-section">
+    <h2>Bất động sản tìm được</h2>
+    <div class="product-list" id="search-results">
+
+    </div>
+
+    <!-- Nút xem thêm và ẩn bớt -->
+<%--    <div class="view-more">--%>
+<%--        <a href="#" id="toggleButton">Xem thêm</a>--%>
+<%--    </div>--%>
+</div>
+
+
 <div class="news-section">
     <h2>Tin Tức Bất Động Sản</h2>
 
