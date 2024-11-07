@@ -143,19 +143,69 @@
         </div>
     </div>
 
-    <!-- Form tìm kiếm ở giữa -->
     <div class="search-container">
-        <form class="search-form" method="get">
-            <input type="text" placeholder="Tìm kiếm..." name="search" required>
-
-
+        <form class="search-form" id="search-form" method="post" action="SearchServlet">
+            <input type="text" id="search" placeholder="Tìm kiếm sản phẩm..." name="search" required>
+            <input type="text" id="city" placeholder="Tìm kiếm theo địa chỉ..." name="city">
             <button type="submit">Tìm Kiếm</button>
         </form>
     </div>
+    <script>
+        function toggleDropdown(dropdownClass) {
+            const dropdown = document.querySelector(`.${dropdownClass}`);
+            dropdown.classList.toggle('hidden');
+        }
+    </script>
 
     <script src="JS/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Khi người dùng gõ vào ô tìm kiếm hoặc ô địa chỉ, thực hiện tìm kiếm ngay lập tức
+            $('#search, #city').on('keyup', function () {
+                // Lấy giá trị của các trường tìm kiếm
+                var searchText = $('#search').val();
+                var city = $('#city').val();
 
+                // Kiểm tra nếu ô tìm kiếm không trống mới gửi yêu cầu Ajax
+                if (searchText.length > 0 || city.length > 0) {
+                    $.ajax({
+                        url: 'SearchServlet',  // Địa chỉ servlet xử lý tìm kiếm
+                        type: 'POST',
+                        data: {
+                            search: searchText,
+                            city: city
+                        },
+                        success: function (response) {
+                            // Hiển thị kết quả trả về trong phần product-list
+                            $('#search-results').html(response);
+                        },
+                        error: function () {
+                            $('#search-results').html('<p>Lỗi trong quá trình tìm kiếm.</p>');
+                        }
+                    });
+                } else {
+                    // Nếu không có gì để tìm kiếm, xóa kết quả hiển thị
+                    $('#search-results').html('');
+                }
+            });
+        });
+
+    </script>
 </header>
+
+
+<div class="product-section">
+
+    <div class="product-list" id="search-results">
+
+    </div>
+
+</div>
+
+
+
+
 <div class="news-section">
     <h2>Tin Tức Bất Động Sản</h2>
 

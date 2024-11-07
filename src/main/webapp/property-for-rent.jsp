@@ -178,20 +178,25 @@
     <div class="menu">
         <div class="header-bottom" style="height:60px;margin-top: 0">
             <div class="store-name">
-                <h1><a href="welcome">
-                    <span class="color1">HOME</span>
-                    <span class="color2">LANDER</span>
-                </a></h1>
+                <h1>
+                    <a href="<%= isLoggedIn ? "welcome" : "homes" %>">
+                        <span class="color1">HOME</span>
+                        <span class="color2">LANDER</span>
+                    </a>
+                </h1>
             </div>
+
+
             <nav>
                 <ul>
-                    <li><a href="property-for-sale.jsp">Nhà Đất Bán</a></li>
-                    <li><a href="property-for-rent.jsp">Nhà Đất Cho Thuê</a></li>
-                    <li><a href="project.jsp">Dự Án</a></li>
-                    <li><a href="news.jsp">Tin Tức</a></li>
-                    <li><a href="wiki.jsp">Wiki BĐS</a></li>
+                    <li><a href="#nhadatban">Nhà Đất Bán</a></li>
+                    <li><a href="#nhadatchochue">Nhà Đất Cho Thuê</a></li>
+                    <li><a href="#duan">Dự Án</a></li>
+                    <li><a href="#tintuc">Tin Tức</a></li>
+                    <li><a href="#wikibds">Wiki BĐS</a></li>
                 </ul>
             </nav>
+
             <div class="contact-info">
                 <img src="jpg/phone-call.png" alt="Phone Icon" class="phone-icon">
                 <span class="phone-number">0123 456 789</span>
@@ -241,33 +246,40 @@
                 if (properties != null && !properties.isEmpty()) {
                     for (Property1 property : properties) {
             %>
-            <div class="container1">
-                <div class="property-container">
-                    <img src="<%= property.getImageUrl() %>" alt="Hình ảnh bất động sản" class="property-image">
-                    <div class="property-details">
-                        <h2 class="property-title">
-                            <i class="fas fa-building"></i> <%= property.getTitle() %>
-                        </h2>
+            <style>
+                .property-link:hover {
+                    opacity: 0.8;
+                }
+            </style>
+            <a href="property-detail.jsp?id=<%= property.getId() %>" class="property-link"
+               style="text-decoration: none">
+                <div class="container1">
+                    <div class="property-container">
+                        <img src="<%= property.getImageUrl() %>" alt="Hình ảnh bất động sản" class="property-image">
+                        <div class="property-details">
+                            <h2 class="property-title">
+                                <i class="fas fa-building"></i> <%= property.getTitle() %>
+                            </h2>
 
-                        <p class="property-price">
-                            <i class="fas fa-dollar-sign"></i> <%= property.getPrice() %> tỷ
-                        </p>
+                            <p class="property-price">
+                                <i class="fas fa-dollar-sign"></i> <%= property.getPrice() %> tỷ
+                            </p>
 
-                        <p class="property-area">
-                            <i class="fas fa-ruler-combined"></i>  <%= property.getArea() %> m²
-                        </p>
+                            <p class="property-area">
+                                <i class="fas fa-ruler-combined"></i> <%= property.getArea() %> m²
+                            </p>
 
-                        <p class="property-address">
-                            <i class="fas fa-map-marker-alt"></i>  <%= property.getAddress() %>
-                        </p>
+                            <p class="property-address">
+                                <i class="fas fa-map-marker-alt"></i> <%= property.getAddress() %>
+                            </p>
 
-                        <p class="property-description">
-                            <i class="fas fa-info-circle"></i>  <%= property.getDescription() %>
-                        </p>
-
+                            <p class="property-description">
+                                <i class="fas fa-info-circle"></i> <%= property.getDescription() %>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
             <%
                 }
             } else {

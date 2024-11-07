@@ -178,20 +178,25 @@
     <div class="menu">
         <div class="header-bottom" style="height:60px;margin-top: 0">
             <div class="store-name">
-                <h1><a href="homes">
-                    <span class="color1">HOME</span>
-                    <span class="color2">LANDER</span>
-                </a></h1>
+                <h1>
+                    <a href="<%= isLoggedIn ? "welcome" : "homes" %>">
+                        <span class="color1">HOME</span>
+                        <span class="color2">LANDER</span>
+                    </a>
+                </h1>
             </div>
+
+
             <nav>
                 <ul>
-                    <li><a href="property-for-sale.jsp">Nhà Đất Bán</a></li>
-                    <li><a href="property-for-rent.jsp">Nhà Đất Cho Thuê</a></li>
-                    <li><a href="project.jsp">Dự Án</a></li>
-                    <li><a href="news.jsp">Tin Tức</a></li>
-                    <li><a href="wiki.jsp">Wiki BĐS</a></li>
+                    <li><a href="#nhadatban">Nhà Đất Bán</a></li>
+                    <li><a href="#nhadatchochue">Nhà Đất Cho Thuê</a></li>
+                    <li><a href="#duan">Dự Án</a></li>
+                    <li><a href="#tintuc">Tin Tức</a></li>
+                    <li><a href="#wikibds">Wiki BĐS</a></li>
                 </ul>
             </nav>
+
             <div class="contact-info">
                 <img src="jpg/phone-call.png" alt="Phone Icon" class="phone-icon">
                 <span class="phone-number">0123 456 789</span>
@@ -241,33 +246,40 @@
                 if (properties != null && !properties.isEmpty()) {
                     for (Property1 property : properties) {
             %>
-            <div class="container1">
-                <div class="property-container">
-                    <img src="<%= property.getImageUrl() %>" alt="Hình ảnh bất động sản" class="property-image">
-                    <div class="property-details">
-                        <h2 class="property-title">
-                            <i class="fas fa-building"></i> <%= property.getTitle() %>
-                        </h2>
+            <style>
+                .property-link:hover {
+                    opacity: 0.8;
+                }
+            </style>
+            <a href="property-detail.jsp?id=<%= property.getId() %>" class="property-link"
+               style="text-decoration: none">
+                <div class="container1">
+                    <div class="property-container">
+                        <img src="<%= property.getImageUrl() %>" alt="Hình ảnh bất động sản" class="property-image">
+                        <div class="property-details">
+                            <h2 class="property-title">
+                                <i class="fas fa-building"></i> <%= property.getTitle() %>
+                            </h2>
 
-                        <p class="property-price">
-                            <i class="fas fa-dollar-sign"></i> <%= property.getPrice() %> tỷ
-                        </p>
+                            <p class="property-price">
+                                <i class="fas fa-dollar-sign"></i> <%= property.getPrice() %> tỷ
+                            </p>
 
-                        <p class="property-area">
-                            <i class="fas fa-ruler-combined"></i>  <%= property.getArea() %> m²
-                        </p>
+                            <p class="property-area">
+                                <i class="fas fa-ruler-combined"></i> <%= property.getArea() %> m²
+                            </p>
 
-                        <p class="property-address">
-                            <i class="fas fa-map-marker-alt"></i>  <%= property.getAddress() %>
-                        </p>
+                            <p class="property-address">
+                                <i class="fas fa-map-marker-alt"></i> <%= property.getAddress() %>
+                            </p>
 
-                        <p class="property-description">
-                            <i class="fas fa-info-circle"></i>  <%= property.getDescription() %>
-                        </p>
-
+                            <p class="property-description">
+                                <i class="fas fa-info-circle"></i> <%= property.getDescription() %>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
             <%
                 }
             } else {
@@ -282,7 +294,7 @@
 
 <div class="filter-container">
     <h4>Lọc Theo Khoảng Giá</h4>
-    <form id="priceFilterForm">
+    <form id="priceFilterForm" method="GET" action="FilterServlet">
         <div class="form-group">
             <label>Chọn khoảng giá:</label>
             <ul class="price-options">
@@ -302,12 +314,13 @@
                 <li data-value="tren-60" class="price-option">Trên 60 tỷ</li>
             </ul>
         </div>
-        <button type="submit">Lọc</button>
+        <input type="hidden" name="priceRange" id="priceRange">
     </form>
 </div>
+
 <div class="filter-container1">
     <h4>Lọc Theo Diện Tích</h4>
-    <form id="areaFilterForm">
+    <form id="areaFilterForm" method="GET" action="FilterServlet">
         <div class="form-group">
             <label>Chọn diện tích:</label>
             <ul class="price-options">
@@ -324,10 +337,58 @@
                 <li data-value="tren-500" class="price-option">Trên 500 m²</li>
             </ul>
         </div>
-        <button type="submit">Lọc</button>
+        <input type="hidden" name="areaRange" id="areaRange">
     </form>
 </div>
 
+<!-- Kết quả lọc sẽ được hiển thị ở đây -->
+<div class="product-section">
+    <div class="product-list" id="search-results">
+        <!-- Kết quả sẽ được trả về từ FilterServlet -->
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Khi người dùng chọn khoảng giá
+        $('.price-option').on('click', function () {
+            var selectedPrice = $(this).data('value');
+            $('#priceRange').val(selectedPrice); // Gán giá trị đã chọn vào input ẩn
+            $('#priceFilterForm').submit(); // Submit form để gửi dữ liệu tới servlet
+        });
+
+        // Khi người dùng chọn diện tích
+        $('.price-option').on('click', function () {
+            var selectedArea = $(this).data('value');
+            $('#areaRange').val(selectedArea); // Gán giá trị diện tích đã chọn vào input ẩn
+            $('#areaFilterForm').submit(); // Submit form để gửi dữ liệu tới servlet
+        });
+
+        // Khi người dùng gõ vào ô tìm kiếm
+        $('#search, #city').on('keyup', function () {
+            var searchText = $('#search').val();
+            var city = $('#city').val();
+
+            // Gửi dữ liệu tìm kiếm đến servlet
+            $.ajax({
+                url: 'SearchServlet',
+                type: 'POST',
+                data: {
+                    search: searchText,
+                    city: city
+                },
+                success: function (response) {
+                    // Hiển thị kết quả trả về trong phần product-list
+                    $('#search-results').html(response);
+                },
+                error: function () {
+                    $('#search-results').html('<p>Lỗi trong quá trình tìm kiếm.</p>');
+                }
+            });
+        });
+    });
+
+</script>
 
 <style>
     /* Thiết lập form hiển thị sản phẩm */
