@@ -14,26 +14,15 @@
         }
 
         .navbar {
+            position: fixed;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #333;
+            background-color: #e02424;
             padding: 15px 30px;
         }
 
-        .navbar a {
-            color: white;
-            text-decoration: none;
-            padding: 10px 20px;
-            margin: 0 15px;
-            font-size: 16px;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-        }
-
-        .navbar a:hover {
-            background-color: #575757;
-        }
+        
 
         /* Hiệu ứng hover cho các mục Đăng Nhập, Đăng Ký, Đăng Tin */
         .auth-links a {
@@ -71,6 +60,60 @@
         .auth-links {
             display: flex;
         }
+
+        /* CSS cho menu đa cấp */
+        .menu_bar {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+        }
+
+        .menu_bar > li {
+            position: relative;
+            display: inline-block;
+        }
+
+        .menu_bar a {
+            display: block;
+            padding: 10px 20px;
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Tạo hiệu ứng hover cho menu */
+        .menu_bar li:hover > a {
+            background-color: #575757;
+        }
+
+        /* Ẩn các submenu khi không hover */
+        .submenu {
+            display: none;
+            position: absolute;
+            background-color: #444;
+            top: 100%;
+            left: 0;
+            min-width: 200px;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Hiển thị các mục con khi hover vào mục cha */
+        .menu_bar > li:hover .submenu {
+            display: block;
+        }
+
+        .submenu li a {
+            padding: 10px 20px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .submenu li a:hover {
+            background-color: #666;
+        }
     </style>
 </head>
 <body>
@@ -82,11 +125,57 @@
 
         <!-- Các mục menu chính -->
         <div class="menu">
-            <a href="#">Nhà Đất Bán</a>
-            <a href="#">Nhà Đất Cho Thuê</a>
-            <a href="#">Dự Án</a>
-            <a href="#">Tin Tức</a>
-            <a href="#">Wiki BĐS</a>
+            <ul class="menu_bar">
+                <!-- Mục Nhà Đất Bán có menu con -->
+                <li>
+                    <a href="#">Nhà Đất Bán</a>
+                    <ul class="submenu">
+                        <li><a href="#">Bán căn hộ chung cư</a></li>
+                        <li><a href="#">Bán nhà riêng</a></li>
+                        <li><a href="#">Bán nhà biệt thự liền kề</a></li>
+                        <li><a href="#">Bán nhà mặt phố</a></li>
+                        <li><a href="#">Bán trang trại ,khu nghỉ dưỡng</a></li>
+                        <li><a href="#">Bán kho ,nhà xưởng </a></li>
+                        <li><a href="#">Bán loại bất động sản khác</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Nhà Đất Cho Thuê</a>
+                    <ul class="submenu">
+                        <li><a href="#">Cho thuê căn hộ chung cư</a></li>
+                        <li><a href="#">Cho thuê nhà riêng</a></li>
+                        <li><a href="#">Cho thuê nhà biệt thự ,liền kề</a></li>
+                        <li><a href="#">Cho thuê nhà mặt phố</a></li>
+                        <li><a href="#">Cho thuê nhà trọ, phòng trọ</a></li>
+                        <li><a href="#">Cho thuê văn phòng </a></li>
+                        <li><a href="#">Cho thuê loại bất động sản khác</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Dự Án</a>
+                    <ul class="submenu">
+                        <li><a href="#">Căn hộ chung cư</a></li>
+                        <li><a href="#">Cao ốc văn phòng</a></li>
+                        <li><a href="#">Trung tâm thương mại</a></li>
+                        <li><a href="#">Khu đô thị mới</a></li>
+                        <li><a href="#">Khu phức hợp</a></li>
+                        <li><a href="#">Nhà ở xã hội</a></li>
+                        <li><a href="#">Khu nghỉ dưỡng , Sinh thái</a></li>
+                        <li><a href="#">Khu công nghiệp</a></li>
+                        <li><a href="#">Biệt thự , liền kề</a></li> 
+                        <li><a href="#">Nhà mặt phố</a></li>
+                        <li><a href="#">Dự án khác</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Tin Tức</a></li>
+                <li><a href="#">Wiki BĐS</a>
+                    <ul class="submenu">
+                        <li><a href="#">Mua BĐS</a></li>
+                        <li><a href="#">Bán BĐS</a></li>
+                        <li><a href="#">Thuê BĐS</a></li>
+                        <li><a href="#">Tài chính BĐS</a></li>
+                        <li><a href="#">Phong thủy</a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
 
         <!-- Các mục Đăng Nhập, Đăng Ký, Đăng Tin -->
