@@ -269,6 +269,9 @@ nav ul li a:hover {
 .main .tintuc .main2 {
   margin-left: 30px;
 }
+.main .tintuc .main2 .bigtext1 {
+  font-size: 20px;
+}
 .footer {
   background-color: #f8f8f8;
   padding: 20px 0;
