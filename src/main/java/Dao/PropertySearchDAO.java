@@ -1,19 +1,35 @@
 package Dao;
 
 import Entity.Property1;
-
 import java.sql.*;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class PropertySearchDAO {
+
+    // Phương thức loại bỏ dấu và chuyển thành chữ thường
+    private String removeAccents(String input) {
+        if (input == null) return "";
+
+        // Loại bỏ dấu và chuyển chuỗi thành chữ thường
+        String normalized = Normalizer.normalize(input, Normalizer.Form.NFD);
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        String result = pattern.matcher(normalized).replaceAll("");
+
+        return result.toLowerCase(); // Chuyển thành chữ thường
+    }
 
     public List<Property1> searchProducts(String searchText, String city) {
         List<Property1> properties = new ArrayList<>();
 
+        // Loại bỏ dấu và chuyển thành chữ thường
+        searchText = removeAccents(searchText);
+        city = removeAccents(city);
+
         // Tạo câu truy vấn SQL để tìm kiếm sản phẩm theo tên và địa chỉ
-        // Điều kiện sẽ là tìm kiếm bất kỳ phần nào trong địa chỉ (không chỉ thành phố)
-        String sql = "SELECT * FROM properties WHERE title LIKE ? AND address LIKE ?";
+        String sql = "SELECT * FROM properties WHERE LOWER(REPLACE(title, 'đ', 'd')) LIKE ? AND LOWER(REPLACE(address, 'đ', 'd')) LIKE ?";
 
         // Kết nối đến cơ sở dữ liệu
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/webbds", "root", "123456");

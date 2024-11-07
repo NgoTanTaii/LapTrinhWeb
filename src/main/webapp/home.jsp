@@ -126,18 +126,13 @@
     </div>
 
 
-
     <div class="search-container">
-        <form class="search-form" id="search-form">
+        <form class="search-form" id="search-form" method="post" action="SearchServlet">
             <input type="text" id="search" placeholder="Tìm kiếm sản phẩm..." name="search" required>
             <input type="text" id="city" placeholder="Tìm kiếm theo địa chỉ..." name="city">
             <button type="submit">Tìm Kiếm</button>
         </form>
     </div>
-
-
-
-
     <script>
         function toggleDropdown(dropdownClass) {
             const dropdown = document.querySelector(`.${dropdownClass}`);
@@ -148,45 +143,49 @@
     <script src="JS/script.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        // Khi form tìm kiếm được submit
-        $('#search-form').submit(function(event) {
-            event.preventDefault(); // Ngừng gửi form theo cách thông thường
+        $(document).ready(function () {
+            // Khi người dùng gõ vào ô tìm kiếm hoặc ô địa chỉ, thực hiện tìm kiếm ngay lập tức
+            $('#search, #city').on('keyup', function () {
+                // Lấy giá trị của các trường tìm kiếm
+                var searchText = $('#search').val();
+                var city = $('#city').val();
 
-            // Lấy giá trị tìm kiếm từ form
-            var searchText = $('#search').val();
-            var city = $('#city').val();
-
-            // Gửi yêu cầu Ajax đến SearchServlet
-            $.ajax({
-                url: 'SearchServlet',  // Địa chỉ servlet xử lý tìm kiếm
-                type: 'POST',
-                data: { search: searchText, city: city }, // Gửi dữ liệu tìm kiếm
-                success: function(response) {
-                    // Hiển thị kết quả trả về trong phần product-list
-                    $('#search-results').html(response);
-                },
-                error: function() {
-                    $('#search-results').html('<p>Lỗi trong quá trình tìm kiếm.</p>');
+                // Kiểm tra nếu ô tìm kiếm không trống mới gửi yêu cầu Ajax
+                if (searchText.length > 0 || city.length > 0) {
+                    $.ajax({
+                        url: 'SearchServlet',  // Địa chỉ servlet xử lý tìm kiếm
+                        type: 'POST',
+                        data: {
+                            search: searchText,
+                            city: city
+                        },
+                        success: function (response) {
+                            // Hiển thị kết quả trả về trong phần product-list
+                            $('#search-results').html(response);
+                        },
+                        error: function () {
+                            $('#search-results').html('<p>Lỗi trong quá trình tìm kiếm.</p>');
+                        }
+                    });
+                } else {
+                    // Nếu không có gì để tìm kiếm, xóa kết quả hiển thị
+                    $('#search-results').html('');
                 }
             });
         });
+
     </script>
-
-
 </header>
 
+
 <div class="product-section">
-    <h2>Bất động sản tìm được</h2>
+
     <div class="product-list" id="search-results">
 
+<%--                <a href="property-detail.jsp?id=<%= property.getId() %>" style="text-decoration: none; color: inherit;">--%>
     </div>
 
-    <!-- Nút xem thêm và ẩn bớt -->
-<%--    <div class="view-more">--%>
-<%--        <a href="#" id="toggleButton">Xem thêm</a>--%>
-<%--    </div>--%>
 </div>
-
 
 <div class="news-section">
     <h2>Tin Tức Bất Động Sản</h2>

@@ -16,11 +16,32 @@ import java.util.List;
 public class SearchServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
+    // Phương thức loại bỏ dấu và chuyển thành chữ thường
+    private String removeAccents(String input) {
+        if (input == null) return "";
+
+        // Loại bỏ dấu và chuyển chuỗi thành chữ thường
+        String normalized = java.text.Normalizer.normalize(input, java.text.Normalizer.Form.NFD);
+        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        String result = pattern.matcher(normalized).replaceAll("");
+
+        return result.toLowerCase(); // Chuyển thành chữ thường
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         // Lấy tham số tìm kiếm từ form
         String searchText = request.getParameter("search");
         String city = request.getParameter("city");
+
+        // Loại bỏ dấu và chuyển chuỗi thành chữ thường
+        searchText = removeAccents(searchText);
+        city = removeAccents(city);
+
+        // Đảm bảo tham số không null hoặc rỗng
+        if (searchText == null) searchText = "";
+        if (city == null) city = "";
 
         // Tạo đối tượng PropertySearchDAO để tìm kiếm sản phẩm từ cơ sở dữ liệu
         PropertySearchDAO propertySearchDAO = new PropertySearchDAO();
@@ -31,10 +52,17 @@ public class SearchServlet extends HttpServlet {
         // Đặt kiểu trả về là text/html
         response.setContentType("text/html");
 
+        // Tạo header HTML cho phản hồi
+        response.getWriter().println("<html><head><title>Search Results</title></head><body>");
+
+        // Hiển thị tiêu đề của trang
+        response.getWriter().println("<h1>Kết quả tìm kiếm</h1>");
+
         // Kiểm tra nếu không có sản phẩm nào
         if (properties.isEmpty()) {
-            response.getWriter().println("<p>Không có bất động sản nào phù hợp với từ khóa: " + searchText + " và thành phố: " + city + "</p>");
+            response.getWriter().println("<p>Không có bất động sản nào phù hợp với từ khóa: <strong>" + searchText + "</strong> và thành phố: <strong>" + city + "</strong>.</p>");
         } else {
+            // Nếu có kết quả, hiển thị danh sách sản phẩm
             response.getWriter().println("<ul>");
             for (Property1 property : properties) {
                 // Hiển thị tên và hình ảnh của sản phẩm
@@ -45,5 +73,8 @@ public class SearchServlet extends HttpServlet {
             }
             response.getWriter().println("</ul>");
         }
+
+        // Tạo footer HTML cho phản hồi
+        response.getWriter().println("</body></html>");
     }
 }
