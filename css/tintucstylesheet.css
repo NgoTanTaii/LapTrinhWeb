@@ -184,6 +184,7 @@ nav ul li a:hover {
 .main .tintuc .main1 {
   display: flex;
   flex-direction: column;
+  gap: 20px;
 }
 .main .tintuc .main1 .tintuc1 {
   display: flex;
