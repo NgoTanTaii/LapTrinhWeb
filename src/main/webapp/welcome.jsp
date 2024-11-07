@@ -142,8 +142,10 @@
             <img src="jpg/1.webp" alt="Banner 2">
         </div>
     </div>
+
+    <!-- Form tìm kiếm ở giữa -->
     <div class="search-container">
-        <form class="search-form" action="search-results.html" method="get">
+        <form class="search-form" method="get">
             <input type="text" placeholder="Tìm kiếm..." name="search" required>
 
 
