@@ -53,7 +53,6 @@
         }
 
         .btn {
-
             padding: 10px;
             border-radius: 4px;
             cursor: pointer;
@@ -66,7 +65,7 @@
         }
 
         .submit-btn {
-            border-radius:5px ;
+            border-radius: 5px;
             height: 40px;
             width: 100%;
             background-color: red;
@@ -130,8 +129,8 @@
 
         <div class="social-login">
             <p>Hoặc đăng nhập bằng:</p>
-            <button class="btn btn-facebook" onclick="handleFacebookLogin()">
-                <i class="fab fa-facebook-f"></i> Facebook
+            <button class="btn btn-facebook" onclick="checkLoginState()">
+                <i class="fab fa-facebook-f"></i> Đăng nhập bằng Facebook
             </button>
             <div id="g_id_onload"
                  data-client_id="161137938230-6h6mbfajcfra9avc0762peh4556202hq.apps.googleusercontent.com"
@@ -148,14 +147,60 @@
 </div>
 
 <script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://connect.facebook.net/en_US/sdk.js"></script>
 <script>
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '1773989986680875',
+            cookie: true,
+            xfbml: true,
+            version: 'v15.0'
+        });
+    };
+
+    function checkLoginState() {
+        FB.getLoginStatus(function (response) {
+            statusChangeCallback(response);
+        });
+    }
+
+    function statusChangeCallback(response) {
+        if (response.status === 'connected') {
+            fetchUserData();
+        } else {
+            FB.login(function (response) {
+                if (response.authResponse) {
+                    fetchUserData();
+                }
+            }, {scope: 'public_profile,email'});
+        }
+    }
+
+    function fetchUserData() {
+        FB.api('/me', {fields: 'id,name,email'}, function (response) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "/LoginServlet", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.send(`facebookId=${response.id}&name=${response.name}&email=${response.email}`);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    window.location.href = "welcome";
+                }
+            };
+        });
+    }
+</script>
+
+
+<script>
+    // Cấu hình đăng nhập bằng Google
     google.accounts.id.initialize({
         client_id: "161137938230-6h6mbfajcfra9avc0762peh4556202hq.apps.googleusercontent.com",
         callback: handleCredentialResponse
     });
 
     function handleCredentialResponse(response) {
-        // Send the credential to the server
         fetch('/loginWithGoogle', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -169,13 +214,13 @@
             .catch(error => console.error(error));
     }
 
-    // Render the Google Sign-In button
+    // Hiển thị nút đăng nhập Google
     google.accounts.id.renderButton(
         document.getElementById("g_id_onload"),
         {theme: "outline", size: "large"}
     );
 
-    // Optional: Display the One Tap prompt if desired
+    // Hiển thị gợi ý đăng nhập một lần
     google.accounts.id.prompt();
 </script>
 

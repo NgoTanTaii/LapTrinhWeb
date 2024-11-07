@@ -96,6 +96,23 @@
 
         }
 
+        .cart-item {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .item-content {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+
         .cart-item img {
             width: 200px;
             height: 200px;
@@ -111,35 +128,19 @@
             justify-content: center;
         }
 
-        .item-info h4 {
-            margin: 0;
-            font-size: 18px;
-            color: #333;
-        }
-
-        .item-info p {
-            margin: 4px 0;
-            font-size: 14px;
-            color: #666;
-        }
-
-        .item-info .price {
-            font-size: 16px;
-            font-weight: bold;
-            color: #d9534f;
-        }
-
         .remove-button {
             background-color: transparent;
             border: none;
             color: #d9534f;
             font-size: 16px;
             cursor: pointer;
+            margin-left: 10px;
         }
 
         .remove-button:hover {
             color: #a94442;
         }
+
 
         #checkout-button {
             background-color: #5cb85c;
@@ -158,6 +159,11 @@
         #checkout-button:hover {
             background-color: #4cae4c;
         }
+        .cart-item .price, .cart-item .area {
+            color: #d9534f; /* Màu đỏ */
+            font-weight: bold;
+        }
+
     </style>
 </head>
 <header class="header">
@@ -312,39 +318,40 @@
 
     function updateCartDisplay() {
         const cartList = document.getElementById('cart-items');
-        const checkoutButton = document.getElementById('checkout-button'); // Reference to the button
-        cartList.innerHTML = ''; // Clear previous items
+        const checkoutButton = document.getElementById('checkout-button');
+        cartList.innerHTML = ''; // Xóa các mục cũ
 
         if (cartItems.length === 0) {
             cartList.innerHTML = '<li>Giỏ hàng của bạn đang trống.</li>';
-            checkoutButton.disabled = true; // Disable button when cart is empty
-            checkoutButton.style.opacity = "0.5"; // Dim the button to indicate it's disabled
+            checkoutButton.disabled = true; // Vô hiệu hóa nút khi giỏ hàng trống
+            checkoutButton.style.opacity = "0.5"; // Giảm độ mờ để chỉ ra rằng nút bị vô hiệu
             return;
         }
 
-        // Enable the button if there are items in the cart
         checkoutButton.disabled = false;
         checkoutButton.style.opacity = "1";
 
-        // Render each item in the cart
         cartItems.forEach((item) => {
             const listItem = document.createElement('li');
             listItem.classList.add('cart-item');
             listItem.innerHTML = `
-            <img src="${item.imageUrl}" alt="${item.title}">
-            <div class="item-info">
-                <h4>${item.title}</h4>
-                <p>Địa chỉ: ${item.address}</p>
-                <p>Diện tích: ${item.area} m²</p>
-                <p class="price">Giá: ${item.price.toLocaleString()} tỷ</p>
+            <div class="item-content">
+                <img src="${item.imageUrl}" alt="${item.title}" class="clickable-image">
+                <div class="item-info">
+                    <h4>${item.title}</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> Địa chỉ: ${item.address}</p>
+                    <p class="area"><i class="fas fa-ruler-combined"></i> Diện tích: ${item.area} m²</p>
+                    <p class="price"><i class="fas fa-dollar-sign"></i> Giá: ${item.price.toLocaleString()} tỷ</p>
+                </div>
             </div>
             <button class="remove-button" onclick="removeFromCart('${item.id}')">
-                <i class="fas fa-trash-alt"></i>
+                <i class="fas fa-trash-alt"></i> Xóa
             </button>
         `;
 
-            // Add event listener to redirect to property detail page when item is clicked
-            listItem.addEventListener('click', function () {
+            // Chỉ gắn sự kiện click vào hình ảnh để chuyển hướng
+            listItem.querySelector('.clickable-image').addEventListener('click', function (event) {
+                event.stopPropagation(); // Ngăn chặn sự kiện lan ra các thành phần khác
                 window.location.href = `property-detail.jsp?id=${item.id}`;
             });
 

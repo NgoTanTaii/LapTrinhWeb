@@ -278,12 +278,36 @@
             </div>
 
         </div>
-        <div class="header-right" style="margin-top: 10px">
+        <%
+            boolean isLoggedIn = session.getAttribute("username") != null;
+            String username = (String) session.getAttribute("username");
+        %>
 
-            <a href="login.jsp" class="btn"><h3>Đăng nhập</h3></a>
-            <a href="register.jsp" class="btn"><h3>Đăng ký</h3></a>
-            <a href="post-status.jsp" class="btn"><h3>Đăng tin</h3></a>
+        <div class="header-right" style="margin-top: 10px">
+            <% if (isLoggedIn) { %>
+            <a href="account.jsp" class="btn">
+                <h3 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px;">
+                    Hello, <%= username %>
+                </h3>
+            </a>
+
+            <a href="logout" class="btn">
+                <h3>Đăng xuất</h3>
+            </a>
+            <% } else { %>
+            <a href="login.jsp" class="btn">
+                <h3>Đăng nhập</h3>
+            </a>
+            <a href="register.jsp" class="btn">
+                <h3>Đăng ký</h3>
+            </a>
+            <% } %>
+            <a href="post-status.html" class="btn">
+                <h3>Đăng tin</h3>
+            </a>
         </div>
+
+
         <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()"
            style="border: 1px solid #ccc; border-radius:100%;">
             <img src="jpg/heart%20(1).png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng"
@@ -299,31 +323,30 @@
     </div>
     <div class="menu">
         <div class="header-bottom" style="height:60px;margin-top: 0">
-
             <div class="store-name">
-                <h1><a href="homes">
-                    <span class="color1">HOME</span>
-                    <span class="color2">LANDER</span> <!-- Đổi từ VINA BOOK sang VINA BĐS -->
-                </a></h1>
+                <h1>
+                    <a href="<%= isLoggedIn ? "welcome" : "homes" %>">
+                        <span class="color1">HOME</span>
+                        <span class="color2">LANDER</span>
+                    </a>
+                </h1>
             </div>
 
 
             <nav>
                 <ul>
-                    <li><a href="property-for-sale.html">Nhà Đất Bán</a></li>
-                    <li><a href="property-for-rent.html">Nhà Đất Cho Thuê</a></li>
+                    <li><a href="#nhadatban">Nhà Đất Bán</a></li>
+                    <li><a href="#nhadatchochue">Nhà Đất Cho Thuê</a></li>
                     <li><a href="#duan">Dự Án</a></li>
                     <li><a href="#tintuc">Tin Tức</a></li>
                     <li><a href="#wikibds">Wiki BĐS</a></li>
                 </ul>
             </nav>
 
-
             <div class="contact-info">
                 <img src="jpg/phone-call.png" alt="Phone Icon" class="phone-icon">
                 <span class="phone-number">0123 456 789</span>
             </div>
-
         </div>
     </div>
 

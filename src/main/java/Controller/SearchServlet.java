@@ -62,16 +62,22 @@ public class SearchServlet extends HttpServlet {
         if (properties.isEmpty()) {
             response.getWriter().println("<p>Không có bất động sản nào phù hợp với từ khóa: <strong>" + searchText + "</strong> và thành phố: <strong>" + city + "</strong>.</p>");
         } else {
-            // Nếu có kết quả, hiển thị danh sách sản phẩm
+            // Thêm link vào phần hiển thị sản phẩm
             response.getWriter().println("<ul>");
             for (Property1 property : properties) {
-                // Hiển thị tên và hình ảnh của sản phẩm
+                // Tạo đường dẫn đến trang chi tiết sản phẩm
+                String detailPageUrl = "property-detail.jsp?id=" + property.getId(); // Giả sử bạn có một phương thức getId() để lấy id của sản phẩm
+
+                // Hiển thị sản phẩm với liên kết tới trang chi tiết
                 response.getWriter().println("<li>");
+                response.getWriter().println("<a href='" + detailPageUrl + "'>"); // Thêm thẻ <a> để tạo liên kết
                 response.getWriter().println("<img src='" + property.getImageUrl() + "' alt='" + property.getTitle() + "' style='width: 100px; height: 100px;'><br>");
                 response.getWriter().println("<strong>" + property.getTitle() + "</strong><br>");
+                response.getWriter().println("</a>"); // Đóng thẻ <a>
                 response.getWriter().println("</li>");
             }
             response.getWriter().println("</ul>");
+
         }
 
         // Tạo footer HTML cho phản hồi
