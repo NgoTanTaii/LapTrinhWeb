@@ -416,7 +416,6 @@
                     // Kiểm tra và lấy tên thành phố
                     if (addressParts.length > 0) {
                         cityPart = addressParts[addressParts.length - 1].trim(); // Thành phố
-                        // Kiểm tra và lấy từ trước thành phố
                         if (addressParts.length > 1) {
                             preCityWord = addressParts[addressParts.length - 2].trim(); // Từ trước thành phố
                         }
@@ -424,10 +423,10 @@
         %>
         <div class="property-card">
             <a href="property-detail.jsp?id=<%= property.getId() %>" style="text-decoration: none; color: inherit;">
-                <img src="<%= property.getImageUrl() %>" alt="<%= property.getTitle() %>">
-                <h3><%= property.getTitle() %>
-                </h3>
-                <p><%= property.getDescription() %>
+                <img src="<%= property.getImageUrl() %>" alt="<%= property.getTitle() %>" style="width: 100%; height: auto;">
+                <h3><%= property.getTitle() %></h3>
+                <p>
+                    <%= property.getDescription().length() > 50 ? property.getDescription().substring(0, 50) + "..." : property.getDescription() %>
                 </p>
                 <div style="display: flex; justify-content: space-between; color: red; margin-top: 5px;">
                     <span><%= property.getArea() %> m²</span>

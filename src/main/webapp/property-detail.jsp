@@ -889,6 +889,55 @@
 
 </script>
 
+<% if (isLoggedIn) { %>
+<!-- Form Comment khi người dùng đã đăng nhập -->
+<div class="comment-section">
+    <h3>Để lại bình luận của bạn:</h3>
+    <form action="submit-comment.jsp" method="POST">
+        <textarea name="comment" rows="5" placeholder="Nhập bình luận của bạn..." required></textarea>
+        <br>
+        <button type="submit">Gửi bình luận</button>
+    </form>
+</div>
+<% } else { %>
+<!-- Thông báo yêu cầu đăng nhập -->
+<div class="login-prompt">
+    <p>Vui lòng <a href="login.jsp">đăng nhập</a> để có thể để lại bình luận.</p>
+</div>
+<% } %>
+<style>
+    .comment-section {
+        margin-top: 20px;
+        margin-left: 135px;
+        max-width: 53%;
+    }
+
+    textarea {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    .login-prompt p {
+        color: #f00;
+    }
+
+</style>
 
 <div class="copyright">
     <p>© Mọi quyền thuộc về Homelander. Mọi thông tin liên quan vui lòng liên hệ với chúng tôi.</p>

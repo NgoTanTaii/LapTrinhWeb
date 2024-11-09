@@ -212,9 +212,14 @@
         <img src="jpg/1.webp" alt="Banner 2">
     </div>
 </div>
-<form method="post" action="SearchStatusServlet?status=2">
-    <button type="submit">Tìm kiếm bất động sản trạng thái 2</button>
-</form>
+<div class="search-container">
+    <form class="search-form" id="search-form" method="post" action="SearchServlet">
+        <input type="text" id="search" placeholder="Tìm kiếm sản phẩm..." name="search" required>
+        <input type="text" id="city" placeholder="Tìm kiếm theo địa chỉ..." name="city">
+        <button type="submit">Tìm Kiếm</button>
+    </form>
+</div>
+
 
 <div class="product-section">
     <div class="product-list" id="search-results">
