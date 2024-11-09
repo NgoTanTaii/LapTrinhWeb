@@ -203,13 +203,7 @@
             // Code xử lý cập nhật vai trò ở đây
         });
 
-        $('#example tbody').on('click', 'button.delete-button', function () {
-            var data = $('#example').DataTable().row($(this).parents('tr')).data();
-            if (confirm('Bạn có chắc chắn muốn xóa người dùng này không?')) {
-                alert('Đã xóa người dùng: ' + data['Tên Người Dùng']);
-                // Code xử lý xóa ở đây
-            }
-        });
+
     });
 </script>
 </body>
