@@ -213,12 +213,91 @@
     </div>
 </div>
 <div class="search-container">
-    <form class="search-form">
-        <input type="text" placeholder="Tìm kiếm..." name="search" required>
-
+    <form class="search-form" id="search-form" method="post" action="SearchServlet">
+        <input type="text" id="search" placeholder="Tìm kiếm sản phẩm..." name="search" required>
+        <input type="text" id="city" placeholder="Tìm kiếm theo địa chỉ..." name="city">
         <button type="submit">Tìm Kiếm</button>
     </form>
 </div>
+
+<div class="product-section">
+    <div class="product-list" id="search-results">
+        <!-- Các sản phẩm sẽ được hiển thị tại đây -->
+    </div>
+    <button id="toggleButton">Xem thêm</button>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const toggleButton = document.getElementById('toggleButton');
+        let isExpanded = false; // Trạng thái để theo dõi việc mở rộng hay thu gọn
+
+        // Lắng nghe sự kiện submit của form tìm kiếm
+        document.getElementById('search-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Ngừng hành động mặc định của form (submit)
+
+            const searchText = document.getElementById('search').value;
+            const city = document.getElementById('city').value;
+
+            // Gửi yêu cầu tìm kiếm qua AJAX
+            fetch('SearchServlet', {
+                method: 'POST',
+                body: new URLSearchParams({
+                    search: searchText,
+                    city: city
+                }),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('search-results').innerHTML = data;
+                    initProductToggle(); // Sau khi nhận dữ liệu từ server, khởi tạo lại chức năng toggle
+                });
+        });
+
+        // Hàm toggle sản phẩm
+        function initProductToggle() {
+            const products = document.querySelectorAll('.product-item');
+            let isExpanded = false;
+
+            // Ban đầu hiển thị 8 sản phẩm đầu tiên
+            products.forEach((product, index) => {
+                if (index < 8) {
+                    product.style.display = 'block'; // Hiển thị 8 sản phẩm đầu tiên
+                } else {
+                    product.style.display = 'none'; // Ẩn các sản phẩm còn lại
+                }
+            });
+
+            toggleButton.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                if (isExpanded) {
+                    products.forEach((product, index) => {
+                        if (index >= 8) {
+                            product.style.display = 'none'; // Ẩn các sản phẩm ngoài 8 sản phẩm đầu tiên
+                        }
+                    });
+                    toggleButton.textContent = 'Xem thêm'; // Đổi lại thành "Xem thêm"
+                } else {
+                    products.forEach(product => product.style.display = 'block'); // Hiển thị tất cả sản phẩm
+                    toggleButton.textContent = 'Ẩn bớt'; // Đổi thành "Ẩn bớt"
+                }
+
+                isExpanded = !isExpanded;
+
+                // Cuộn mượt mà về đầu phần sản phẩm
+                document.querySelector('.product-section').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        }
+    });
+</script>
+
 <script src="JS/script.js"></script>
 
 
@@ -341,12 +420,7 @@
     </form>
 </div>
 
-<!-- Kết quả lọc sẽ được hiển thị ở đây -->
-<div class="product-section">
-    <div class="product-list" id="search-results">
-        <!-- Kết quả sẽ được trả về từ FilterServlet -->
-    </div>
-</div>
+
 
 <script>
     $(document).ready(function () {

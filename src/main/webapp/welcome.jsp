@@ -791,7 +791,6 @@
 
 </style>
 <script>
-
     let cartItems = JSON.parse(sessionStorage.getItem('cartItems')) || [];
     let miniCartVisible = false; // Biến theo dõi trạng thái hiển thị của giỏ hàng
 
