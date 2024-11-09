@@ -1,21 +1,22 @@
 package Entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 public class Comment implements Serializable {
     private int commentId;
     private int propertyId;
     private int userId;
-    private String userName; // Tên người dùng, có thể lấy từ bảng Users
+    private String userName; // User name from the Users table
     private String content;
-    private String commentDate;
+    private Timestamp commentDate; // Timestamp for database compatibility
 
-    // Constructor không tham số
+    // No-argument constructor
     public Comment() {
     }
 
-    // Constructor với tất cả các tham số
-    public Comment(int commentId, int propertyId, int userId, String userName, String content, String commentDate) {
+    // All-arguments constructor
+    public Comment(int commentId, int propertyId, int userId, String userName, String content, Timestamp commentDate) {
         this.commentId = commentId;
         this.propertyId = propertyId;
         this.userId = userId;
@@ -24,7 +25,7 @@ public class Comment implements Serializable {
         this.commentDate = commentDate;
     }
 
-    // Getter và Setter cho commentId
+    // Getters and Setters
     public int getCommentId() {
         return commentId;
     }
@@ -33,7 +34,6 @@ public class Comment implements Serializable {
         this.commentId = commentId;
     }
 
-    // Getter và Setter cho propertyId
     public int getPropertyId() {
         return propertyId;
     }
@@ -42,7 +42,6 @@ public class Comment implements Serializable {
         this.propertyId = propertyId;
     }
 
-    // Getter và Setter cho userId
     public int getUserId() {
         return userId;
     }
@@ -51,7 +50,6 @@ public class Comment implements Serializable {
         this.userId = userId;
     }
 
-    // Getter và Setter cho userName
     public String getUserName() {
         return userName;
     }
@@ -60,7 +58,6 @@ public class Comment implements Serializable {
         this.userName = userName;
     }
 
-    // Getter và Setter cho content
     public String getContent() {
         return content;
     }
@@ -69,12 +66,11 @@ public class Comment implements Serializable {
         this.content = content;
     }
 
-    // Getter và Setter cho commentDate
-    public String getCommentDate() {
+    public Timestamp getCommentDate() {
         return commentDate;
     }
 
-    public void setCommentDate(String commentDate) {
+    public void setCommentDate(Timestamp commentDate) {
         this.commentDate = commentDate;
     }
 }

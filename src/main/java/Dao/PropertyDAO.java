@@ -1,6 +1,7 @@
 package Dao;
 
 import DBcontext.ConnectDB;
+import DBcontext.Database;
 import DBcontext.DbConnection1;
 import Entity.Comment;
 import Entity.Property1;
@@ -438,7 +439,24 @@ public class PropertyDAO {
             e.printStackTrace();
         }
     }
+    public int getTotalProducts() {
+        int totalProducts = 0;
+        String sql = "SELECT COUNT(*) AS total FROM properties";
 
+        try (Connection conn = Database.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            if (rs.next()) {
+                totalProducts = rs.getInt("total");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error fetching total products: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return totalProducts;
+    }
 
 }
 

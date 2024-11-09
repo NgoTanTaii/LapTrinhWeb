@@ -4,6 +4,13 @@
 <%@ page import="java.util.List" %>
 <%@ page import="Dao.PosterDAO" %>
 <%@ page import="Entity.Poster" %>
+<%@ page import="Entity.Comment" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="DBcontext.Database" %>
+<%@ page import="java.sql.PreparedStatement" %>
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="Dao.CommentDAO" %>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
@@ -889,22 +896,138 @@
 
 </script>
 
+<!-- Form for Adding Comments (only shown if logged in) -->
 <% if (isLoggedIn) { %>
-<!-- Form Comment khi người dùng đã đăng nhập -->
 <div class="comment-section">
     <h3>Để lại bình luận của bạn:</h3>
-    <form action="submit-comment.jsp" method="POST">
+    <form action="SubmitCommentServlet" method="POST">
+        <input type="hidden" name="productId" value="<%= request.getParameter("id") %>">
         <textarea name="comment" rows="5" placeholder="Nhập bình luận của bạn..." required></textarea>
-        <br>
         <button type="submit">Gửi bình luận</button>
     </form>
 </div>
 <% } else { %>
-<!-- Thông báo yêu cầu đăng nhập -->
 <div class="login-prompt">
-    <p>Vui lòng <a href="login.jsp">đăng nhập</a> để có thể để lại bình luận.</p>
+    <p style=" margin-left: 135px;margin-top: 30px">Vui lòng <a href="login.jsp">đăng nhập</a> để có thể để lại bình
+        luận.</p>
 </div>
 <% } %>
+
+
+<%
+    String propertyIdParam = request.getParameter("id");
+    String loggedInUsername = (String) session.getAttribute("username"); // Get logged-in username from session
+    String role = (String) session.getAttribute("role"); // Get role from session
+    List<Comment> comments = new ArrayList<>();
+
+    if (propertyIdParam != null) {
+        try {
+            CommentDAO commentDAO = new CommentDAO();
+            comments = commentDAO.getCommentsByPropertyId(propertyId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+%>
+
+<div class="existing-comments">
+    <h3>Bình luận:</h3>
+
+    <%
+        if (comments != null && !comments.isEmpty()) {
+            for (Comment comment : comments) {
+                // Check if the logged-in user is the comment author (by username) or an admin
+                boolean canDelete = "admin".equals(role) ||
+                        (loggedInUsername != null && loggedInUsername.equals(comment.getUserName()));
+    %>
+    <div class="comment">
+        <p>
+            <strong><%= comment.getUserName() != null ? comment.getUserName() : "Unknown User" %></strong>
+            - <%= comment.getCommentDate() %>
+                <% if (canDelete) { %>
+            <!-- Show delete button if the user is admin or the comment's author -->
+        <form action="DeleteCommentServlet" method="post" style="display:inline;">
+            <input type="hidden" name="commentId" value="<%= comment.getCommentId() %>">
+            <input type="hidden" name="propertyId" value="<%= propertyIdParam %>">
+            <button type="submit" onclick="return confirm('Are you sure you want to delete this comment?');">Delete</button>
+        </form>
+        <% } %>
+        </p>
+        <p><%= comment.getContent() %></p>
+    </div>
+    <%
+        }
+    } else {
+    %>
+    <p>Chưa có bình luận nào.</p>
+    <% } %>
+</div>
+
+
+
+</div>
+
+
+<style>
+    /* Styling for the comments section */
+    .existing-comments {
+        margin-left: 135px;
+        width: 100%;
+        max-width: 600px;
+        margin-top: 30px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-family: Arial, sans-serif;
+    }
+
+    .existing-comments h3 {
+        font-size: 24px;
+        color: #333;
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+
+    .comment {
+
+        padding: 15px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .comment:last-child {
+        border-bottom: none;
+    }
+
+    .comment p {
+        margin: 5px 0;
+        color: #333;
+        line-height: 1.4;
+    }
+
+    .comment strong {
+        color: #0077cc;
+        font-weight: bold;
+    }
+
+    .comment .date {
+        color: #999;
+        font-size: 12px;
+        margin-left: 10px;
+    }
+
+    .no-comments {
+        font-size: 16px;
+        color: #666;
+        text-align: center;
+        padding: 20px 0;
+    }
+
+</style>
+
+
 <style>
     .comment-section {
         margin-top: 20px;
