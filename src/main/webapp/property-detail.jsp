@@ -6,10 +6,7 @@
 <%@ page import="Entity.Poster" %>
 <%@ page import="Entity.Comment" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="java.sql.Connection" %>
-<%@ page import="DBcontext.Database" %>
-<%@ page import="java.sql.PreparedStatement" %>
-<%@ page import="java.sql.ResultSet" %>
+
 <%@ page import="Dao.CommentDAO" %>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">

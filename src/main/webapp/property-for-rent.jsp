@@ -342,7 +342,7 @@
                             </h2>
 
                             <p class="property-price">
-                                <i class="fas fa-dollar-sign"></i> <%= property.getPrice() %> tỷ
+                                <i class="fas fa-dollar-sign"></i> <%= property.getPrice() %> triệu
                             </p>
 
                             <p class="property-area">
@@ -379,19 +379,19 @@
             <label>Chọn khoảng giá:</label>
             <ul class="price-options">
                 <li data-value="thoa-thuan" class="price-option">Thỏa thuận</li>
-                <li data-value="duoi-500" class="price-option">Dưới 500 triệu</li>
-                <li data-value="500-800" class="price-option">500 - 800 triệu</li>
-                <li data-value="800-1ty" class="price-option">800 triệu - 1 tỷ</li>
-                <li data-value="1-2ty" class="price-option">1 - 2 tỷ</li>
-                <li data-value="2-3ty" class="price-option">2 - 3 tỷ</li>
-                <li data-value="3-5ty" class="price-option">3 - 5 tỷ</li>
-                <li data-value="5-7ty" class="price-option">5 - 7 tỷ</li>
-                <li data-value="7-10ty" class="price-option">7 - 10 tỷ</li>
-                <li data-value="10-20ty" class="price-option">10 - 20 tỷ</li>
-                <li data-value="20-30ty" class="price-option">20 - 30 tỷ</li>
-                <li data-value="30-40ty" class="price-option">30 - 40 tỷ</li>
-                <li data-value="40-60ty" class="price-option">40 - 60 tỷ</li>
-                <li data-value="tren-60" class="price-option">Trên 60 tỷ</li>
+                <li data-value="duoi-500" class="price-option">Dưới 5  triệu</li>
+                <li data-value="500-800" class="price-option">5 - 8 triệu</li>
+                <li data-value="800-1ty" class="price-option">8 triệu - 10 triệu</li>
+                <li data-value="1-2ty" class="price-option">10 - 20 triệu</li>
+                <li data-value="2-3ty" class="price-option">20 - 30 triệu</li>
+                <li data-value="3-5ty" class="price-option">30 - 50 triệu</li>
+                <li data-value="5-7ty" class="price-option">50 - 70 triệu</li>
+                <li data-value="7-10ty" class="price-option">70 - 100 triệu</li>
+                <li data-value="10-20ty" class="price-option">100 - 200 triệu</li>
+                <li data-value="20-30ty" class="price-option">200 - 300 triệu</li>
+                <li data-value="30-40ty" class="price-option">300 - 400 triệu</li>
+                <li data-value="40-60ty" class="price-option">400 - 600 triệu</li>
+                <li data-value="tren-60" class="price-option">Trên 600 triệu</li>
             </ul>
         </div>
         <button type="submit">Lọc</button>
