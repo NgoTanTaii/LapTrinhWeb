@@ -2,6 +2,7 @@ package Dao;
 
 import Controller.User;
 import DBcontext.ConnectDB;
+import DBcontext.Database;
 
 import java.sql.*;
 
@@ -51,7 +52,6 @@ public class UserDAO {
     }
 
 
-
     public boolean userExists(String username) {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -90,13 +90,33 @@ public class UserDAO {
         return false; // Không tồn tại
     }
 
-    // Kết nối tới CSDL
+
     private Connection getConnection() throws SQLException {
-        // Kết nối tới CSDL (cấu hình tùy thuộc vào hệ thống của bạn)
-        // Ví dụ sử dụng JDBC với MySQL
+
         String url = "jdbc:mysql://localhost:3306/webbds";
         String user = "root";
         String password = "123456";
         return DriverManager.getConnection(url, user, password);
+    }
+
+    public User getUserByUsername(String username) throws SQLException {
+        String query = "SELECT * FROM users WHERE username = ?";
+        try (Connection con = Database.getConnection();
+             PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                user.setEmail(rs.getString("email"));
+                user.setToken(rs.getString("token"));
+                user.setStatus(rs.getString("status"));
+                user.setRole(rs.getString("role"));
+                return user;
+            }
+        }
+        return null;
     }
 }

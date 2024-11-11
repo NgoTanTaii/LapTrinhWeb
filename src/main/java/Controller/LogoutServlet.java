@@ -1,4 +1,3 @@
-// LogoutServlet.java
 package Controller;
 
 import DBcontext.Database;
@@ -17,18 +16,17 @@ import java.sql.SQLException;
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
 
         if (session != null) {
-            // Lấy userId từ session (giả sử userId được lưu trong session khi đăng nhập)
             Integer userId = (Integer) session.getAttribute("userId");
 
             if (userId != null) {
-                // Xóa giỏ hàng từ CSDL dựa trên userId
+                // Xóa giỏ hàng từ cơ sở dữ liệu dựa trên userId
                 try {
-                    Connection connection = Database.getConnection(); // Giả sử bạn có phương thức này để lấy kết nối CSDL
-                    String deleteCartQuery = "DELETE FROM cart_items WHERE user_id = ?";
+                    Connection connection = Database.getConnection(); // Lấy kết nối cơ sở dữ liệu
+                    String deleteCartQuery = "DELETE FROM cart_item WHERE cart_id IN (SELECT cart_id FROM cart WHERE user_id = ?)";
                     PreparedStatement statement = connection.prepareStatement(deleteCartQuery);
                     statement.setInt(1, userId);
                     statement.executeUpdate();
@@ -40,11 +38,11 @@ public class LogoutServlet extends HttpServlet {
                 }
             }
 
-            // Xóa session
+            // Hủy session
             session.invalidate();
         }
 
-        // Chuyển hướng về trang "homes"
-        response.sendRedirect("homes");
+        // Chuyển hướng về trang "homes" sau khi đăng xuất
+        response.sendRedirect("homes"); // Trang đăng nhập hoặc trang bạn muốn chuyển hướng tới
     }
 }

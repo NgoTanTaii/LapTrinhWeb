@@ -198,7 +198,9 @@
                 </h3>
             </a>
 
-            <a href="logout" class="btn"><h3>Đăng xuất</h3></a>
+            <a href="javascript:void(0)" id="logoutButton" class="btn">
+                <h3>Đăng xuất</h3>
+            </a>
             <% } else { %>
             <a href="login.jsp" class="btn"><h3>Đăng nhập</h3></a>
             <a href="register.jsp" class="btn"><h3>Đăng ký</h3></a>
@@ -296,35 +298,36 @@
             alert("Bất động sản này đã được quan tâm!");
         } else {
             const product = {
-                id: id,
-                title: title,
+                id,
+                title,
                 price: parseFloat(price),
-                area: area,
-                imageUrl: imageUrl,
-                address: address,
-                quantity: 1 // Số lượng cố định là 1
+                area,
+                imageUrl,
+                address,
+                quantity: 1
             };
             cartItems.push(product);
             updateSessionStorage();
             updateCartDisplay();
+            saveCartToDatabase();
         }
     }
 
-    // Update sessionStorage
+    // Update sessionStorage with the cart items
     function updateSessionStorage() {
         sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
     }
 
-
+    // Update the cart display in the mini cart
     function updateCartDisplay() {
         const cartList = document.getElementById('cart-items');
         const checkoutButton = document.getElementById('checkout-button');
-        cartList.innerHTML = ''; // Xóa các mục cũ
+        cartList.innerHTML = ''; // Clear previous cart items
 
         if (cartItems.length === 0) {
             cartList.innerHTML = '<li>Giỏ hàng của bạn đang trống.</li>';
-            checkoutButton.disabled = true; // Vô hiệu hóa nút khi giỏ hàng trống
-            checkoutButton.style.opacity = "0.5"; // Giảm độ mờ để chỉ ra rằng nút bị vô hiệu
+            checkoutButton.disabled = true; // Disable the checkout button when the cart is empty
+            checkoutButton.style.opacity = "0.5"; // Reduce opacity to show button is disabled
             return;
         }
 
@@ -349,9 +352,8 @@
             </button>
         `;
 
-            // Chỉ gắn sự kiện click vào hình ảnh để chuyển hướng
             listItem.querySelector('.clickable-image').addEventListener('click', function (event) {
-                event.stopPropagation(); // Ngăn chặn sự kiện lan ra các thành phần khác
+                event.stopPropagation();
                 window.location.href = `property-detail.jsp?id=${item.id}`;
             });
 
@@ -359,15 +361,65 @@
         });
     }
 
-    // Remove item from cart
+    // Remove item from the cart
     function removeFromCart(id) {
         cartItems = cartItems.filter(item => item.id !== id);
         updateSessionStorage();
         updateCartDisplay();
     }
 
-    // Initial display of cart items
+    // Save the cart to the database via AJAX
+    function saveCartToDatabase() {
+        const userId = sessionStorage.getItem("userId");
+        if (userId) {
+            fetch('/saveCart', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId, cartItems })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log("Giỏ hàng đã được lưu vào cơ sở dữ liệu.");
+                    } else {
+                        console.error("Lỗi khi lưu giỏ hàng.");
+                    }
+                })
+                .catch(error => console.error("Có lỗi xảy ra:", error));
+        }
+    }
+
+    // Logout and clear cart
+    function logout() {
+        sessionStorage.removeItem('cartItems'); // Remove cart from session
+        const userId = sessionStorage.getItem('userId');
+
+        if (userId) {
+            fetch('/logout', {
+                method: 'POST',
+                body: JSON.stringify({ userId }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log("Giỏ hàng đã được xóa khỏi cơ sở dữ liệu.");
+                    } else {
+                        console.error("Không thể xóa giỏ hàng từ cơ sở dữ liệu.");
+                    }
+                })
+                .catch(error => console.error("Có lỗi xảy ra khi xóa giỏ hàng:", error));
+        }
+
+        // Redirect to the home page after logout
+        window.location.href = 'homes';
+    }
+
+    // Add event listener for logout button
+    document.querySelector("#logoutButton").addEventListener("click", logout);
+
+    // Initial cart display
     updateCartDisplay();
+
 </script>
 <div class="footer">
     <div class="footer-top">

@@ -1,28 +1,34 @@
 package Entity;
 
-import java.math.BigDecimal;
-
 public class CartItem {
-    private int propertyId;     // ID của sản phẩm (bất động sản)
-    private String title;       // Tiêu đề sản phẩm
-    private BigDecimal price;   // Giá sản phẩm
-    private BigDecimal area;    // Diện tích sản phẩm
-    private String imageUrl;    // URL hình ảnh sản phẩm
-    private String address;     // Địa chỉ sản phẩm
-    private int quantity;       // Số lượng sản phẩm trong giỏ hàng
+    private int cartItemId;    // ID của mục giỏ hàng
+    private int cartId;        // ID giỏ hàng
+    private int propertyId;    // ID bất động sản
+    private String title;      // Tiêu đề bất động sản
+    private double price;      // Giá bất động sản
+    private double area;       // Diện tích bất động sản
+    private String imageUrl;   // URL của hình ảnh bất động sản
+    private int quantity;      // Số lượng của mục này trong giỏ hàng
 
-    // Constructor
-    public CartItem(int propertyId, String title, BigDecimal price, BigDecimal area, String imageUrl, String address) {
-        this.propertyId = propertyId;
-        this.title = title;
-        this.price = price;
-        this.area = area;
-        this.imageUrl = imageUrl;
-        this.address = address;
-        this.quantity = 1; // Mỗi sản phẩm chỉ được thêm 1 lần vào giỏ hàng
+    // Getter và Setter cho cartItemId
+    public int getCartItemId() {
+        return cartItemId;
     }
 
-    // Getters and Setters
+    public void setCartItemId(int cartItemId) {
+        this.cartItemId = cartItemId;
+    }
+
+    // Getter và Setter cho cartId
+    public int getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
+    }
+
+    // Getter và Setter cho propertyId
     public int getPropertyId() {
         return propertyId;
     }
@@ -31,6 +37,7 @@ public class CartItem {
         this.propertyId = propertyId;
     }
 
+    // Getter và Setter cho title
     public String getTitle() {
         return title;
     }
@@ -39,22 +46,25 @@ public class CartItem {
         this.title = title;
     }
 
-    public BigDecimal getPrice() {
+    // Getter và Setter cho price
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public BigDecimal getArea() {
+    // Getter và Setter cho area
+    public double getArea() {
         return area;
     }
 
-    public void setArea(BigDecimal area) {
+    public void setArea(double area) {
         this.area = area;
     }
 
+    // Getter và Setter cho imageUrl
     public String getImageUrl() {
         return imageUrl;
     }
@@ -63,14 +73,7 @@ public class CartItem {
         this.imageUrl = imageUrl;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
+    // Getter và Setter cho quantity
     public int getQuantity() {
         return quantity;
     }
@@ -79,17 +82,6 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-    // Optional: Override toString() for better debug output
-    @Override
-    public String toString() {
-        return "CartItem{" +
-                "propertyId=" + propertyId +
-                ", title='" + title + '\'' +
-                ", price=" + price +
-                ", area=" + area +
-                ", imageUrl='" + imageUrl + '\'' +
-                ", address='" + address + '\'' +
-                ", quantity=" + quantity +
-                '}';
+    public void setAddress(String address) {
     }
 }

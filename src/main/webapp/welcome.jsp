@@ -46,10 +46,10 @@
                 </h3>
             </a>
 
-            <!-- Nút Đăng xuất -->
-            <a href="logout" class="btn">
+            <a href="javascript:void(0)" id="logoutButton" class="btn">
                 <h3>Đăng xuất</h3>
             </a>
+
             <% } else { %>
             <!-- Tùy chọn Đăng nhập và Đăng ký nếu người dùng chưa đăng nhập -->
             <a href="login.jsp" class="btn">
@@ -202,14 +202,47 @@
 
 
 <div class="product-section">
-
-    <div class="product-list" id="search-results">
-
+    <h2>Bất động sản dành cho bạn</h2>
+    <div class="product-list">
+        <%
+            List<Property> properties = (List<Property>) request.getAttribute("properties");
+            if (properties != null && !properties.isEmpty()) {
+                int index = 0;
+                for (Property property : properties) {
+        %>
+        <div class="product-item" <%= index >= 8 ? "style='display: none;'" : "" %>>
+           <span onclick="location.href='property-detail.jsp?id=<%= property.getId() %>'"
+                 style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="<%= property.getImageUrl() %>" alt="<%= property.getTitle() %>" class="product-image">
+                <h3><%= property.getTitle() %></h3>
+                <p class="address">
+                    <img src="jpg/location.png" alt="Location Icon" class="location-icon">
+                    <%= property.getAddress() %>
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price"><%= property.getPrice() %> tỷ</p>
+                        <p class="size"><%= property.getArea() %> m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('<%= property.getId() %>', '<%= property.getTitle() %>', <%= property.getPrice() %>, <%= property.getArea() %>, '<%= property.getImageUrl() %>', '<%= property.getAddress() %>')">
+                <img src="jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <%
+                    index++;
+                }
+            }
+        %>
     </div>
 
+    <!-- Nút xem thêm và ẩn bớt -->
+    <div class="view-more">
+        <a href="#" id="toggleButton">Xem thêm</a>
+    </div>
 </div>
-
-
 
 
 <div class="news-section">
@@ -254,7 +287,6 @@
     <h2>Bất động sản dành cho bạn</h2>
     <div class="product-list">
         <%
-            List<Property> properties = (List<Property>) request.getAttribute("properties");
             if (properties != null && !properties.isEmpty()) {
                 int index = 0;
                 for (Property property : properties) {
@@ -613,6 +645,7 @@
 
 
 </div>
+
 <style>
 
     .footer {
@@ -790,52 +823,45 @@
     }
 
 </style>
-<script>
-    let cartItems = JSON.parse(sessionStorage.getItem('cartItems')) || [];
-    let miniCartVisible = false; // Biến theo dõi trạng thái hiển thị của giỏ hàng
 
-    // Hàm thêm bất động sản vào giỏ hàng
+<script>
+    let cartItems = JSON.parse(sessionStorage.getItem('cartItems')) || []; // Get cart from sessionStorage
+    let miniCartVisible = false; // Track mini cart visibility
+
+    // Hàm thêm bất động sản vào giỏ hàng và lưu vào cơ sở dữ liệu
     function addToFavorites(id, title, price, area, imageUrl, address) {
         const existingProductIndex = cartItems.findIndex(item => item.id === id);
 
         if (existingProductIndex !== -1) {
-            alert("bất động sản này đã được quan tâm!"); // Thông báo cho người dùng
+            alert("Bất động sản này đã được quan tâm!"); // Notify if product is already in cart
         } else {
-            const product = {
-                id: id,
-                title: title,
-                price: parseFloat(price),
-                area: area,
-                imageUrl: imageUrl,
-                address: address,
-                quantity: 1 // Số lượng cố định là 1
-            };
-            cartItems.push(product);
-            updateSessionStorage();
-            updateCartDisplay();
-            showMiniCart();
+            const product = { id, title, price: parseFloat(price), area, imageUrl, address, quantity: 1 };
+            cartItems.push(product); // Add product to cart
+            updateSessionStorage();  // Update sessionStorage
+            updateCartDisplay();     // Update cart UI
+            showMiniCart();          // Ensure mini cart is shown after adding an item
+
+            // Gửi giỏ hàng lên cơ sở dữ liệu thông qua AJAX
+            saveCartToDatabase();
         }
     }
 
-    // Cập nhật sessionStorage
+    // Update sessionStorage with new cart
     function updateSessionStorage() {
         sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
     }
+    function goToCart() {
+        window.location.href = 'cart.jsp'; // Chuyển hướng đến trang giỏ hàng
+    }
 
-    // Cập nhật hiển thị giỏ hàng
+    // Update the cart display in the mini cart
     function updateCartDisplay() {
         const itemCount = document.querySelector('.item-count');
         const cartList = document.getElementById('cart-items');
 
-        cartList.innerHTML = '';
+        cartList.innerHTML = cartItems.length === 0 ? '<li>Bạn chưa có bất động sản đã lưu.</li>' : '';
 
-        if (cartItems.length === 0) {
-            cartList.innerHTML = '<li>Bạn chưa có bất động sản đã lưu.</li>';
-            itemCount.innerText = 0; // Cập nhật số lượng sản phẩm
-            return; // Kết thúc hàm nếu giỏ hàng trống
-        }
-
-        cartItems.forEach((item) => {
+        cartItems.forEach(item => {
             const listItem = document.createElement('li');
             listItem.innerHTML = `
             <img src="${item.imageUrl}" alt="${item.title}" width="40" height="40">
@@ -844,47 +870,87 @@
                 <p>Địa chỉ: ${item.address}</p>
                 <p>Diện tích: ${item.area} m²</p>
                 <span>Giá: ${item.price.toLocaleString()} tỷ</span>
-
             </div>
             <button onclick="removeFromCart('${item.id}')">Xóa</button>
         `;
             cartList.appendChild(listItem);
         });
 
-        itemCount.innerText = cartItems.length; // Cập nhật số lượng sản phẩm
+        itemCount.innerText = cartItems.length; // Update the item count
     }
 
-    // Xóa sản phẩm khỏi giỏ hàng
+    // Show mini cart after adding an item
+    function showMiniCart() {
+        const miniCart = document.querySelector('.mini-cart');
+        miniCart.style.display = 'block'; // Make the mini cart visible
+        updateCartDisplay(); // Update cart content
+    }
+
+    // Remove item from cart
     function removeFromCart(id) {
         cartItems = cartItems.filter(item => item.id !== id);
         updateSessionStorage();
         updateCartDisplay();
     }
 
-    // Hiện giỏ hàng mini
-    function showMiniCart() {
-        const miniCart = document.querySelector('.mini-cart');
-        miniCart.style.display = 'block';
-        updateCartDisplay();
+    // Save cart to the database via AJAX
+    function saveCartToDatabase() {
+        const userId = sessionStorage.getItem("userId");
+        if (userId) {
+            fetch('/saveCart', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId, cartItems })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log("Giỏ hàng đã được lưu vào cơ sở dữ liệu.");
+                    } else {
+                        console.log("Lỗi khi lưu giỏ hàng.");
+                    }
+                })
+                .catch(error => console.error("Có lỗi xảy ra:", error));
+        }
     }
 
-    // Chuyển hướng đến trang giỏ hàng
-    function goToCart() {
+    // Logout and clear cart
+    function logout() {
+        sessionStorage.removeItem('cartItems'); // Remove cart from session
+        const userId = sessionStorage.getItem('userId');
 
-        window.location.href = 'cart.jsp'; // Chuyển hướng đến trang giỏ hàng
+        if (userId) {
+            fetch('/logout', {
+                method: 'POST',
+                body: JSON.stringify({ userId }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log("Giỏ hàng đã được xóa khỏi cơ sở dữ liệu.");
+                    } else {
+                        console.error("Không thể xóa giỏ hàng từ cơ sở dữ liệu.");
+                    }
+                })
+                .catch(error => console.error("Có lỗi xảy ra khi xóa giỏ hàng:", error));
+        }
 
+        window.location.href = 'homes'; // Redirect to homepage after logout
     }
 
-    // Cập nhật hiển thị giỏ hàng khi tải lại trang
-    updateCartDisplay();
-
+    // Toggle mini cart visibility
     function toggleMiniCart() {
         const miniCart = document.querySelector('.mini-cart');
-        miniCartVisible = !miniCartVisible; // Chuyển đổi trạng thái hiển thị
-        miniCart.style.display = miniCartVisible ? 'block' : 'none'; // Cập nhật hiển thị
-        updateCartDisplay(); // Cập nhật hiển thị giỏ hàng
+        miniCartVisible = !miniCartVisible; // Toggle visibility state
+        miniCart.style.display = miniCartVisible ? 'block' : 'none'; // Update visibility
+        updateCartDisplay(); // Update cart display
     }
 
+    // Event listener for logout button
+    document.querySelector("#logoutButton").addEventListener("click", logout);
+
+    // Initialize the cart display when the page loads
+    updateCartDisplay();
 
 </script>
 <style>
