@@ -225,21 +225,21 @@
     <!-- List các tin tức -->
     <div class="news-list">
         <div class="news-item">
-            <img src="jpg/banner-books.jpg" alt="Image">
-            <h3><a href="#">Tiêu đề bài viết</a></h3>
-            <p class="summary">Tóm tắt ngắn gọn về nội dung bài viết...</p>
+            <img src="jpg/HaNoi.jpg" alt="Image">
+            <h3><a href="#">Đất Hà Nội tăng giá mạnh </a></h3>
+            <p class="summary">Hà Nội có tiền cũng không mua đất đuược?...</p>
             <span class="date">Ngày đăng: 01/01/2024</span>
         </div>
         <div class="news-item">
-            <img src="jpg/banner-books.jpg" alt="Image">
-            <h3><a href="#">Tiêu đề bài viết</a></h3>
-            <p class="summary">Tóm tắt ngắn gọn về nội dung bài viết...</p>
+            <img src="jpg/HCM.jpg" alt="Image">
+            <h3><a href="#">HCM ngày càng xấu đi trong mắt du khách nuước ngoài</a></h3>
+            <p class="summary">Người nước ngoài kêu ca về du lịch...</p>
             <span class="date">Ngày đăng: 01/01/2024</span>
         </div>
         <div class="news-item">
-            <img src="jpg/banner-books.jpg" alt="Image">
-            <h3><a href="#">Tiêu đề bài viết</a></h3>
-            <p class="summary">Tóm tắt ngắn gọn về nội dung bài viết...</p>
+            <img src="jpg/binhduong.jpg" alt="Image">
+            <h3><a href="#">Bình Dương thành phố mới</a></h3>
+            <p class="summary">Thành phố trong thành phố...</p>
             <span class="date">Ngày đăng: 01/01/2024</span>
         </div>
 
