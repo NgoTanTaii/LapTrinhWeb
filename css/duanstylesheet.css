@@ -149,6 +149,9 @@ nav ul li a:hover {
   display: flex;
   flex-direction: column;
 }
+.main button:hover {
+  color: darkred;
+}
 .main .menu {
   width: 70%;
   border-style: solid;
@@ -160,6 +163,9 @@ nav ul li a:hover {
 }
 .main .menu i {
   color: #000;
+}
+.main .menu button:hover {
+  color: darkred;
 }
 .main .du_an {
   display: flex;
