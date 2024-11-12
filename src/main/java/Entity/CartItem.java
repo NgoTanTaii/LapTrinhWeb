@@ -1,4 +1,5 @@
 package Entity;
+
 public class CartItem {
     private int cartItemId;    // ID của mục giỏ hàng
     private int cartId;        // ID giỏ hàng
@@ -8,11 +9,6 @@ public class CartItem {
     private double area;       // Diện tích bất động sản
     private String imageUrl;   // URL của hình ảnh bất động sản
     private int quantity;      // Số lượng của mục này trong giỏ hàng
-
-
-
-
-
 
 
     public int getCartItemId() {
@@ -86,6 +82,5 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-    public void setAddress(String address) {
-    }
+
 }

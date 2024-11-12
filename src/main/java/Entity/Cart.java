@@ -4,14 +4,14 @@ public class Cart {
     private int cartId;
     private int userId;
 
-    public Cart(int cartId, int userId) {
-        this.cartId = cartId;
-        this.userId = userId;
-    }
-
     public Cart() {
     }
 
+    public Cart(int userId) {
+        this.userId = userId;
+    }
+
+    // Getters and Setters
     public int getCartId() {
         return cartId;
     }

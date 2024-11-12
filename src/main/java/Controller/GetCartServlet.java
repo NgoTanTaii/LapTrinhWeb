@@ -74,7 +74,7 @@ public class GetCartServlet extends HttpServlet {
                     item.setPrice(rsItems.getDouble("price"));
                     item.setArea(rsItems.getDouble("area"));
                     item.setImageUrl(rsItems.getString("image_url"));
-                    item.setAddress(rsItems.getString("address"));
+
 
                     cartItems.add(item);
                 }
