@@ -379,6 +379,7 @@
             })
                 .then(response => response.json())
                 .then(data => {
+                    console.log("Response from saveCart:", data); // Add this to confirm response
                     if (data.success) {
                         console.log("Giỏ hàng đã được lưu vào cơ sở dữ liệu.");
                     } else {

@@ -23,7 +23,7 @@ public class LogoutServlet extends HttpServlet {
             Integer userId = (Integer) session.getAttribute("userId");
 
             if (userId != null) {
-                // Xóa giỏ hàng từ cơ sở dữ liệu dựa trên userId
+
                 try {
                     Connection connection = Database.getConnection(); // Lấy kết nối cơ sở dữ liệu
                     String deleteCartQuery = "DELETE FROM cart_item WHERE cart_id IN (SELECT cart_id FROM cart WHERE user_id = ?)";

@@ -1,5 +1,6 @@
 package Controller;
 
+import Entity.CartItem;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,87 +10,134 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
+import java.sql.*;
+import java.util.List;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-        protected void doPost(HttpServletRequest request, HttpServletResponse response)
-                throws ServletException, IOException {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
 
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
+        // Check the login status of the user
+        String loginStatus = checkLogin(username, password);
 
-            // Kiểm tra trạng thái của người dùng
-            String loginStatus = checkLogin(username, password);
+        HttpSession session = request.getSession();
 
-            HttpSession session = request.getSession();
-
-            if ("admin".equals(loginStatus)) {
-                // Nếu người dùng là admin, lưu vai trò và chuyển đến trang welcome.jsp
+        if ("admin".equals(loginStatus) || "active".equals(loginStatus)) {
+            // Get userId based on the username and save it in the session
+            int userId = getUserIdByUsername(username);
+            if (userId != -1) {
+                session.setAttribute("userId", userId); // Store userId in the session
                 session.setAttribute("username", username);
-                session.setAttribute("role", "admin"); // Vai trò admin
-                response.sendRedirect("welcome");
-            } else if ("active".equals(loginStatus)) {
-                // Nếu người dùng là user, lưu vai trò và chuyển đến trang welcome.jsp
-                session.setAttribute("username", username);
-                session.setAttribute("role", "user"); // Vai trò người dùng
-                response.sendRedirect("welcome");
-            } else if ("inactive".equals(loginStatus)) {
-                // Nếu tài khoản chưa được kích hoạt
-                response.setContentType("text/html");
-                PrintWriter out = response.getWriter();
-                out.println("<h3>Tài khoản của bạn chưa được kích hoạt. Vui lòng kiểm tra email để xác nhận tài khoản.</h3>");
-                request.getRequestDispatcher("login.jsp").include(request, response);
-            } else {
-                // Nếu đăng nhập thất bại
-                response.setContentType("text/html");
-                PrintWriter out = response.getWriter();
-                out.println("<h3>Login Failed. Invalid Username or Password.</h3>");
-                request.getRequestDispatcher("login.jsp").include(request, response);
-            }
-        }
+                session.setAttribute("role", loginStatus.equals("admin") ? "admin" : "user");
 
-        // Kiểm tra thông tin đăng nhập và trạng thái tài khoản
-        private String checkLogin(String username, String password) {
-            String status = null;
-            String url = "jdbc:mysql://localhost:3306/webbds"; // Đảm bảo thay thế đúng tên cơ sở dữ liệu của bạn
-            String dbUser = "root";
-            String dbPassword = "123456";
-
-            try (Connection conn = DriverManager.getConnection(url, dbUser, dbPassword)) {
-                // Truy vấn cơ sở dữ liệu
-                String sql = "SELECT role, status FROM users WHERE username = ? AND password = ?";
-                PreparedStatement stmt = conn.prepareStatement(sql);
-                stmt.setString(1, username);
-                stmt.setString(2, password);
-
-                ResultSet rs = stmt.executeQuery();
-
-                if (rs.next()) {
-                    String role = rs.getString("role");
-                    String accountStatus = rs.getString("status");
-
-                    // Kiểm tra vai trò và trạng thái tài khoản
-                    if ("admin".equals(role)) {
-                        status = "admin";
-                    } else if ("active".equals(accountStatus)) {
-                        status = "active";
-                    } else if ("inactive".equals(accountStatus)) {
-                        status = "inactive";
-                    }
+                // Check for cart in session
+                List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+                if (cart != null && !cart.isEmpty()) {
+                    // Transfer cart items to the database
+                    saveCartToDatabase(userId, cart);
+                    // Clear cart from session
+                    session.removeAttribute("cart");
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
 
-            return status;
+                response.sendRedirect("welcome");
+            } else {
+                response.getWriter().println("Error: User ID not found.");
+            }
+        } else if ("inactive".equals(loginStatus)) {
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
+            out.println("<h3>Your account is not yet activated. Please check your email to activate your account.</h3>");
+            request.getRequestDispatcher("login.jsp").include(request, response);
+        } else {
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
+            out.println("<h3>Login Failed. Invalid Username or Password.</h3>");
+            request.getRequestDispatcher("login.jsp").include(request, response);
         }
     }
 
+    // Save the cart items to the database for a specific user
+    private void saveCartToDatabase(int userId, List<CartItem> cart) {
+        String url = "jdbc:mysql://localhost:3306/webbds";
+        String dbUser = "root";
+        String dbPassword = "123456";
+
+        String insertCartItemSql = "INSERT INTO CartItems (user_id, cart_item_id, property_id, title, price, area, image_url, quantity) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection connection = DriverManager.getConnection(url, dbUser, dbPassword);
+             PreparedStatement statement = connection.prepareStatement(insertCartItemSql)) {
+
+            for (CartItem item : cart) {
+                statement.setInt(1, userId);
+                statement.setInt(2, item.getCartItemId());
+                statement.setInt(3, item.getPropertyId());
+                statement.setString(4, item.getTitle());
+                statement.setDouble(5, item.getPrice());
+                statement.setDouble(6, item.getArea());
+                statement.setString(7, item.getImageUrl());
+                statement.setInt(8, item.getQuantity());
+                statement.addBatch();
+            }
+
+            statement.executeBatch(); // Execute all insertions as a batch
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle SQL exception
+        }
+    }
+
+    // Get userId by username
+    private int getUserIdByUsername(String username) {
+        String sql = "SELECT id FROM users WHERE username = ?";
+        String url = "jdbc:mysql://localhost:3306/webbds";
+        String dbUser = "root";
+        String dbPassword = "123456";
+
+        try (Connection conn = DriverManager.getConnection(url, dbUser, dbPassword);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    // Existing checkLogin method
+    private String checkLogin(String username, String password) {
+        String status = null;
+        String url = "jdbc:mysql://localhost:3306/webbds";
+        String dbUser = "root";
+        String dbPassword = "123456";
+
+        try (Connection conn = DriverManager.getConnection(url, dbUser, dbPassword)) {
+            String sql = "SELECT role, status FROM users WHERE username = ? AND password = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                String role = rs.getString("role");
+                String accountStatus = rs.getString("status");
+                if ("admin".equals(role)) {
+                    status = "admin";
+                } else if ("active".equals(accountStatus)) {
+                    status = "active";
+                } else if ("inactive".equals(accountStatus)) {
+                    status = "inactive";
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return status;
+    }
+}

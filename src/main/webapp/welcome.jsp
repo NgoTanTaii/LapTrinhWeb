@@ -32,14 +32,15 @@
         </div>
 
         <%
-            // Kiểm tra xem người dùng đã đăng nhập chưa bằng cách xác minh session
-            boolean isLoggedIn = session.getAttribute("username") != null;
+            // Get userId from session to retrieve the cart
+            Integer userId = (Integer) session.getAttribute("userId");
             String username = (String) session.getAttribute("username");
+            boolean isLoggedIn = userId != null;
         %>
 
         <div class="header-right" style="margin-top: 10px">
             <% if (isLoggedIn) { %>
-            <!-- Hiển thị thông tin tài khoản nếu người dùng đã đăng nhập -->
+            <!-- Display user account information -->
             <a href="account.jsp" class="btn">
                 <h3 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px;">
                     Hello, <%= username %>
@@ -49,9 +50,8 @@
             <a href="javascript:void(0)" id="logoutButton" class="btn">
                 <h3>Đăng xuất</h3>
             </a>
-
             <% } else { %>
-            <!-- Tùy chọn Đăng nhập và Đăng ký nếu người dùng chưa đăng nhập -->
+            <!-- Display login and registration options if not logged in -->
             <a href="login.jsp" class="btn">
                 <h3>Đăng nhập</h3>
             </a>
@@ -60,7 +60,7 @@
             </a>
             <% } %>
 
-            <!-- Nút Đăng tin (luôn hiển thị cho cả người dùng đã đăng nhập và chưa đăng nhập) -->
+            <!-- "Post Status" button, visible to both logged-in and non-logged-in users -->
             <a href="post-status.html" class="btn">
                 <h3>Đăng tin</h3>
             </a>
@@ -237,8 +237,6 @@
             }
         %>
     </div>
-
-    <!-- Nút xem thêm và ẩn bớt -->
     <div class="view-more">
         <a href="#" id="toggleButton">Xem thêm</a>
     </div>
@@ -835,7 +833,7 @@
         if (existingProductIndex !== -1) {
             alert("Bất động sản này đã được quan tâm!"); // Notify if product is already in cart
         } else {
-            const product = { id, title, price: parseFloat(price), area, imageUrl, address, quantity: 1 };
+            const product = {id, title, price: parseFloat(price), area, imageUrl, address, quantity: 1};
             cartItems.push(product); // Add product to cart
             updateSessionStorage();  // Update sessionStorage
             updateCartDisplay();     // Update cart UI
@@ -850,6 +848,7 @@
     function updateSessionStorage() {
         sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
     }
+
     function goToCart() {
         window.location.href = 'cart.jsp'; // Chuyển hướng đến trang giỏ hàng
     }
@@ -895,12 +894,13 @@
 
     // Save cart to the database via AJAX
     function saveCartToDatabase() {
-        const userId = sessionStorage.getItem("userId");
+        const userId = "<%= userId %>";
+        sessionStorage.setItem("userId", userId);
         if (userId) {
             fetch('/saveCart', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId, cartItems })
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({userId, cartItems})
             })
                 .then(response => response.json())
                 .then(data => {
@@ -922,8 +922,8 @@
         if (userId) {
             fetch('/logout', {
                 method: 'POST',
-                body: JSON.stringify({ userId }),
-                headers: { 'Content-Type': 'application/json' }
+                body: JSON.stringify({userId}),
+                headers: {'Content-Type': 'application/json'}
             })
                 .then(response => {
                     if (response.ok) {

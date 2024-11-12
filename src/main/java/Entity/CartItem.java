@@ -1,5 +1,4 @@
 package Entity;
-
 public class CartItem {
     private int cartItemId;    // ID của mục giỏ hàng
     private int cartId;        // ID giỏ hàng
@@ -10,7 +9,12 @@ public class CartItem {
     private String imageUrl;   // URL của hình ảnh bất động sản
     private int quantity;      // Số lượng của mục này trong giỏ hàng
 
-    // Getter và Setter cho cartItemId
+
+
+
+
+
+
     public int getCartItemId() {
         return cartItemId;
     }

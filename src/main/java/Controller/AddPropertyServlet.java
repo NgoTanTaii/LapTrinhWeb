@@ -49,8 +49,17 @@ public class AddPropertyServlet extends HttpServlet {
         property.setDescription(description);
         property.setType(type);
         property.setStatus(status);
+//      logged in
 
 
         propertyDAO.createProperty(property);
+        // chuwa log
+//        HttpSession session = request.getSession();
+//        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+//        if (cart == null) {
+//            cart = new ArrayList<>();
+//            session.setAttribute("cart", cart);
+//        }
+//        cart.add(item);
     }
 }
