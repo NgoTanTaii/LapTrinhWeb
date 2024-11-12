@@ -253,11 +253,12 @@ nav ul li a:hover {
 .main .du_an .du_an_7 .text {
   margin-left: 20px;
 }
-.main .du_an .button {
-  width: 100px;
-  height: 20px;
+.main .du_an button {
+  font-size: 20px;
   margin-top: 20px;
   margin-bottom: 20px;
+  width: 200px;
+  height: 50px;
 }
 .footer {
   background-color: #f8f8f8;

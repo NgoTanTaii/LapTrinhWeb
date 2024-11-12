@@ -271,14 +271,20 @@ nav ul li a:hover {
   border-style: solid;
   border-color: #ccc;
   width: 350px;
-  height: 400px;
+  height: 350px;
 }
 .main .tintuc .main2 .bigtext1 {
   font-size: 20px;
   margin-left: 10px;
 }
-.main .tintuc .main2 .normaltext1 {
+.main .tintuc .main2 a {
+  text-decoration: none;
+  color: #000;
   margin-left: 10px;
+}
+.main .tintuc .main2 a:hover {
+  color: darkred;
+  text-decoration: underline;
 }
 .main button {
   font-size: 20px;
