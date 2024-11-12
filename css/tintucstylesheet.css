@@ -168,6 +168,14 @@ nav ul li a:hover {
   flex-direction: row;
   align-items: center;
 }
+.main .timkiem .Home a {
+  color: #000;
+  text-decoration: none;
+}
+.main .timkiem .Home a:hover {
+  color: darkred;
+  text-decoration: underline;
+}
 .main .timkiem .search {
   display: flex;
   flex-direction: row;
@@ -198,9 +206,15 @@ nav ul li a:hover {
   flex-direction: column;
   margin-left: 20px;
 }
-.main .tintuc .main1 .tintuc1 .text .bigtext {
+.main .tintuc .main1 .tintuc1 .text a {
+  text-decoration: none;
+  color: #000;
   font-size: 25px;
   margin-top: 40px;
+}
+.main .tintuc .main1 .tintuc1 .text a:hover {
+  color: darkred;
+  text-decoration: underline;
 }
 .main .tintuc .main1 .tintuc1 .text .normaltext {
   color: #ccc;
@@ -218,9 +232,15 @@ nav ul li a:hover {
   flex-direction: column;
   margin-left: 20px;
 }
-.main .tintuc .main1 .tintuc2 .text .bigtext {
+.main .tintuc .main1 .tintuc2 .text a {
+  text-decoration: none;
+  color: #000;
   font-size: 25px;
   margin-top: 40px;
+}
+.main .tintuc .main1 .tintuc2 .text a:hover {
+  color: darkred;
+  text-decoration: underline;
 }
 .main .tintuc .main1 .tintuc2 .text .normaltext {
   color: #ccc;
@@ -238,9 +258,15 @@ nav ul li a:hover {
   flex-direction: column;
   margin-left: 20px;
 }
-.main .tintuc .main1 .tintuc3 .text .bigtext {
+.main .tintuc .main1 .tintuc3 .text a {
+  text-decoration: none;
+  color: #000;
   font-size: 25px;
   margin-top: 40px;
+}
+.main .tintuc .main1 .tintuc3 .text a:hover {
+  color: darkred;
+  text-decoration: underline;
 }
 .main .tintuc .main1 .tintuc3 .text .normaltext {
   color: #ccc;
@@ -258,9 +284,15 @@ nav ul li a:hover {
   flex-direction: column;
   margin-left: 20px;
 }
-.main .tintuc .main1 .tintuc4 .text .bigtext {
+.main .tintuc .main1 .tintuc4 .text a {
+  text-decoration: none;
+  color: #000;
   font-size: 25px;
   margin-top: 40px;
+}
+.main .tintuc .main1 .tintuc4 .text a:hover {
+  color: darkred;
+  text-decoration: underline;
 }
 .main .tintuc .main1 .tintuc4 .text .normaltext {
   color: #ccc;
@@ -292,6 +324,9 @@ nav ul li a:hover {
   margin-bottom: 20px;
   width: 200px;
   height: 50px;
+}
+.main button:hover {
+  color: darkred;
 }
 .footer {
   background-color: #f8f8f8;
