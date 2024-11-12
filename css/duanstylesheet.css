@@ -179,7 +179,16 @@ nav ul li a:hover {
   margin-bottom: 20px;
 }
 .main .du_an .du_an_1 .text {
+  margin-top: 10px;
   margin-left: 20px;
+}
+.main .du_an .du_an_1 .text a {
+  text-decoration: none;
+  color: #000;
+}
+.main .du_an .du_an_1 .text a:hover {
+  text-decoration: underline;
+  color: darkred;
 }
 .main .du_an .du_an_2 {
   display: flex;
@@ -191,7 +200,16 @@ nav ul li a:hover {
   margin-bottom: 20px;
 }
 .main .du_an .du_an_2 .text {
+  margin-top: 10px;
   margin-left: 20px;
+}
+.main .du_an .du_an_2 .text a {
+  text-decoration: none;
+  color: #000;
+}
+.main .du_an .du_an_2 .text a:hover {
+  text-decoration: underline;
+  color: darkred;
 }
 .main .du_an .du_an_3 {
   display: flex;
@@ -203,7 +221,16 @@ nav ul li a:hover {
   margin-bottom: 20px;
 }
 .main .du_an .du_an_3 .text {
+  margin-top: 10px;
   margin-left: 20px;
+}
+.main .du_an .du_an_3 .text a {
+  text-decoration: none;
+  color: #000;
+}
+.main .du_an .du_an_3 .text a:hover {
+  text-decoration: underline;
+  color: darkred;
 }
 .main .du_an .du_an_4 {
   display: flex;
@@ -215,7 +242,16 @@ nav ul li a:hover {
   margin-bottom: 20px;
 }
 .main .du_an .du_an_4 .text {
+  margin-top: 10px;
   margin-left: 20px;
+}
+.main .du_an .du_an_4 .text a {
+  text-decoration: none;
+  color: #000;
+}
+.main .du_an .du_an_4 .text a:hover {
+  text-decoration: underline;
+  color: darkred;
 }
 .main .du_an .du_an_5 {
   display: flex;
@@ -227,7 +263,16 @@ nav ul li a:hover {
   margin-bottom: 20px;
 }
 .main .du_an .du_an_5 .text {
+  margin-top: 10px;
   margin-left: 20px;
+}
+.main .du_an .du_an_5 .text a {
+  text-decoration: none;
+  color: #000;
+}
+.main .du_an .du_an_5 .text a:hover {
+  text-decoration: underline;
+  color: darkred;
 }
 .main .du_an .du_an_6 {
   display: flex;
@@ -239,7 +284,16 @@ nav ul li a:hover {
   margin-bottom: 20px;
 }
 .main .du_an .du_an_6 .text {
+  margin-top: 10px;
   margin-left: 20px;
+}
+.main .du_an .du_an_6 .text a {
+  text-decoration: none;
+  color: #000;
+}
+.main .du_an .du_an_6 .text a:hover {
+  text-decoration: underline;
+  color: darkred;
 }
 .main .du_an .du_an_7 {
   display: flex;
@@ -251,7 +305,16 @@ nav ul li a:hover {
   margin-bottom: 20px;
 }
 .main .du_an .du_an_7 .text {
+  margin-top: 10px;
   margin-left: 20px;
+}
+.main .du_an .du_an_7 .text a {
+  text-decoration: none;
+  color: #000;
+}
+.main .du_an .du_an_7 .text a:hover {
+  text-decoration: underline;
+  color: darkred;
 }
 .main .du_an button {
   font-size: 20px;
