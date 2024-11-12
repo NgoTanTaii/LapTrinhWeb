@@ -21,19 +21,49 @@ public class UserDAO {
     }
 
     // Phương thức xóa người dùng
-    public void deleteUser(int userId) {
-        String sql = "DELETE FROM users WHERE id = ?";
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, userId);
-            stmt.executeUpdate();
+    public boolean deleteUser(int userId) {
+        String deleteCartItemsSql = "DELETE FROM cartitems WHERE user_id = ?";
+        String deleteCartSql = "DELETE FROM cart WHERE user_id = ?";
+        String deleteUserSql = "DELETE FROM users WHERE id = ?";
+
+        try (Connection conn = getConnection()) {
+            conn.setAutoCommit(false); // Start transaction
+
+            // Delete cart items
+            try (PreparedStatement stmt = conn.prepareStatement(deleteCartItemsSql)) {
+                stmt.setInt(1, userId);
+                stmt.executeUpdate();
+            }
+
+            // Delete cart
+            try (PreparedStatement stmt = conn.prepareStatement(deleteCartSql)) {
+                stmt.setInt(1, userId);
+                stmt.executeUpdate();
+            }
+
+            // Delete user
+            try (PreparedStatement stmt = conn.prepareStatement(deleteUserSql)) {
+                stmt.setInt(1, userId);
+                stmt.executeUpdate();
+            }
+
+            conn.commit(); // Commit transaction
+            System.out.println("User with ID " + userId + " and related data was successfully deleted.");
+            return true;
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            // Rollback transaction in case of error
+            try {
+                getConnection().rollback();
+            } catch (SQLException rollbackException) {
+                rollbackException.printStackTrace();
+            }
+            System.err.println("Error while deleting user and related data: " + e.getMessage());
+            return false;
         }
     }
 
 
-    // Phương thức thêm người dùng
     public void addUser(User user) {
         String sql = "INSERT INTO users (username, email, password, role, status, token) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -119,4 +149,37 @@ public class UserDAO {
         }
         return null;
     }
+
+
+    // Check if a user exists by Google ID
+    public boolean checkUserExists(String userId) {
+        String sql = "SELECT COUNT(*) FROM users WHERE google_id = ?";
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next() && rs.getInt(1) > 0) {
+                return true; // User exists
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false; // User does not exist
+    }
+
+    // Add a new user to the database
+    public void addUser(String userId, String name, String email) {
+        String sql = "INSERT INTO users (google_id, name, email, status) VALUES (?, ?, ?, 'active')";
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, userId);
+            stmt.setString(2, name);
+            stmt.setString(3, email);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
+
+

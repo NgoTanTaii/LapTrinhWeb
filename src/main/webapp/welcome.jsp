@@ -844,6 +844,34 @@
         }
     }
 
+    // Function to send cart data to the server
+    function saveCartToDatabase() {
+        const userId = sessionStorage.getItem('userId');
+        const cartId = sessionStorage.getItem('cartId');
+
+        if (userId && cartId) {
+            // Send cart items to the server using AJAX
+            fetch('/saveCart', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    userId,
+                    cartId,
+                    cartItems
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log("Giỏ hàng đã được lưu vào cơ sở dữ liệu.");
+                    } else {
+                        console.log("Lỗi khi lưu giỏ hàng.");
+                    }
+                })
+                .catch(error => console.error("Có lỗi xảy ra:", error));
+        }
+    }
+
     // Update sessionStorage with new cart
     function updateSessionStorage() {
         sessionStorage.setItem('cartItems', JSON.stringify(cartItems));

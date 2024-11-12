@@ -15,34 +15,22 @@ import java.sql.SQLException;
 
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
+        @Override
+        protected void doPost(HttpServletRequest request, HttpServletResponse response)
+                throws ServletException, IOException {
 
-        if (session != null) {
-            Integer userId = (Integer) session.getAttribute("userId");
+            HttpSession session = request.getSession(false);
 
-            if (userId != null) {
+            if (session != null) {
+                // Remove cartId and userId from the session
+                session.removeAttribute("cartId");
+                session.removeAttribute("userId");
 
-                try {
-                    Connection connection = Database.getConnection(); // Lấy kết nối cơ sở dữ liệu
-                    String deleteCartQuery = "DELETE FROM cart_item WHERE cart_id IN (SELECT cart_id FROM cart WHERE user_id = ?)";
-                    PreparedStatement statement = connection.prepareStatement(deleteCartQuery);
-                    statement.setInt(1, userId);
-                    statement.executeUpdate();
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    response.getWriter().write("Có lỗi xảy ra khi xóa giỏ hàng.");
-                    return;
-                }
+                // Invalidate the session
+                session.invalidate();
             }
 
-            // Hủy session
-            session.invalidate();
+            // Redirect to the home page or login page
+            response.sendRedirect("homes");
         }
-
-        // Chuyển hướng về trang "homes" sau khi đăng xuất
-        response.sendRedirect("homes"); // Trang đăng nhập hoặc trang bạn muốn chuyển hướng tới
-    }
 }

@@ -66,7 +66,7 @@ public class LoginServlet extends HttpServlet {
         if (sessionCartItems != null && !sessionCartItems.isEmpty()) {
             try {
                 CartItemDAO cartItemDAO = new CartItemDAO();
-                List<CartItem> existingCartItems = cartItemDAO.getCartItemsByUserId(userId);
+                List<CartItem> existingCartItems = cartItemDAO.getCartItemsByCartId(userId);
 
                 // Loop through session cart items and save or update in DB
                 for (CartItem sessionItem : sessionCartItems) {

@@ -188,6 +188,7 @@
         <%
             boolean isLoggedIn = session.getAttribute("username") != null;
             String username = (String) session.getAttribute("username");
+            Integer userId = (Integer) session.getAttribute("userId");
         %>
 
         <div class="header-right" style="margin-top: 10px">
@@ -278,6 +279,8 @@
 </header>
 
 <body>
+
+
 <div class="main-content">
 
     <h1>Giỏ hàng bất động sản của bạn</h1>
@@ -287,11 +290,22 @@
     <button id="checkout-button" onclick="window.location.href='checkout.jsp'">Đặt lịch</button>
 </div>
 
+
+
+
+
+
 <script>
     let cartItems = JSON.parse(sessionStorage.getItem('cartItems')) || [];
+    const userId = <%= userId != null ? userId : "null" %>; // Get userId from session in JSP
 
     // Function to add items to the cart
     function addToFavorites(id, title, price, area, imageUrl, address) {
+        if (!userId) {
+            alert("Please log in to add items to your cart.");
+            return;
+        }
+
         const existingProductIndex = cartItems.findIndex(item => item.id === id);
 
         if (existingProductIndex !== -1) {
@@ -322,12 +336,12 @@
     function updateCartDisplay() {
         const cartList = document.getElementById('cart-items');
         const checkoutButton = document.getElementById('checkout-button');
-        cartList.innerHTML = ''; // Clear previous cart items
+        cartList.innerHTML = '';
 
         if (cartItems.length === 0) {
             cartList.innerHTML = '<li>Giỏ hàng của bạn đang trống.</li>';
-            checkoutButton.disabled = true; // Disable the checkout button when the cart is empty
-            checkoutButton.style.opacity = "0.5"; // Reduce opacity to show button is disabled
+            checkoutButton.disabled = true;
+            checkoutButton.style.opacity = "0.5";
             return;
         }
 
@@ -338,20 +352,19 @@
             const listItem = document.createElement('li');
             listItem.classList.add('cart-item');
             listItem.innerHTML = `
-            <div class="item-content">
-                <img src="${item.imageUrl}" alt="${item.title}" class="clickable-image">
-                <div class="item-info">
-                    <h4>${item.title}</h4>
-                    <p><i class="fas fa-map-marker-alt"></i> Địa chỉ: ${item.address}</p>
-                    <p class="area"><i class="fas fa-ruler-combined"></i> Diện tích: ${item.area} m²</p>
-                    <p class="price"><i class="fas fa-dollar-sign"></i> Giá: ${item.price.toLocaleString()} tỷ</p>
-                </div>
+        <div class="item-content">
+            <img src="${item.imageUrl}" alt="${item.title}" class="clickable-image">
+            <div class="item-info">
+                <h4>${item.title}</h4>
+                <p><i class="fas fa-map-marker-alt"></i> Địa chỉ: ${item.address}</p>
+                <p class="area"><i class="fas fa-ruler-combined"></i> Diện tích: ${item.area} m²</p>
+                <p class="price"><i class="fas fa-dollar-sign"></i> Giá: ${item.price.toLocaleString()} tỷ</p>
             </div>
-            <button class="remove-button" onclick="removeFromCart('${item.id}')">
-                <i class="fas fa-trash-alt"></i> Xóa
-            </button>
+        </div>
+        <button class="remove-button" onclick="removeFromCart('${item.id}')">
+            <i class="fas fa-trash-alt"></i> Xóa
+        </button>
         `;
-
             listItem.querySelector('.clickable-image').addEventListener('click', function (event) {
                 event.stopPropagation();
                 window.location.href = `property-detail.jsp?id=${item.id}`;
@@ -368,60 +381,55 @@
         updateCartDisplay();
     }
 
-    // Save the cart to the database via AJAX
+    // Save cart items to the database using AJAX
     function saveCartToDatabase() {
-        const userId = sessionStorage.getItem("userId");
-        if (userId) {
-            fetch('/saveCart', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId, cartItems })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log("Response from saveCart:", data); // Add this to confirm response
-                    if (data.success) {
-                        console.log("Giỏ hàng đã được lưu vào cơ sở dữ liệu.");
-                    } else {
-                        console.error("Lỗi khi lưu giỏ hàng.");
-                    }
-                })
-                .catch(error => console.error("Có lỗi xảy ra:", error));
+        const cartId = sessionStorage.getItem("cartId"); // You can also set a default cartId if it's not set.
+
+        if (!userId || !cartId) {
+            console.error("Missing userId or cartId. Cannot save cart to database.");
+            return;
         }
+
+        fetch('/saveCart', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                userId: parseInt(userId),  // Make sure userId is an integer
+                cartId: parseInt(cartId),  // Make sure cartId is an integer
+                cartItems: cartItems       // Send the entire array of cart items
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log("Items added to cart in the database.");
+                } else {
+                    console.error("Error adding items to cart:", data.message);
+                }
+            })
+            .catch(error => console.error("Error:", error));
     }
 
-    // Logout and clear cart
     function logout() {
-        sessionStorage.removeItem('cartItems'); // Remove cart from session
-        const userId = sessionStorage.getItem('userId');
+        sessionStorage.removeItem('cartItems');
 
-        if (userId) {
-            fetch('/logout', {
-                method: 'POST',
-                body: JSON.stringify({ userId }),
-                headers: { 'Content-Type': 'application/json' }
-            })
-                .then(response => {
-                    if (response.ok) {
-                        console.log("Giỏ hàng đã được xóa khỏi cơ sở dữ liệu.");
-                    } else {
-                        console.error("Không thể xóa giỏ hàng từ cơ sở dữ liệu.");
-                    }
-                })
-                .catch(error => console.error("Có lỗi xảy ra khi xóa giỏ hàng:", error));
-        }
+        fetch('/logout', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({userId})
+        })
+            .then(response => response.ok && console.log("Giỏ hàng đã được xóa khỏi cơ sở dữ liệu."))
+            .catch(error => console.error("Có lỗi xảy ra khi xóa giỏ hàng:", error));
 
-        // Redirect to the home page after logout
         window.location.href = 'homes';
     }
 
-    // Add event listener for logout button
     document.querySelector("#logoutButton").addEventListener("click", logout);
 
-    // Initial cart display
     updateCartDisplay();
 
 </script>
+
 <div class="footer">
     <div class="footer-top">
 

@@ -134,7 +134,7 @@
             </button>
             <div id="g_id_onload"
                  data-client_id="161137938230-6h6mbfajcfra9avc0762peh4556202hq.apps.googleusercontent.com"
-                 data-login_uri="http://localhost:8080/untitled4/loginWithGoogle">
+                 data-login_uri="http://localhost:8080/Batdongsan/loginWithGoogle">
             </div>
             <div class="g_id_signin" data-type="standard"></div>
         </div>
@@ -194,35 +194,36 @@
 
 
 <script>
-    // Cấu hình đăng nhập bằng Google
+    // Google Sign-In setup
     google.accounts.id.initialize({
         client_id: "161137938230-6h6mbfajcfra9avc0762peh4556202hq.apps.googleusercontent.com",
         callback: handleCredentialResponse
     });
 
+    // Handle the response from Google
     function handleCredentialResponse(response) {
         fetch('/loginWithGoogle', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             body: `credential=${response.credential}`
         })
-            .then(res => {
-                if (!res.ok) throw new Error('Authorization failed');
-                return res.text();
+            .then(res => res.text())
+            .then(data => {
+                console.log('Login successful', data);
+                window.location.href = "welcome"; // Redirect after successful login
             })
-            .then(data => console.log('Login successful:', data))
-            .catch(error => console.error(error));
+            .catch(error => console.error("Error:", error));
     }
 
-    // Hiển thị nút đăng nhập Google
+    // Render the Google Sign-In button
     google.accounts.id.renderButton(
         document.getElementById("g_id_onload"),
-        {theme: "outline", size: "large"}
+        { theme: "outline", size: "large" }
     );
 
-    // Hiển thị gợi ý đăng nhập một lần
     google.accounts.id.prompt();
 </script>
+
 
 </body>
 </html>

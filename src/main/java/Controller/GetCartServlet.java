@@ -67,7 +67,7 @@ public class GetCartServlet extends HttpServlet {
 
                 while (rsItems.next()) {
                     CartItem item = new CartItem();
-                    item.setCartItemId(rsItems.getInt("cart_item_id"));
+
                     item.setPropertyId(rsItems.getInt("property_id"));
                     item.setQuantity(rsItems.getInt("quantity"));
                     item.setTitle(rsItems.getString("title"));

@@ -1,25 +1,16 @@
 package Entity;
 
 public class CartItem {
-    private int cartItemId;    // ID của mục giỏ hàng
-    private int cartId;        // ID giỏ hàng
-    private int propertyId;    // ID bất động sản
-    private String title;      // Tiêu đề bất động sản
-    private double price;      // Giá bất động sản
-    private double area;       // Diện tích bất động sản
-    private String imageUrl;   // URL của hình ảnh bất động sản
-    private int quantity;      // Số lượng của mục này trong giỏ hàng
+    private int cartId;
+    private int userId;
+    private int propertyId;
+    private String title;
+    private double price;
+    private double area;
+    private String imageUrl;
+    private int quantity;
 
-
-    public int getCartItemId() {
-        return cartItemId;
-    }
-
-    public void setCartItemId(int cartItemId) {
-        this.cartItemId = cartItemId;
-    }
-
-    // Getter và Setter cho cartId
+    // Getters and setters for all fields
     public int getCartId() {
         return cartId;
     }
@@ -28,7 +19,14 @@ public class CartItem {
         this.cartId = cartId;
     }
 
-    // Getter và Setter cho propertyId
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     public int getPropertyId() {
         return propertyId;
     }
@@ -37,7 +35,6 @@ public class CartItem {
         this.propertyId = propertyId;
     }
 
-    // Getter và Setter cho title
     public String getTitle() {
         return title;
     }
@@ -46,7 +43,6 @@ public class CartItem {
         this.title = title;
     }
 
-    // Getter và Setter cho price
     public double getPrice() {
         return price;
     }
@@ -55,7 +51,6 @@ public class CartItem {
         this.price = price;
     }
 
-    // Getter và Setter cho area
     public double getArea() {
         return area;
     }
@@ -64,7 +59,6 @@ public class CartItem {
         this.area = area;
     }
 
-    // Getter và Setter cho imageUrl
     public String getImageUrl() {
         return imageUrl;
     }
@@ -73,7 +67,6 @@ public class CartItem {
         this.imageUrl = imageUrl;
     }
 
-    // Getter và Setter cho quantity
     public int getQuantity() {
         return quantity;
     }
@@ -81,6 +74,4 @@ public class CartItem {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-
-
 }

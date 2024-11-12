@@ -1,11 +1,11 @@
 package Controller;
 
+import Dao.UserDAO; // Assuming you have a UserDAO to handle database operations
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -42,21 +42,36 @@ public class LoginWithGoogleServlet extends HttpServlet {
         }
 
         try {
+            // Verify the ID token
             GoogleIdToken idToken = verifier.verify(idTokenString);
             if (idToken != null) {
                 GoogleIdToken.Payload payload = idToken.getPayload();
-                String userId = payload.getSubject();
+
+                // Get user details from Google
+                String userId = payload.getSubject();  // Google user ID (unique to the user)
                 String email = payload.getEmail();
                 String name = (String) payload.get("name");
 
-                // Lưu thông tin người dùng vào session
-                request.getSession().setAttribute("username", name);
+                // Check if the user already exists in the database
+                UserDAO userDAO = new UserDAO();
+                if (userDAO.checkUserExists(userId)) {
+                    // User exists, just log them in
+                    request.getSession().setAttribute("username", name);
+                    request.getSession().setAttribute("email", email);
+                    response.sendRedirect("welcome"); // Redirect to the welcome page
+                } else {
+                    // User does not exist, so create a new user
+                    userDAO.addUser(userId, name, email);
 
-                // Chuyển hướng đến trang welcome sau khi đăng nhập thành công
-                response.sendRedirect("http://localhost:8080/untitled4/welcome");
+                    // Store user info in session after adding to the database
+                    request.getSession().setAttribute("username", name);
+                    request.getSession().setAttribute("email", email);
 
+                    // Redirect to the welcome page
+                    response.sendRedirect("welcome");
+                }
             } else {
-                System.out.println("Invalid ID token.");
+                // Invalid ID token, return error
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid ID token.");
             }
         } catch (GeneralSecurityException | IOException e) {
