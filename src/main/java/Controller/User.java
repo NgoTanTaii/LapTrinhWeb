@@ -12,12 +12,13 @@ public class User {
     public User(String username, String email, String password, String role, String status) {
     }
 
+    public User(String username, String password, String email) {
+    }
+
     public void setStatus(String status) {
         this.status = status;
     }
 
-    public User(String username, String email, String role, String password) {
-    }
 
     public User() {
 

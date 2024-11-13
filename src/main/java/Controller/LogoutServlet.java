@@ -15,22 +15,21 @@ import java.sql.SQLException;
 
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
-        @Override
-        protected void doPost(HttpServletRequest request, HttpServletResponse response)
-                throws ServletException, IOException {
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-            HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(false);
 
-            if (session != null) {
-                // Remove cartId and userId from the session
-                session.removeAttribute("cartId");
-                session.removeAttribute("userId");
+        if (session != null) {
+            session.removeAttribute("cartId");
+            session.removeAttribute("userId");
 
-                // Invalidate the session
-                session.invalidate();
-            }
-
-            // Redirect to the home page or login page
-            response.sendRedirect("homes");
+            // Invalidate the session
+            session.invalidate();
         }
+
+        // Redirect to the home page or login page
+        response.sendRedirect("homes");
+    }
 }

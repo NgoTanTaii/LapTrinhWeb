@@ -1,6 +1,6 @@
 package Controller;
 
-import DBcontext.Database;
+import Dao.CartDAO;
 import Dao.CartItemDAO;
 import Entity.CartItem;
 import jakarta.servlet.ServletException;
@@ -9,67 +9,81 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.google.gson.JsonObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.logging.Logger;
 
 @WebServlet("/addToCart")
 public class AddToCartServlet extends HttpServlet {
+    private CartDAO cartDAO;
+    private CartItemDAO cartItemDAO;
+
+    @Override
+    public void init() {
+        cartDAO = new CartDAO();
+        cartItemDAO = new CartItemDAO();
+    }
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Parse JSON request
-        StringBuilder sb = new StringBuilder();
-        String line;
-        try (BufferedReader reader = request.getReader()) {
-            while ((line = reader.readLine()) != null) {
-                sb.append(line);
-            }
+        HttpSession session = request.getSession();
+        Integer userId = (Integer) session.getAttribute("userId");
+
+        if (userId == null) {
+            // User not logged in, redirect to login page with a message
+            session.setAttribute("message", "Vui lòng đăng nhập để thêm vào giỏ hàng.");
+            response.sendRedirect("login.jsp");
+            return;
         }
 
-        JSONObject jsonRequest = new JSONObject(sb.toString());
-        int userId = jsonRequest.getInt("userId");
-        int cartId = jsonRequest.getInt("cartId");
-        JSONArray cartItemsArray = jsonRequest.getJSONArray("cartItems");
+        String propertyIdStr = request.getParameter("propertyId");
+        String title = request.getParameter("title");
+        String priceStr = request.getParameter("price");
+        String areaStr = request.getParameter("area");
+        String imageUrl = request.getParameter("imageUrl");
+        String address = request.getParameter("address");
 
-        // Create CartItemDAO instance
-        CartItemDAO cartItemDAO = new CartItemDAO();
+        try {
+            int cartId = cartDAO.createCartIfNotExists(userId);
+            int propertyId = Integer.parseInt(propertyIdStr);
+            double price = Double.parseDouble(priceStr);
+            double area = Double.parseDouble(areaStr);
 
-        // Loop through the cart items array and save each item
-        for (int i = 0; i < cartItemsArray.length(); i++) {
-            JSONObject item = cartItemsArray.getJSONObject(i);
-            CartItem cartItem = new CartItem();
-            cartItem.setCartId(cartId);
-            cartItem.setUserId(userId);
-            cartItem.setPropertyId(item.getInt("id"));
-            cartItem.setTitle(item.getString("title"));
-            cartItem.setPrice(item.getDouble("price"));
-            cartItem.setArea(item.getDouble("area"));
-            cartItem.setImageUrl(item.getString("imageUrl"));
-            cartItem.setQuantity(item.getInt("quantity"));
-
-            try {
-                // Add cart item to the database
-                cartItemDAO.addCartItem(cartItem);
-            } catch (SQLException e) {
-                e.printStackTrace();
-                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            // Check if property exists
+            if (!cartItemDAO.checkPropertyExists(propertyId)) {
+                session.setAttribute("message", "Sản phẩm không tồn tại.");
+                response.sendRedirect(getRefererPage(request));  // Redirect to the referring page
                 return;
             }
-        }
 
-        // Return success response
-        response.setContentType("application/json");
-        PrintWriter out = response.getWriter();
-        out.print("{\"success\": true}");
-        out.flush();
+            // Check if the item already exists in the cart
+            boolean itemExists = cartItemDAO.checkIfItemExists(cartId, propertyId);
+
+            if (itemExists) {
+                int currentQuantity = cartItemDAO.getItemQuantity(cartId, propertyId);
+                cartItemDAO.updateCartItemQuantity(cartId, propertyId, currentQuantity + 1);
+                session.setAttribute("message", "Sản phẩm đã có trong giỏ hàng.");
+            } else {
+                // Add new item to the cart
+                CartItem cartItem = new CartItem(propertyId, title, price, area, imageUrl, cartId, 1, address);
+                cartItemDAO.addCartItem(cartId, cartItem);
+                session.setAttribute("message", "Sản phẩm đã được thêm vào giỏ hàng!");
+            }
+
+            // Redirect to the referring page (same page as before)
+            response.sendRedirect(getRefererPage(request));
+
+        } catch (SQLException | NumberFormatException e) {
+            e.printStackTrace();
+            session.setAttribute("message", "Lỗi khi thêm sản phẩm vào giỏ hàng: " + e.getMessage());
+            response.sendRedirect(getRefererPage(request));  // Redirect to the referring page
+        }
+    }
+
+    // Method to get the referring page (URL of the page where the request came from)
+    private String getRefererPage(HttpServletRequest request) {
+        String referer = request.getHeader("Referer");
+        return referer != null ? referer : "welcome"; // Default to welcome page if Referer header is not found
     }
 }
-
-

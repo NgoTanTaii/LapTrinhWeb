@@ -1,6 +1,7 @@
 package Controller;
 
 import DBcontext.Database;
+import Dao.CartDAO;
 import Dao.CartItemDAO;
 import Entity.CartItem;
 import jakarta.servlet.ServletException;
@@ -22,9 +23,7 @@ import java.util.List;
 public class LoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
@@ -42,14 +41,12 @@ public class LoginServlet extends HttpServlet {
                                        String username, String loginStatus) throws IOException {
         int userId = getUserIdByUsername(username);
         if (userId != -1) {
-            session.setAttribute("userId", userId);
-            session.setAttribute("username", username);
-            session.setAttribute("role", "admin".equals(loginStatus) ? "admin" : "user");
+            initializeSession(session, userId, username, loginStatus);
 
             try {
                 CartItemDAO cartItemDAO = new CartItemDAO();
-                int cartId = cartItemDAO.createCartIfNotExists(userId); // Ensure cart exists and get cartId
-                saveSessionCartToDatabase(session, userId, cartId); // Save session cart items to DB
+                int cartId = new CartDAO().createCartIfNotExists(userId); // Ensure cart exists and get cartId
+                synchronizeSessionCartWithDatabase(session, userId, cartId); // Sync session cart with DB
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -60,25 +57,29 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
-    // Method to save session cart items to database, linking them to user's cart
-    private void saveSessionCartToDatabase(HttpSession session, int userId, int cartId) {
+    private void initializeSession(HttpSession session, int userId, String username, String loginStatus) {
+        session.setAttribute("userId", userId);
+        session.setAttribute("username", username);
+        session.setAttribute("role", "admin".equals(loginStatus) ? "admin" : "user");
+    }
+
+    // Synchronize session cart items with the database cart
+    private void synchronizeSessionCartWithDatabase(HttpSession session, int userId, int cartId) {
         List<CartItem> sessionCartItems = (List<CartItem>) session.getAttribute("cart");
         if (sessionCartItems != null && !sessionCartItems.isEmpty()) {
             try {
                 CartItemDAO cartItemDAO = new CartItemDAO();
-                List<CartItem> existingCartItems = cartItemDAO.getCartItemsByCartId(userId);
+                List<CartItem> existingCartItems = cartItemDAO.getCartItemsByCartId(cartId);
 
-                // Loop through session cart items and save or update in DB
                 for (CartItem sessionItem : sessionCartItems) {
-                    boolean existsInCart = existingCartItems.stream()
+                    boolean itemExistsInCart = existingCartItems.stream()
                             .anyMatch(dbItem -> dbItem.getPropertyId() == sessionItem.getPropertyId());
 
-                    if (existsInCart) {
-                        // If item exists in the user's cart, update quantity
-                        cartItemDAO.updateCartItemQuantity(userId, sessionItem.getPropertyId(), sessionItem.getQuantity());
+                    if (itemExistsInCart) {
+                        cartItemDAO.updateCartItemQuantity(cartId, sessionItem.getPropertyId(), sessionItem.getQuantity());
                     } else {
-                        // Otherwise, add the item as a new entry in the cart
-                        cartItemDAO.addCartItem(userId, sessionItem);
+                        sessionItem.setCartId(cartId); // Set cartId for new item
+                        cartItemDAO.addCartItem(cartId, sessionItem);
                     }
                 }
                 session.removeAttribute("cart"); // Clear session cart after saving to DB
@@ -90,14 +91,13 @@ public class LoginServlet extends HttpServlet {
 
     private void handleFailedLogin(HttpServletResponse response, String loginStatus) throws IOException {
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-
-        if ("inactive".equals(loginStatus)) {
-            out.println("<h3>Your account is not yet activated. Please check your email to activate your account.</h3>");
-        } else {
-            out.println("<h3>Login Failed. Invalid Username or Password.</h3>");
+        try (PrintWriter out = response.getWriter()) {
+            if ("inactive".equals(loginStatus)) {
+                out.println("<h3>Your account is not yet activated. Please check your email to activate your account.</h3>");
+            } else {
+                out.println("<h3>Login Failed. Invalid Username or Password.</h3>");
+            }
         }
-        out.flush();
     }
 
     private int getUserIdByUsername(String username) {
@@ -117,22 +117,21 @@ public class LoginServlet extends HttpServlet {
 
     private String checkLogin(String username, String password) {
         String status = null;
-        try (Connection conn = Database.getConnection()) {
-            String sql = "SELECT role, status FROM users WHERE username = ? AND password = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setString(1, username);
-                stmt.setString(2, password);
-                ResultSet rs = stmt.executeQuery();
-                if (rs.next()) {
-                    String role = rs.getString("role");
-                    String accountStatus = rs.getString("status");
-                    if ("admin".equals(role)) {
-                        status = "admin";
-                    } else if ("active".equals(accountStatus)) {
-                        status = "active";
-                    } else if ("inactive".equals(accountStatus)) {
-                        status = "inactive";
-                    }
+        String sql = "SELECT role, status FROM users WHERE username = ? AND password = ?";
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                String role = rs.getString("role");
+                String accountStatus = rs.getString("status");
+                if ("admin".equals(role)) {
+                    status = "admin";
+                } else if ("active".equals(accountStatus)) {
+                    status = "active";
+                } else if ("inactive".equals(accountStatus)) {
+                    status = "inactive";
                 }
             }
         } catch (SQLException e) {

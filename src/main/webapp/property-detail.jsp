@@ -337,7 +337,7 @@
         </div>
     </a>
 
-    <!-- Menu Section -->
+
     <div class="menu">
         <div class="header-bottom" style="height:60px;margin-top: 0">
             <div class="store-name">
@@ -379,7 +379,6 @@
         out.println("<h2>Property not found</h2>");
     } else {
 %>
-
 
 <div class="container" style="max-width:80% ">
     <div class="property-detail">
@@ -425,20 +424,36 @@
         </p>
         <p style="color: darkred"><i class="fas fa-money-bill-wave"></i> <%= property.getPrice() %> tỷ</p>
         <p style="color: darkred"><i class="fas fa-ruler-combined"></i> <%= property.getArea() %> m²</p>
-        <p><i class="fas fa -info-circle"></i> <%= property.getDescription() %>
+        <p><i class="fas fa-info-circle"></i><%= property.getDescription() %>
         </p>
 
         </p>
-        <div class="heart-icon"
-             onclick="<% if (session.getAttribute("username") != null) { %>
-                     addToFavorites('<%= property.getId() %>', '<%= property.getTitle() %>', <%= property.getPrice() %>, <%= property.getArea() %>, '<%= property.getImageUrl() %>','<%= property.getAddress() %>');
-                 <% } else { %>
-                     alert('Vui lòng đăng nhập để thêm vào giỏ hàng.');
-                     window.location.href = 'login.jsp';
-                     <% } %>">
-            <img src="jpg/heartred.png" alt="Heart Icon" class="heart-image">
+        <%
+            String message = (String) session.getAttribute("message");
+            if (message != null) {
+        %>
+        <div class="alert alert-info" style="color: darkred;padding-top: 30px"><i class="fas fa-info-circle"></i>
+            <%= message %>
         </div>
+        <%
+                // Optionally remove the message after displaying it
+                session.removeAttribute("message");
+            }
+        %>
 
+        <form action="addToCart" method="post" style="display: inline;">
+            <input type="hidden" name="propertyId" value="<%= property.getId() %>">
+            <input type="hidden" name="title" value="<%= property.getTitle() %>">
+            <input type="hidden" name="price" value="<%= property.getPrice() %>">
+            <input type="hidden" name="area" value="<%= property.getArea() %>">
+            <input type="hidden" name="imageUrl" value="<%= property.getImageUrl() %>">
+            <input type="hidden" name="address" value="<%= property.getAddress() %>">
+
+            <!-- Heart icon as submit button -->
+            <button type="submit" class="heart-icon" style="border: none; background: transparent; padding: 0;">
+                <img src="jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </button>
+        </form>
 
     </div>
 
@@ -763,8 +778,8 @@
         %>
 
         <div class="more-products">
-            <button id="scrollLeftBtn1"> < </button>
-            <button id="scrollRightBtn1">️ > </button>
+            <button id="scrollLeftBtn1"> <</button>
+            <button id="scrollRightBtn1">️ ></button>
         </div>
     </div>
 </div>
@@ -883,8 +898,8 @@
         if (userId) {
             fetch('/logout', {
                 method: 'POST',
-                body: JSON.stringify({ userId }), // Send userId to delete cart from the database
-                headers: { 'Content-Type': 'application/json' }
+                body: JSON.stringify({userId}), // Send userId to delete cart from the database
+                headers: {'Content-Type': 'application/json'}
             })
                 .then(response => {
                     if (response.ok) {
@@ -953,18 +968,21 @@
     %>
     <div class="comment">
         <p>
-            <strong><%= comment.getUserName() != null ? comment.getUserName() : "Unknown User" %></strong>
+            <strong><%= comment.getUserName() != null ? comment.getUserName() : "Unknown User" %>
+            </strong>
             - <%= comment.getCommentDate() %>
                 <% if (canDelete) { %>
             <!-- Show delete button if the user is admin or the comment's author -->
         <form action="DeleteCommentServlet" method="post" style="display:inline;">
             <input type="hidden" name="commentId" value="<%= comment.getCommentId() %>">
             <input type="hidden" name="propertyId" value="<%= propertyIdParam %>">
-            <button type="submit" onclick="return confirm('Are you sure you want to delete this comment?');">Delete</button>
+            <button type="submit" onclick="return confirm('Are you sure you want to delete this comment?');">Delete
+            </button>
         </form>
         <% } %>
         </p>
-        <p><%= comment.getContent() %></p>
+        <p><%= comment.getContent() %>
+        </p>
     </div>
     <%
         }
@@ -973,7 +991,6 @@
     <p>Chưa có bình luận nào.</p>
     <% } %>
 </div>
-
 
 
 </div>

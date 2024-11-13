@@ -3,11 +3,13 @@ package Dao;
 import Controller.User;
 import DBcontext.ConnectDB;
 import DBcontext.Database;
+import Entity.CartItem;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO {
-    // Phương thức cập nhật quyền người dùng
     public void updateUserRole(int userId, String role) {
         String sql = "UPDATE users SET role = ? WHERE id = ?";
         try (Connection conn = getConnection();
@@ -64,7 +66,7 @@ public class UserDAO {
     }
 
 
-    public void addUser(User user) {
+    public User addUser(User user) {
         String sql = "INSERT INTO users (username, email, password, role, status, token) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             System.out.println("Inserting username: " + user.getUsername());
@@ -79,6 +81,7 @@ public class UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return user;
     }
 
 
@@ -180,6 +183,48 @@ public class UserDAO {
             e.printStackTrace();
         }
     }
+
+    // Method to get cart items for a user
+    public List<CartItem> getCartItemsByUsername(String username) {
+        String getUserIdSql = "SELECT id FROM users WHERE username = ?";
+        String getCartItemsSql = "SELECT ci.* FROM cartitems ci " +
+                "JOIN cart c ON ci.cart_id = c.id " +
+                "WHERE c.user_id = ?";
+
+        List<CartItem> cartItems = new ArrayList<>();
+        try (Connection conn = getConnection();
+             PreparedStatement getUserStmt = conn.prepareStatement(getUserIdSql)) {
+
+            // Step 1: Get user ID by username
+            getUserStmt.setString(1, username);
+            ResultSet userRs = getUserStmt.executeQuery();
+
+            if (userRs.next()) {
+                int userId = userRs.getInt("id");
+
+                // Step 2: Use user ID to retrieve cart items
+                try (PreparedStatement getCartItemsStmt = conn.prepareStatement(getCartItemsSql)) {
+                    getCartItemsStmt.setInt(1, userId);
+                    ResultSet rs = getCartItemsStmt.executeQuery();
+
+                    while (rs.next()) {
+                        CartItem item = new CartItem();
+                        item.setCartId(rs.getInt("cart_id"));
+                        item.setPropertyId(rs.getInt("property_id"));
+                        item.setQuantity(rs.getInt("quantity"));
+                        item.setPrice(rs.getDouble("price"));
+                        item.setArea(rs.getInt("area"));
+                        item.setImageUrl(rs.getString("image_url"));
+                        cartItems.add(item);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cartItems;
 }
+}
+
 
 

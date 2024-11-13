@@ -1,30 +1,29 @@
 package Entity;
 
 public class CartItem {
-    private int cartId;
-    private int userId;
     private int propertyId;
     private String title;
     private double price;
     private double area;
     private String imageUrl;
+    private int cartId;
     private int quantity;
+    private String address;
 
-    // Getters and setters for all fields
-    public int getCartId() {
-        return cartId;
-    }
-
-    public void setCartId(int cartId) {
+    // Constructor
+    public CartItem(int propertyId, String title, double price, double area, String imageUrl, int cartId, int quantity, String address) {
+        this.propertyId = propertyId;
+        this.title = title;
+        this.price = price;
+        this.area = area;
+        this.imageUrl = imageUrl;
         this.cartId = cartId;
+        this.quantity = quantity;
+        this.address = address;
     }
 
-    public int getUserId() {
-        return userId;
-    }
+    public CartItem() {
 
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public int getPropertyId() {
@@ -67,11 +66,27 @@ public class CartItem {
         this.imageUrl = imageUrl;
     }
 
+    public int getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
+    }
+
     public int getQuantity() {
         return quantity;
     }
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

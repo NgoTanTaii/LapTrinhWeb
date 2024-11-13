@@ -1,12 +1,17 @@
-<!DOCTYPE html>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html lang="vi">
 <head>
+    <%@ page import="java.util.List" %>
+    <%@ page import="Dao.CartItemDAO" %>
+    <%@ page import="Entity.CartItem" %>
+    <%@ page import="java.sql.SQLException" %>
+    <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+    <!DOCTYPE html>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Giỏ hàng của bạn</title>
     <link rel="stylesheet" href="css/bds.css">
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -82,83 +87,106 @@
             margin-bottom: 20px;
         }
 
-        .cart-item {
+        /* Container for cart items */
+        .container.mt-4 {
+            max-width: 1200px; /* Limit the width for larger screens */
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* List of cart items */
+        .list-group {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        /* Individual product item styling */
+        .list-group-item {
             display: flex;
             align-items: center;
             background-color: #fff;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 10px;
-            margin-bottom: 15px;
-            position: relative;
-            cursor: pointer; /* Con trỏ chuột sẽ thành dạng pointer khi hover */
-
-
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 15px;
+            transition: transform 0.3s ease-in-out;
         }
 
-        .cart-item {
-            display: flex;
-            align-items: center;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 10px;
-            margin-bottom: 15px;
-            position: relative;
+        /* On hover, slightly enlarge the product card */
+        .list-group-item:hover {
+            transform: scale(1.05);
         }
 
-        .item-content {
-            display: flex;
-            align-items: center;
-            flex: 1;
-        }
-
-        .cart-item img {
-            width: 200px;
-            height: 200px;
-            border-radius: 8px;
+        /* Styling for product image */
+        .list-group-item img {
+            width: 150px;  /* Larger image */
+            height: 150px;  /* Maintain aspect ratio */
             object-fit: cover;
-            margin-right: 15px;
+            border-radius: 8px;
+            margin-right: 20px;
         }
 
-        .item-info {
-            flex: 1;
+        /* Styling for the description part (title, price, etc.) */
+        .list-group-item div {
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
 
-        .remove-button {
-            background-color: transparent;
-            border: none;
-            color: #d9534f;
+        /* Title styling */
+        .list-group-item h5 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /* Address and area styling */
+        .list-group-item p {
+            margin: 5px 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Price styling */
+        .list-group-item .text-danger {
             font-size: 16px;
-            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Button to remove item */
+        .btn.btn-sm.btn-danger {
             margin-left: 10px;
+            background-color: #d9534f;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
         }
 
-        .remove-button:hover {
-            color: #a94442;
+        .btn.btn-sm.btn-danger:hover {
+            background-color: #a94442;
         }
 
-
+        /* Checkout button styling */
         #checkout-button {
             background-color: #5cb85c;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
+            color: white;
+            padding: 15px;
+            font-size: 18px;
             border-radius: 5px;
-            cursor: pointer;
-            display: block;
-            margin: 20px auto;
-            text-align: center;
+            border: none;
             width: 100%;
+            margin-top: 20px;
+            cursor: pointer;
+            text-align: center;
         }
 
         #checkout-button:hover {
             background-color: #4cae4c;
         }
+
         .cart-item .price, .cart-item .area {
             color: #d9534f; /* Màu đỏ */
             font-weight: bold;
@@ -166,6 +194,25 @@
 
     </style>
 </head>
+
+
+<%
+    Integer userId = (Integer) session.getAttribute("userId");
+    List<CartItem> cartItems = null;
+
+    if (userId != null) {
+        CartItemDAO cartItemDAO = new CartItemDAO();
+        try {
+            cartItems = cartItemDAO.getCartItemsByUserId(userId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+%>
+
+
+
+
 <header class="header">
     <div class="header-top" style="width: 100%; position: sticky; top: 0; z-index: 1000;">
         <div class="header-left">
@@ -188,7 +235,6 @@
         <%
             boolean isLoggedIn = session.getAttribute("username") != null;
             String username = (String) session.getAttribute("username");
-            Integer userId = (Integer) session.getAttribute("userId");
         %>
 
         <div class="header-right" style="margin-top: 10px">
@@ -199,17 +245,24 @@
                 </h3>
             </a>
 
-            <a href="javascript:void(0)" id="logoutButton" class="btn">
-                <h3>Đăng xuất</h3>
-            </a>
+            <form action="logout" method="post" style="display: inline;" onsubmit="return confirmLogout();">
+                <button type="submit" id="logoutButton" class="btn btn-danger">
+                    <h3 class="mb-0">Đăng xuất</h3>
+                </button>
+            </form>
+
+            <script>
+                function confirmLogout() {
+                    return confirm("Bạn có chắc chắn muốn đăng xuất?");
+                }
+            </script>
+
             <% } else { %>
             <a href="login.jsp" class="btn"><h3>Đăng nhập</h3></a>
             <a href="register.jsp" class="btn"><h3>Đăng ký</h3></a>
             <% } %>
             <a href="post-status.html" class="btn"><h3>Đăng tin</h3></a>
         </div>
-
-
 
 
     </div>
@@ -278,157 +331,54 @@
 
 </header>
 
+
 <body>
 
+<div class="container mt-4">
+    <h3 class="text-center mb-4">Giỏ hàng của bạn</h3>
 
-<div class="main-content">
+    <ul class="list-group">
+        <%
+            if (cartItems != null && !cartItems.isEmpty()) {
+                for (CartItem item : cartItems) {
+        %>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <!-- Image is wrapped in an anchor tag for redirection -->
+                <a href="property-detail.jsp?id=<%= item.getPropertyId() %>" style="cursor: pointer;">
+                    <img src="<%= item.getImageUrl() %>" alt="<%= item.getTitle() %>" class="img-thumbnail mr-3"
+                         style="width: 100px; height: 100px; object-fit: cover;">
+                </a>
 
-    <h1>Giỏ hàng bất động sản của bạn</h1>
-    <ul id="cart-items" class="cart-list">
+                <div>
+                    <h5 class="mb-1"><%= item.getTitle() %></h5>
+                    <p class="mb-1 text-muted"><i class="fas fa-map-marker-alt"></i> Địa chỉ: <%= item.getAddress() %></p>
+                    <p class="mb-1"><i class="fas fa-ruler-combined"></i> Diện tích: <strong><%= item.getArea() %> m²</strong></p>
+                    <p class="mb-0 text-danger"><i class="fas fa-dollar-sign"></i> Giá: <strong><%= item.getPrice() %> tỷ</strong></p>
+                </div>
+            </div>
 
+            <!-- Remove button (form to delete product) -->
+            <form action="removeItemFromCart" method="POST" style="display: inline;">
+                <input type="hidden" name="propertyId" value="<%= item.getPropertyId() %>">
+                <button type="submit" class="btn btn-sm btn-danger ml-3" onclick="return confirm('Are you sure you want to remove this item?')">
+                    <i class="fas fa-trash-alt"></i> Xóa
+                </button>
+            </form>
+        </li>
+        <%
+            }
+        } else {
+        %>
+        <li class="list-group-item text-center text-muted">Giỏ hàng của bạn đang trống.</li>
+        <% } %>
     </ul>
-    <button id="checkout-button" onclick="window.location.href='checkout.jsp'">Đặt lịch</button>
+
+    <button id="checkout-button" class="btn btn-success w-100 mt-3" onclick="window.location.href='checkout.jsp'">
+        Đặt lịch
+    </button>
 </div>
 
-
-
-
-
-
-<script>
-    let cartItems = JSON.parse(sessionStorage.getItem('cartItems')) || [];
-    const userId = <%= userId != null ? userId : "null" %>; // Get userId from session in JSP
-
-    // Function to add items to the cart
-    function addToFavorites(id, title, price, area, imageUrl, address) {
-        if (!userId) {
-            alert("Please log in to add items to your cart.");
-            return;
-        }
-
-        const existingProductIndex = cartItems.findIndex(item => item.id === id);
-
-        if (existingProductIndex !== -1) {
-            alert("Bất động sản này đã được quan tâm!");
-        } else {
-            const product = {
-                id,
-                title,
-                price: parseFloat(price),
-                area,
-                imageUrl,
-                address,
-                quantity: 1
-            };
-            cartItems.push(product);
-            updateSessionStorage();
-            updateCartDisplay();
-            saveCartToDatabase();
-        }
-    }
-
-    // Update sessionStorage with the cart items
-    function updateSessionStorage() {
-        sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
-    }
-
-    // Update the cart display in the mini cart
-    function updateCartDisplay() {
-        const cartList = document.getElementById('cart-items');
-        const checkoutButton = document.getElementById('checkout-button');
-        cartList.innerHTML = '';
-
-        if (cartItems.length === 0) {
-            cartList.innerHTML = '<li>Giỏ hàng của bạn đang trống.</li>';
-            checkoutButton.disabled = true;
-            checkoutButton.style.opacity = "0.5";
-            return;
-        }
-
-        checkoutButton.disabled = false;
-        checkoutButton.style.opacity = "1";
-
-        cartItems.forEach((item) => {
-            const listItem = document.createElement('li');
-            listItem.classList.add('cart-item');
-            listItem.innerHTML = `
-        <div class="item-content">
-            <img src="${item.imageUrl}" alt="${item.title}" class="clickable-image">
-            <div class="item-info">
-                <h4>${item.title}</h4>
-                <p><i class="fas fa-map-marker-alt"></i> Địa chỉ: ${item.address}</p>
-                <p class="area"><i class="fas fa-ruler-combined"></i> Diện tích: ${item.area} m²</p>
-                <p class="price"><i class="fas fa-dollar-sign"></i> Giá: ${item.price.toLocaleString()} tỷ</p>
-            </div>
-        </div>
-        <button class="remove-button" onclick="removeFromCart('${item.id}')">
-            <i class="fas fa-trash-alt"></i> Xóa
-        </button>
-        `;
-            listItem.querySelector('.clickable-image').addEventListener('click', function (event) {
-                event.stopPropagation();
-                window.location.href = `property-detail.jsp?id=${item.id}`;
-            });
-
-            cartList.appendChild(listItem);
-        });
-    }
-
-    // Remove item from the cart
-    function removeFromCart(id) {
-        cartItems = cartItems.filter(item => item.id !== id);
-        updateSessionStorage();
-        updateCartDisplay();
-    }
-
-    // Save cart items to the database using AJAX
-    function saveCartToDatabase() {
-        const cartId = sessionStorage.getItem("cartId"); // You can also set a default cartId if it's not set.
-
-        if (!userId || !cartId) {
-            console.error("Missing userId or cartId. Cannot save cart to database.");
-            return;
-        }
-
-        fetch('/saveCart', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                userId: parseInt(userId),  // Make sure userId is an integer
-                cartId: parseInt(cartId),  // Make sure cartId is an integer
-                cartItems: cartItems       // Send the entire array of cart items
-            })
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    console.log("Items added to cart in the database.");
-                } else {
-                    console.error("Error adding items to cart:", data.message);
-                }
-            })
-            .catch(error => console.error("Error:", error));
-    }
-
-    function logout() {
-        sessionStorage.removeItem('cartItems');
-
-        fetch('/logout', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({userId})
-        })
-            .then(response => response.ok && console.log("Giỏ hàng đã được xóa khỏi cơ sở dữ liệu."))
-            .catch(error => console.error("Có lỗi xảy ra khi xóa giỏ hàng:", error));
-
-        window.location.href = 'homes';
-    }
-
-    document.querySelector("#logoutButton").addEventListener("click", logout);
-
-    updateCartDisplay();
-
-</script>
 
 <div class="footer">
     <div class="footer-top">
@@ -486,9 +436,6 @@
     <div class="footer-bottom">
         <p>&copy; 2024 Công ty Bất Động Sản. Mọi quyền lợi thuộc về công ty.</p>
     </div>
-
-
 </div>
-
 </body>
 </html>
