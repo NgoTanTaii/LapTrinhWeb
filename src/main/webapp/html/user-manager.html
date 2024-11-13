@@ -138,8 +138,6 @@
             <li><a href="top-user-manager.html">Quản lý top 5 khách</a></li>
             <li><a href="top-employee-manager.html">Quản lý top 5 nhân viên</a></li>
             <li><a href="booking-manager.html">Quản lý đơn đặt hàng</a></li>
-
-
         </ul>
     </div>
 
@@ -162,6 +160,54 @@
                 <th>Thao tác</th>
             </tr>
             </thead>
+            <tbody>
+            <!-- Sample data goes here -->
+            <tr>
+                <td>1</td>
+                <td>Nguyễn Văn A</td>
+                <td>nguyenvana@example.com</td>
+                <td>
+                    <select class="role-select">
+                        <option value="Admin" selected>Admin</option>
+                        <option value="User">User</option>
+                    </select>
+                </td>
+                <td>
+                    <button class="update-button">Cập nhật</button>
+                    <button class="delete-button">Xóa</button>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Trần Thị B</td>
+                <td>tranthib@example.com</td>
+                <td>
+                    <select class="role-select">
+                        <option value="Admin">Admin</option>
+                        <option value="User" selected>User</option>
+                    </select>
+                </td>
+                <td>
+                    <button class="update-button">Cập nhật</button>
+                    <button class="delete-button">Xóa</button>
+                </td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Phan Văn C</td>
+                <td>phanvanc@example.com</td>
+                <td>
+                    <select class="role-select">
+                        <option value="Admin" selected>Admin</option>
+                        <option value="User">User</option>
+                    </select>
+                </td>
+                <td>
+                    <button class="update-button">Cập nhật</button>
+                    <button class="delete-button">Xóa</button>
+                </td>
+            </tr>
+            </tbody>
         </table>
     </div>
 </div>
@@ -170,40 +216,27 @@
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function () {
-        $('#example').DataTable({
-            "ajax": {
-                "url": "getUsers", // URL của servlet vừa tạo
-                "dataSrc": "demo"  // Trường JSON trả về từ servlet
-            },
-            "columns": [
-                {"data": "ID"},
-                {"data": "Tên Người Dùng"},
-                {"data": "Email"},
-                {
-                    "data": "Vai Trò",
-                    "render": function (data, type, row) {
-                        return `<select class="role-select">
-                                    <option value="Admin" ${data === 'Admin' ? 'selected' : ''}>Admin</option>
-                                    <option value="User" ${data === 'User' ? 'selected' : ''}>User</option>
-                                </select>`;
-                    }
-                },
-                {
-                    "data": null,
-                    "defaultContent": "<button class='update-button'>Cập nhật</button> <button class='delete-button'>Xóa</button>"
-                }
-            ]
+        var table = $('#example').DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true
         });
 
         // Event for Update and Delete Buttons
         $('#example tbody').on('click', 'button.update-button', function () {
             var data = $('#example').DataTable().row($(this).parents('tr')).data();
             var selectedRole = $(this).parents('tr').find('.role-select').val();
-            alert('Bạn đã chọn Cập nhật cho người dùng: ' + data['Tên Người Dùng'] + ' với vai trò: ' + selectedRole);
+            alert('Bạn đã chọn Cập nhật cho người dùng: ' + data[1] + ' với vai trò: ' + selectedRole);
             // Code xử lý cập nhật vai trò ở đây
         });
 
-
+        $('#example tbody').on('click', 'button.delete-button', function () {
+            var data = $('#example').DataTable().row($(this).parents('tr')).data();
+            if (confirm('Bạn có chắc chắn muốn xóa người dùng này không?')) {
+                alert('Đã xóa người dùng: ' + data[1]);
+                // Code xử lý xóa người dùng ở đây
+            }
+        });
     });
 </script>
 </body>
