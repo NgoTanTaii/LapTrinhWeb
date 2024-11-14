@@ -156,7 +156,7 @@ nav ul li a:hover {
   width: 70%;
   border-style: solid;
   border-color: #ccc;
-  background-color: gray;
+  background-color: #ccc;
   display: flex;
   flex-direction: row;
   gap: 30px;
@@ -329,9 +329,18 @@ nav ul li a:hover {
   width: 200px;
   height: 50px;
 }
+.main .tintuc {
+  width: 100%;
+  background-color: #ccc;
+  margin-top: 20px;
+}
+.main .tintuc p {
+  margin-left: 20px;
+}
 .main .tintuc a {
   color: #000;
   text-decoration: none;
+  margin-left: 20px;
 }
 .main .tintuc a:hover {
   color: darkred;
