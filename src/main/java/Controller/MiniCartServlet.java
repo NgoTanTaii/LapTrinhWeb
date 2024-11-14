@@ -1,6 +1,5 @@
 package Controller;
 
-import Dao.CartDAO;
 import Dao.CartItemDAO;
 import Entity.CartItem;
 import jakarta.servlet.ServletException;
@@ -11,8 +10,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
+import com.google.gson.Gson;
 
 @WebServlet("/getMiniCart")
 public class MiniCartServlet extends HttpServlet {
@@ -38,16 +39,35 @@ public class MiniCartServlet extends HttpServlet {
             List<CartItem> cartItems = cartItemDAO.getCartItemsByUserId(userId);
             int itemCount = cartItems.size(); // Count of items in the cart
 
-            // Set the cart items and item count as request attributes
-            request.setAttribute("cartItems", cartItems);
-            request.setAttribute("itemCount", itemCount);
+            // Tạo một đối tượng để chứa dữ liệu trả về
+            CartResponse cartResponse = new CartResponse(true, itemCount, cartItems);
 
-            // Forward the request to welcome.jsp, which will display the mini cart
-            request.getRequestDispatcher("/welcome").forward(request, response); // Forward to the page displaying the floating cart
+
+
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            PrintWriter out = response.getWriter();
+            out.print(new Gson().toJson(cartResponse));
+            out.flush();
 
         } catch (SQLException e) {
             e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error fetching cart items.");
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.setContentType("application/json");
+            response.getWriter().write("{\"success\": false, \"message\": \"Error fetching cart items.\"}");
+        }
+    }
+
+    // Class nội bộ để tổ chức phản hồi JSON
+    private static class CartResponse {
+        private boolean success;
+        private int itemCount;
+        private List<CartItem> cartItems;
+
+        public CartResponse(boolean success, int itemCount, List<CartItem> cartItems) {
+            this.success = success;
+            this.itemCount = itemCount;
+            this.cartItems = cartItems;
         }
     }
 }

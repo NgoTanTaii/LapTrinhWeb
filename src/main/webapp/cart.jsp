@@ -245,17 +245,14 @@
                 </h3>
             </a>
 
-            <form action="logout" method="post" style="display: inline;" onsubmit="return confirmLogout();">
-                <button type="submit" id="logoutButton" class="btn btn-danger">
-                    <h3 class="mb-0">Đăng xuất</h3>
-                </button>
-            </form>
+            <a href="javascript:void(0)" id="logoutButton" class="btn" onclick="document.getElementById('logoutForm').submit();">
+                <h3>Đăng xuất</h3>
+            </a>
 
-            <script>
-                function confirmLogout() {
-                    return confirm("Bạn có chắc chắn muốn đăng xuất?");
-                }
-            </script>
+            <!-- Hidden Form to Logout -->
+            <form id="logoutForm" action="logout" method="POST" style="display: none;">
+                <button type="submit" style="display: none;"></button> <!-- This button will not be visible -->
+            </form>
 
             <% } else { %>
             <a href="login.jsp" class="btn"><h3>Đăng nhập</h3></a>
