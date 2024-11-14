@@ -397,6 +397,9 @@ nav ul li a:hover {
   text-decoration: underline;
 }
 .main button {
+  color: darkred;
+  background-color: white;
+  border-color: red;
   font-size: 20px;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -404,7 +407,8 @@ nav ul li a:hover {
   height: 50px;
 }
 .main button:hover {
-  color: darkred;
+  background-color: red;
+  color: white;
 }
 .footer {
   background-color: #f8f8f8;

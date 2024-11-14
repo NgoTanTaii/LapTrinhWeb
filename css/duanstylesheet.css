@@ -323,11 +323,18 @@ nav ul li a:hover {
   color: darkred;
 }
 .main .du_an button {
+  color: darkred;
+  background-color: white;
+  border-color: red;
   font-size: 20px;
   margin-top: 20px;
   margin-bottom: 20px;
-  width: 200px;
-  height: 50px;
+  width: 300px;
+  height: 200px;
+}
+.main button:hover {
+  background-color: red;
+  color: white;
 }
 .main .tintuc {
   width: 100%;
