@@ -329,6 +329,14 @@ nav ul li a:hover {
   width: 200px;
   height: 50px;
 }
+.main .tintuc a {
+  color: #000;
+  text-decoration: none;
+}
+.main .tintuc a:hover {
+  color: darkred;
+  text-decoration: underline;
+}
 .footer {
   background-color: #f8f8f8;
   padding: 20px 0;
