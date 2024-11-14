@@ -336,7 +336,8 @@
 
     <ul class="list-group">
         <%
-            if (cartItems != null && !cartItems.isEmpty()) {
+            boolean hasItemsInCart = cartItems != null && !cartItems.isEmpty();
+            if (hasItemsInCart) {
                 for (CartItem item : cartItems) {
         %>
         <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -358,7 +359,7 @@
             <!-- Remove button (form to delete product) -->
             <form action="removeItemFromCart" method="POST" style="display: inline;">
                 <input type="hidden" name="propertyId" value="<%= item.getPropertyId() %>">
-                <button type="submit" class="btn btn-sm btn-danger ml-3" onclick="return confirm('Are you sure you want to remove this item?')">
+                <button type="submit" class="btn btn-sm btn-danger ml-3" onclick="return confirm(' Bạn có chắc chắn muốn xóa bất động sản này không?')">
                     <i class="fas fa-trash-alt"></i> Xóa
                 </button>
             </form>
@@ -371,10 +372,36 @@
         <% } %>
     </ul>
 
-    <button id="checkout-button" class="btn btn-success w-100 mt-3" onclick="window.location.href='checkout.jsp'">
+    <button id="checkout-button" class="btn btn-success w-100 mt-3" onclick="checkCartBeforeCheckout()">
         Đặt lịch
     </button>
 </div>
+
+<script>
+    function checkCartBeforeCheckout() {
+        // Check if there are items in the cart by checking the cart content message
+        const emptyCartMessage = document.querySelector('.list-group-item.text-muted');
+
+        if (emptyCartMessage) {
+            // Cart is empty
+            alert('Giỏ hàng của bạn hiện tại không có sản phẩm. Vui lòng thêm sản phẩm vào giỏ hàng để tiếp tục.');
+        } else {
+            // Proceed to checkout if there are items
+            window.location.href = 'checkout.jsp';
+        }
+    }
+
+    // Disable the checkout button initially if the cart is empty
+    window.onload = function() {
+        const checkoutButton = document.getElementById('checkout-button');
+        const emptyCartMessage = document.querySelector('.list-group-item.text-muted');
+
+        if (emptyCartMessage) {
+            checkoutButton.disabled = true; // Disable button if cart is empty
+            checkoutButton.style.backgroundColor = '#ccc'; // Change color to indicate disabled state
+        }
+    };
+</script>
 
 
 <div class="footer">
