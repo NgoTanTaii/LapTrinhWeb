@@ -47,7 +47,8 @@
                 </h3>
             </a>
 
-            <a href="javascript:void(0)" id="logoutButton" class="btn" onclick="document.getElementById('logoutForm').submit();">
+            <a href="javascript:void(0)" id="logoutButton" class="btn"
+               onclick="document.getElementById('logoutForm').submit();">
                 <h3>Đăng xuất</h3>
             </a>
 
@@ -73,15 +74,35 @@
         </div>
 
         <a href="javascript:void(0)" id="floating-cart" class="floating-cart" onclick="toggleMiniCart()"
-           style="border: 1px solid #ccc; border-radius: 100%; position: fixed; bottom: 20px; right: 20px; z-index: 999;">
-            <img src="jpg/heart%20(1).png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng" class="cart-icon">
-            <div class="item-count" id="item-count">0</div>
-            <div class="mini-cart" id="mini-cart" style="display: none;">
-                <h4>Bất động sản đã lưu</h4>
-                <ul id="cart-items">
-                    <li>Đang tải...</li>
+           style="border: 1px solid #ccc; border-radius: 50%; position: fixed; bottom: 20px; right: 20px; z-index: 999; padding: 10px; background-color: white;">
+            <img src="jpg/heart%20(1).png" style="width: 30px; height: 30px;" alt="Giỏ hàng" class="cart-icon">
+            <div class="item-count" id="item-count"
+                 style="position: absolute; top: 0; right: 0; background-color: red; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px;">
+                0
+            </div>
+            <div class="mini-cart" id="mini-cart"
+                 style="display: none; position: absolute; bottom: 50px; right: 0; width: 250px; background-color: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                <h4 style="margin-top: 0;">Bất động sản đã lưu</h4>
+                <ul id="cart-items" style="list-style-type: none; padding: 0; margin: 10px 0;">
+                    <!-- Mỗi sản phẩm có một form để xóa -->
+                    <li id="mini-cart-item-1">
+                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+
+                            <form action="removeMiniCartItem" method="POST" style="display: inline;">
+                                <input type="hidden" name="propertyId" value="1">
+                                <button type="submit" class="btn btn-sm btn-danger ml-3"
+                                        style="border: none; background-color: red; color: white; padding: 5px; border-radius: 4px; cursor: pointer;">
+                                    <i class="fas fa-trash-alt"></i> Xóa
+                                </button>
+                            </form>
+                        </div>
+                    </li>
+                    <!-- Thêm các mục khác tương tự với ID và giá trị khác nhau -->
                 </ul>
-                <button id="go-to-cart" onclick="goToCart()">Đi tới xem bất động sản đã lưu</button>
+                <button id="go-to-cart" onclick="goToCart()"
+                        style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer;">
+                    Đi tới xem bất động sản đã lưu
+                </button>
             </div>
         </a>
 
@@ -161,9 +182,15 @@
                                     <p style="color:darkred">Diện tích: ${item.area} m²</p>
                                     <p>Địa chỉ: ${item.address}</p>
                                     <p>Số lượng: ${item.quantity}</p>
-                                    <button onclick="removeItem(${item.propertyId})" class="btn btn-sm btn-danger ml-3">
-                                        <i class="fas fa-trash-alt"></i> Xóa
-                                    </button>
+                 <!-- Form xóa sản phẩm -->
+<form action="removeMiniCartItem" method="POST" style="display: inline;">
+    <input type="hidden" name="propertyId" value="${item.propertyId}">
+    <button type="submit" class="btn btn-sm btn-danger ml-3" style="border: none; background-color: red; color: white; padding: 5px; border-radius: 4px; cursor: pointer;">
+        <i class="fas fa-trash-alt"></i> Xóa
+    </button>
+</form>
+
+
                                 </div>
                             </div>
                         `;
@@ -182,46 +209,6 @@
                     });
             }
 
-            function removeItem(propertyId) {
-                const confirmation = confirm("Bạn có chắc chắn muốn xóa sản phẩm này?");
-                if (!confirmation) return;
-
-                fetch('/removeCartItem', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    body: `propertyId=${propertyId}`  // Pass propertyId here
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            alert(data.message);
-
-                            // Update the cart item count
-                            const itemCountElement = document.getElementById('item-count');
-                            let itemCount = parseInt(itemCountElement.innerText) - 1;
-                            itemCountElement.innerText = itemCount;
-
-                            // Remove the item from the cart display
-                            const itemElement = document.getElementById(`cart-item-${propertyId}`);
-                            if (itemElement) itemElement.remove();
-
-                            // If the cart is empty, display the "empty cart" message
-                            const cartItemsContainer = document.getElementById('cart-items');
-                            if (itemCount === 0) {
-                                cartItemsContainer.innerHTML = '<li>Giỏ hàng trống</li>';
-                            }
-                        } else {
-                            alert(data.message || "Không thể xóa sản phẩm.");
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert("Có lỗi xảy ra. Vui lòng thử lại.");
-                    });
-            }
         </script>
 
         <style>
@@ -259,9 +246,6 @@
 
 
     </div>
-
-
-
 
 
     <div class="menu">
@@ -508,12 +492,12 @@
         document.getElementById("overlay").style.opacity = 1;
 
         // Automatically hide the alert message and overlay after a few seconds
-        setTimeout(function() {
+        setTimeout(function () {
             var alertMessage = document.getElementById("alertMessage");
             var overlay = document.getElementById("overlay");
             alertMessage.classList.add("hide"); // Fade out the alert message
             overlay.style.opacity = 0; // Fade out the overlay
-            setTimeout(function() {
+            setTimeout(function () {
                 // Remove the message and overlay completely after fade-out is done
                 alertMessage.style.display = 'none';
                 overlay.style.display = 'none';
@@ -577,8 +561,6 @@
         <a href="#" id="toggleButton">Xem thêm</a>
     </div>
 </div>
-
-
 
 
 <script>

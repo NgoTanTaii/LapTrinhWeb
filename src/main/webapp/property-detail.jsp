@@ -330,15 +330,35 @@
     </div>
 
     <a href="javascript:void(0)" id="floating-cart" class="floating-cart" onclick="toggleMiniCart()"
-       style="border: 1px solid #ccc; border-radius: 100%; position: fixed; bottom: 20px; right: 20px; z-index: 999;">
-        <img src="jpg/heart%20(1).png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng" class="cart-icon">
-        <div class="item-count" id="item-count">0</div>
-        <div class="mini-cart" id="mini-cart" style="display: none;">
-            <h4>Bất động sản đã lưu</h4>
-            <ul id="cart-items">
-                <li>Đang tải...</li>
+       style="border: 1px solid #ccc; border-radius: 50%; position: fixed; bottom: 20px; right: 20px; z-index: 999; padding: 10px; background-color: white;">
+        <img src="jpg/heart%20(1).png" style="width: 30px; height: 30px;" alt="Giỏ hàng" class="cart-icon">
+        <div class="item-count" id="item-count"
+             style="position: absolute; top: 0; right: 0; background-color: red; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px;">
+            0
+        </div>
+        <div class="mini-cart" id="mini-cart"
+             style="display: none; position: absolute; bottom: 50px; right: 0; width: 250px; background-color: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+            <h4 style="margin-top: 0;">Bất động sản đã lưu</h4>
+            <ul id="cart-items" style="list-style-type: none; padding: 0; margin: 10px 0;">
+                <!-- Mỗi sản phẩm có một form để xóa -->
+                <li id="mini-cart-item-1">
+                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+
+                        <form action="removeMiniCartItem" method="POST" style="display: inline;">
+                            <input type="hidden" name="propertyId" value="1">
+                            <button type="submit" class="btn btn-sm btn-danger ml-3"
+                                    style="border: none; background-color: red; color: white; padding: 5px; border-radius: 4px; cursor: pointer;">
+                                <i class="fas fa-trash-alt"></i> Xóa
+                            </button>
+                        </form>
+                    </div>
+                </li>
+                <!-- Thêm các mục khác tương tự với ID và giá trị khác nhau -->
             </ul>
-            <button id="go-to-cart" onclick="goToCart()">Đi tới xem bất động sản đã lưu</button>
+            <button id="go-to-cart" onclick="goToCart()"
+                    style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer;">
+                Đi tới xem bất động sản đã lưu
+            </button>
         </div>
     </a>
 
@@ -408,18 +428,25 @@
                             data.cartItems.forEach(item => {
                                 const li = document.createElement('li');
                                 li.id = `cart-item-${item.propertyId}`;
+
                                 li.innerHTML = `
                             <div style="display: flex; align-items: center; margin-bottom: 10px;">
                                 <img src="${item.imageUrl}" alt="${item.title}" class="cart-item-image" style="width: 50px; height: 50px; margin-right: 10px;">
                                 <div>
                                     <h5>${item.title}</h5>
-                                    <p>Giá: ${item.price} tỷ</p>
-                                    <p>Diện tích: ${item.area} m²</p>
+                                    <p style="color:darkred">Giá: ${item.price} tỷ</p>
+                                    <p style="color:darkred">Diện tích: ${item.area} m²</p>
                                     <p>Địa chỉ: ${item.address}</p>
                                     <p>Số lượng: ${item.quantity}</p>
-                                    <button onclick="removeItem(${item.propertyId})" class="btn btn-sm btn-danger ml-3">
-                                        <i class="fas fa-trash-alt"></i> Xóa
-                                    </button>
+                 <!-- Form xóa sản phẩm -->
+<form action="removeMiniCartItem" method="POST" style="display: inline;">
+    <input type="hidden" name="propertyId" value="${item.propertyId}">
+    <button type="submit" class="btn btn-sm btn-danger ml-3" style="border: none; background-color: red; color: white; padding: 5px; border-radius: 4px; cursor: pointer;">
+        <i class="fas fa-trash-alt"></i> Xóa
+    </button>
+</form>
+
+
                                 </div>
                             </div>
                         `;
@@ -438,47 +465,6 @@
                 });
         }
 
-        // Remove Item from Cart
-        function removeItem(propertyId) {
-            var confirmation = confirm("Bạn có chắc chắn muốn xóa sản phẩm này?");
-            if (confirmation) {
-                fetch('/removeItemFromCart', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    body: `propertyId=${propertyId}`
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            alert(data.message);
-
-                            // Cập nhật số lượng mục trong giỏ hàng
-                            const itemCountElement = document.getElementById('item-count');
-                            let itemCount = parseInt(itemCountElement.innerText) - 1;
-                            itemCountElement.innerText = itemCount;
-
-                            // Xóa mục khỏi giao diện
-                            const itemElement = document.getElementById(`cart-item-${propertyId}`);
-                            if (itemElement) itemElement.remove();
-
-                            // Nếu giỏ hàng rỗng, hiển thị thông báo "Giỏ hàng trống"
-                            const cartItemsContainer = document.getElementById('cart-items');
-                            if (itemCount === 0) {
-                                cartItemsContainer.innerHTML = '<li>Giỏ hàng trống</li>';
-                            }
-                        } else {
-                            alert(data.message || "Không thể xóa sản phẩm.");
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error removing item:', error);
-                        alert("Có lỗi xảy ra. Vui lòng thử lại.");
-                    });
-            }
-        }
     </script>
 
     <div class="menu">
