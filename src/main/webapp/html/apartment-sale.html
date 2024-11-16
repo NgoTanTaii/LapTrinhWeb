@@ -4,186 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href=" ../css/bds.css">
-    <style>  /* Thiết lập cho menu chính */
-        header{
-            position: fixed;
-            position: sticky;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-            margin-right: 0;
-            border-radius: 10px;
-        }
+    <link rel="stylesheet" type="text/css" href=" ../css/apartment-sale.css">
 
-        ul li {
-            position: relative;
-            display: inline-block;
-            margin-right: 20px;
-            z-index: 10; /* Đảm bảo menu cha hiển thị trên cùng */
-        }
-
-        ul li a {
-            text-decoration: none;
-            display: inline-block;
-            color: #333;
-        }
-
-        /* Thiết lập cho menu con */
-        ul li ul {
-            display: none; /* Ẩn menu con mặc định */
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background-color: #f9f9f9;
-            min-width: 200px;
-            padding: 10px 0;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            z-index: 999; /* Đảm bảo menu con hiển thị trên các phần tử khác */
-        }
-
-        ul li ul li {
-            display: block;
-            margin: 0;
-        }
-
-        ul li ul li a {
-            padding: 10px 15px;
-            color: #333;
-            display: block;
-        }
-
-        /* Hiển thị menu con khi hover */
-        ul li:hover ul {
-            display: block;
-        }
-
-        /* Style cho menu con khi hover */
-        ul li ul li a:hover {
-            background-color: #eee;
-        }
-
-        .heart-container {
-            position: relative;
-            display: inline-block;
-            padding-top: 5px;
-        }
-
-        .heart-icon1 {
-            width: 15px; /* Kích thước của biểu tượng trái tim */
-            height: 15px;
-            cursor: pointer;
-        }
-
-        
-
-        /* Khi hover vào biểu tượng trái tim, hiển thị dòng chữ */
-        .heart-container:hover .hover-text {
-            opacity: 1;
-        }
-
-
-       
-        .content {
-            display: flex;
-            justify-content: center; /* Center the content */
-            max-width: 800px;
-            margin: auto;
-        }
-        .listing-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid #e0e0e0;
-            padding-top: 15px;
-        }
-
-        /* Nút hiển thị số điện thoại và yêu thích */
-        .contact-info {
-            display: flex;
-            gap: 10px;
-        }
-        .save-favorite {
-            background-color: transparent;
-            color: #333; /* Màu của viền trái tim */
-            font-size: 18px;
-            border: none;
-            cursor: pointer;
-        }
-        .content h1{
-    width: 100px;
-    padding: 17px;
-        }
-         /* Container chứa sản phẩm */
-         .product-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            padding: 20px;
-        }
-
-        /* Mỗi sản phẩm */
-        .product {
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            width: 30%;
-            margin-bottom: 20px;
-            box-sizing: border-box;
-            padding: 15px;
-            text-align: center;
-            transition: box-shadow 0.3s ease-in-out;
-        }
-
-        .product:hover {
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Định dạng ảnh sản phẩm */
-        .product img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
-
-        /* Mô tả sản phẩm */
-        .product-description {
-            margin-top: 15px;
-            color: #555;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        /* Giá sản phẩm */
-        .product-price {
-            font-size: 18px;
-            font-weight: bold;
-            margin: 10px 0;
-            color: #4CAF50;
-        }
-
-        /* Diện tích và địa chỉ */
-        .product-details {
-            font-size: 14px;
-            color: #777;
-        }
-
-        /* Định dạng nút "Xem chi tiết" */
-        .view-details {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-
-        .view-details:hover {
-            background-color: #45a049;
-        }
-</style>
 </head>
 <body>
 <header class="header">
@@ -325,14 +147,14 @@
 
         <!-- Sản phẩm 2 -->
         <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Nhà 2">
+            <img src=" ../jpg/img1.jpg" alt="Nhà 2">
             <div class="product-description">
-                <p>Nhà 1 trệt 2 lầu, gần khu dân cư, an ninh tốt, giao thông thuận tiện.</p>
+                <p>Ban quản lý dự án Vinhomes quỹ căn tháng 11 chính chủ studio 1PN 2PN 3PN, miễn phí trung gian</p>
             </div>
             <div class="product-price">Giá: 3 tỷ VNĐ</div>
             <div class="product-details">
                 <p>Diện tích: 120m²</p>
-                <p>Địa chỉ: 456 Đường DEF, TP. Hồ Chí Minh</p>
+                <p>Địa chỉ: Gia Lâm, Hà Nội</p>
             </div>
             <a href="#" class="view-details">Xem chi tiết</a>
         </div>
