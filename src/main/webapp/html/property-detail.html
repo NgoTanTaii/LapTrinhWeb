@@ -6,7 +6,27 @@
     <link rel="stylesheet" href="../css/property-detail.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* CSS styles go here */
+        .heart-container {
+            position: relative;
+            display: inline-block;
+            padding-top: 5px;
+        }
+
+
+
+        .heart-icon1 {
+            width: 15px !important; /* Kích thước hình ảnh */
+            height: 15px !important; /* Kích thước hình ảnh */
+            margin-left: 10px; /* Khoảng cách bên trái */
+            transition: transform 0.2s; /* Hiệu ứng chuyển động mượt mà */
+            margin-bottom: 12px;
+
+        }
+
+        .heart-icon1:hover {
+            transform: scale(1.1); /* Tăng kích thước khi di chuột qua */
+        }
+
         .container {
             max-width: 800px;
             margin: 0 auto;
@@ -139,6 +159,9 @@
         <p><i class="fas fa-tag"></i> Giá: 1.5 tỷ</p>
         <p><i class="fas fa-ruler-combined"></i> Diện tích: 100 m²</p>
         <p><i class="fas fa-info-circle"></i> Mô tả: Mô tả chi tiết về bất động sản.</p>
+        <div class="heart-icon1" style="padding: 20px">
+            <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+        </div>
 
     </div>
 
@@ -459,8 +482,6 @@
             </div>
 
         </a>
-
-
 
 
         <!-- Thêm các sản phẩm liên quan khác -->
