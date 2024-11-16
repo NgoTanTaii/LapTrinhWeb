@@ -187,6 +187,28 @@
             font-size: 12px; /* Kích thước chữ */
             font-weight: bold; /* Đậm chữ */
         }
+        .heart-icon {
+            position: absolute;
+            bottom: 5px; /* Di chuyển trái tim xuống góc dưới */
+            right: 5px; /* Đặt trái tim ở góc phải */
+            z-index: 10; /* Đảm bảo trái tim nằm trên tất cả các phần tử khác */
+            cursor: pointer;
+            margin-bottom: 2px;
+            margin-right: 10px;
+        }
+
+        .heart-icon img {
+            width: 20px !important; /* Kích thước nhỏ hơn của trái tim */
+            height: 20px !important; /* Kích thước nhỏ hơn của trái tim */
+            transition: transform 0.3s ease, filter 0.3s ease; /* Hiệu ứng chuyển động */
+
+
+        }
+
+        .heart-icon:hover img {
+            transform: scale(1.2); /* Phóng to biểu tượng trái tim khi hover */
+            filter: brightness(1.5); /* Tăng độ sáng khi hover */
+        }
 
     </style>
 </head>
@@ -272,9 +294,10 @@
         <p><i class="fas fa-tag"></i> Giá: 1.5 tỷ</p>
         <p><i class="fas fa-ruler-combined"></i> Diện tích: 100 m²</p>
         <p><i class="fas fa-info-circle"></i> Mô tả: Mô tả chi tiết về bất động sản.</p>
-        <button type="submit" class="heart-icon" style="border: none; background: transparent; padding: 0;">
+        <div class="heart-icon"
+             onclick="addToFavorites('1', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
             <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
-        </button>
+        </div>
 
     </div>
 
