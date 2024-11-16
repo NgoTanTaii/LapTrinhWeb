@@ -12,9 +12,9 @@ public class Property1 {
     private String status;        // Trạng thái của tài sản
     private String imageUrl;      // URL của hình ảnh
     private String description;
+    private int posterId;
 
-
-    public Property1(int id, String title, double price, double area, String address, String type, String status, String imageUrl, String description) {
+    public Property1(int id, String title, double price, double area, String address, String type, String status, String imageUrl, String description, int posterId) {
         this.id = id;
         this.title = title;
         this.price = price;
@@ -24,6 +24,8 @@ public class Property1 {
         this.status = status;
         this.imageUrl = imageUrl;
         this.description = description;
+        this.posterId = posterId;
+
 
     }
 
@@ -103,6 +105,14 @@ public class Property1 {
         this.description = description;
     }
 
+    public int getPosterId() {
+        return posterId;
+    }
+
+    public void setPosterId(int posterId) {
+        this.posterId = posterId;
+    }
+
     public Property1() {
 
     }
@@ -115,8 +125,6 @@ public class Property1 {
 
     public Property1(int propertyId, String title, double price, String address, double area, String imageUrl) {
     }
-
-
 
 
 }

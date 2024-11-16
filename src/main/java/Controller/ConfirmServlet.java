@@ -1,5 +1,6 @@
 package Controller;
 
+import Dao.CartDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,15 +14,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
 @WebServlet("/confirm")
 public class ConfirmServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-
     public void init() throws ServletException {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver"); // Đảm bảo driver MySQL đã được thêm vào classpath
+            Class.forName("com.mysql.cj.jdbc.Driver"); // Ensure MySQL driver is in classpath
         } catch (ClassNotFoundException e) {
             throw new ServletException("Cannot load JDBC driver", e);
         }
@@ -29,27 +28,26 @@ public class ConfirmServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Lấy token từ URL
+        // Get token from URL
         String token = request.getParameter("token");
         System.out.println("Received token: " + token); // Debugging
 
         if (token == null || token.isEmpty()) {
-
             response.getWriter().println("Token không hợp lệ.");
             return;
         }
 
         try (Connection conn = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/webbds?useSSL=false&serverTimezone=UTC", "root", "123456")) { // Thay đổi thông tin kết nối
+                "jdbc:mysql://localhost:3306/webbds?useSSL=false&serverTimezone=UTC", "root", "123456")) {
 
-            // Kiểm tra token có hợp lệ không
+            // Check if the token is valid
             String checkQuery = "SELECT * FROM users WHERE token = ?";
             PreparedStatement checkStmt = conn.prepareStatement(checkQuery);
             checkStmt.setString(1, token);
             ResultSet rs = checkStmt.executeQuery();
 
             if (rs.next()) {
-                // Token hợp lệ, cập nhật trạng thái tài khoản thành 'active'
+                // Token is valid, update account status to 'active'
                 String updateQuery = "UPDATE users SET status = 'active', token = NULL WHERE token = ?";
                 PreparedStatement updateStmt = conn.prepareStatement(updateQuery);
                 updateStmt.setString(1, token);
@@ -58,18 +56,25 @@ public class ConfirmServlet extends HttpServlet {
                 System.out.println("Rows updated: " + rowsUpdated); // Debugging
 
                 if (rowsUpdated > 0) {
-                    // Hiển thị thông báo sau khi cập nhật thành công
+                    // Retrieve user ID from the result set
+                    int userId = rs.getInt("id");
+
+//                    // Create cart for the user after activation
+//                    CartDAO cartDAO = new CartDAO();
+//                    cartDAO.createCart(userId);
+
+                    // Display confirmation message after successful activation and cart creation
                     response.setContentType("text/html; charset=UTF-8");
                     response.getWriter().println("<html><body>");
                     response.getWriter().println("<h2>Tài khoản của bạn đã được kích hoạt thành công!</h2>");
-                    response.getWriter().println("<p>Vui lòng <a href='login.jsp'>đăng nhập</a> để tiếp tục sử dụng tài khoản.</p>");
+                    response.getWriter().println("<p>Giỏ hàng của bạn đã được tạo. Vui lòng <a href='login.jsp'>đăng nhập</a> để tiếp tục sử dụng tài khoản.</p>");
                     response.getWriter().println("</body></html>");
                 } else {
-                    // Nếu không có tài khoản nào được cập nhật
+                    // If no rows were updated
                     response.getWriter().println("Có lỗi xảy ra trong quá trình kích hoạt tài khoản. Vui lòng thử lại.");
                 }
             } else {
-                // Token không hợp lệ hoặc không tồn tại trong cơ sở dữ liệu
+                // Token is invalid or does not exist in the database
                 response.getWriter().println("Token không hợp lệ.");
             }
 

@@ -6,56 +6,61 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.ResultSet;
 
-@WebServlet("/submitComment")
+@WebServlet("/SubmitCommentServlet")
 public class SubmitCommentServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("username"); // Get username from session
+        Integer userId = null;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        // Lấy thông tin từ form
-        int propertyId = Integer.parseInt(request.getParameter("propertyId"));
-        int userId = Integer.parseInt(request.getParameter("userId"));
-        String commentContent = request.getParameter("commentContent");
+        // Check if the user is logged in
+        if (username == null) {
+            response.sendRedirect("login.jsp"); // Redirect to login if not logged in
+            return;
+        }
 
-        Connection conn = null;
-        PreparedStatement ps = null;
-
-        try {
-            // Kết nối đến cơ sở dữ liệu
-            conn = Database.getConnection();
-
-            // Thêm bình luận vào cơ sở dữ liệu
-            String sql = "INSERT INTO comments (property_id, user_id, content, comment_date) VALUES (?, ?, ?, CURRENT_TIMESTAMP)";
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, propertyId);
-            ps.setInt(2, userId);
-            ps.setString(3, commentContent);
-
-            int result = ps.executeUpdate();
-            if (result > 0) {
-                // Bình luận thành công, chuyển hướng về trang chi tiết bất động sản
-                response.sendRedirect("property-detail.jsp?id=" + propertyId);
-            } else {
-                response.getWriter().write("Failed to submit comment.");
+        // Retrieve userId from the database using the username
+        try (Connection conn = Database.getConnection()) {
+            String query = "SELECT id FROM users WHERE username = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                userId = rs.getInt("id");
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            response.getWriter().write("Database error: " + e.getMessage());
-        } finally {
-            try {
-                if (ps != null) ps.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
+        }
+
+        // Proceed only if userId is found
+        if (userId == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
+
+        String commentContent = request.getParameter("comment");
+        String propertyId = request.getParameter("productId");
+
+        if (commentContent != null && !commentContent.trim().isEmpty()) {
+            try (Connection conn = Database.getConnection()) {
+                String sql = "INSERT INTO comments (property_id, user_id, content) VALUES (?, ?, ?)";
+                PreparedStatement statement = conn.prepareStatement(sql);
+                statement.setInt(1, Integer.parseInt(propertyId));
+                statement.setInt(2, userId);
+                statement.setString(3, commentContent);
+                statement.executeUpdate();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+
+        response.sendRedirect("property-detail.jsp?id=" + propertyId);
     }
 }

@@ -29,7 +29,6 @@
             </div>
 
 
-
         </div>
         <div class="header-right" style="margin-top: 10px">
 
@@ -59,7 +58,7 @@
             <div class="store-name">
                 <h1><a href="">
                     <span class="color1">HOME</span>
-                    <span class="color2">LANDER</span> <!-- Đổi từ VINA BOOK sang VINA BĐS -->
+                    <span class="color2">LANDER</span>
                 </a></h1>
             </div>
 
@@ -73,7 +72,7 @@
                             <li><a href="#">Nhà đất giá rẻ</a></li>
                         </ul>
                     </li>
-                    <li><a href="property-for-rent.jsp">Nhà Đất Cho Thuê</a>
+                    <li><a href="forrent">Nhà Đất Cho Thuê</a>
                         <ul>
                             <li><a href="#">Thông tin cho thuê nhà đất</a></li>
                             <li><a href="#">Thuê nhà nguyên căn</a></li>
@@ -87,14 +86,14 @@
                             <li><a href="#">Dự án chung cư</a></li>
                         </ul>
                     </li>
-                    <li><a href="news.html">Tin Tức</a>
+                    <li><a href="news.jsp">Tin Tức</a>
                         <ul>
                             <li><a href="#">Tin thị trường</a></li>
                             <li><a href="#">Xu hướng bất động sản</a></li>
                             <li><a href="#">Phân tích và đánh giá</a></li>
                         </ul>
                     </li>
-                    <li><a href="wiki.html">Wiki BĐS</a>
+                    <li><a href="wiki.jsp">Wiki BĐS</a>
                         <ul>
                             <li><a href="#">Mua bán</a></li>
                             <li><a href="#">Cho thuê</a></li>
@@ -116,7 +115,6 @@
     </div>
 
 
-
     <div class="slideshow-container">
         <div class="mySlides fade">
             <img src="jpg/1.webp" alt="Banner 1">
@@ -127,37 +125,14 @@
 
     </div>
 
-    <!-- Form tìm kiếm ở giữa -->
+
     <div class="search-container">
-        <form class="search-form" action="SearchServlet" method="POST">
-            <input type="text" placeholder="Tìm kiếm..." name="search" required>
-
-            <fieldset class="price-group">
-                <legend onclick="toggleDropdown('price-dropdown')">Giá <span class="arrow-down">▼</span></legend>
-                <div class="price-dropdown hidden">
-                    <label for="min-price">Giá tối thiểu (tỷ):</label>
-                    <input type="number" id="min-price" name="min-price" placeholder="Nhập giá tối thiểu">
-
-                    <label for="max-price">Giá tối đa (tỷ):</label>
-                    <input type="number" id="max-price" name="max-price" placeholder="Nhập giá tối đa">
-                </div>
-            </fieldset>
-
-            <fieldset class="area-group">
-                <legend onclick="toggleDropdown('area-dropdown')">Diện Tích <span class="arrow-down">▼</span></legend>
-                <div class="area-dropdown hidden">
-                    <label for="min-area">Diện tích tối thiểu (m²):</label>
-                    <input type="number" id="min-area" name="min-area" placeholder="Nhập diện tích tối thiểu">
-
-                    <label for="max-area">Diện tích tối đa (m²):</label>
-                    <input type="number" id="max-area" name="max-area" placeholder="Nhập diện tích tối đa">
-                </div>
-            </fieldset>
-
+        <form class="search-form" id="search-form" method="post" action="SearchServlet">
+            <input type="text" id="search" placeholder="Tìm kiếm sản phẩm..." name="search" required>
+            <input type="text" id="city" placeholder="Tìm kiếm theo địa chỉ..." name="city">
             <button type="submit">Tìm Kiếm</button>
         </form>
     </div>
-
     <script>
         function toggleDropdown(dropdownClass) {
             const dropdown = document.querySelector(`.${dropdownClass}`);
@@ -166,8 +141,51 @@
     </script>
 
     <script src="JS/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Khi người dùng gõ vào ô tìm kiếm hoặc ô địa chỉ, thực hiện tìm kiếm ngay lập tức
+            $('#search, #city').on('keyup', function () {
+                // Lấy giá trị của các trường tìm kiếm
+                var searchText = $('#search').val();
+                var city = $('#city').val();
 
+                // Kiểm tra nếu ô tìm kiếm không trống mới gửi yêu cầu Ajax
+                if (searchText.length > 0 || city.length > 0) {
+                    $.ajax({
+                        url: 'SearchServlet',  // Địa chỉ servlet xử lý tìm kiếm
+                        type: 'POST',
+                        data: {
+                            search: searchText,
+                            city: city
+                        },
+                        success: function (response) {
+                            // Hiển thị kết quả trả về trong phần product-list
+                            $('#search-results').html(response);
+                        },
+                        error: function () {
+                            $('#search-results').html('<p>Lỗi trong quá trình tìm kiếm.</p>');
+                        }
+                    });
+                } else {
+                    // Nếu không có gì để tìm kiếm, xóa kết quả hiển thị
+                    $('#search-results').html('');
+                }
+            });
+        });
+
+    </script>
 </header>
+
+
+<div class="product-section">
+
+    <div class="product-list" id="search-results">
+
+    </div>
+
+</div>
+
 <div class="news-section">
     <h2>Tin Tức Bất Động Sản</h2>
 
@@ -181,21 +199,21 @@
     <!-- List các tin tức -->
     <div class="news-list">
         <div class="news-item">
-            <img src="jpg/banner-books.jpg" alt="Image">
-            <h3><a href="#">Tiêu đề bài viết</a></h3>
-            <p class="summary">Tóm tắt ngắn gọn về nội dung bài viết...</p>
+            <img src="jpg/HaNoi.jpg" alt="Image">
+            <h3><a href="#">Đất Hà Nội tăng giá mạnh </a></h3>
+            <p class="summary">Hà Nội có tiền cũng không mua đất đuược?...</p>
             <span class="date">Ngày đăng: 01/01/2024</span>
         </div>
         <div class="news-item">
-            <img src="jpg/banner-books.jpg" alt="Image">
-            <h3><a href="#">Tiêu đề bài viết</a></h3>
-            <p class="summary">Tóm tắt ngắn gọn về nội dung bài viết...</p>
+            <img src="jpg/HCM.jpg" alt="Image">
+            <h3><a href="#">HCM ngày càng xấu đi trong mắt du khách nuước ngoài</a></h3>
+            <p class="summary">Người nước ngoài kêu ca về du lịch...</p>
             <span class="date">Ngày đăng: 01/01/2024</span>
         </div>
         <div class="news-item">
-            <img src="jpg/banner-books.jpg" alt="Image">
-            <h3><a href="#">Tiêu đề bài viết</a></h3>
-            <p class="summary">Tóm tắt ngắn gọn về nội dung bài viết...</p>
+            <img src="jpg/binhduong.jpg" alt="Image">
+            <h3><a href="#">Bình Dương thành phố mới</a></h3>
+            <p class="summary">Thành phố trong thành phố...</p>
             <span class="date">Ngày đăng: 01/01/2024</span>
         </div>
 
@@ -206,7 +224,7 @@
 </div>
 
 
-<div class="product-section"    >
+<div class="product-section">
     <h2>Bất động sản dành cho bạn</h2>
     <div class="product-list">
         <%
@@ -370,7 +388,6 @@
 </style>
 
 
-
 <%
     // Tạo danh sách các thành phố lớn
     List<String> majorCities = List.of("TP.HCM", "Hà Nội", "Đà Nẵng", "Vũng Tàu");
@@ -399,7 +416,6 @@
                     // Kiểm tra và lấy tên thành phố
                     if (addressParts.length > 0) {
                         cityPart = addressParts[addressParts.length - 1].trim(); // Thành phố
-                        // Kiểm tra và lấy từ trước thành phố
                         if (addressParts.length > 1) {
                             preCityWord = addressParts[addressParts.length - 2].trim(); // Từ trước thành phố
                         }
@@ -407,9 +423,11 @@
         %>
         <div class="property-card">
             <a href="property-detail.jsp?id=<%= property.getId() %>" style="text-decoration: none; color: inherit;">
-                <img src="<%= property.getImageUrl() %>" alt="<%= property.getTitle() %>">
+                <img src="<%= property.getImageUrl() %>" alt="<%= property.getTitle() %>" style="width: 100%; height: auto;">
                 <h3><%= property.getTitle() %></h3>
-                <p><%= property.getDescription() %></p>
+                <p>
+                    <%= property.getDescription().length() > 50 ? property.getDescription().substring(0, 50) + "..." : property.getDescription() %>
+                </p>
                 <div style="display: flex; justify-content: space-between; color: red; margin-top: 5px;">
                     <span><%= property.getArea() %> m²</span>
                     <span><i class="fas fa-map-marker-alt"></i> <%= preCityWord + ", " + cityPart %></span>
@@ -456,32 +474,32 @@
 
     <div class="property-form">
         <div class="city hcm">
-            <a href="#" class="city-link">
+            <a href="property-HCM.jsp" class="city-link">
                 <img src="jpg/HCM.jpg" alt="TP.HCM">
                 <span class="city-name">TP.HCM</span>
             </a>
         </div>
         <div class="other-cities">
             <div class="city">
-                <a href="#" class="city-link">
+                <a href="property-HaNoi.jsp" class="city-link">
                     <img src="jpg/HaNoi.jpg" alt="Hà Nội">
                     <span class="city-name">Hà Nội</span>
                 </a>
             </div>
             <div class="city">
-                <a href="#" class="city-link">
+                <a href="property-DaNang.jsp" class="city-link">
                     <img src="jpg/DaNang.jpg" alt="Đà Nẵng">
                     <span class="city-name">Đà Nẵng</span>
                 </a>
             </div>
             <div class="city">
-                <a href="#" class="city-link">
+                <a href="property-BinhDuong.jsp" class="city-link">
                     <img src="jpg/binhduong.jpg" alt="Bình Dương">
                     <span class="city-name">Bình Dương</span>
                 </a>
             </div>
             <div class="city">
-                <a href="#" class="city-link">
+                <a href="property-DongNai.jsp" class="city-link">
                     <img src="jpg/DongNai.jpg" alt="Đồng Nai">
                     <span class="city-name">Đồng Nai</span>
                 </a>
@@ -1041,5 +1059,4 @@
     }
 </style>
 
-</body>
-</html>
+

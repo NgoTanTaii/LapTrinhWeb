@@ -1,5 +1,8 @@
 package Controller;
 
+import Dao.CartDAO;
+import Dao.UserDAO;
+import Entity.Cart;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -61,7 +64,11 @@ public class RegisterServlet extends HttpServlet {
             }
 
             String insertQuery = "INSERT INTO users (username, password, email, token, status) VALUES (?, ?, ?, ?, 'inactive')";
+
+
             PreparedStatement insertStmt = conn.prepareStatement(insertQuery);
+
+
             insertStmt.setString(1, username);
             insertStmt.setString(2, password); // Nên mã hóa mật khẩu
             insertStmt.setString(3, email);
@@ -70,7 +77,7 @@ public class RegisterServlet extends HttpServlet {
             System.out.println("Rows inserted: " + rowsInserted); // Debugging
 
             // Tạo đường dẫn xác nhận tài khoản
-            String confirmLink = "http://localhost:8080/untitled4/confirm?token=" + token;
+            String confirmLink = "http://localhost:8080/Batdongsan/confirm?token=" + token;
             System.out.println("Confirmation link: " + confirmLink); // Debugging
 
             // Gửi email xác nhận
@@ -82,6 +89,13 @@ public class RegisterServlet extends HttpServlet {
             out.println("<html><body>");
             out.println("<h3>Đăng ký thành công! Vui lòng kiểm tra email của bạn để xác nhận tài khoản.</h3>");
             out.println("</body></html>");
+
+
+
+            // tao ra cart khi dang ki thanh cong
+//            CartDAO cartDAO = new CartDAO();
+//            Cart cart = cartDAO.createCart(user.getId());
+
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -138,4 +152,5 @@ public class RegisterServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
+
 }

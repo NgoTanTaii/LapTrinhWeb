@@ -154,12 +154,8 @@
             <li><a href="top-user-manager.html">Quản lý top 5 khách</a></li>
             <li><a href="top-employee-manager.html">Quản lý top 5 nhân viên</a></li>
             <li><a href="booking-manager.html">Quản lý đơn đặt hàng</a></li>
-
-
         </ul>
     </div>
-
-
 
     <!-- Main content -->
     <div class="main-content">
@@ -203,37 +199,188 @@
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function () {
-        // Tạo DataTable với tính năng tìm kiếm
-        const table = $('#propertyTable').DataTable({
-            "ajax": {
-                "url": "../Json/property-data.json",
-                "dataSrc": "demo"
+        // Sample data
+        const sampleData = [
+            {
+                "id": 1,
+                "name": "Bất động sản A",
+                "description": "Mô tả BĐS A",
+                "price": "1.000.000.000 VND",
+                "address": "Địa chỉ A",
+                "type": "Chung cư",
+                "status": "Đang bán",
+                "image": "https://via.placeholder.com/100",
+                "area": "50m²"
             },
+            {
+                "id": 2,
+                "name": "Bất động sản B",
+                "description": "Mô tả BĐS B",
+                "price": "2.500.000.000 VND",
+                "address": "Địa chỉ B",
+                "type": "Nhà riêng",
+                "status": "Đã bán",
+                "image": "https://via.placeholder.com/100",
+                "area": "100m²"
+            },
+            {
+                "id": 3,
+                "name": "Bất động sản C",
+                "description": "Mô tả BĐS C",
+                "price": "1.200.000.000 VND",
+                "address": "Địa chỉ C",
+                "type": "Biệt thự",
+                "status": "Đang bán",
+                "image": "https://via.placeholder.com/100",
+                "area": "150m²"
+            },
+            {
+                "id": 2,
+                "name": "Bất động sản B",
+                "description": "Mô tả BĐS B",
+                "price": "2.500.000.000 VND",
+                "address": "Địa chỉ B",
+                "type": "Nhà riêng",
+                "status": "Đã bán",
+                "image": "https://via.placeholder.com/100",
+                "area": "100m²"
+            },
+            {
+                "id": 2,
+                "name": "Bất động sản B",
+                "description": "Mô tả BĐS B",
+                "price": "2.500.000.000 VND",
+                "address": "Địa chỉ B",
+                "type": "Nhà riêng",
+                "status": "Đã bán",
+                "image": "https://via.placeholder.com/100",
+                "area": "100m²"
+            },
+            {
+                "id": 2,
+                "name": "Bất động sản B",
+                "description": "Mô tả BĐS B",
+                "price": "2.500.000.000 VND",
+                "address": "Địa chỉ B",
+                "type": "Nhà riêng",
+                "status": "Đã bán",
+                "image": "https://via.placeholder.com/100",
+                "area": "100m²"
+            },
+            {
+                "id": 2,
+                "name": "Bất động sản B",
+                "description": "Mô tả BĐS B",
+                "price": "2.500.000.000 VND",
+                "address": "Địa chỉ B",
+                "type": "Nhà riêng",
+                "status": "Đã bán",
+                "image": "https://via.placeholder.com/100",
+                "area": "100m²"
+            },
+            {
+                "id": 2,
+                "name": "Bất động sản B",
+                "description": "Mô tả BĐS B",
+                "price": "2.500.000.000 VND",
+                "address": "Địa chỉ B",
+                "type": "Nhà riêng",
+                "status": "Đã bán",
+                "image": "https://via.placeholder.com/100",
+                "area": "100m²"
+            },
+            {
+                "id": 2,
+                "name": "Bất động sản B",
+                "description": "Mô tả BĐS B",
+                "price": "2.500.000.000 VND",
+                "address": "Địa chỉ B",
+                "type": "Nhà riêng",
+                "status": "Đã bán",
+                "image": "https://via.placeholder.com/100",
+                "area": "100m²"
+            },
+            {
+                "id": 2,
+                "name": "Bất động sản B",
+                "description": "Mô tả BĐS B",
+                "price": "2.500.000.000 VND",
+                "address": "Địa chỉ B",
+                "type": "Nhà riêng",
+                "status": "Đã bán",
+                "image": "https://via.placeholder.com/100",
+                "area": "100m²"
+            },
+            {
+                "id": 2,
+                "name": "Bất động sản B",
+                "description": "Mô tả BĐS B",
+                "price": "2.500.000.000 VND",
+                "address": "Địa chỉ B",
+                "type": "Nhà riêng",
+                "status": "Đã bán",
+                "image": "https://via.placeholder.com/100",
+                "area": "100m²"
+            },
+            {
+                "id": 2,
+                "name": "Bất động sản B",
+                "description": "Mô tả BĐS B",
+                "price": "2.500.000.000 VND",
+                "address": "Địa chỉ B",
+                "type": "Nhà riêng",
+                "status": "Đã bán",
+                "image": "https://via.placeholder.com/100",
+                "area": "100m²"
+            },
+            {
+                "id": 2,
+                "name": "Bất động sản B",
+                "description": "Mô tả BĐS B",
+                "price": "2.500.000.000 VND",
+                "address": "Địa chỉ B",
+                "type": "Nhà riêng",
+                "status": "Đã bán",
+                "image": "https://via.placeholder.com/100",
+                "area": "100m²"
+            },
+            {
+                "id": 2,
+                "name": "Bất động sản B",
+                "description": "Mô tả BĐS B",
+                "price": "2.500.000.000 VND",
+                "address": "Địa chỉ B",
+                "type": "Nhà riêng",
+                "status": "Đã bán",
+                "image": "https://via.placeholder.com/100",
+                "area": "100m²"
+            },
+
+        ];
+
+        // Initialize DataTable
+        const table = $('#propertyTable').DataTable({
+            "data": sampleData,
             "columns": [
-                {"data": 0},
-                {"data": 1},
-                {"data": 2},
-                {"data": 3},
-                {"data": 4},
-                {"data": 5},
-                {"data": 6},
+                {"data": "id"},
+                {"data": "name"},
+                {"data": "description"},
+                {"data": "price"},
+                {"data": "address"},
+                {"data": "type"},
+                {"data": "status"},
                 {
-                    "data": 7,
+                    "data": "image",
                     "render": function(data) {
-                        return `<img src="${data}" alt="Image" width="100">`;
+                        return `<img src="${data}" alt="Image">`;
                     }
                 },
-                {"data": 8},
+                {"data": "area"},
                 {
                     "data": null,
                     "defaultContent": `<button class='update-button'>Sửa</button> <button class='delete-button'>Xóa</button>`
                 }
-            ],
-            "initComplete": function() {
-                // Hiển thị tổng số trang
-                const pageInfo = table.page.info();
-                $('#paginationInfo').text(`Tổng số trang: ${pageInfo.pages}`);
-            }
+            ]
         });
 
         // Tìm kiếm trực tiếp khi nhập
@@ -244,14 +391,13 @@
         // Xử lý sự kiện Cập Nhật và Xóa
         $('#propertyTable tbody').on('click', 'button.update-button', function () {
             const data = table.row($(this).parents('tr')).data();
-            alert('Bạn đã chọn Cập nhật cho bất động sản: ' + data[1]);
-            // Code xử lý cập nhật
+            alert('Bạn đã chọn Cập nhật cho bất động sản: ' + data.name);
         });
 
         $('#propertyTable tbody').on('click', 'button.delete-button', function () {
             const data = table.row($(this).parents('tr')).data();
             if (confirm('Bạn có chắc chắn muốn xóa bất động sản này không?')) {
-                alert('Đã xóa bất động sản: ' + data[1]);
+                alert('Đã xóa bất động sản: ' + data.name);
                 // Code xử lý xóa
             }
         });

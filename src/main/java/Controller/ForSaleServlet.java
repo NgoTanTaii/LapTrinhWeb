@@ -1,6 +1,7 @@
 package Controller;
 
 import DBcontext.Database;
+import Dao.PropertyBystatusDAO;
 import Entity.Property1;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -28,13 +29,21 @@ public class ForSaleServlet extends HttpServlet {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
+                    // Lấy thông tin từ ResultSet
                     String title = rs.getString("title");
-                    double price = rs.getDouble("price"); // Nếu giá trị không tồn tại, sẽ mặc định là 0.0
-                    double area = rs.getDouble("area");   // Tương tự cho area
+                    double price = rs.getDouble("price");
+                    double area = rs.getDouble("area");
                     String address = rs.getString("address");
                     String imageUrl = rs.getString("image_url");
 
-                    Property1 property = new Property1(title, price, area, address, imageUrl);
+                    // Tạo đối tượng Property1 với các thuộc tính lấy từ cơ sở dữ liệu
+                    Property1 property = new Property1();
+                    property.setTitle(title);
+                    property.setPrice(price);
+                    property.setArea(area);
+                    property.setAddress(address);
+                    property.setImageUrl(imageUrl);
+
                     properties.add(property);
                 }
             }
@@ -43,6 +52,7 @@ public class ForSaleServlet extends HttpServlet {
             request.setAttribute("errorMessage", "Không thể lấy dữ liệu từ cơ sở dữ liệu.");
         }
 
+        // Gán danh sách properties cho request attribute để truyền đến JSP
         request.setAttribute("properties", properties);
         request.getRequestDispatcher("property-for-sale.jsp").forward(request, response);
     }
