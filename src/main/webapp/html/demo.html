@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Trang Web Bán Nhà Đất</title>
+    <style>
+        /* Tổng thể trang */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* Định dạng tiêu đề */
+        h1 {
+            text-align: center;
+            color: #333;
+            padding: 20px;
+            background-color: #4CAF50;
+            margin: 0;
+            color: white;
+        }
+
+        /* Container chứa sản phẩm */
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        /* Mỗi sản phẩm */
+        .product {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 30%;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            padding: 15px;
+            text-align: center;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .product:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Định dạng ảnh sản phẩm */
+        .product img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        /* Mô tả sản phẩm */
+        .product-description {
+            margin-top: 15px;
+            color: #555;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Giá sản phẩm */
+        .product-price {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #4CAF50;
+        }
+
+        /* Diện tích và địa chỉ */
+        .product-details {
+            font-size: 14px;
+            color: #777;
+        }
+
+        /* Định dạng nút "Xem chi tiết" */
+        .view-details {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .view-details:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Danh Sách Nhà Đất</h1>
+
+    <div class="product-container">
+        <!-- Sản phẩm 1 -->
+        <div class="product">
+            <img src="https://via.placeholder.com/300x200" alt="Nhà 1">
+            <div class="product-description">
+                <p>Nhà đẹp, diện tích rộng, vị trí thuận lợi, gần các tiện ích như chợ, trường học.</p>
+            </div>
+            <div class="product-price">Giá: 2 tỷ VNĐ</div>
+            <div class="product-details">
+                <p>Diện tích: 80m²</p>
+                <p>Địa chỉ: 123 Đường ABC, TP. Hồ Chí Minh</p>
+            </div>
+            <a href="#" class="view-details">Xem chi tiết</a>
+        </div>
+
+        <!-- Sản phẩm 2 -->
+        <div class="product">
+            <img src="https://via.placeholder.com/300x200" alt="Nhà 2">
+            <div class="product-description">
+                <p>Nhà 1 trệt 2 lầu, gần khu dân cư, an ninh tốt, giao thông thuận tiện.</p>
+            </div>
+            <div class="product-price">Giá: 3 tỷ VNĐ</div>
+            <div class="product-details">
+                <p>Diện tích: 120m²</p>
+                <p>Địa chỉ: 456 Đường DEF, TP. Hồ Chí Minh</p>
+            </div>
+            <a href="#" class="view-details">Xem chi tiết</a>
+        </div>
+
+        <!-- Sản phẩm 3 -->
+        <div class="product">
+            <img src="https://via.placeholder.com/300x200" alt="Nhà 3">
+            <div class="product-description">
+                <p>Căn hộ chung cư mới xây, hiện đại, đầy đủ tiện nghi, không gian sống lý tưởng.</p>
+            </div>
+            <div class="product-price">Giá: 1.5 tỷ VNĐ</div>
+            <div class="product-details">
+                <p>Diện tích: 60m²</p>
+                <p>Địa chỉ: 789 Đường GHI, TP. Hồ Chí Minh</p>
+            </div>
+            <a href="#" class="view-details">Xem chi tiết</a>
+        </div>
+    </div>
+
+</body>
+</html>

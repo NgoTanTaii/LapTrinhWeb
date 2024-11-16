@@ -108,8 +108,41 @@
             width: 100%; /* Đặt chiều rộng của select là 100% */
             padding: 8px; /* Padding cho select */
         }
+        /* Thiết lập cho menu con */
+ul li ul {
+    display: none;
+    /* Ẩn menu con mặc định */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    padding: 10px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    /* Đảm bảo menu con hiển thị trên các phần tử khác */
+}
 
+ul li ul li {
+    display: block;
+    margin: 0;
+}
 
+ul li ul li a {
+    padding: 10px 15px;
+    color: #333;
+    display: block;
+}
+
+/* Hiển thị menu con khi hover */
+ul li:hover ul {
+    display: block;
+}
+
+/* Style cho menu con khi hover */
+ul li ul li a:hover {
+    background-color: #eee;
+}
     </style>
 </head>
 <body>
@@ -165,12 +198,52 @@
 
             <nav>
                 <ul>
-                    <li><a href="property-for-sale.html">Nhà Đất Bán</a></li>
-                    <li><a href="#nhadatchochue">Nhà Đất Cho Thuê</a></li>
-                    <li><a href="#duan">Dự Án</a></li>
-                    <li><a href="#tintuc">Tin Tức</a></li>
-                    <li><a href="#wikibds">Wiki BĐS</a></li>
+                    <li><a href="property-for-sale.html">Nhà Đất Bán</a>
+                        <ul>
+                            <li><a href="#">Bán căn hộ chung cư</a></li>
+                            <li><a href="#">Bán nhà riêng</a></li>
+                            <li><a href="#">Bán nhà biệt thự liền kề</a></li>
+                            <li><a href="#">Bán nhà mặt phố</a></li>
+                            <li><a href="#">Bán trang trại, khu nghỉ dưỡng</a></li>
+                            <li><a href="#">Bán kho , nhà xưởng</a></li>
+                            <li><a href="#">Bán loại bất động sản khác</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="property-for-rent.html">Nhà Đất Cho Thuê</a>
+                        <ul>
+                            <li><a href="#">Cho thuê căn hộ chung cư</a></li>
+                            <li><a href="#">Cho thuê nhà riêng</a></li>
+                            <li><a href="#">Cho thuê nhà biệt thự, liền kề</a></li>
+                            <li><a href="#">Cho thuê nhà mặt phố</a></li>
+                            <li><a href="#">Cho thuê phòng trọ , nhà trọ</a></li>
+                            <li><a href="#">Cho thuê văn phòng</a></li>
+                            <li><a href="#">Cho thuê loại bất động sản khác</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="project.html">Dự Án</a>
+                        <ul>
+                            <li><a href="#">Các dự án nổi bật</a></li>
+                            <li><a href="#">Dự án nhà ở</a></li>
+                            <li><a href="#">Dự án chung cư</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="news.html">Tin Tức</a>
+                        <ul>
+                            <li><a href="#">Tin thị trường</a></li>
+                            <li><a href="#">Xu hướng bất động sản</a></li>
+                            <li><a href="#">Phân tích và đánh giá</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="wiki.html">Wiki BĐS</a>
+                        <ul>
+                            <li><a href="#">Mua bán</a></li>
+                            <li><a href="#">Cho thuê</a></li>
+                            <li><a href="#">Tài chính</a></li>
+                            <li><a href="#">Phong thủy</a></li>
+                        </ul>
+                    </li>
                 </ul>
+
             </nav>
 
 
