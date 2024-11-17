@@ -367,6 +367,13 @@
 
     </script>
 </header>
+<div class="product-section">
+
+    <div class="product-list" id="search-results">
+
+    </div>
+
+</div>
 
 
 <div class="news-section">
@@ -764,32 +771,32 @@
 
     <div class="property-form">
         <div class="city hcm">
-            <a href="#" class="city-link">
+            <a href="property-HCM.jsp" class="city-link">
                 <img src="jpg/HCM.jpg" alt="TP.HCM">
                 <span class="city-name">TP.HCM</span>
             </a>
         </div>
         <div class="other-cities">
             <div class="city">
-                <a href="#" class="city-link">
+                <a href="property-HaNoi.jsp" class="city-link">
                     <img src="jpg/HaNoi.jpg" alt="Hà Nội">
                     <span class="city-name">Hà Nội</span>
                 </a>
             </div>
             <div class="city">
-                <a href="#" class="city-link">
+                <a href="property-DaNang.jsp" class="city-link">
                     <img src="jpg/DaNang.jpg" alt="Đà Nẵng">
                     <span class="city-name">Đà Nẵng</span>
                 </a>
             </div>
             <div class="city">
-                <a href="#" class="city-link">
+                <a href="property-BinhDuong.jsp" class="city-link">
                     <img src="jpg/binhduong.jpg" alt="Bình Dương">
                     <span class="city-name">Bình Dương</span>
                 </a>
             </div>
             <div class="city">
-                <a href="#" class="city-link">
+                <a href="property-DongNai.jsp" class="city-link">
                     <img src="jpg/DongNai.jpg" alt="Đồng Nai">
                     <span class="city-name">Đồng Nai</span>
                 </a>

@@ -134,13 +134,47 @@
 
 
         </div>
+        <%
+            Integer userId = (Integer) session.getAttribute("userId");
+            String username = (String) session.getAttribute("username");
+            boolean isLoggedIn = userId != null;
+        %>
+
         <div class="header-right" style="margin-top: 10px">
+            <% if (isLoggedIn) { %>
+            <a href="account.jsp" class="btn">
+                <h3 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px;">
+                    Hello, <%= username %>
+                </h3>
+            </a>
 
+            <a href="javascript:void(0)" id="logoutButton" class="btn"
+               onclick="document.getElementById('logoutForm').submit();">
+                <h3>Đăng xuất</h3>
+            </a>
 
-            <a href="login.jsp" class="btn"><h3>Đăng nhập</h3></a>
-            <a href="register.jsp" class="btn"><h3>Đăng ký</h3></a>
-            <a href="post-status.jsp" class="btn"><h3>Đăng tin</h3></a>
+            <!-- Hidden Form to Logout -->
+            <form id="logoutForm" action="logout" method="POST" style="display: none;">
+                <button type="submit" style="display: none;"></button> <!-- This button will not be visible -->
+            </form>
+
+            <% } else { %>
+            <!-- Display login and registration options if not logged in -->
+            <a href="login.jsp" class="btn">
+                <h3>Đăng nhập</h3>
+            </a>
+            <a href="register.jsp" class="btn">
+                <h3>Đăng ký</h3>
+            </a>
+            <% } %>
+
+            <!-- "Post Status" button, visible to both logged-in and non-logged-in users -->
+            <a href="post-status.html" class="btn">
+                <h3>Đăng tin</h3>
+            </a>
         </div>
+
+
     </div>
 
     <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()"
@@ -283,8 +317,8 @@
 
 <div class="container1">
     <div class="left-content">
-        <p class="breadcrumbs">Bán / Tất cả BĐS tại Hồ Chí Minh</p>
-        <h1>Mua bán nhà đất tại Hồ Chí Minh giá rẻ mới nhất T10/2024</h1>
+        <p class="breadcrumbs">Bán / Tất cả BĐS tại Đồng Nai</p>
+        <h1>Mua bán nhà đất tại Đồng Nai giá rẻ mới nhất T10/2024</h1>
         <p>Hiện có <strong>181.125</strong> bất động sản.</p>
 
         <div class="filter-group">
