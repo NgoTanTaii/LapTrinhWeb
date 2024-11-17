@@ -61,6 +61,8 @@
         /* Style cho menu con khi hover */
         ul li ul li a:hover {
             background-color: #eee;
+            text-decoration: none;
+
         }
 
         .heart-container {
@@ -262,26 +264,51 @@
     <!-- List các tin tức -->
     <div class="news-list">
         <div class="news-item">
-            <img src="../jpg/banner-books.jpg" alt="Image">
-            <h3><a href="#">Tiêu đề bài viết</a></h3>
-            <p class="summary">Tóm tắt ngắn gọn về nội dung bài viết...</p>
+            <img src="../jpg/quy-nhon-thuoc-tinh-nao-1.jpg" alt="Image">
+            <h3><a href="https://www.example.com/quy-nhon-tinh-nang-noi-bat">Khám Phá Quy Nhơn: Những Tính Năng Nổi Bật</a></h3>
+            <p class="summary">Quy Nhơn không chỉ nổi tiếng với những bãi biển đẹp mà còn với các điểm đến hấp dẫn như Eo Gió và Kỳ Co. Tìm hiểu những điều thú vị khi đến thăm thành phố này.</p>
             <span class="date">Ngày đăng: 01/01/2024</span>
         </div>
         <div class="news-item">
-            <img src="../jpg/banner-books.jpg" alt="Image">
-            <h3><a href="#">Tiêu đề bài viết</a></h3>
-            <p class="summary">Tóm tắt ngắn gọn về nội dung bài viết...</p>
+            <img src="../jpg/nga-tu-so.jpg" alt="Image">
+            <h3><a href="https://www.example.com/nga-tu-so-giao-thoa">Ngã Tư Sở: Điểm Giao Thoa Của Những Khu Vực Sầm Uất</a></h3>
+            <p class="summary">Ngã Tư Sở là một trong những khu vực giao thông quan trọng tại Hà Nội, nơi kết nối nhiều tuyến đường lớn. Cùng tìm hiểu về sự phát triển và tiềm năng của khu vực này.</p>
             <span class="date">Ngày đăng: 01/01/2024</span>
         </div>
         <div class="news-item">
-            <img src="../jpg/banner-books.jpg" alt="Image">
-            <h3><a href="#">Tiêu đề bài viết</a></h3>
-            <p class="summary">Tóm tắt ngắn gọn về nội dung bài viết...</p>
+            <img src="../jpg/tt.jpg" alt="Image">
+            <h3><a href="https://www.example.com/dia-chi-du-an-ha-tang">Thông Tin Mới Nhất Về Các Dự Án Hạ Tầng Thành Phố</a></h3>
+            <p class="summary">Các dự án hạ tầng tại thành phố đang được triển khai mạnh mẽ để cải thiện giao thông và tiện ích cho cư dân. Cập nhật các thông tin mới nhất về tiến độ và kế hoạch triển khai.</p>
             <span class="date">Ngày đăng: 01/01/2024</span>
         </div>
-
-
     </div>
+
+    <script>
+        // Lấy dữ liệu tin tức từ News API
+        fetch('https://newsapi.org/v2/top-headlines?country=vn&apiKey=f888e044b2fc4ad5a48e52d9d1313f82')
+            .then(response => response.json())
+            .then(data => {
+                const articles = data.articles;
+                let newsHTML = '';
+
+                articles.forEach(article => {
+                    newsHTML += `
+          <div class="news-item">
+            <img src="${article.urlToImage || '../jpg/default.jpg'}" alt="Image">
+            <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
+            <p class="summary">${article.description || 'No description available'}</p>
+            <span class="date">Ngày đăng: ${new Date(article.publishedAt).toLocaleDateString()}</span>
+          </div>
+        `;
+                });
+
+                // Chèn các tin tức vào trong phần tử với id="news-list"
+                document.getElementById('news-list').innerHTML = newsHTML;
+            })
+            .catch(error => console.error('Error fetching news:', error));
+    </script>
+
+</div>
 
 
 </div>
