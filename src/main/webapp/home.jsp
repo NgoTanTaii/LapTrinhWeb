@@ -117,11 +117,12 @@
 
     <div class="slideshow-container">
         <div class="mySlides fade">
-            <img src="jpg/1.webp" alt="Banner 1">
+            <img src="jpg/1%20(1).webp" alt="Banner 1">
         </div>
         <div class="mySlides fade">
-            <img src="jpg/1.webp" alt="Banner 2">
+            <img src="jpg/20.jpg" alt="Banner 2">
         </div>
+
 
     </div>
 
@@ -144,16 +145,13 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
-            // Khi người dùng gõ vào ô tìm kiếm hoặc ô địa chỉ, thực hiện tìm kiếm ngay lập tức
             $('#search, #city').on('keyup', function () {
-                // Lấy giá trị của các trường tìm kiếm
                 var searchText = $('#search').val();
                 var city = $('#city').val();
 
-                // Kiểm tra nếu ô tìm kiếm không trống mới gửi yêu cầu Ajax
                 if (searchText.length > 0 || city.length > 0) {
                     $.ajax({
-                        url: 'SearchServlet',  // Địa chỉ servlet xử lý tìm kiếm
+                        url: 'SearchServlet',
                         type: 'POST',
                         data: {
                             search: searchText,
@@ -168,13 +166,13 @@
                         }
                     });
                 } else {
-                    // Nếu không có gì để tìm kiếm, xóa kết quả hiển thị
                     $('#search-results').html('');
                 }
             });
         });
 
     </script>
+
 </header>
 
 
@@ -423,8 +421,10 @@
         %>
         <div class="property-card">
             <a href="property-detail.jsp?id=<%= property.getId() %>" style="text-decoration: none; color: inherit;">
-                <img src="<%= property.getImageUrl() %>" alt="<%= property.getTitle() %>" style="width: 100%; height: auto;">
-                <h3><%= property.getTitle() %></h3>
+                <img src="<%= property.getImageUrl() %>" alt="<%= property.getTitle() %>"
+                     style="width: 100%; height: auto;">
+                <h3><%= property.getTitle() %>
+                </h3>
                 <p>
                     <%= property.getDescription().length() > 50 ? property.getDescription().substring(0, 50) + "..." : property.getDescription() %>
                 </p>

@@ -310,10 +310,10 @@
 
     <div class="slideshow-container">
         <div class="mySlides fade">
-            <img src="jpg/1.webp" alt="Banner 1">
+            <img src="jpg/1%20(1).webp" alt="Banner 1">
         </div>
         <div class="mySlides fade">
-            <img src="jpg/1.webp" alt="Banner 2">
+            <img src="jpg/1%20(1).webp" alt="Banner 2">
         </div>
     </div>
 
