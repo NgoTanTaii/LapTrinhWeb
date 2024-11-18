@@ -1,61 +1,42 @@
 package Entity;
 
-import java.sql.Timestamp;
+import java.util.List;
 
 public class Order {
     private int orderId;
-    private String customerName;
-    private String propertyName;
+    private int userId;
+    private double totalPrice;
     private String status;
-    private Timestamp createdAt;
+    private String createdAt;
+    private List<OrderItem> items;
 
-    // Constructor
-    public Order(int orderId, String customerName, String propertyName, String status, Timestamp createdAt) {
+    // Constructors, Getters, and Setters
+    public Order() {}
+
+    public Order(int orderId, int userId, double totalPrice, String status, String createdAt, List<OrderItem> items) {
         this.orderId = orderId;
-        this.customerName = customerName;
-        this.propertyName = propertyName;
+        this.userId = userId;
+        this.totalPrice = totalPrice;
         this.status = status;
         this.createdAt = createdAt;
+        this.items = items;
     }
 
-    // Getter and Setter methods
-    public int getOrderId() {
-        return orderId;
-    }
+    public int getOrderId() { return orderId; }
+    public void setOrderId(int orderId) { this.orderId = orderId; }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
-    }
+    public int getUserId() { return userId; }
+    public void setUserId(int userId) { this.userId = userId; }
 
-    public String getCustomerName() {
-        return customerName;
-    }
+    public double getTotalPrice() { return totalPrice; }
+    public void setTotalPrice(double totalPrice) { this.totalPrice = totalPrice; }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 
-    public String getPropertyName() {
-        return propertyName;
-    }
+    public String getCreatedAt() { return createdAt; }
+    public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
 
-    public void setPropertyName(String propertyName) {
-        this.propertyName = propertyName;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
+    public List<OrderItem> getItems() { return items; }
+    public void setItems(List<OrderItem> items) { this.items = items; }
 }
