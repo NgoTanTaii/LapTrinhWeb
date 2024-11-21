@@ -201,16 +201,23 @@ nav ul li a:hover {
   border-color: #ccc;
   width: 1000px;
 }
+.main .tintuc .main1 .tintuc1 img {
+  width: 300px;
+}
 .main .tintuc .main1 .tintuc1 .text {
   display: flex;
   flex-direction: column;
   margin-left: 20px;
 }
+.main .tintuc .main1 .tintuc1 .text p {
+  margin-bottom: 5px;
+}
 .main .tintuc .main1 .tintuc1 .text a {
   text-decoration: none;
   color: #000;
-  font-size: 25px;
-  margin-top: 40px;
+  font-size: 22px;
+  margin-top: 5px;
+  margin-bottom: 20px;
 }
 .main .tintuc .main1 .tintuc1 .text a:hover {
   color: darkred;
