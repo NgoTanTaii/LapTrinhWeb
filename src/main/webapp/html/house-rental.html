@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href=" ../css/house-rental.css">
+
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-top" style="width: 100%; position: sticky; top: 0; z-index: 1000;">
+            <div class="header-left">
+
+                <div class="contact-item">
+                    <img src="../jpg/phone-call.png" class="icon">
+                    <span>0123 456 789</span>
+                </div>
+                <div class="contact-item">
+                    <img src="../jpg/email.png" class="icon">
+                    <span>info@company.com</span>
+                </div>
+                <div class="contact-item">
+
+                    <img src="../jpg/location.png" class="icon">
+                    <span>123 Đường ABC, Quận XYZ, TP.HCM</span>
+                </div>
+
+            </div>
+            <div class="header-right" style="margin-top: 10px">
+
+
+                <a href="login.html" class="btn">
+                    <h3>Đăng nhập</h3>
+                </a>
+                <a href="register.html" class="btn">
+                    <h3>Đăng ký</h3>
+                </a>
+                <a href="post-status.html" class="btn">
+                    <h3>Đăng tin</h3>
+                </a>
+            </div>
+            <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()"
+                style="border: 1px solid #ccc; border-radius:100%;">
+                <img src="../jpg/heart%20(1).png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng"
+                    class="cart-icon">
+                <div class="item-count">0</div>
+                <div class="mini-cart">
+                    <h4>Bất động sản đã lưu</h4>
+                    <ul id="cart-items"></ul>
+                    <button id="go-to-cart" onclick="goToCart()">Đi tới xem bất động sản đã lưu</button>
+                </div>
+            </a>
+
+        </div>
+        <div class="menu">
+            <div class="header-bottom" style="height:60px;margin-top: 0 ">
+
+                <div class="store-name">
+                    <h1><a href="index.html">
+                            <span class="color1">HOME</span>
+                            <span class="color2">LANDER</span> <!-- Đổi từ VINA BOOK sang VINA BĐS -->
+                        </a></h1>
+                </div>
+
+
+                <nav>
+                    <ul>
+                        <li><a href="property-for-sale.html">Nhà Đất Bán</a>
+                            <ul>
+                                <li><a href="apartment-sale.html" >Bán căn hộ chung cư</a></li>
+                                <li><a href="house-sale.html" >Bán nhà riêng</a></li>
+                                <li><a href="villa-sale.html">Bán nhà biệt thự liền kề</a></li>
+                                <li><a href="street_houses-sale.html">Bán nhà mặt phố</a></li>
+                                <li><a href="farm_resort-sale.html">Bán trang trại, khu nghỉ dưỡng</a></li>
+                                <li><a href="warehouses_factories-sale.html">Bán kho , nhà xưởng</a></li>
+                                <li><a href="other_real_estate-sale.html">Bán loại bất động sản khác</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="property-for-rent.html">Nhà Đất Cho Thuê</a>
+                            <ul>
+                                <li><a href="apartment-rental.html">Cho thuê căn hộ chung cư</a></li>
+                                <li><a href="house-rental.html" style="color: #e03c31;">Cho thuê nhà riêng</a></li>
+                                <li><a href="villa-rental.html">Cho thuê nhà biệt thự, liền kề</a></li>
+                                <li><a href="street_houses-rental.html">Cho thuê nhà mặt phố</a></li>
+                                <li><a href="accommodation-rental.html">Cho thuê phòng trọ , nhà trọ</a></li>
+                                <li><a href="office-rental.html">Cho thuê văn phòng</a></li>
+                                <li><a href="other_real_estate-rental.html">Cho thuê loại bất động sản khác</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="project.html">Dự Án</a>
+                            <ul>
+                                <li><a href="#">Các dự án nổi bật</a></li>
+                                <li><a href="#">Dự án nhà ở</a></li>
+                                <li><a href="#">Dự án chung cư</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="news.html">Tin Tức</a>
+                            <ul>
+                                <li><a href="#">Tin thị trường</a></li>
+                                <li><a href="#">Xu hướng bất động sản</a></li>
+                                <li><a href="#">Phân tích và đánh giá</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="wiki.html">Wiki BĐS</a>
+                            <ul>
+                                <li><a href="#">Mua bán</a></li>
+                                <li><a href="#">Cho thuê</a></li>
+                                <li><a href="#">Tài chính</a></li>
+                                <li><a href="#">Phong thủy</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </nav>
+
+
+                <div class="contact-info">
+                    <img src="../jpg/phone-call.png" alt="Phone Icon" class="phone-icon">
+                    <span class="phone-number">0123 456 789</span>
+                </div>
+
+            </div>
+        </div>
+
+
+    </header>
+
+    <!-- Nội dung chính -->
+    <main class="content">
+        <!-- Container for Posts -->
+        <div class="product-container">
+            <h2>Danh sách cho thuê nhà riêng dành cho bạn</h2>
+            <!-- Sản phẩm 1 -->
+            <div class="product">
+                <img src=" ../jpg/img1.jpg" alt="Nhà 1">
+                <div class="product-description">
+                    <p>CHÍNH CHỦ CẦN BÁN CĂN PENHOUSE 400 M ECOPARK FULL ĐỒ SỔ CẦM TAY SẴN SÀNG GIAO DỊCH</p>
+                </div>
+                <div class="product-price">Giá: 24 tỷ VNĐ</div>
+                <div class="product-details">
+                    <p>Diện tích: 400m²</p>
+                    <p>Địa chỉ: Ecopark Grand - The Island , Xuân Quan, Văn Giang, Hưng Yên</p>
+                </div>
+                <a href="#" class="view-details">Xem chi tiết</a>
+            </div>
+
+            <!-- Sản phẩm 2 -->
+            <div class="product">
+                <img src=" ../jpg/img2.jpg" alt="Nhà 2">
+                <div class="product-description">
+                    <p>Ban quản lý dự án Vinhomes quỹ căn tháng 11 chính chủ studio 1PN 2PN 3PN, miễn phí trung gian</p>
+                </div>
+                <div class="product-price">Giá: 3 tỷ VNĐ</div>
+                <div class="product-details">
+                    <p>Diện tích: 120m²</p>
+                    <p>Địa chỉ: Đường Lê Văn Lương, Phường Nhân Chính, Thanh Xuân, Hà Nội</p>
+                </div>
+                <a href="#" class="view-details">Xem chi tiết</a>
+            </div>
+
+            <!-- Sản phẩm 3 -->
+            <div class="product">
+                <img src=" ../jpg/img3.jpg" alt="Nhà 3">
+                <div class="product-description">
+                    <p>Em Thư nhân viên CĐT chuyên phụ trách rổ hàng mua gốc CĐT & chuyển nhượng pháp lí minh bạch- CK
+                        17%</p>
+                </div>
+                <div class="product-price">Giá: 5,5 tỷ VNĐ</div>
+                <div class="product-details">
+                    <p>Diện tích: 60m²</p>
+                    <p>Địa chỉ: Dự án Diamond Centery Celadon City, Đường N1, Phường Sơn Kỳ, Tân Phú, Hồ Chí Minh</p>
+                </div>
+                <a href="#" class="view-details">Xem chi tiết</a>
+            </div>
+
+            <!-- Sản phẩm 4 -->
+            <div class="product">
+                <img src=" ../jpg/img19.jpg" alt="Nhà 4">
+                <div class="product-description">
+                    <p>Chuyên bán căn hộ Vinhomes Central Park & Landmark 81 giá tốt nhất (1-2-3-4 PN). LH 0901 692 ***
+                    </p>
+                </div>
+                <div class="product-price">Giá: 6 tỷ VNĐ</div>
+                <div class="product-details">
+                    <p>Diện tích: 80m²</p>
+                    <p>Địa chỉ: Dự án Vinhomes Central Park, Đường Điện Biên Phủ, Phường 22, Bình Thạnh, Hồ Chí Minh</p>
+                </div>
+                <a href="#" class="view-details">Xem chi tiết</a>
+            </div>
+
+            <!-- Sản phẩm 5 -->
+            <div class="product">
+                <img src=" ../jpg/img18.jpg" alt="Nhà 5">
+                <div class="product-description">
+                    <p>Tân Cảng 2PN 80m2 6,2 tỷ, 2PN 89m2 7,4 tỷ, 3PN 107m2 9,8 tỷ đã có sổ hồng, thương lượng 0937 600
+                        ***</p>
+                </div>
+                <div class="product-price">Giá: 7,4 tỷ VNĐ</div>
+                <div class="product-details">
+                    <p>Diện tích: 80m²</p>
+                    <p>Địa chỉ: Dự án Vinhomes Central Park, Đường Điện Biên Phủ, Phường 22, Bình Thạnh, Hồ Chí Minh</p>
+                </div>
+                <a href="#" class="view-details">Xem chi tiết</a>
+            </div>
+
+            <!-- Sản phẩm 6 -->
+            <div class="product">
+                <img src=" ../jpg/img17.jpg" alt="Nhà 6">
+                <div class="product-description">
+                    <p>Full giỏ hàng Vinhome Smart City, quỹ căn đẹp, giá tốt nhất thị trường, hỗ trợ tìm căn theo nhu
+                        cầu</p>
+                </div>
+                <div class="product-price">Giá: 7,5 tỷ VNĐ</div>
+                <div class="product-details">
+                    <p>Diện tích: 60m²</p>
+                    <p>Địa chỉ: Dự án Vinhomes Smart City, Phường Tây Mỗ, Nam Từ Liêm, Hà Nội.</p>
+                </div>
+                <a href="#" class="view-details">Xem chi tiết</a>
+            </div>
+
+            <!-- Sản phẩm 7 -->
+            <div class="product">
+                <img src=" ../jpg/img11.jpg" alt="Nhà 7">
+                <div class="product-description">
+                    <p>Quỹ căn stu,1-3PN chính chủ view đẹp, pháp lý rõ ràng, giá rẻ nhất, cắt lỗ tại Vinhomes Oceanpark
+                    </p>
+                </div>
+                <div class="product-price">Giá: 2,6 tỷ VNĐ</div>
+                <div class="product-details">
+                    <p>Diện tích: 59m²</p>
+                    <p>Địa chỉ: Dự án Vinhomes Ocean Park Gia Lâm, Xã Dương Xá, Gia Lâm, Hà Nội
+                    </p>
+                </div>
+                <a href="#" class="view-details">Xem chi tiết</a>
+            </div>
+
+            <!-- Sản phẩm 8 -->
+            <div class="product">
+                <img src=" ../jpg/img12.jpg" alt="Nhà 8">
+                <div class="product-description">
+                    <p>Tổng hợp quỹ căn hộ chuyển nhượng tại Goldmark city loại 2-3 & 4 Phòng ngủ giá tốt nhất thị
+                        trường</p>
+                </div>
+                <div class="product-price">Giá: 5,1 tỷ VNĐ</div>
+                <div class="product-details">
+                    <p>Diện tích: 83m²</p>
+                    <p>Địa chỉ: Dự án Goldmark City, Đường Hồ Tùng Mậu, Phường Phú Diễn, Bắc Từ Liêm, Hà Nội.</p>
+                </div>
+                <a href="#" class="view-details">Xem chi tiết</a>
+            </div>
+
+            <!-- Sản phẩm 9 -->
+            <div class="product">
+                <img src=" ../jpg/img13.jpg" alt="Nhà 9">
+                <div class="product-description">
+                    <p>KHÔNG GIAN SỐNG LÝ TƯỞNG - CĂN HỘ CAO CẤP MELODY LINH ĐÀM GIÁ ƯU ĐÃI TỪ CHỦ ĐẦU TƯ CHỈ TỪ 60TR/M2
+                    </p>
+                </div>
+                <div class="product-price">Giá: 4,92 tỷ VNĐ</div>
+                <div class="product-details">
+                    <p>Diện tích: 82m²</p>
+                    <p>Địa chỉ: Dự án Hà Nội Melody Residences, Đường Bằng Liệt, Phường Hoàng Liệt, Hoàng Mai, Hà Nội
+                    </p>
+                </div>
+                <a href="#" class="view-details">Xem chi tiết</a>
+            </div>
+            
+            <!-- Sản phẩm 10 -->
+            <div class="product">
+                <img src=" ../jpg/img14.jpg" alt="Nhà 10">
+                <div class="product-description">
+                    <p>Chỉ 2,2 tỷ cho căn 2PN diện tích 60m2; 70m2; 80m2 Vinhomes Grand Park. Thương lượng Khách thiện
+                        chív</p>
+                </div>
+                <div class="product-price">Giá: 2,2 tỷ VNĐ</div>
+                <div class="product-details">
+                    <p>Diện tích: 70m²</p>
+                    <p>Địa chỉ: Vinhomes Grand Park, Long Thạnh Mỹ, Quận 9, Hồ Chí Minh</p>
+                </div>
+                <a href="#" class="view-details">Xem chi tiết</a>
+            </div>
+
+            <!-- Sản phẩm 11 -->
+            <div class="product">
+                <img src=" ../jpg/img16.jpg" alt="Nhà 11">
+                <div class="product-description">
+                    <p>QUỸ CĂN HỘ STUDIO,1PN-3PN GIÁ TỐT, PHÁP LÝ RÕ RÀNG TẠI VINHOMES OCEAN PARK</p>
+                </div>
+                <div class="product-price">Giá: 2,6 tỷ VNĐ</div>
+                <div class="product-details">
+                    <p>Diện tích: 59m²</p>
+                    <p>Địa chỉ: Dự án Vinhomes Ocean Park Gia Lâm, Xã Dương Xá, Gia Lâm, Hà Nội</p>
+                </div>
+                <a href="#" class="view-details">Xem chi tiết</a>
+            </div>
+
+            <!-- Sản phẩm 12 -->
+            <div class="product">
+                <img src=" ../jpg/img15.jpg" alt="Nhà 12">
+                <div class="product-description">
+                    <p>Chuyên bán căn hộ Lumiere Riverside từ 1 PN đến 4 PN, Duplex, Penthouse, giá tốt nhất</p>
+                </div>
+                <div class="product-price">Giá: 7,3 tỷ VNĐ</div>
+                <div class="product-details">
+                    <p>Diện tích: 60m²</p>
+                    <p>Địa chỉ: Dự án Lumiere Riverside, Đường Xa Lộ Hà Nội, Phường An Phú, Quận 2, Hồ Chí Minh</p>
+                </div>
+                <a href="#" class="view-details">Xem chi tiết</a>
+            </div>
+        </div>
+
+    </main>
+
+    <div class="footer">
+        <div class="footer-top">
+            <h1><a href="homes">
+                    <span class="color1">HOME</span>
+                    <span class="color2">LANDER</span>
+                </a></h1>
+            <span class="footer-item"><i class="fas fa-phone"></i> Hotline: 0123 456 789</span>
+            <span class="footer-item"><i class="fas fa-envelope"></i> Hỗ trợ: support@batdongsan.com</span>
+            <span class="footer-item"><i class="fas fa-headset"></i> Chăm sóc: 0987 654 321</span>
+        </div>
+
+        <div class="footer-content">
+            <!-- Thông tin công ty -->
+            <div class="company-info">
+                <h3>Công ty Bất Động Sản</h3>
+                <p>Địa chỉ: 123 Đường ABC, Quận 1, TP.HCM</p>
+                <p>Điện thoại: 0123 456 789</p>
+            </div>
+
+            <!-- Liên kết nhanh -->
+            <div class="quick-links">
+                <h3>Liên kết nhanh</h3>
+                <ul>
+                    <li><a href="#">Trang chủ</a></li>
+                    <li><a href="#">Dự án</a></li>
+                    <li><a href="#">Tin tức</a></li>
+                    <li><a href="#">Liên hệ</a></li>
+                </ul>
+            </div>
+
+            <!-- Mạng xã hội -->
+            <div class="social-media">
+                <h3>Mạng xã hội</h3>
+                <a href="https://www.facebook.com/khoa.ngo.562114/" class="social-icon"><i class="fab fa-facebook"></i>
+                    Facebook</a>
+                <a href="https://www.instagram.com/khoa5462/" class="social-icon"><i class="fab fa-instagram"></i>
+                    Instagram</a>
+                <a href="https://mail.google.com/mail/u/0/?hl=vi#inbox" class="social-icon"><i
+                        class="fas fa-envelope"></i>
+                    Mail</a>
+            </div>
+
+            <!-- Form nhập email -->
+            <div class="newsletter">
+                <h3>Đăng ký nhận tin tức mới nhất</h3>
+                <form action="#" method="POST">
+                    <input type="email" name="email" placeholder="Nhập email của bạn" required>
+                    <button type="submit">Đăng ký</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 Công ty Bất Động Sản. Mọi quyền lợi thuộc về công ty.</p>
+        </div>
+
+
+    </div>
+</body>
+
+</html>
