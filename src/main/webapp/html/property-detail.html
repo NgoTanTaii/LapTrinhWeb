@@ -6,6 +6,61 @@
     <link rel="stylesheet" href="../css/property-detail.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-right: 0;
+            border-radius: 10px;
+        }
+
+        .u-lo li {
+            position: relative;
+            display: inline-block;
+            margin-right: 20px;
+            z-index: 10; /* Đảm bảo menu cha hiển thị trên cùng */
+        }
+
+        ul li a {
+            text-decoration: none;
+            display: inline-block;
+            color: #333;
+        }
+
+        /* Thiết lập cho menu con */
+        ul li ul {
+            display: none; /* Ẩn menu con mặc định */
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #f9f9f9;
+            min-width: 200px;
+            padding: 10px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 999; /* Đảm bảo menu con hiển thị trên các phần tử khác */
+        }
+
+        ul li ul li {
+            display: block;
+            margin: 0;
+        }
+
+        ul li ul li a {
+            padding: 10px 15px;
+            color: #333;
+            display: block;
+        }
+
+        /* Hiển thị menu con khi hover */
+        ul li:hover ul {
+            display: block;
+        }
+
+        /* Style cho menu con khi hover */
+        ul li ul li a:hover {
+            background-color: #eee;
+            text-decoration: none;
+
+        }
         .heart-container {
             position: relative;
             display: inline-block;
@@ -255,20 +310,53 @@
     <div class="menu">
         <div class="header-bottom" style="height:60px;margin-top: 0">
             <div class="store-name">
-                <h1><a href="homes">
+                <h1><a href="index.html">
                     <span class="color1">HOME</span>
                     <span class="color2">LANDER</span>
                 </a></h1>
             </div>
             <nav>
-                <ul>
-                    <li><a href="#nhadatban">Nhà Đất Bán</a></li>
-                    <li><a href="#nhadatchochue">Nhà Đất Cho Thuê</a></li>
-                    <li><a href="#duan">Dự Án</a></li>
-                    <li><a href="#tintuc">Tin Tức</a></li>
-                    <li><a href="#wikibds">Wiki BĐS</a></li>
+                <ul class="u-lo">
+                    <li><a href="property-for-sale.html">Nhà Đất Bán</a>
+                        <ul>
+                            <li><a href="#">Thông tin bán nhà đất</a></li>
+                            <li><a href="#">Mua bán bất động sản</a></li>
+                            <li><a href="#">Nhà đất giá rẻ</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="property-for-rent.html">Nhà Đất Cho Thuê</a>
+                        <ul>
+                            <li><a href="#">Thông tin cho thuê nhà đất</a></li>
+                            <li><a href="#">Thuê nhà nguyên căn</a></li>
+                            <li><a href="#">Thuê căn hộ giá rẻ</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="project.html">Dự Án</a>
+                        <ul>
+                            <li><a href="#">Các dự án nổi bật</a></li>
+                            <li><a href="#">Dự án nhà ở</a></li>
+                            <li><a href="#">Dự án chung cư</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="news.html">Tin Tức</a>
+                        <ul>
+                            <li><a href="#">Tin thị trường</a></li>
+                            <li><a href="#">Xu hướng bất động sản</a></li>
+                            <li><a href="#">Phân tích và đánh giá</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="wiki.html">Wiki BĐS</a>
+                        <ul>
+                            <li><a href="#">Mua bán</a></li>
+                            <li><a href="#">Cho thuê</a></li>
+                            <li><a href="#">Tài chính</a></li>
+                            <li><a href="#">Phong thủy</a></li>
+                        </ul>
+                    </li>
                 </ul>
+
             </nav>
+
             <div class="contact-info">
                 <img src="../jpg/phone-call.png" alt="Phone Icon" class="phone-icon">
                 <span class="phone-number">0123 456 789</span>
@@ -415,7 +503,7 @@
     <div class="related-properties-container" id="relatedProductsContainer">
         <a href="property-detail.html?id=1" style="text-decoration: none;">
             <div class="related-property">
-                <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
+                <img src="../jpg/1.jpg" alt="Sản phẩm 1">
                 <h4>Sản phẩm 1</h4>
                 <p style="display: flex; justify-content: space-between; color: red;">
                     <span>Giá: 1.5 tỷ</span>
@@ -431,24 +519,7 @@
         </a>
         <a href="property-detail.html?id=1" style="text-decoration: none;">
             <div class="related-property">
-                <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
-                <h4>Sản phẩm 1</h4>
-                <p style="display: flex; justify-content: space-between; color: red;">
-                    <span>Giá: 1.5 tỷ</span>
-                    <span>Diện tích: 100m²</span>
-                </p>
-                <p style="display: flex; align-items: center;">
-                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
-                         style="width: 16px; height: 16px; margin-right: 5px;">
-                    Địa chỉ: HCM
-                </p>
-            </div>
-
-        </a>
-
-        <a href="property-detail.html?id=1" style="text-decoration: none;">
-            <div class="related-property">
-                <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
+                <img src="../jpg/2.jpg" alt="Sản phẩm 1">
                 <h4>Sản phẩm 1</h4>
                 <p style="display: flex; justify-content: space-between; color: red;">
                     <span>Giá: 1.5 tỷ</span>
@@ -465,7 +536,7 @@
 
         <a href="property-detail.html?id=1" style="text-decoration: none;">
             <div class="related-property">
-                <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
+                <img src="../jpg/3.jpg" alt="Sản phẩm 1">
                 <h4>Sản phẩm 1</h4>
                 <p style="display: flex; justify-content: space-between; color: red;">
                     <span>Giá: 1.5 tỷ</span>
@@ -482,7 +553,24 @@
 
         <a href="property-detail.html?id=1" style="text-decoration: none;">
             <div class="related-property">
-                <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
+                <img src="../jpg/4.jpg" alt="Sản phẩm 1">
+                <h4>Sản phẩm 1</h4>
+                <p style="display: flex; justify-content: space-between; color: red;">
+                    <span>Giá: 1.5 tỷ</span>
+                    <span>Diện tích: 100m²</span>
+                </p>
+                <p style="display: flex; align-items: center;">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
+                         style="width: 16px; height: 16px; margin-right: 5px;">
+                    Địa chỉ: HCM
+                </p>
+            </div>
+
+        </a>
+
+        <a href="property-detail.html?id=1" style="text-decoration: none;">
+            <div class="related-property">
+                <img src="../jpg/5.jpg" alt="Sản phẩm 1">
                 <h4>Sản phẩm 1</h4>
                 <p style="display: flex; justify-content: space-between; color: red;">
                     <span>Giá: 1.5 tỷ</span>
@@ -498,7 +586,7 @@
         </a>
         <a href="property-detail.html?id=1" style="text-decoration: none;">
             <div class="related-property">
-                <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
+                <img src="../jpg/6.jpg" alt="Sản phẩm 1">
                 <h4>Sản phẩm 1</h4>
                 <p style="display: flex; justify-content: space-between; color: red;">
                     <span>Giá: 1.5 tỷ</span>
@@ -514,7 +602,7 @@
         </a>
         <a href="property-detail.html?id=1" style="text-decoration: none;">
             <div class="related-property">
-                <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
+                <img src="../jpg/7.jpg" alt="Sản phẩm 1">
                 <h4>Sản phẩm 1</h4>
                 <p style="display: flex; justify-content: space-between; color: red;">
                     <span>Giá: 1.5 tỷ</span>
@@ -542,7 +630,7 @@
     <div class="related-properties-container" id="relatedProductsContainer">
         <a href="property-detail.html?id=1" style="text-decoration: none;">
             <div class="related-property">
-                <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
+                <img src="../jpg/8.jpg" alt="Sản phẩm 1" style="height: 150px">
                 <h4>Sản phẩm 1</h4>
                 <p style="display: flex; justify-content: space-between; color: red;">
                     <span>Giá: 1.5 tỷ</span>
@@ -558,7 +646,7 @@
         </a>
         <a href="property-detail.html?id=1" style="text-decoration: none;">
             <div class="related-property">
-                <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
+                <img src="../jpg/9.jpg" alt="Sản phẩm 1">
                 <h4>Sản phẩm 1</h4>
                 <p style="display: flex; justify-content: space-between; color: red;">
                     <span>Giá: 1.5 tỷ</span>
@@ -574,24 +662,7 @@
         </a>
         <a href="property-detail.html?id=1" style="text-decoration: none;">
             <div class="related-property">
-                <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
-                <h4>Sản phẩm 1</h4>
-                <p style="display: flex; justify-content: space-between; color: red;">
-                    <span>Giá: 1.5 tỷ</span>
-                    <span>Diện tích: 100m²</span>
-                </p>
-                <p style="display: flex; align-items: center;">
-                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
-                         style="width: 16px; height: 16px; margin-right: 5px;">
-                    Địa chỉ: HCM
-                </p>
-            </div>
-
-        </a>
-
-        <a href="property-detail.html?id=1" style="text-decoration: none;">
-            <div class="related-property">
-                <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
+                <img src="../jpg/10.jpg" alt="Sản phẩm 1">
                 <h4>Sản phẩm 1</h4>
                 <p style="display: flex; justify-content: space-between; color: red;">
                     <span>Giá: 1.5 tỷ</span>
@@ -608,7 +679,24 @@
 
         <a href="property-detail.html?id=1" style="text-decoration: none;">
             <div class="related-property">
-                <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
+                <img src="../jpg/11.jpg" alt="Sản phẩm 1">
+                <h4>Sản phẩm 1</h4>
+                <p style="display: flex; justify-content: space-between; color: red;">
+                    <span>Giá: 1.5 tỷ</span>
+                    <span>Diện tích: 100m²</span>
+                </p>
+                <p style="display: flex; align-items: center;">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
+                         style="width: 16px; height: 16px; margin-right: 5px;">
+                    Địa chỉ: HCM
+                </p>
+            </div>
+
+        </a>
+
+        <a href="property-detail.html?id=1" style="text-decoration: none;">
+            <div class="related-property">
+                <img src="../jpg/13.jpg" alt="Sản phẩm 1">
                 <h4>Sản phẩm 1</h4>
                 <p style="display: flex; justify-content: space-between; color: red;">
                     <span>Giá: 1.5 tỷ</span>
@@ -626,11 +714,30 @@
 
         <!-- Thêm các sản phẩm liên quan khác -->
         <div class="more-products">
-            <button id="scrollLeftBtn"> <</button>
-            <button id="scrollRightBtn">️ ></button>
+            <button id="scrollLeftBtn1"> <</button>
+            <button id="scrollRightBtn1">️ ></button>
         </div>
     </div>
 </div>
+<!-- Form for Adding Comments (only shown if logged in) -->
+
+<div class="comment-section" style="padding-left: 135px">
+    <h3>Để lại bình luận của bạn:</h3>
+    <form action="SubmitCommentServlet" method="POST">
+        <input type="hidden" name="productId">
+        <textarea name="comment" rows="5" placeholder="Nhập bình luận của bạn..." required></textarea>
+        <button type="submit">Gửi bình luận</button>
+    </form>
+</div>
+
+<div class="login-prompt">
+    <p style=" margin-left: 135px;margin-top: 30px">Vui lòng <a href="login.jsp">đăng nhập</a> để có thể để lại bình
+        luận.</p>
+</div>
+
+
+
+
 <!-- Thêm banner dưới danh sách sản phẩm -->
 <div class="copyright">
     <p>© Mọi quyền thuộc về Homelander. Mọi thông tin liên quan vui lòng liên hệ với chúng tôi.</p>
