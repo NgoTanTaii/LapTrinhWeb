@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href=" ../css/house-rental.css">
+
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-top" style="width: 100%; position: sticky; top: 0; z-index: 1000;">
+            <div class="header-left">
+
+                <div class="contact-item">
+                    <img src="../jpg/phone-call.png" class="icon">
+                    <span>0123 456 789</span>
+                </div>
+                <div class="contact-item">
+                    <img src="../jpg/email.png" class="icon">
+                    <span>info@company.com</span>
+                </div>
+                <div class="contact-item">
+
+                    <img src="../jpg/location.png" class="icon">
+                    <span>123 Đường ABC, Quận XYZ, TP.HCM</span>
+                </div>
+
+            </div>
+            <div class="header-right" style="margin-top: 10px">
+
+
+                <a href="login.html" class="btn">
+                    <h3>Đăng nhập</h3>
+                </a>
+                <a href="register.html" class="btn">
+                    <h3>Đăng ký</h3>
+                </a>
+                <a href="post-status.html" class="btn">
+                    <h3>Đăng tin</h3>
+                </a>
+            </div>
+            <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()"
+                style="border: 1px solid #ccc; border-radius:100%;">
+                <img src="../jpg/heart%20(1).png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng"
+                    class="cart-icon">
+                <div class="item-count">0</div>
+                <div class="mini-cart">
+                    <h4>Bất động sản đã lưu</h4>
+                    <ul id="cart-items"></ul>
+                    <button id="go-to-cart" onclick="goToCart()">Đi tới xem bất động sản đã lưu</button>
+                </div>
+            </a>
+
+        </div>
+        <div class="menu">
+            <div class="header-bottom" style="height:60px;margin-top: 0 ">
+
+                <div class="store-name">
+                    <h1><a href="index.html">
+                            <span class="color1">HOME</span>
+                            <span class="color2">LANDER</span> <!-- Đổi từ VINA BOOK sang VINA BĐS -->
+                        </a></h1>
+                </div>
+
+
+                <nav>
+                    <ul>
+                        <li><a href="property-for-sale.html">Nhà Đất Bán</a>
+                            <ul>
+                                <li><a href="apartment-sale.html" >Bán căn hộ chung cư</a></li>
+                                <li><a href="house-sale.html" >Bán nhà riêng</a></li>
+                                <li><a href="villa-sale.html">Bán nhà biệt thự liền kề</a></li>
+                                <li><a href="street_houses-sale.html">Bán nhà mặt phố</a></li>
+                                <li><a href="farm_resort-sale.html">Bán trang trại, khu nghỉ dưỡng</a></li>
+                                <li><a href="warehouses_factories-sale.html">Bán kho , nhà xưởng</a></li>
+                                <li><a href="other_real_estate-sale.html">Bán loại bất động sản khác</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="property-for-rent.html">Nhà Đất Cho Thuê</a>
+                            <ul>
+                                <li><a href="apartment-rental.html">Cho thuê căn hộ chung cư</a></li>
+                                <li><a href="house-rental.html" style="color: #e03c31;">Cho thuê nhà riêng</a></li>
+                                <li><a href="villa-rental.html">Cho thuê nhà biệt thự, liền kề</a></li>
+                                <li><a href="street_houses-rental.html">Cho thuê nhà mặt phố</a></li>
+                                <li><a href="accommodation-rental.html">Cho thuê phòng trọ , nhà trọ</a></li>
+                                <li><a href="office-rental.html">Cho thuê văn phòng</a></li>
+                                <li><a href="other_real_estate-rental.html">Cho thuê loại bất động sản khác</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="project.html">Dự Án</a>
+                            <ul>
+                                <li><a href="#">Các dự án nổi bật</a></li>
+                                <li><a href="#">Dự án nhà ở</a></li>
+                                <li><a href="#">Dự án chung cư</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="news.html">Tin Tức</a>
+                            <ul>
+                                <li><a href="#">Tin thị trường</a></li>
+                                <li><a href="#">Xu hướng bất động sản</a></li>
+                                <li><a href="#">Phân tích và đánh giá</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="wiki.html">Wiki BĐS</a>
+                            <ul>
+                                <li><a href="#">Mua bán</a></li>
+                                <li><a href="#">Cho thuê</a></li>
+                                <li><a href="#">Tài chính</a></li>
+                                <li><a href="#">Phong thủy</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </nav>
+
+
+                <div class="contact-info">
+                    <img src="../jpg/phone-call.png" alt="Phone Icon" class="phone-icon">
+                    <span class="phone-number">0123 456 789</span>
+                </div>
+
+            </div>
+        </div>
+
+
+    </header>
+
+    <!-- Nội dung chính -->
+    <main class="content">
+        <!-- Container for Posts -->
+        <div class="product-container">
+            <h2>Danh sách cho thuê nhà riêng dành cho bạn</h2>
+            <!-- Sản phẩm 1 -->
+            <div class="product">
+                <img src=" ../jpg/img142.jpg" alt="Nhà 1">
+                <div class="product-description">
+                    <p>Cho thuê nhà riêng dài hạn diện tích tầng 1 270m2, lửng 64m2</p>
+                </div>
+                <div class="product-price">Giá: 20 triệu/tháng</div>
+                <div class="product-details">
+                    <p>Diện tích: 270 m²</p>
+                    <p>Địa chỉ: Đường Quốc Lộ 13, Phường Hiệp Bình Phước, Thủ Đức, Hồ Chí Minh</p>
+                </div>
+                <a href="chi-tiet-san-pham.html" class="view-details">Xem chi tiết</a>
+            </div>
+
+            <!-- Sản phẩm 2 -->
+            <div class="product">
+                <img src=" ../jpg/img143.jpg" alt="Nhà 2">
+                <div class="product-description">
+                    <p>Cho thuê nhà nguyên căn, 1 trệnt 1 lầu chỉ 5tr5 trong khu dân cư Hiệp Phát</p>
+                </div>
+                <div class="product-price">Giá: 5,5 triệu/tháng</div>
+                <div class="product-details">
+                    <p>Diện tích: 100 m²</p>
+                    <p>Địa chỉ: Đường Nguyễn Đức Thuận, Phường Hiệp Thành, Thủ Dầu Một, Bình Dương</p>
+                </div>
+                <a href="chi-tiet-san-pham.html" class="view-details">Xem chi tiết</a>
+            </div>
+
+            <!-- Sản phẩm 3 -->
+            <div class="product">
+                <img src=" ../jpg/img144.jpg" alt="Nhà 3">
+                <div class="product-description">
+                    <p>Cho thuê nhà nguyên căn chính chủ: 1 trệt 1 lầu, 2WC, DT 3,5*12m, có 2PN 2WC</p>
+                </div>
+                <div class="product-price">Giá: 4,3 triệu/tháng</div>
+                <div class="product-details">
+                    <p>Diện tích: 42 m²</p>
+                    <p>Địa chỉ: Nguyễn Thị Sáng, Đông Thạnh, Hóc Môn, Hồ Chí Minh</p>
+                </div>
+                <a href="chi-tiet-san-pham.html" class="view-details">Xem chi tiết</a>
+            </div>
+
+            <!-- Sản phẩm 4 -->
+            <div class="product">
+                <img src=" ../jpg/img145.jpg" alt="Nhà 4">
+                <div class="product-description">
+                    <p>Chính chủ cần cho HGĐ thuê nhà số 2 - B4 ngách 12 ngõ Văn Hương, Đống Đa, HN
+                    </p>
+                </div>
+                <div class="product-price">Giá: 10 triệu/tháng</div>
+                <div class="product-details">
+                    <p>Diện tích: 22 m²</p>
+                    <p>Địa chỉ: Nhà số 2 - B4 ngách 12 ngõ Văn Hương, Phố Tôn Đức Thắng, Phường Hàng Bột, Đống Đa, Hà Nội</p>
+                </div>
+                <a href="chi-tiet-san-pham.html" class="view-details">Xem chi tiết</a>
+            </div>
+
+            <!-- Sản phẩm 5 -->
+            <div class="product">
+                <img src=" ../jpg/img146.jpg" alt="Nhà 5">
+                <div class="product-description">
+                    <p>Cho thuê 2 tầng nhà mặt ngõ Nguyễn Chánh, 52m2/tầng, MT 5,3m thang máy, nội thất đầy đủ. 22tr/tháng</p>
+                </div>
+                <div class="product-price">Giá: 22 triệu/tháng</div>
+                <div class="product-details">
+                    <p>Diện tích: 52 m²</p>
+                    <p>Địa chỉ: Đường Nguyễn Chánh, Phường Trung Hòa, Cầu Giấy, Hà Nội</p>
+                </div>
+                <a href="chi-tiet-san-pham.html" class="view-details">Xem chi tiết</a>
+            </div>
+
+            <!-- Sản phẩm 6 -->
+            <div class="product">
+                <img src=" ../jpg/img147.jpg" alt="Nhà 6">
+                <div class="product-description">
+                    <p>Cho thuê nhà 5 tầng - khu tập thể tài chính - kế toán, Nam Từ Liêm, Hà Nội</p>
+                </div>
+                <div class="product-price">Giá: 15 triệu/tháng</div>
+                <div class="product-details">
+                    <p>Diện tích: 45 m²</p>
+                    <p>Địa chỉ: Đường Cầu Diễn, Phường Cầu Diễn, Nam Từ Liêm, Hà Nội</p>
+                </div>
+                <a href="chi-tiet-san-pham.html" class="view-details">Xem chi tiết</a>
+            </div>
+
+            <!-- Sản phẩm 7 -->
+            <div class="product">
+                <img src=" ../jpg/img148.jpg" alt="Nhà 7">
+                <div class="product-description">
+                    <p>Cho thuê nhà Số 181/11 Đường 3/2, P11, Q10.DT 4x14m, 1 trệt, 1 lầu, giá 20tr/th TL
+                    </p>
+                </div>
+                <div class="product-price">Giá: 20 triệu/tháng</div>
+                <div class="product-details">
+                    <p>Diện tích: 56 m²</p>
+                    <p>Địa chỉ: 181/11, Đường 3/2, Phường 11, Quận 10, Hồ Chí Minh
+                    </p>
+                </div>
+                <a href="chi-tiet-san-pham.html" class="view-details">Xem chi tiết</a>
+            </div>
+
+            <!-- Sản phẩm 8 -->
+            <div class="product">
+                <img src=" ../jpg/img149.jpg" alt="Nhà 8">
+                <div class="product-description">
+                    <p>Chính chủ cho thuê nhà ở Hoàng Quốc Việt - 40m2 - 4 tầng - 3PN - 3VS - gần phố - gần bãi đỗ ô tô</p>
+                </div>
+                <div class="product-price">Giá: 12 triệu/tháng</div>
+                <div class="product-details">
+                    <p>Diện tích: 40 m²</p>
+                    <p>Địa chỉ: Ngõ 5, Đường Hoàng Quốc Việt, Phường Nghĩa Đô, Cầu Giấy, Hà Nội</p>
+                </div>
+                <a href="chi-tiet-san-pham.html" class="view-details">Xem chi tiết</a>
+            </div>
+
+            <!-- Sản phẩm 9 -->
+            <div class="product">
+                <img src=" ../jpg/img150.jpg" alt="Nhà 9">
+                <div class="product-description">
+                    <p>Cho thuê nhà riêng hẻm 152 Nguyễn Trọng Tuyển, 1 trệt 1 lầu diện tích 85,1 m2 giá 15tr/tháng
+                    </p>
+                </div>
+                <div class="product-price">Giá: 15 triệu/tháng</div>
+                <div class="product-details">
+                    <p>Diện tích: 85,1 m²</p>
+                    <p>Địa chỉ: Hẻm 152, Đường Nguyễn Trọng Tuyển, Phường 8, Phú Nhuận, Hồ Chí Minh
+                    </p>
+                </div>
+                <a href="chi-tiet-san-pham.html" class="view-details">Xem chi tiết</a>
+            </div>
+            
+            <!-- Sản phẩm 10 -->
+            <div class="product">
+                <img src=" ../jpg/img151.jpg" alt="Nhà 10">
+                <div class="product-description">
+                    <p>Chính chủ cho thuê tầng 1 + 2 nhà riêng mặt ngõ rộng 131 Thái Hà</p>
+                </div>
+                <div class="product-price">Giá: 28 triệu/tháng</div>
+                <div class="product-details">
+                    <p>Diện tích: 100 m²</p>
+                    <p>Địa chỉ: 131, Phố Thái Hà, Phường Trung Liệt, Đống Đa, Hà Nội</p>
+                </div>
+                <a href="chi-tiet-san-pham.html" class="view-details">Xem chi tiết</a>
+            </div>
+
+            <!-- Sản phẩm 11 -->
+            <div class="product">
+                <img src=" ../jpg/img152.jpg" alt="Nhà 11">
+                <div class="product-description">
+                    <p>Cho thuê nhà đầy đủ nội thất đường 65 KDC Tân Quy Đông, Q7 DT 5x20m, 1trệt 3lầu 25tr LH 0902 428 ***</p>
+                </div>
+                <div class="product-price">Giá: 25 triệu/tháng</div>
+                <div class="product-details">
+                    <p>Diện tích: 100 m²</p>
+                    <p>Địa chỉ: Đường Số 65, Phường Tân Phong, Quận 7, Hồ Chí Minh</p>
+                </div>
+                <a href="chi-tiet-san-pham.html" class="view-details">Xem chi tiết</a>
+            </div>
+
+            <!-- Sản phẩm 12 -->
+            <div class="product">
+                <img src=" ../jpg/img153.jpg" alt="Nhà 12">
+                <div class="product-description">
+                    <p>Cho thuê nhà để ở hoặc làm văn phòng gần Gigamall - Không gian sống lý tưởng</p>
+                </div>
+                <div class="product-price">Giá: 25 triệu/tháng</div>
+                <div class="product-details">
+                    <p>Diện tích: 76 m²</p>
+                    <p>Địa chỉ: Đường Số 25, Phường Hiệp Bình Chánh, Thủ Đức, Hồ Chí Minh</p>
+                </div>
+                <a href="chi-tiet-san-pham.html" class="view-details">Xem chi tiết</a>
+            </div>
+        </div>
+
+    </main>
+
+    <div class="footer">
+        <div class="footer-top">
+            <h1><a href="homes">
+                    <span class="color1">HOME</span>
+                    <span class="color2">LANDER</span>
+                </a></h1>
+            <span class="footer-item"><i class="fas fa-phone"></i> Hotline: 0123 456 789</span>
+            <span class="footer-item"><i class="fas fa-envelope"></i> Hỗ trợ: support@batdongsan.com</span>
+            <span class="footer-item"><i class="fas fa-headset"></i> Chăm sóc: 0987 654 321</span>
+        </div>
+
+        <div class="footer-content">
+            <!-- Thông tin công ty -->
+            <div class="company-info">
+                <h3>Công ty Bất Động Sản</h3>
+                <p>Địa chỉ: 123 Đường ABC, Quận 1, TP.HCM</p>
+                <p>Điện thoại: 0123 456 789</p>
+            </div>
+
+            <!-- Liên kết nhanh -->
+            <div class="quick-links">
+                <h3>Liên kết nhanh</h3>
+                <ul>
+                    <li><a href="#">Trang chủ</a></li>
+                    <li><a href="#">Dự án</a></li>
+                    <li><a href="#">Tin tức</a></li>
+                    <li><a href="#">Liên hệ</a></li>
+                </ul>
+            </div>
+
+            <!-- Mạng xã hội -->
+            <div class="social-media">
+                <h3>Mạng xã hội</h3>
+                <a href="https://www.facebook.com/khoa.ngo.562114/" class="social-icon"><i class="fab fa-facebook"></i>
+                    Facebook</a>
+                <a href="https://www.instagram.com/khoa5462/" class="social-icon"><i class="fab fa-instagram"></i>
+                    Instagram</a>
+                <a href="https://mail.google.com/mail/u/0/?hl=vi#inbox" class="social-icon"><i
+                        class="fas fa-envelope"></i>
+                    Mail</a>
+            </div>
+
+            <!-- Form nhập email -->
+            <div class="newsletter">
+                <h3>Đăng ký nhận tin tức mới nhất</h3>
+                <form action="#" method="POST">
+                    <input type="email" name="email" placeholder="Nhập email của bạn" required>
+                    <button type="submit">Đăng ký</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 Công ty Bất Động Sản. Mọi quyền lợi thuộc về công ty.</p>
+        </div>
+
+
+    </div>
+</body>
+
+</html>
