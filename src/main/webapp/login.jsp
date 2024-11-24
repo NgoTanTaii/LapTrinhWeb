@@ -53,7 +53,6 @@
         }
 
         .btn {
-
             padding: 10px;
             border-radius: 4px;
             cursor: pointer;
@@ -66,7 +65,7 @@
         }
 
         .submit-btn {
-            border-radius:5px ;
+            border-radius: 5px;
             height: 40px;
             width: 100%;
             background-color: red;
@@ -130,12 +129,12 @@
 
         <div class="social-login">
             <p>Hoặc đăng nhập bằng:</p>
-            <button class="btn btn-facebook" onclick="handleFacebookLogin()">
-                <i class="fab fa-facebook-f"></i> Facebook
+            <button class="btn btn-facebook" onclick="checkLoginState()">
+                <i class="fab fa-facebook-f"></i> Đăng nhập bằng Facebook
             </button>
             <div id="g_id_onload"
                  data-client_id="161137938230-6h6mbfajcfra9avc0762peh4556202hq.apps.googleusercontent.com"
-                 data-login_uri="http://localhost:8080/untitled4/loginWithGoogle">
+                 data-login_uri="http://localhost:8080/Batdongsan/loginWithGoogle">
             </div>
             <div class="g_id_signin" data-type="standard"></div>
         </div>
@@ -148,36 +147,83 @@
 </div>
 
 <script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://connect.facebook.net/en_US/sdk.js"></script>
 <script>
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '1773989986680875',
+            cookie: true,
+            xfbml: true,
+            version: 'v15.0'
+        });
+    };
+
+    function checkLoginState() {
+        FB.getLoginStatus(function (response) {
+            statusChangeCallback(response);
+        });
+    }
+
+    function statusChangeCallback(response) {
+        if (response.status === 'connected') {
+            fetchUserData();
+        } else {
+            FB.login(function (response) {
+                if (response.authResponse) {
+                    fetchUserData();
+                }
+            }, {scope: 'public_profile,email'});
+        }
+    }
+
+    function fetchUserData() {
+        FB.api('/me', {fields: 'id,name,email'}, function (response) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "/LoginServlet", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.send(`facebookId=${response.id}&name=${response.name}&email=${response.email}`);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    window.location.href = "welcome";
+                }
+            };
+        });
+    }
+</script>
+
+
+<script>
+    // Google Sign-In setup
     google.accounts.id.initialize({
         client_id: "161137938230-6h6mbfajcfra9avc0762peh4556202hq.apps.googleusercontent.com",
         callback: handleCredentialResponse
     });
 
+    // Handle the response from Google
     function handleCredentialResponse(response) {
-        // Send the credential to the server
         fetch('/loginWithGoogle', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             body: `credential=${response.credential}`
         })
-            .then(res => {
-                if (!res.ok) throw new Error('Authorization failed');
-                return res.text();
+            .then(res => res.text())
+            .then(data => {
+                console.log('Login successful', data);
+                window.location.href = "welcome"; // Redirect after successful login
             })
-            .then(data => console.log('Login successful:', data))
-            .catch(error => console.error(error));
+            .catch(error => console.error("Error:", error));
     }
 
     // Render the Google Sign-In button
     google.accounts.id.renderButton(
         document.getElementById("g_id_onload"),
-        {theme: "outline", size: "large"}
+        { theme: "outline", size: "large" }
     );
 
-    // Optional: Display the One Tap prompt if desired
     google.accounts.id.prompt();
 </script>
+
 
 </body>
 </html>

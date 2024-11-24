@@ -2,11 +2,15 @@
 <%@ page import="Dao.PropertyDAO" %>
 <%@ page import="Entity.Property1" %>
 <%@ page import="java.util.List" %>
+<%@ page import="Dao.PosterDAO" %>
+<%@ page import="Entity.Poster" %>
 <%@ page import="Entity.Comment" %>
+<%@ page import="java.util.ArrayList" %>
+
 <%@ page import="Dao.CommentDAO" %>
-<%@ page import="Entity.User" %>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 <link rel="stylesheet" href="css/property-detail.css">
 <meta charset="UTF-8">
 <title>Property Details</title>
@@ -274,7 +278,6 @@
             background-color: #f9f9f9; /* Màu nền nhẹ cho phần bản quyền */
         }
     </style>
-
 </head>
 <header class="header">
     <div class="header-top" style="width: 100%; position: sticky; top: 0; z-index: 1000;">
@@ -309,7 +312,14 @@
                 </h3>
             </a>
 
-            <a href="logout" class="btn"><h3>Đăng xuất</h3></a>
+            <a href="javascript:void(0)" id="logoutButton" class="btn" onclick="document.getElementById('logoutForm').submit();">
+                <h3>Đăng xuất</h3>
+            </a>
+
+            <!-- Hidden Form to Logout -->
+            <form id="logoutForm" action="logout" method="POST" style="display: none;">
+                <button type="submit" style="display: none;"></button> <!-- This button will not be visible -->
+            </form>
             <% } else { %>
             <a href="login.jsp" class="btn"><h3>Đăng nhập</h3></a>
             <a href="register.jsp" class="btn"><h3>Đăng ký</h3></a>
@@ -319,20 +329,144 @@
 
     </div>
 
-    <!-- Floating Cart Icon -->
-    <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()"
-       style="border:1px solid #ccc; border-radius:100%;">
-        <img src="jpg/heart%20(1).png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng"
-             class="cart-icon">
-        <div class="item-count">0</div>
-        <div class="mini-cart">
-            <h4>Bất động sản đã lưu</h4>
-            <ul id="cart-items"></ul>
-            <button id="go-to-cart" onclick="goToCart()">Đi tới xem bất động sản đã lưu</button>
+    <a href="javascript:void(0)" id="floating-cart" class="floating-cart" onclick="toggleMiniCart()"
+       style="border: 1px solid #ccc; border-radius: 50%; position: fixed; bottom: 20px; right: 20px; z-index: 999; padding: 10px; background-color: white;">
+        <img src="jpg/heart%20(1).png" style="width: 30px; height: 30px;" alt="Giỏ hàng" class="cart-icon">
+        <div class="item-count" id="item-count"
+             style="position: absolute; top: 0; right: 0; background-color: red; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px;">
+            0
+        </div>
+        <div class="mini-cart" id="mini-cart"
+             style="display: none; position: absolute; bottom: 50px; right: 0; width: 250px; background-color: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+            <h4 style="margin-top: 0;">Bất động sản đã lưu</h4>
+            <ul id="cart-items" style="list-style-type: none; padding: 0; margin: 10px 0;">
+                <!-- Mỗi sản phẩm có một form để xóa -->
+                <li id="mini-cart-item-1">
+                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+
+                        <form action="removeMiniCartItem" method="POST" style="display: inline;">
+                            <input type="hidden" name="propertyId" value="1">
+                            <button type="submit" class="btn btn-sm btn-danger ml-3"
+                                    style="border: none; background-color: red; color: white; padding: 5px; border-radius: 4px; cursor: pointer;">
+                                <i class="fas fa-trash-alt"></i> Xóa
+                            </button>
+                        </form>
+                    </div>
+                </li>
+                <!-- Thêm các mục khác tương tự với ID và giá trị khác nhau -->
+            </ul>
+            <button id="go-to-cart" onclick="goToCart()"
+                    style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer;">
+                Đi tới xem bất động sản đã lưu
+            </button>
         </div>
     </a>
 
-    <!-- Menu Section -->
+    <script>
+        // Tự động tải số lượng sản phẩm trong giỏ hàng khi trang được tải
+        document.addEventListener("DOMContentLoaded", function () {
+            loadCartCount(); // Gọi hàm để tải số lượng mục trong giỏ hàng
+        });
+
+        // Toggle Mini Cart visibility
+        function toggleMiniCart() {
+            var miniCart = document.getElementById('mini-cart');
+            if (miniCart.style.display === 'none' || miniCart.style.display === '') {
+                miniCart.style.display = 'block';
+                loadCartItems(); // Load cart items khi mở mini-cart
+            } else {
+                miniCart.style.display = 'none';
+            }
+        }
+
+        // Hàm tải số lượng sản phẩm trong giỏ hàng
+        function loadCartCount() {
+            fetch('http://localhost:8080/Batdongsan/getMiniCart', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('item-count').innerText = data.itemCount;
+                    } else {
+                        document.getElementById('item-count').innerText = 0;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading cart count:', error);
+                    document.getElementById('item-count').innerText = 0;
+                });
+        }
+
+        // Redirect to Cart Page
+        function goToCart() {
+            window.location.href = 'cart.jsp';  // Thay đổi nếu cần
+        }
+
+        // Load Cart Items via AJAX
+        function loadCartItems() {
+            fetch('http://localhost:8080/Batdongsan/getMiniCart', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const cartItemsContainer = document.getElementById('cart-items');
+                    cartItemsContainer.innerHTML = '';
+
+                    if (data.success) {
+                        document.getElementById('item-count').innerText = data.itemCount;
+
+                        if (data.cartItems.length > 0) {
+                            data.cartItems.forEach(item => {
+                                const li = document.createElement('li');
+                                li.id = `cart-item-${item.propertyId}`;
+
+                                li.innerHTML = `
+                            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                <img src="${item.imageUrl}" alt="${item.title}" class="cart-item-image" style="width: 50px; height: 50px; margin-right: 10px;">
+                                <div>
+                                    <h5>${item.title}</h5>
+                                    <p style="color:darkred">Giá: ${item.price} tỷ</p>
+                                    <p style="color:darkred">Diện tích: ${item.area} m²</p>
+                                    <p>Địa chỉ: ${item.address}</p>
+                                    <p>Số lượng: ${item.quantity}</p>
+                 <!-- Form xóa sản phẩm -->
+<form action="removeMiniCartItem" method="POST" style="display: inline;">
+    <input type="hidden" name="propertyId" value="${item.propertyId}">
+    <button type="submit" class="btn btn-sm btn-danger ml-3" style="border: none; background-color: red; color: white; padding: 5px; border-radius: 4px; cursor: pointer;">
+        <i class="fas fa-trash-alt"></i> Xóa
+    </button>
+</form>
+
+
+                                </div>
+                            </div>
+                        `;
+                                cartItemsContainer.appendChild(li);
+                            });
+                        } else {
+                            cartItemsContainer.innerHTML = '<li>Giỏ hàng trống</li>';
+                        }
+                    } else {
+                        cartItemsContainer.innerHTML = `<li>${data.message}</li>`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading cart items:', error);
+                    document.getElementById('cart-items').innerHTML = '<li>Đã xảy ra lỗi khi tải giỏ hàng.</li>';
+                });
+        }
+
+    </script>
+
     <div class="menu">
         <div class="header-bottom" style="height:60px;margin-top: 0">
             <div class="store-name">
@@ -375,7 +509,6 @@
     } else {
 %>
 
-
 <div class="container" style="max-width:80% ">
     <div class="property-detail">
         <h2><%= property.getTitle() %>
@@ -416,23 +549,40 @@
             // Tạo URL nhúng Google Maps không có API key
             String mapUrl = "https://www.google.com/maps?q=" + formattedAddress + "&output=embed";
         %>
-        <p>Địa chỉ: <%= property.getAddress() %>
+        <p><i class="fas fa-map-marker-alt"></i> <%= property.getAddress() %>
         </p>
-        <p>Giá: <%= property.getPrice() %> tỷ</p>
-        <p>Diện tích: <%= property.getArea() %> m²</p>
-        <p>Mô tả: <%= property.getDescription() %>
+        <p style="color: darkred"><i class="fas fa-money-bill-wave"></i> <%= property.getPrice() %> tỷ</p>
+        <p style="color: darkred"><i class="fas fa-ruler-combined"></i> <%= property.getArea() %> m²</p>
+        <p><i class="fas fa-info-circle"></i><%= property.getDescription() %>
         </p>
-        <div class="heart-icon"
-             onclick="<% if (session.getAttribute("username") != null) { %>
-                     addToFavorites('<%= property.getId() %>', '<%= property.getTitle() %>', <%= property.getPrice() %>, <%= property.getArea() %>, '<%= property.getImageUrl() %>','<%= property.getAddress() %>');
-                 <% } else { %>
-                     alert('Vui lòng đăng nhập để thêm vào giỏ hàng.');
-                     window.location.href = 'login.jsp';
-                     <% } %>">
-            <img src="jpg/heartred.png" alt="Heart Icon" class="heart-image">
+
+        </p>
+        <%
+            String message = (String) session.getAttribute("message");
+            if (message != null) {
+        %>
+        <div class="alert alert-info" style="color: darkred;padding-top: 30px;font-size: 30px   "><i class="fas fa-info-circle"></i>
+            <%= message %>
         </div>
+        <%
+                // Optionally remove the message after displaying it
+                session.removeAttribute("message");
+            }
+        %>
 
+        <form action="addToCart" method="post" style="display: inline;">
+            <input type="hidden" name="propertyId" value="<%= property.getId() %>">
+            <input type="hidden" name="title" value="<%= property.getTitle() %>">
+            <input type="hidden" name="price" value="<%= property.getPrice() %>">
+            <input type="hidden" name="area" value="<%= property.getArea() %>">
+            <input type="hidden" name="imageUrl" value="<%= property.getImageUrl() %>">
+            <input type="hidden" name="address" value="<%= property.getAddress() %>">
 
+            <!-- Heart icon as submit button -->
+            <button type="submit" class="heart-icon" style="border: none; background: transparent; padding: 0;">
+                <img src="jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </button>
+        </form>
 
     </div>
 
@@ -504,24 +654,37 @@
         });
     </script>
 
+
+    <%
+
+        PosterDAO posterDAO = new PosterDAO();
+        Poster poster = posterDAO.getPosterByPropertyId(Integer.parseInt(propertyId));
+
+        if (poster == null) {
+            out.println("<h2>Poster information not found</h2>");
+        } else {
+    %>
+
     <div class="sender-info">
         <h3>Thông tin người đăng</h3>
         <div class="sender-image">
-            <img src="jpg/hinh-nen-gai-xinh.jpg" alt="Người đăng" class="sender-avatar">
+            <img src="<%= poster.getImgUrl() %>"
+                 alt="Người đăng" class="sender-avatar">
         </div>
         <div class="info-box">
-
-            <span id="sender-name">Nguyễn Văn A</span>
+            <span id="sender-name"><%= poster.getName() %></span>
         </div>
         <div class="info-box">
             <span class="icon" style="margin-bottom: 12px;">✉️</span>
-            <span id="sender-email">nguyenvana@example.com</span>
+            <span id="sender-email"><%= poster.getMail() %></span>
         </div>
         <div class="info-box">
             <span class="icon" style="margin-bottom: 12px;">📱</span>
-            <span id="sender-zalo">https://zalo.me/123456789</span>
+            <span id="sender-zalo">https://zalo.me/<%= poster.getPhone() %></span>
         </div>
     </div>
+
+    <% } %>
 
 </div>
 
@@ -751,278 +914,334 @@
 </div>
 
 
+<script>
+    const container1 = document.getElementById('relatedProductsContainer1');
 
-
-
-
-
-
-
-    <script>
-        const container1 = document.getElementById('relatedProductsContainer1');
-
-        document.getElementById('scrollLeftBtn1').addEventListener('click', function () {
-            container1.scrollBy({
-                top: 0,
-                left: -200, // Cuộn 200px sang trái
-                behavior: 'smooth'
-            });
+    document.getElementById('scrollLeftBtn1').addEventListener('click', function () {
+        container1.scrollBy({
+            top: 0,
+            left: -200, // Cuộn 200px sang trái
+            behavior: 'smooth'
         });
+    });
 
-        document.getElementById('scrollRightBtn1').addEventListener('click', function () {
-            container1.scrollBy({
-                top: 0,
-                left: 200, // Cuộn 200px sang phải
-                behavior: 'smooth'
-            });
+    document.getElementById('scrollRightBtn1').addEventListener('click', function () {
+        container1.scrollBy({
+            top: 0,
+            left: 200, // Cuộn 200px sang phải
+            behavior: 'smooth'
         });
-    </script>
+    });
+</script>
 
-    <script>
 
-        let cartItems = JSON.parse(sessionStorage.getItem('cartItems')) || [];
-        let miniCartVisible = false; // Biến theo dõi trạng thái hiển thị của giỏ hàng
+<!-- Form for Adding Comments (only shown if logged in) -->
+<% if (isLoggedIn) { %>
+<div class="comment-section">
+    <h3>Để lại bình luận của bạn:</h3>
+    <form action="SubmitCommentServlet" method="POST">
+        <input type="hidden" name="productId" value="<%= request.getParameter("id") %>">
+        <textarea name="comment" rows="5" placeholder="Nhập bình luận của bạn..." required></textarea>
+        <button type="submit">Gửi bình luận</button>
+    </form>
+</div>
+<% } else { %>
+<div class="login-prompt">
+    <p style=" margin-left: 135px;margin-top: 30px">Vui lòng <a href="login.jsp">đăng nhập</a> để có thể để lại bình
+        luận.</p>
+</div>
+<% } %>
 
-        // Hàm thêm bất động sản vào giỏ hàng
-        function addToFavorites(id, title, price, area, imageUrl, address) {
-            const existingProductIndex = cartItems.findIndex(item => item.id === id);
 
-            if (existingProductIndex !== -1) {
-                alert("bất động sản này đã được quan tâm!"); // Thông báo cho người dùng
-            } else {
-                const product = {
-                    id: id,
-                    title: title,
-                    price: parseFloat(price),
-                    area: area,
-                    imageUrl: imageUrl,
-                    address: address,
-                    quantity: 1 // Số lượng cố định là 1
-                };
-                cartItems.push(product);
-                updateSessionStorage();
-                updateCartDisplay();
-                showMiniCart();
-            }
+<%
+    String propertyIdParam = request.getParameter("id");
+    String loggedInUsername = (String) session.getAttribute("username"); // Get logged-in username from session
+    String role = (String) session.getAttribute("role"); // Get role from session
+    List<Comment> comments = new ArrayList<>();
+
+    if (propertyIdParam != null) {
+        try {
+            CommentDAO commentDAO = new CommentDAO();
+            comments = commentDAO.getCommentsByPropertyId(propertyId);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
+%>
 
-        // Cập nhật sessionStorage
-        function updateSessionStorage() {
-            sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
+<div class="existing-comments">
+    <h3>Bình luận:</h3>
+
+    <%
+        if (comments != null && !comments.isEmpty()) {
+            for (Comment comment : comments) {
+                // Check if the logged-in user is the comment author (by username) or an admin
+                boolean canDelete = "admin".equals(role) ||
+                        (loggedInUsername != null && loggedInUsername.equals(comment.getUserName()));
+    %>
+    <div class="comment">
+        <p>
+            <strong><%= comment.getUserName() != null ? comment.getUserName() : "Unknown User" %>
+            </strong>
+            - <%= comment.getCommentDate() %>
+                <% if (canDelete) { %>
+            <!-- Show delete button if the user is admin or the comment's author -->
+        <form action="DeleteCommentServlet" method="post" style="display:inline;">
+            <input type="hidden" name="commentId" value="<%= comment.getCommentId() %>">
+            <input type="hidden" name="propertyId" value="<%= propertyIdParam %>">
+            <button type="submit" onclick="return confirm('Are you sure you want to delete this comment?');">Delete
+            </button>
+        </form>
+        <% } %>
+        </p>
+        <p><%= comment.getContent() %>
+        </p>
+    </div>
+    <%
         }
-
-        // Cập nhật hiển thị giỏ hàng
-        function updateCartDisplay() {
-            const itemCount = document.querySelector('.item-count');
-            const cartList = document.getElementById('cart-items');
-
-            cartList.innerHTML = '';
-
-            if (cartItems.length === 0) {
-                cartList.innerHTML = '<li>Bạn chưa có bất động sản đã lưu.</li>';
-                itemCount.innerText = 0; // Cập nhật số lượng sản phẩm
-                return; // Kết thúc hàm nếu giỏ hàng trống
-            }
-
-            cartItems.forEach((item) => {
-                const listItem = document.createElement('li');
-                listItem.innerHTML = `
-            <img src="${item.imageUrl}" alt="${item.title}" width="40" height="40">
-            <div class="item-info">
-                <h4>${item.title}</h4>
-                <p>Địa chỉ: ${item.address}</p>
-                <p>Diện tích: ${item.area} m²</p>
-                <span>Giá: ${item.price.toLocaleString()} tỷ</span>
-
-            </div>
-            <button onclick="removeFromCart('${item.id}')">Xóa</button>
-        `;
-                cartList.appendChild(listItem);
-            });
-
-            itemCount.innerText = cartItems.length; // Cập nhật số lượng sản phẩm
-        }
-
-        // Xóa sản phẩm khỏi giỏ hàng
-        function removeFromCart(id) {
-            cartItems = cartItems.filter(item => item.id !== id);
-            updateSessionStorage();
-            updateCartDisplay();
-        }
-
-        // Hiện giỏ hàng mini
-        function showMiniCart() {
-            const miniCart = document.querySelector('.mini-cart');
-            miniCart.style.display = 'block';
-            updateCartDisplay();
-        }
-
-        // Chuyển hướng đến trang giỏ hàng
-        function goToCart() {
-            if (!isLoggedIn) {
-                alert("Bạn cần đăng nhập để xem bất động sản đã quan tâm."); // Thông báo yêu cầu đăng nhập
-                window.location.href = 'login.jsp'; // Điều hướng đến trang đăng nhập
-            } else {
-                window.location.href = 'cart.jsp'; // Điều hướng đến trang giỏ hàng nếu đã đăng nhập
-            }
+    } else {
+    %>
+    <p>Chưa có bình luận nào.</p>
+    <% } %>
+</div>
 
 
-        }
+</div>
 
 
-        // Cập nhật hiển thị giỏ hàng khi tải lại trang
-        updateCartDisplay();
+<style>
+    /* Styling for the comments section */
+    .existing-comments {
+        margin-left: 135px;
+        width: 100%;
+        max-width: 600px;
+        margin-top: 30px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-family: Arial, sans-serif;
+    }
 
-        function toggleMiniCart() {
-            const miniCart = document.querySelector('.mini-cart');
-            miniCartVisible = !miniCartVisible; // Chuyển đổi trạng thái hiển thị
-            miniCart.style.display = miniCartVisible ? 'block' : 'none'; // Cập nhật hiển thị
-            updateCartDisplay(); // Cập nhật hiển thị giỏ hàng
-        }
+    .existing-comments h3 {
+        font-size: 24px;
+        color: #333;
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+
+    .comment {
+
+        padding: 15px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .comment:last-child {
+        border-bottom: none;
+    }
+
+    .comment p {
+        margin: 5px 0;
+        color: #333;
+        line-height: 1.4;
+    }
+
+    .comment strong {
+        color: #0077cc;
+        font-weight: bold;
+    }
+
+    .comment .date {
+        color: #999;
+        font-size: 12px;
+        margin-left: 10px;
+    }
+
+    .no-comments {
+        font-size: 16px;
+        color: #666;
+        text-align: center;
+        padding: 20px 0;
+    }
+
+</style>
 
 
-    </script>
+<style>
+    .comment-section {
+        margin-top: 20px;
+        margin-left: 135px;
+        max-width: 53%;
+    }
+
+    textarea {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    .login-prompt p {
+        color: #f00;
+    }
+
+</style>
+
+<div class="copyright">
+    <p>© Mọi quyền thuộc về Homelander. Mọi thông tin liên quan vui lòng liên hệ với chúng tôi.</p>
+</div>
 
 
-    <div class="copyright">
-        <p>© Mọi quyền thuộc về Homelander. Mọi thông tin liên quan vui lòng liên hệ với chúng tôi.</p>
+<style>
+    .related-properties {
+        margin-top: 10px; /* Giảm khoảng cách giữa các phần */
+        padding-left: 135px; /* Khoảng cách với lề trái */
+        position: relative; /* Để định vị các nút */
+
+    }
+
+
+    .related-properties-container {
+        display: flex;
+        overflow-x: auto; /* Ẩn thanh cuộn mặc định */
+        height: 250px; /* Chiều cao cố định cho sản phẩm liên quan */
+        padding-bottom: 10px; /* Khoảng cách cho nút cuộn */
+
+
+    }
+
+    .related-properties-container::-webkit-scrollbar {
+        height: 0px; /* Chiều cao của thanh cuộn */
+    }
+
+    .related-property {
+        flex: 0 0 auto; /* Không cho phép co lại */
+        width: 200px; /* Chiều rộng của mỗi sản phẩm liên quan */
+        margin-right: 10px;
+        text-align: left;
+        overflow: visible; /* Cho phép hình ảnh hiển thị bên ngoài */
+        border: 1px solid gainsboro;
+        border-radius: 10px;
+        position: relative; /* Để z-index có hiệu lực */
+        transition: transform 0.3s; /* Thêm hiệu ứng chuyển tiếp */
+    }
+
+    .related-property:hover {
+        transform: translateY(-5px); /* Nổi lên trên 5px */
+        z-index: 15; /* Đưa sản phẩm lên trên cùng để không bị che khuất */
+    }
+
+
+    .related-property img {
+        padding: 10px;
+        width: 100%; /* Đảm bảo hình ảnh phù hợp với kích thước chứa */
+        height: auto; /* Tự động điều chỉnh chiều cao */
+        border: 2px solid transparent; /* Border mặc định là trong suốt */
+        border-radius: 20px; /* Bo tròn góc cho hình ảnh */
+        transition: border-color 0.3s; /* Hiệu ứng chuyển tiếp cho border */
+    }
+
+    .more-products {
+        position: absolute; /* Định vị tuyệt đối */
+        top: 0; /* Căn lên cùng với tiêu đề */
+        right: 0; /* Căn bên phải */
+        padding-bottom: 5px;
+    }
+
+    #scrollLeftBtn, #scrollRightBtn {
+        background-color: whitesmoke; /* Màu nền cho nút */
+        color: black; /* Màu chữ */
+        border: none; /* Không có đường viền */
+        padding: 5px; /* Khoảng cách bên trong */
+        cursor: pointer; /* Con trỏ khi di chuột qua */
+        border-radius: 5px; /* Bo tròn góc */
+        font-size: 14px; /* Kích thước chữ */
+        margin-left: 5px; /* Khoảng cách giữa các nút */
+    }
+
+    #scrollLeftBtn:hover, #scrollRightBtn:hover {
+        background-color: wheat; /* Màu nền khi di chuột qua */
+    }
+</style>
+
+
+<div class="footer">
+    <div class="footer-top">
+
+        <h1><a href="homes">
+            <span class="color1">HOME</span>
+            <span class="color2">LANDER</span>
+        </a></h1>
+        <span class="footer-item"><i class="fas fa-phone"></i> Hotline: 0123 456 789</span>
+        <span class="footer-item"><i class="fas fa-envelope"></i> Hỗ trợ: support@batdongsan.com</span>
+        <span class="footer-item"><i class="fas fa-headset"></i> Chăm sóc: 0987 654 321</span>
+    </div>
+
+    <div class="footer-content">
+        <!-- Thông tin công ty -->
+        <div class="company-info">
+            <h3>Công ty Bất Động Sản</h3>
+            <p>Địa chỉ: 123 Đường ABC, Quận 1, TP.HCM</p>
+            <p>Điện thoại: 0123 456 789</p>
+        </div>
+
+        <!-- Liên kết nhanh -->
+        <div class="quick-links">
+            <h3>Liên kết nhanh</h3>
+            <ul>
+                <li><a href="#">Trang chủ</a></li>
+                <li><a href="#">Dự án</a></li>
+                <li><a href="#">Tin tức</a></li>
+                <li><a href="#">Liên hệ</a></li>
+            </ul>
+        </div>
+
+        <!-- Mạng xã hội -->
+        <div class="social-media">
+            <h3>Mạng xã hội</h3>
+            <a href="https://www.facebook.com/khoa.ngo.562114/" class="social-icon"><i class="fab fa-facebook"></i>
+                Facebook</a>
+            <a href="https://www.instagram.com/khoa5462/" class="social-icon"><i class="fab fa-instagram"></i>
+                Instagram</a>
+            <a href="https://mail.google.com/mail/u/0/?hl=vi#inbox" class="social-icon"><i
+                    class="fas fa-envelope"></i>
+                Mail</a>
+        </div>
+
+        <!-- Form nhập email -->
+        <div class="newsletter">
+            <h3>Đăng ký nhận tin tức mới nhất</h3>
+            <form action="#" method="POST">
+                <input type="email" name="email" placeholder="Nhập email của bạn" required>
+                <button type="submit">Đăng ký</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2024 Công ty Bất Động Sản. Mọi quyền lợi thuộc về công ty.</p>
     </div>
 
 
-    <style>
-        .related-properties {
-            margin-top: 10px; /* Giảm khoảng cách giữa các phần */
-            padding-left: 135px; /* Khoảng cách với lề trái */
-            position: relative; /* Để định vị các nút */
-
-        }
+</div>
 
 
-        .related-properties-container {
-            display: flex;
-            overflow-x: auto; /* Ẩn thanh cuộn mặc định */
-            height: 250px; /* Chiều cao cố định cho sản phẩm liên quan */
-            padding-bottom: 10px; /* Khoảng cách cho nút cuộn */
-
-
-        }
-
-        .related-properties-container::-webkit-scrollbar {
-            height: 0px; /* Chiều cao của thanh cuộn */
-        }
-
-        .related-property {
-            flex: 0 0 auto; /* Không cho phép co lại */
-            width: 200px; /* Chiều rộng của mỗi sản phẩm liên quan */
-            margin-right: 10px;
-            text-align: left;
-            overflow: visible; /* Cho phép hình ảnh hiển thị bên ngoài */
-            border: 1px solid gainsboro;
-            border-radius: 10px;
-            position: relative; /* Để z-index có hiệu lực */
-            transition: transform 0.3s; /* Thêm hiệu ứng chuyển tiếp */
-        }
-
-        .related-property:hover {
-            transform: translateY(-5px); /* Nổi lên trên 5px */
-            z-index: 15; /* Đưa sản phẩm lên trên cùng để không bị che khuất */
-        }
-
-
-        .related-property img {
-            padding: 10px;
-            width: 100%; /* Đảm bảo hình ảnh phù hợp với kích thước chứa */
-            height: auto; /* Tự động điều chỉnh chiều cao */
-            border: 2px solid transparent; /* Border mặc định là trong suốt */
-            border-radius: 20px; /* Bo tròn góc cho hình ảnh */
-            transition: border-color 0.3s; /* Hiệu ứng chuyển tiếp cho border */
-        }
-
-        .more-products {
-            position: absolute; /* Định vị tuyệt đối */
-            top: 0; /* Căn lên cùng với tiêu đề */
-            right: 0; /* Căn bên phải */
-            padding-bottom: 5px;
-        }
-
-        #scrollLeftBtn, #scrollRightBtn {
-            background-color: whitesmoke; /* Màu nền cho nút */
-            color: black; /* Màu chữ */
-            border: none; /* Không có đường viền */
-            padding: 5px; /* Khoảng cách bên trong */
-            cursor: pointer; /* Con trỏ khi di chuột qua */
-            border-radius: 5px; /* Bo tròn góc */
-            font-size: 14px; /* Kích thước chữ */
-            margin-left: 5px; /* Khoảng cách giữa các nút */
-        }
-
-        #scrollLeftBtn:hover, #scrollRightBtn:hover {
-            background-color: wheat; /* Màu nền khi di chuột qua */
-        }
-    </style>
-
-
-    <div class="footer">
-        <div class="footer-top">
-
-            <h1><a href="homes">
-                <span class="color1">HOME</span>
-                <span class="color2">LANDER</span>
-            </a></h1>
-            <span class="footer-item"><i class="fas fa-phone"></i> Hotline: 0123 456 789</span>
-            <span class="footer-item"><i class="fas fa-envelope"></i> Hỗ trợ: support@batdongsan.com</span>
-            <span class="footer-item"><i class="fas fa-headset"></i> Chăm sóc: 0987 654 321</span>
-        </div>
-
-        <div class="footer-content">
-            <!-- Thông tin công ty -->
-            <div class="company-info">
-                <h3>Công ty Bất Động Sản</h3>
-                <p>Địa chỉ: 123 Đường ABC, Quận 1, TP.HCM</p>
-                <p>Điện thoại: 0123 456 789</p>
-            </div>
-
-            <!-- Liên kết nhanh -->
-            <div class="quick-links">
-                <h3>Liên kết nhanh</h3>
-                <ul>
-                    <li><a href="#">Trang chủ</a></li>
-                    <li><a href="#">Dự án</a></li>
-                    <li><a href="#">Tin tức</a></li>
-                    <li><a href="#">Liên hệ</a></li>
-                </ul>
-            </div>
-
-            <!-- Mạng xã hội -->
-            <div class="social-media">
-                <h3>Mạng xã hội</h3>
-                <a href="https://www.facebook.com/khoa.ngo.562114/" class="social-icon"><i class="fab fa-facebook"></i>
-                    Facebook</a>
-                <a href="https://www.instagram.com/khoa5462/" class="social-icon"><i class="fab fa-instagram"></i>
-                    Instagram</a>
-                <a href="https://mail.google.com/mail/u/0/?hl=vi#inbox" class="social-icon"><i
-                        class="fas fa-envelope"></i>
-                    Mail</a>
-            </div>
-
-            <!-- Form nhập email -->
-            <div class="newsletter">
-                <h3>Đăng ký nhận tin tức mới nhất</h3>
-                <form action="#" method="POST">
-                    <input type="email" name="email" placeholder="Nhập email của bạn" required>
-                    <button type="submit">Đăng ký</button>
-                </form>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <p>&copy; 2024 Công ty Bất Động Sản. Mọi quyền lợi thuộc về công ty.</p>
-        </div>
-
-
-    </div>
-
-
-        <%
+<%
     }
 %>

@@ -1,23 +1,29 @@
 package Entity;
 
-import java.math.BigDecimal;
-
 public class CartItem {
     private int propertyId;
     private String title;
-    private BigDecimal price;
-    private BigDecimal area;
+    private double price;
+    private double area;
     private String imageUrl;
+    private int cartId;
+    private int quantity;
     private String address;
 
-    // Constructor, getters, and setters
-    public CartItem(int propertyId, String title, BigDecimal price, BigDecimal area, String imageUrl, String address) {
+    // Constructor
+    public CartItem(int propertyId, String title, double price, double area, String imageUrl, int cartId, int quantity, String address) {
         this.propertyId = propertyId;
         this.title = title;
         this.price = price;
         this.area = area;
         this.imageUrl = imageUrl;
+        this.cartId = cartId;
+        this.quantity = quantity;
         this.address = address;
+    }
+
+    public CartItem() {
+
     }
 
     public int getPropertyId() {
@@ -36,19 +42,19 @@ public class CartItem {
         this.title = title;
     }
 
-    public BigDecimal getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public BigDecimal getArea() {
+    public double getArea() {
         return area;
     }
 
-    public void setArea(BigDecimal area) {
+    public void setArea(double area) {
         this.area = area;
     }
 
@@ -58,6 +64,22 @@ public class CartItem {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public int getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public String getAddress() {

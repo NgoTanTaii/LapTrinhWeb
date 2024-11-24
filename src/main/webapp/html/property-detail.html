@@ -6,7 +6,27 @@
     <link rel="stylesheet" href="../css/property-detail.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* CSS styles go here */
+        .heart-container {
+            position: relative;
+            display: inline-block;
+            padding-top: 5px;
+        }
+
+
+
+        .heart-icon1 {
+            width: 15px !important; /* Kích thước hình ảnh */
+            height: 15px !important; /* Kích thước hình ảnh */
+            margin-left: 10px; /* Khoảng cách bên trái */
+            transition: transform 0.2s; /* Hiệu ứng chuyển động mượt mà */
+            margin-bottom: 12px;
+
+        }
+
+        .heart-icon1:hover {
+            transform: scale(1.1); /* Tăng kích thước khi di chuột qua */
+        }
+
         .container {
             max-width: 800px;
             margin: 0 auto;
@@ -68,6 +88,128 @@
             background-color: #f8f8f8;
             text-align: center;
         }
+        .floating-cart {
+            position: fixed; /* Đảm bảo vị trí cố định trên trang */
+            bottom: 20px; /* Khoảng cách với mép dưới trang */
+            right: 20px; /* Khoảng cách với mép phải của trang */
+            width: 40px !important; /* Giảm chiều rộng của biểu tượng giỏ hàng */
+            height: 40px !important; /* Giảm chiều cao của biểu tượng giỏ hàng */
+            background-color: transparent; /* Màu nền của biểu tượng */
+            border-radius: 50%; /* Biểu tượng có hình tròn */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng nhẹ để nổi bật */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* Đảm bảo nằm trên các thành phần khác */
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu khi hover */
+        }
+
+        /* Khi hover vào floating-cart */
+        .floating-cart:hover {
+            background-color: transparent;
+            transform: scale(1.1);
+        }
+
+        /* Style cho biểu tượng giỏ hàng (cart-icon) */
+        .floating-cart .cart-icon {
+            width: 40px; /* Giảm kích thước icon */
+            height: 40px;
+            object-fit: contain; /* Đảm bảo ảnh vừa khung mà không bị méo */
+        }
+
+        /* Hiển thị mini-cart khi hover vào floating-cart */
+        .floating-cart:hover .mini-cart {
+            display: block; /* Hiển thị mini-cart khi hover */
+        }
+
+        /* Style cho mini-cart */
+        .mini-cart {
+            display: none; /* Mặc định ẩn mini-cart */
+            position: absolute;
+            bottom: 80px; /* Đặt mini-cart ngay trên biểu tượng giỏ hàng */
+            right: 0;
+            width: 250px; /* Giảm chiều rộng của mini-cart */
+            max-height: 400px; /* Giới hạn chiều cao để tránh quá dài */
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng nhẹ */
+            overflow-y: auto; /* Cho phép cuộn khi nội dung quá dài */
+            padding: 10px;
+        }
+
+        /* Style cho danh sách sản phẩm trong mini-cart */
+        .mini-cart ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .mini-cart li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .mini-cart li img {
+            width: 40px; /* Kích thước hình ảnh nhỏ hơn */
+            height: 40px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        .mini-cart .item-info {
+            font-size: 14px;
+        }
+
+        .mini-cart .item-info h4 {
+            margin: 0;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis; /* Thêm dấu "..." khi tên sách quá dài */
+        }
+
+        .item-count {
+            position: absolute;
+            top: 5px; /* Vị trí từ đầu biểu tượng giỏ hàng */
+            right: 5px; /* Vị trí từ bên phải biểu tượng giỏ hàng */
+            background-color: red; /* Màu nền */
+            color: white; /* Màu chữ */
+            border-radius: 50%; /* Hình tròn */
+            width: 20px; /* Chiều rộng */
+            height: 20px; /* Chiều cao */
+            display: flex;
+            justify-content: center; /* Canh giữa */
+            align-items: center; /* Canh giữa */
+            font-size: 12px; /* Kích thước chữ */
+            font-weight: bold; /* Đậm chữ */
+        }
+        .heart-icon {
+            position: absolute;
+            bottom: 5px; /* Di chuyển trái tim xuống góc dưới */
+            right: 5px; /* Đặt trái tim ở góc phải */
+            z-index: 10; /* Đảm bảo trái tim nằm trên tất cả các phần tử khác */
+            cursor: pointer;
+            margin-bottom: 2px;
+            margin-right: 10px;
+        }
+
+        .heart-icon img {
+            width: 20px !important; /* Kích thước nhỏ hơn của trái tim */
+            height: 20px !important; /* Kích thước nhỏ hơn của trái tim */
+            transition: transform 0.3s ease, filter 0.3s ease; /* Hiệu ứng chuyển động */
+
+
+        }
+
+        .heart-icon:hover img {
+            transform: scale(1.2); /* Phóng to biểu tượng trái tim khi hover */
+            filter: brightness(1.5); /* Tăng độ sáng khi hover */
+        }
+
     </style>
 </head>
 <body>
@@ -91,7 +233,20 @@
             <a href="login.html" class="btn"><h3>Đăng nhập</h3></a>
             <a href="register.html" class="btn"><h3>Đăng ký</h3></a>
             <a href="post-status.html" class="btn"><h3>Đăng tin</h3></a>
+
         </div>
+        <a href="cart.html" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()"
+           style="border: 1px solid #ccc; border-radius:100%;">
+            <img src="../jpg/heart%20(1).png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng"
+                 class="cart-icon">
+            <div class="item-count">0</div>
+            <div class="mini-cart">
+                <h4>Bất động sản đã lưu</h4>
+                <ul id="cart-items"></ul>
+                <button id="go-to-cart" onclick="goToCart()">Đi tới xem bất động sản đã lưu</button>
+            </div>
+        </a>
+
     </div>
     <div class="menu">
         <div class="header-bottom" style="height:60px;margin-top: 0">
@@ -135,10 +290,15 @@
             </div>
             <!-- Thêm các thumbnail khác nếu cần -->
         </div>
-        <p>Địa chỉ: Địa chỉ bất động sản</p>
-        <p>Giá: 1.5 tỷ</p>
-        <p>Diện tích: 100 m²</p>
-        <p>Mô tả: Mô tả chi tiết về bất động sản.</p>
+        <p><i class="fas fa-map-marker-alt"></i> Địa chỉ: Địa chỉ bất động sản</p>
+        <p><i class="fas fa-tag"></i> Giá: 1.5 tỷ</p>
+        <p><i class="fas fa-ruler-combined"></i> Diện tích: 100 m²</p>
+        <p><i class="fas fa-info-circle"></i> Mô tả: Mô tả chi tiết về bất động sản.</p>
+        <div class="heart-icon"
+             onclick="addToFavorites('1', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+            <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+        </div>
+
     </div>
 
     <div class="sender-info">
@@ -249,143 +409,123 @@
 <div class="related-properties" style="width:63%">
     <h3>Các sản phẩm liên quan</h3>
     <div class="related-properties-container" id="relatedProductsContainer">
-        <div class="related-property">
-            <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
-            <h4>Sản phẩm 1</h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: 1.5 tỷ</span>
-                <span>Diện tích: 100m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: HCM
-            </p>
-        </div>
-        <div class="related-property">
-            <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
-            <h4>Sản phẩm 1</h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: 1.5 tỷ</span>
-                <span>Diện tích: 100m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: HCM
-            </p>
-        </div>
+        <a href="property-detail.html?id=1" style="text-decoration: none;">
+            <div class="related-property">
+                <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
+                <h4>Sản phẩm 1</h4>
+                <p style="display: flex; justify-content: space-between; color: red;">
+                    <span>Giá: 1.5 tỷ</span>
+                    <span>Diện tích: 100m²</span>
+                </p>
+                <p style="display: flex; align-items: center;">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
+                         style="width: 16px; height: 16px; margin-right: 5px;">
+                    Địa chỉ: HCM
+                </p>
+            </div>
 
-        <div class="related-property">
-            <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
-            <h4>Sản phẩm 1</h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: 1.5 tỷ</span>
-                <span>Diện tích: 100m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: HCM
-            </p>
-        </div>
-        <div class="related-property">
-            <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
-            <h4>Sản phẩm 1</h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: 1.5 tỷ</span>
-                <span>Diện tích: 100m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: HCM
-            </p>
-        </div>
-        <div class="related-property">
-            <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
-            <h4>Sản phẩm 1</h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: 1.5 tỷ</span>
-                <span>Diện tích: 100m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: HCM
-            </p>
-        </div>
-        <div class="related-property">
-            <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
-            <h4>Sản phẩm 1</h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: 1.5 tỷ</span>
-                <span>Diện tích: 100m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: HCM
-            </p>
-        </div>
+        </a>
+        <a href="property-detail.html?id=1" style="text-decoration: none;">
+            <div class="related-property">
+                <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
+                <h4>Sản phẩm 1</h4>
+                <p style="display: flex; justify-content: space-between; color: red;">
+                    <span>Giá: 1.5 tỷ</span>
+                    <span>Diện tích: 100m²</span>
+                </p>
+                <p style="display: flex; align-items: center;">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
+                         style="width: 16px; height: 16px; margin-right: 5px;">
+                    Địa chỉ: HCM
+                </p>
+            </div>
 
-        <div class="related-property">
-            <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
-            <h4>Sản phẩm 1</h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: 1.5 tỷ</span>
-                <span>Diện tích: 100m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: HCM
-            </p>
-        </div>
-        <div class="related-property">
-            <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
-            <h4>Sản phẩm 1</h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: 1.5 tỷ</span>
-                <span>Diện tích: 100m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: HCM
-            </p>
-        </div>
+        </a>
 
-        <div class="related-property">
-            <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
-            <h4>Sản phẩm 1</h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: 1.5 tỷ</span>
-                <span>Diện tích: 100m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: HCM
-            </p>
-        </div>
+        <a href="property-detail.html?id=1" style="text-decoration: none;">
+            <div class="related-property">
+                <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
+                <h4>Sản phẩm 1</h4>
+                <p style="display: flex; justify-content: space-between; color: red;">
+                    <span>Giá: 1.5 tỷ</span>
+                    <span>Diện tích: 100m²</span>
+                </p>
+                <p style="display: flex; align-items: center;">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
+                         style="width: 16px; height: 16px; margin-right: 5px;">
+                    Địa chỉ: HCM
+                </p>
+            </div>
 
-        <div class="related-property">
-            <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
-            <h4>Sản phẩm 1</h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: 1.5 tỷ</span>
-                <span>Diện tích: 100m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: HCM
-            </p>
-        </div>
+        </a>
+
+        <a href="property-detail.html?id=1" style="text-decoration: none;">
+            <div class="related-property">
+                <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
+                <h4>Sản phẩm 1</h4>
+                <p style="display: flex; justify-content: space-between; color: red;">
+                    <span>Giá: 1.5 tỷ</span>
+                    <span>Diện tích: 100m²</span>
+                </p>
+                <p style="display: flex; align-items: center;">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
+                         style="width: 16px; height: 16px; margin-right: 5px;">
+                    Địa chỉ: HCM
+                </p>
+            </div>
+
+        </a>
+
+        <a href="property-detail.html?id=1" style="text-decoration: none;">
+            <div class="related-property">
+                <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
+                <h4>Sản phẩm 1</h4>
+                <p style="display: flex; justify-content: space-between; color: red;">
+                    <span>Giá: 1.5 tỷ</span>
+                    <span>Diện tích: 100m²</span>
+                </p>
+                <p style="display: flex; align-items: center;">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
+                         style="width: 16px; height: 16px; margin-right: 5px;">
+                    Địa chỉ: HCM
+                </p>
+            </div>
+
+        </a>
+        <a href="property-detail.html?id=1" style="text-decoration: none;">
+            <div class="related-property">
+                <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
+                <h4>Sản phẩm 1</h4>
+                <p style="display: flex; justify-content: space-between; color: red;">
+                    <span>Giá: 1.5 tỷ</span>
+                    <span>Diện tích: 100m²</span>
+                </p>
+                <p style="display: flex; align-items: center;">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
+                         style="width: 16px; height: 16px; margin-right: 5px;">
+                    Địa chỉ: HCM
+                </p>
+            </div>
+
+        </a>
+        <a href="property-detail.html?id=1" style="text-decoration: none;">
+            <div class="related-property">
+                <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
+                <h4>Sản phẩm 1</h4>
+                <p style="display: flex; justify-content: space-between; color: red;">
+                    <span>Giá: 1.5 tỷ</span>
+                    <span>Diện tích: 100m²</span>
+                </p>
+                <p style="display: flex; align-items: center;">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
+                         style="width: 16px; height: 16px; margin-right: 5px;">
+                    Địa chỉ: HCM
+                </p>
+            </div>
+
+        </a>
 
 
-        <!-- Thêm các sản phẩm liên quan khác -->
         <div class="more-products">
             <button id="scrollLeftBtn"> <</button>
             <button id="scrollRightBtn">️ ></button>
@@ -396,140 +536,88 @@
 <div class="related-properties" style="width:63%">
     <h3>Các tin đăng đã xem</h3>
     <div class="related-properties-container" id="relatedProductsContainer">
-        <div class="related-property">
-            <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
-            <h4>Sản phẩm 1</h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: 1.5 tỷ</span>
-                <span>Diện tích: 100m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: HCM
-            </p>
-        </div>
-        <div class="related-property">
-            <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
-            <h4>Sản phẩm 1</h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: 1.5 tỷ</span>
-                <span>Diện tích: 100m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: HCM
-            </p>
-        </div>
+        <a href="property-detail.html?id=1" style="text-decoration: none;">
+            <div class="related-property">
+                <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
+                <h4>Sản phẩm 1</h4>
+                <p style="display: flex; justify-content: space-between; color: red;">
+                    <span>Giá: 1.5 tỷ</span>
+                    <span>Diện tích: 100m²</span>
+                </p>
+                <p style="display: flex; align-items: center;">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
+                         style="width: 16px; height: 16px; margin-right: 5px;">
+                    Địa chỉ: HCM
+                </p>
+            </div>
 
-        <div class="related-property">
-            <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
-            <h4>Sản phẩm 1</h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: 1.5 tỷ</span>
-                <span>Diện tích: 100m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: HCM
-            </p>
-        </div>
-        <div class="related-property">
-            <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
-            <h4>Sản phẩm 1</h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: 1.5 tỷ</span>
-                <span>Diện tích: 100m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: HCM
-            </p>
-        </div>
-        <div class="related-property">
-            <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
-            <h4>Sản phẩm 1</h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: 1.5 tỷ</span>
-                <span>Diện tích: 100m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: HCM
-            </p>
-        </div>
-        <div class="related-property">
-            <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
-            <h4>Sản phẩm 1</h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: 1.5 tỷ</span>
-                <span>Diện tích: 100m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: HCM
-            </p>
-        </div>
+        </a>
+        <a href="property-detail.html?id=1" style="text-decoration: none;">
+            <div class="related-property">
+                <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
+                <h4>Sản phẩm 1</h4>
+                <p style="display: flex; justify-content: space-between; color: red;">
+                    <span>Giá: 1.5 tỷ</span>
+                    <span>Diện tích: 100m²</span>
+                </p>
+                <p style="display: flex; align-items: center;">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
+                         style="width: 16px; height: 16px; margin-right: 5px;">
+                    Địa chỉ: HCM
+                </p>
+            </div>
 
-        <div class="related-property">
-            <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
-            <h4>Sản phẩm 1</h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: 1.5 tỷ</span>
-                <span>Diện tích: 100m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: HCM
-            </p>
-        </div>
-        <div class="related-property">
-            <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
-            <h4>Sản phẩm 1</h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: 1.5 tỷ</span>
-                <span>Diện tích: 100m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: HCM
-            </p>
-        </div>
+        </a>
+        <a href="property-detail.html?id=1" style="text-decoration: none;">
+            <div class="related-property">
+                <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
+                <h4>Sản phẩm 1</h4>
+                <p style="display: flex; justify-content: space-between; color: red;">
+                    <span>Giá: 1.5 tỷ</span>
+                    <span>Diện tích: 100m²</span>
+                </p>
+                <p style="display: flex; align-items: center;">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
+                         style="width: 16px; height: 16px; margin-right: 5px;">
+                    Địa chỉ: HCM
+                </p>
+            </div>
 
-        <div class="related-property">
-            <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
-            <h4>Sản phẩm 1</h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: 1.5 tỷ</span>
-                <span>Diện tích: 100m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: HCM
-            </p>
-        </div>
+        </a>
 
-        <div class="related-property">
-            <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
-            <h4>Sản phẩm 1</h4>
-            <p style="display: flex; justify-content: space-between; color: red;">
-                <span>Giá: 1.5 tỷ</span>
-                <span>Diện tích: 100m²</span>
-            </p>
-            <p style="display: flex; align-items: center;">
-                <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
-                     style="width: 16px; height: 16px; margin-right: 5px;">
-                Địa chỉ: HCM
-            </p>
-        </div>
+        <a href="property-detail.html?id=1" style="text-decoration: none;">
+            <div class="related-property">
+                <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
+                <h4>Sản phẩm 1</h4>
+                <p style="display: flex; justify-content: space-between; color: red;">
+                    <span>Giá: 1.5 tỷ</span>
+                    <span>Diện tích: 100m²</span>
+                </p>
+                <p style="display: flex; align-items: center;">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
+                         style="width: 16px; height: 16px; margin-right: 5px;">
+                    Địa chỉ: HCM
+                </p>
+            </div>
+
+        </a>
+
+        <a href="property-detail.html?id=1" style="text-decoration: none;">
+            <div class="related-property">
+                <img src="../jpg/HCM.jpg" alt="Sản phẩm 1">
+                <h4>Sản phẩm 1</h4>
+                <p style="display: flex; justify-content: space-between; color: red;">
+                    <span>Giá: 1.5 tỷ</span>
+                    <span>Diện tích: 100m²</span>
+                </p>
+                <p style="display: flex; align-items: center;">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon"
+                         style="width: 16px; height: 16px; margin-right: 5px;">
+                    Địa chỉ: HCM
+                </p>
+            </div>
+
+        </a>
 
 
         <!-- Thêm các sản phẩm liên quan khác -->

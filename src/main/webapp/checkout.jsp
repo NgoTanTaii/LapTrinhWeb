@@ -89,6 +89,7 @@
             <label for="phone">Số điện thoại:</label>
             <input type="text" id="phone" name="phone" required>
         </div>
+
         <div class="form-group">
             <label for="appointment-date">Ngày hẹn:</label>
             <input type="date" id="appointment-date" name="appointmentDate" required>

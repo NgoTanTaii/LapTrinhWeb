@@ -1,6 +1,8 @@
 package Entity;
 
 public class User {
+    int id;
+
     String username;
     String password;
 
@@ -12,6 +14,14 @@ public class User {
 
     public User() {
 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getPassword() {

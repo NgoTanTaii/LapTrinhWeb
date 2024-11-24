@@ -69,11 +69,15 @@ public class ScheduleAppointmentServlet extends HttpServlet {
         // Gửi email xác nhận đặt lịch
         boolean emailSent = sendAppointmentConfirmationEmail(userEmail, username, address, phone, appointmentDate, appointmentTime, productDetails.toString());
         if (emailSent) {
+            // Sau khi đặt lịch thành công, xóa tất cả sản phẩm trong giỏ hàng
+            clearCart(username);  // Clear the cart after appointment is confirmed
+
             request.setAttribute("message", "Đặt lịch thành công! Thông tin xác nhận đã được gửi đến email của bạn.");
         } else {
             request.setAttribute("message", "Đã xảy ra lỗi khi gửi email xác nhận. Vui lòng thử lại.");
         }
 
+        // Redirect to cart or confirmation page
         request.getRequestDispatcher("cart.jsp").forward(request, response);
     }
 
@@ -123,7 +127,6 @@ public class ScheduleAppointmentServlet extends HttpServlet {
                     + "- Số điện thoại: " + phone + "\n"
                     + "- Ngày hẹn: " + appointmentDate + "\n"
                     + "- Giờ hẹn: " + appointmentTime + "\n\n"
-
                     + "\nChúng tôi sẽ liên hệ sớm với bạn để xác nhận lịch hẹn.\n\n"
                     + "Trân trọng,\n"
                     + "Đội ngũ Homelander.";
@@ -136,6 +139,19 @@ public class ScheduleAppointmentServlet extends HttpServlet {
         } catch (MessagingException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    // Phương thức xóa tất cả sản phẩm trong giỏ hàng
+    private void clearCart(String username) {
+        String query = "DELETE FROM cart WHERE user_id = (SELECT id FROM users WHERE username = ?)";
+
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webbds", "root", "123456");
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, username);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href=" ../css/bds.css">
+    <link rel="stylesheet" href="../css/bds.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
@@ -61,6 +61,8 @@
         /* Style cho menu con khi hover */
         ul li ul li a:hover {
             background-color: #eee;
+            text-decoration: none;
+
         }
 
         .heart-container {
@@ -126,8 +128,6 @@
             <a href="register.html" class="btn"><h3>Đăng ký</h3></a>
             <a href="post-status.html" class="btn"><h3>Đăng tin</h3></a>
         </div>
-
-
 
 
         <a href="cart.html" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()"
@@ -218,34 +218,36 @@
 
     <!-- Form tìm kiếm ở giữa -->
     <div class="search-container">
-        <form class="search-form">
-            <input type="text" placeholder="Tìm kiếm..." name="search" required>
-
-            <fieldset class="price-group">
-                <legend>Giá <span class="arrow-down">▼</span></legend>
-                <div class="price-dropdown hidden">
-                    <label for="min-price">Giá tối thiểu (tỷ):</label>
-                    <input type="number" id="min-price" name="min-price" placeholder="Nhập giá tối thiểu">
-
-                    <label for="max-price">Giá tối đa (tỷ):</label>
-                    <input type="number" id="max-price" name="max-price" placeholder="Nhập giá tối đa">
-                </div>
-            </fieldset>
-
-            <fieldset class="area-group">
-                <legend>Diện Tích <span class="arrow-down">▼</span></legend>
-                <div class="area-dropdown hidden">
-                    <label for="min-area">Diện tích tối thiểu (m²):</label>
-                    <input type="number" id="min-area" name="min-area" placeholder="Nhập diện tích tối thiểu">
-
-                    <label for="max-area">Diện tích tối đa (m²):</label>
-                    <input type="number" id="max-area" name="max-area" placeholder="Nhập diện tích tối đa">
-                </div>
-            </fieldset>
-
+        <form class="search-form" id="searchForm">
+            <input type="text" placeholder="Tìm kiếm..." name="search" id="searchInput" required>
             <button type="submit">Tìm Kiếm</button>
         </form>
     </div>
+    <script>// Lấy đối tượng của form và input
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = document.getElementById('searchInput');
+
+    // Thêm sự kiện 'submit' cho form
+    searchForm.addEventListener('submit', function(event) {
+        // Ngăn chặn trang tự tải lại khi form được submit
+        event.preventDefault();
+
+        // Lấy giá trị người dùng nhập vào ô tìm kiếm
+        const searchTerm = searchInput.value.trim();
+
+        // Kiểm tra xem người dùng đã nhập gì chưa
+        if (searchTerm) {
+            // Giả lập kết quả tìm kiếm hoặc điều hướng tới trang kết quả
+            console.log("Đang tìm kiếm từ khóa: " + searchTerm);
+
+            // Bạn có thể thay thế bằng logic tìm kiếm thực tế, ví dụ như gọi API hoặc lọc danh sách sản phẩm hiện tại.
+            // Ví dụ điều hướng sang trang tìm kiếm với từ khóa:
+            // location.href = `search-results.html?query=${encodeURIComponent(searchTerm)}`;
+        } else {
+            alert("Vui lòng nhập từ khóa tìm kiếm.");
+        }
+    });
+    </script>
     <script src="../JS/script.js"></script>
 
 </header>
@@ -262,29 +264,54 @@
     <!-- List các tin tức -->
     <div class="news-list">
         <div class="news-item">
-            <img src="../jpg/banner-books.jpg" alt="Image">
-            <h3><a href="#">Tiêu đề bài viết</a></h3>
-            <p class="summary">Tóm tắt ngắn gọn về nội dung bài viết...</p>
+            <img src="../jpg/quy-nhon-thuoc-tinh-nao-1.jpg" alt="Image">
+            <h3><a href="https://www.example.com/quy-nhon-tinh-nang-noi-bat">Khám Phá Quy Nhơn: Những Tính Năng Nổi Bật</a></h3>
+            <p class="summary">Quy Nhơn không chỉ nổi tiếng với những bãi biển đẹp mà còn với các điểm đến hấp dẫn như Eo Gió và Kỳ Co. Tìm hiểu những điều thú vị khi đến thăm thành phố này.</p>
             <span class="date">Ngày đăng: 01/01/2024</span>
         </div>
         <div class="news-item">
-            <img src="../jpg/banner-books.jpg" alt="Image">
-            <h3><a href="#">Tiêu đề bài viết</a></h3>
-            <p class="summary">Tóm tắt ngắn gọn về nội dung bài viết...</p>
+            <img src="../jpg/nga-tu-so.jpg" alt="Image">
+            <h3><a href="https://www.example.com/nga-tu-so-giao-thoa">Ngã Tư Sở: Điểm Giao Thoa Của Những Khu Vực Sầm Uất</a></h3>
+            <p class="summary">Ngã Tư Sở là một trong những khu vực giao thông quan trọng tại Hà Nội, nơi kết nối nhiều tuyến đường lớn. Cùng tìm hiểu về sự phát triển và tiềm năng của khu vực này.</p>
             <span class="date">Ngày đăng: 01/01/2024</span>
         </div>
         <div class="news-item">
-            <img src="../jpg/banner-books.jpg" alt="Image">
-            <h3><a href="#">Tiêu đề bài viết</a></h3>
-            <p class="summary">Tóm tắt ngắn gọn về nội dung bài viết...</p>
+            <img src="../jpg/tt.jpg" alt="Image">
+            <h3><a href="https://www.example.com/dia-chi-du-an-ha-tang">Thông Tin Mới Nhất Về Các Dự Án Hạ Tầng Thành Phố</a></h3>
+            <p class="summary">Các dự án hạ tầng tại thành phố đang được triển khai mạnh mẽ để cải thiện giao thông và tiện ích cho cư dân. Cập nhật các thông tin mới nhất về tiến độ và kế hoạch triển khai.</p>
             <span class="date">Ngày đăng: 01/01/2024</span>
         </div>
-
-
     </div>
 
+    <script>
+        // Lấy dữ liệu tin tức từ News API
+        fetch('https://newsapi.org/v2/top-headlines?country=vn&apiKey=f888e044b2fc4ad5a48e52d9d1313f82')
+            .then(response => response.json())
+            .then(data => {
+                const articles = data.articles;
+                let newsHTML = '';
+
+                articles.forEach(article => {
+                    newsHTML += `
+          <div class="news-item">
+            <img src="${article.urlToImage || '../jpg/default.jpg'}" alt="Image">
+            <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
+            <p class="summary">${article.description || 'No description available'}</p>
+            <span class="date">Ngày đăng: ${new Date(article.publishedAt).toLocaleDateString()}</span>
+          </div>
+        `;
+                });
+
+                // Chèn các tin tức vào trong phần tử với id="news-list"
+                document.getElementById('news-list').innerHTML = newsHTML;
+            })
+            .catch(error => console.error('Error fetching news:', error));
+    </script>
 
 </div>
+
+
+
 <div class="product-section">
     <h2>Bất động sản dành cho bạn</h2>
     <div class="product-list">
@@ -309,327 +336,816 @@
                 <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
             </div>
         </div>
-
         <div class="product-item" style="display: block;">
-            <span onclick="location.href='property-detail.jsp?id=2'"
+            <span onclick="location.href='property-detail.html?id=1'"
                   style="cursor: pointer; color: blue; text-decoration: none;">
-                <img src="../jpg/HCM.jpg" alt="Biệt thự ven sông" class="product-image">
-                <h3>Biệt thự ven sông</h3>
+                <img src="../jpg/1.webp" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 2</h3>
                 <p class="address">
                     <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
-                    TP.HCM, Quận 2
+                    TP.HCM, Quận 1
                 </p>
                 <div class="details">
                     <div class="price-size">
-                        <p class="price">8.5 tỷ</p>
-                        <p class="size">200 m²</p>
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
                     </div>
                 </div>
             </span>
             <div class="heart-icon"
-                 onclick="addToFavorites('2', 'Biệt thự ven sông', 8.5, 200, 'jpg/property2.jpg', 'TP.HCM, Quận 2')">
+                 onclick="addToFavorites('2', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/2.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 3</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('3', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/3.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 4</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('4', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/4.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 5</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('5', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/5.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 6</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('6', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/6.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 7</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('7', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/7.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 8</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('8', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/8.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 9</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('9', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/9.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 10</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('10', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/10.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 11</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('11', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/11.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 12</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('9', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/13.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 10</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('10', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/14.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 11</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('11', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/16.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 9</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('9', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/17.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 10</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('10', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/18.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 11</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('11', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/2.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 11</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('11', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/1.webp" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 9</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('9', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/18.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 10</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('10', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/17.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 11</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('11', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/16.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 11</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('11', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/14.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 9</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('9', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/13.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 10</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('10', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/11.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 11</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('11', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/10.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 11</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('11', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/9.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 9</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('9', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/8.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 10</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('10', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/7.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 11</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('11', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/6.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 11</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('11', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/5.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 9</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('9', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/4.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 10</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('10', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/3.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 11</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('11', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/2.jpg" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 11</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('11', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
+            </div>
+        </div>
+        <div class="product-item" style="display: block;">
+            <span onclick="location.href='property-detail.html?id=1'"
+                  style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="../jpg/1.webp" alt="Căn hộ cao cấp" class="product-image">
+                <h3>Căn hộ cao cấp 9</h3>
+                <p class="address">
+                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
+                    TP.HCM, Quận 1
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price">5.0 tỷ</p>
+                        <p class="size">100 m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="addToFavorites('9', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
                 <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
             </div>
         </div>
 
-        <div class="product-item" style="display: block;">
-            <span onclick="location.href='property-detail.jsp?id=3'"
-                  style="cursor: pointer; color: blue; text-decoration: none;">
-                <img src="../jpg/HCM.jpg" alt="Nhà phố hiện đại" class="product-image">
-                <h3>Nhà phố hiện đại</h3>
-                <p class="address">
-                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
-                    TP.HCM, Quận 3
-                </p>
-                <div class="details">
-                    <div class="price-size">
-                        <p class="price">4.2 tỷ</p>
-                        <p class="size">120 m²</p>
-                    </div>
-                </div>
-            </span>
-            <div class="heart-icon"
-                 onclick="addToFavorites('3', 'Nhà phố hiện đại', 4.2, 120, 'jpg/property3.jpg', 'TP.HCM, Quận 3')">
-                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
-            </div>
-        </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const toggleButton = document.getElementById('toggleButton');
+                const products = document.querySelectorAll('.product-item');
+                let isExpanded = false; // Trạng thái để theo dõi việc mở rộng hay thu gọn
 
-        <div class="product-item" style="display: block;">
-            <span onclick="location.href='property-detail.jsp?id=4'"
-                  style="cursor: pointer; color: blue; text-decoration: none;">
-                <img src="../jpg/HCM.jpg" alt="Căn hộ mini" class="product-image">
-                <h3>Căn hộ mini</h3>
-                <p class="address">
-                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
-                    TP.HCM, Quận 4
-                </p>
-                <div class="details">
-                    <div class="price-size">
-                        <p class="price">2.5 tỷ</p>
-                        <p class="size">60 m²</p>
-                    </div>
-                </div>
-            </span>
-            <div class="heart-icon"
-                 onclick="addToFavorites('4', 'Căn hộ mini', 2.5, 60, 'jpg/property4.jpg', 'TP.HCM, Quận 4')">
-                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
-            </div>
-        </div>
-        <div class="product-item" style="display: block;">
-            <span onclick="location.href='property-detail.jsp?id=4'"
-                  style="cursor: pointer; color: blue; text-decoration: none;">
-                <img src="../jpg/HCM.jpg" alt="Căn hộ mini" class="product-image">
-                <h3>Căn hộ mini</h3>
-                <p class="address">
-                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
-                    TP.HCM, Quận 4
-                </p>
-                <div class="details">
-                    <div class="price-size">
-                        <p class="price">2.5 tỷ</p>
-                        <p class="size">60 m²</p>
-                    </div>
-                </div>
-            </span>
-            <div class="heart-icon"
-                 onclick="addToFavorites('4', 'Căn hộ mini', 2.5, 60, 'jpg/property4.jpg', 'TP.HCM, Quận 4')">
-                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
-            </div>
-        </div>
-        <div class="product-item" style="display: block;">
-            <span onclick="location.href='property-detail.jsp?id=4'"
-                  style="cursor: pointer; color: blue; text-decoration: none;">
-                <img src="../jpg/HCM.jpg" alt="Căn hộ mini" class="product-image">
-                <h3>Căn hộ mini</h3>
-                <p class="address">
-                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
-                    TP.HCM, Quận 4
-                </p>
-                <div class="details">
-                    <div class="price-size">
-                        <p class="price">2.5 tỷ</p>
-                        <p class="size">60 m²</p>
-                    </div>
-                </div>
-            </span>
-            <div class="heart-icon"
-                 onclick="addToFavorites('4', 'Căn hộ mini', 2.5, 60, 'jpg/property4.jpg', 'TP.HCM, Quận 4')">
-                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
-            </div>
-        </div>
-        <div class="product-item" style="display: block;">
-            <span onclick="location.href='property-detail.jsp?id=4'"
-                  style="cursor: pointer; color: blue; text-decoration: none;">
-                <img src="../jpg/HCM.jpg" alt="Căn hộ mini" class="product-image">
-                <h3>Căn hộ mini</h3>
-                <p class="address">
-                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
-                    TP.HCM, Quận 4
-                </p>
-                <div class="details">
-                    <div class="price-size">
-                        <p class="price">2.5 tỷ</p>
-                        <p class="size">60 m²</p>
-                    </div>
-                </div>
-            </span>
-            <div class="heart-icon"
-                 onclick="addToFavorites('4', 'Căn hộ mini', 2.5, 60, 'jpg/property4.jpg', 'TP.HCM, Quận 4')">
-                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
-            </div>
-        </div>
-        <div class="product-item" style="display: block;">
-            <span onclick="location.href='property-detail.jsp?id=4'"
-                  style="cursor: pointer; color: blue; text-decoration: none;">
-                <img src="../jpg/HCM.jpg" alt="Căn hộ mini" class="product-image">
-                <h3>Căn hộ mini</h3>
-                <p class="address">
-                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
-                    TP.HCM, Quận 4
-                </p>
-                <div class="details">
-                    <div class="price-size">
-                        <p class="price">2.5 tỷ</p>
-                        <p class="size">60 m²</p>
-                    </div>
-                </div>
-            </span>
-            <div class="heart-icon"
-                 onclick="addToFavorites('4', 'Căn hộ mini', 2.5, 60, 'jpg/property4.jpg', 'TP.HCM, Quận 4')">
-                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
-            </div>
-        </div>
-        <div class="product-item" style="display: block;">
-            <span onclick="location.href='property-detail.jsp?id=4'"
-                  style="cursor: pointer; color: blue; text-decoration: none;">
-                <img src="../jpg/HCM.jpg" alt="Căn hộ mini" class="product-image">
-                <h3>Căn hộ mini</h3>
-                <p class="address">
-                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
-                    TP.HCM, Quận 4
-                </p>
-                <div class="details">
-                    <div class="price-size">
-                        <p class="price">2.5 tỷ</p>
-                        <p class="size">60 m²</p>
-                    </div>
-                </div>
-            </span>
-            <div class="heart-icon"
-                 onclick="addToFavorites('4', 'Căn hộ mini', 2.5, 60, 'jpg/property4.jpg', 'TP.HCM, Quận 4')">
-                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
-            </div>
-        </div>
-        <div class="product-item" style="display: block;">
-            <span onclick="location.href='property-detail.jsp?id=4'"
-                  style="cursor: pointer; color: blue; text-decoration: none;">
-                <img src="../jpg/HCM.jpg" alt="Căn hộ mini" class="product-image">
-                <h3>Căn hộ mini</h3>
-                <p class="address">
-                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
-                    TP.HCM, Quận 4
-                </p>
-                <div class="details">
-                    <div class="price-size">
-                        <p class="price">2.5 tỷ</p>
-                        <p class="size">60 m²</p>
-                    </div>
-                </div>
-            </span>
-            <div class="heart-icon"
-                 onclick="addToFavorites('4', 'Căn hộ mini', 2.5, 60, 'jpg/property4.jpg', 'TP.HCM, Quận 4')">
-                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
-            </div>
-        </div>
-        <div class="product-item" style="display: block;">
-            <span onclick="location.href='property-detail.jsp?id=4'"
-                  style="cursor: pointer; color: blue; text-decoration: none;">
-                <img src="../jpg/HCM.jpg" alt="Căn hộ mini" class="product-image">
-                <h3>Căn hộ mini</h3>
-                <p class="address">
-                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
-                    TP.HCM, Quận 4
-                </p>
-                <div class="details">
-                    <div class="price-size">
-                        <p class="price">2.5 tỷ</p>
-                        <p class="size">60 m²</p>
-                    </div>
-                </div>
-            </span>
-            <div class="heart-icon"
-                 onclick="addToFavorites('4', 'Căn hộ mini', 2.5, 60, 'jpg/property4.jpg', 'TP.HCM, Quận 4')">
-                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
-            </div>
-        </div>
-        <div class="product-item" style="display: block;">
-            <span onclick="location.href='property-detail.jsp?id=4'"
-                  style="cursor: pointer; color: blue; text-decoration: none;">
-                <img src="../jpg/HCM.jpg" alt="Căn hộ mini" class="product-image">
-                <h3>Căn hộ mini</h3>
-                <p class="address">
-                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
-                    TP.HCM, Quận 4
-                </p>
-                <div class="details">
-                    <div class="price-size">
-                        <p class="price">2.5 tỷ</p>
-                        <p class="size">60 m²</p>
-                    </div>
-                </div>
-            </span>
-            <div class="heart-icon"
-                 onclick="addToFavorites('4', 'Căn hộ mini', 2.5, 60, 'jpg/property4.jpg', 'TP.HCM, Quận 4')">
-                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
-            </div>
-        </div>
-        <div class="product-item" style="display: block;">
-            <span onclick="location.href='property-detail.jsp?id=4'"
-                  style="cursor: pointer; color: blue; text-decoration: none;">
-                <img src="../jpg/HCM.jpg" alt="Căn hộ mini" class="product-image">
-                <h3>Căn hộ mini</h3>
-                <p class="address">
-                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
-                    TP.HCM, Quận 4
-                </p>
-                <div class="details">
-                    <div class="price-size">
-                        <p class="price">2.5 tỷ</p>
-                        <p class="size">60 m²</p>
-                    </div>
-                </div>
-            </span>
-            <div class="heart-icon"
-                 onclick="addToFavorites('4', 'Căn hộ mini', 2.5, 60, 'jpg/property4.jpg', 'TP.HCM, Quận 4')">
-                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
-            </div>
-        </div>
-        <div class="product-item" style="display: block;">
-            <span onclick="location.href='property-detail.jsp?id=4'"
-                  style="cursor: pointer; color: blue; text-decoration: none;">
-                <img src="../jpg/HCM.jpg" alt="Căn hộ mini" class="product-image">
-                <h3>Căn hộ mini</h3>
-                <p class="address">
-                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
-                    TP.HCM, Quận 4
-                </p>
-                <div class="details">
-                    <div class="price-size">
-                        <p class="price">2.5 tỷ</p>
-                        <p class="size">60 m²</p>
-                    </div>
-                </div>
-            </span>
-            <div class="heart-icon"
-                 onclick="addToFavorites('4', 'Căn hộ mini', 2.5, 60, 'jpg/property4.jpg', 'TP.HCM, Quận 4')">
-                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
-            </div>
-        </div>
-        <div class="product-item" style="display: block;">
-            <span onclick="location.href='property-detail.jsp?id=4'"
-                  style="cursor: pointer; color: blue; text-decoration: none;">
-                <img src="../jpg/HCM.jpg" alt="Căn hộ mini" class="product-image">
-                <h3>Căn hộ mini</h3>
-                <p class="address">
-                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
-                    TP.HCM, Quận 4
-                </p>
-                <div class="details">
-                    <div class="price-size">
-                        <p class="price">2.5 tỷ</p>
-                        <p class="size">60 m²</p>
-                    </div>
-                </div>
-            </span>
-            <div class="heart-icon"
-                 onclick="addToFavorites('4', 'Căn hộ mini', 2.5, 60, 'jpg/property4.jpg', 'TP.HCM, Quận 4')">
-                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
-            </div>
-        </div>
-        <div class="product-item" style="display: block;">
-            <span onclick="location.href='property-detail.jsp?id=4'"
-                  style="cursor: pointer; color: blue; text-decoration: none;">
-                <img src="../jpg/HCM.jpg" alt="Căn hộ mini" class="product-image">
-                <h3>Căn hộ mini</h3>
-                <p class="address">
-                    <img src="../jpg/location.png" alt="Location Icon" class="location-icon">
-                    TP.HCM, Quận 4
-                </p>
-                <div class="details">
-                    <div class="price-size">
-                        <p class="price">2.5 tỷ</p>
-                        <p class="size">60 m²</p>
-                    </div>
-                </div>
-            </span>
-            <div class="heart-icon"
-                 onclick="addToFavorites('4', 'Căn hộ mini', 2.5, 60, 'jpg/property4.jpg', 'TP.HCM, Quận 4')">
-                <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
-            </div>
-        </div>
+                // Ban đầu hiển thị 8 sản phẩm đầu tiên
+                products.forEach((product, index) => {
+                    if (index < 8) {
+                        product.style.display = 'block'; // Hiển thị 8 sản phẩm đầu tiên
+                    } else {
+                        product.style.display = 'none'; // Ẩn các sản phẩm còn lại
+                    }
+                });
+
+                toggleButton.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    if (isExpanded) {
+                        // Khi trạng thái đang mở rộng, thu gọn lại và chỉ hiển thị 8 sản phẩm
+                        products.forEach((product, index) => {
+                            if (index >= 8) {
+                                product.style.display = 'none'; // Ẩn các sản phẩm ngoài 8 sản phẩm đầu tiên
+                            }
+                        });
+                        toggleButton.textContent = 'Xem thêm'; // Đổi lại thành "Xem thêm"
+                    } else {
+                        // Khi trạng thái đang thu gọn, hiển thị tất cả sản phẩm
+                        products.forEach(product => product.style.display = 'block'); // Hiển thị tất cả sản phẩm
+                        toggleButton.textContent = 'Ẩn bớt'; // Đổi thành "Ẩn bớt"
+                    }
+
+                    // Đảo trạng thái
+                    isExpanded = !isExpanded;
+
+                    // Thực hiện cuộn mượt mà về đầu phần sản phẩm
+                    document.querySelector('.product-section').scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                });
+            });
+        </script>
+
 
     </div>
+    <script>
+        // Giỏ hàng lưu các bất động sản yêu thích
+        let cart = [];
 
+        // Hàm thêm sản phẩm vào giỏ hàng
+        function addToFavorites(id, title, price, size, image, address) {
+            // Kiểm tra xem sản phẩm đã tồn tại trong giỏ chưa
+            const existingProduct = cart.find(item => item.id === id);
+            if (!existingProduct) {
+                // Thêm sản phẩm vào giỏ hàng nếu chưa có
+                const product = {
+                    id: id,
+                    title: title,
+                    price: price,
+                    size: size,
+                    image: image,
+                    address: address
+                };
+                cart.push(product);
+                updateCartDisplay();
+            } else {
+                alert("Bất động sản này đã có trong giỏ hàng.");
+            }
+        }
+
+        // Hàm cập nhật giao diện giỏ hàng
+        function updateCartDisplay() {
+            // Cập nhật số lượng sản phẩm trong giỏ hàng
+            document.querySelector(".item-count").textContent = cart.length;
+
+            // Cập nhật danh sách sản phẩm trong giỏ hàng mini
+            const cartItemsElement = document.getElementById("cart-items");
+            cartItemsElement.innerHTML = ""; // Xóa nội dung cũ
+            cart.forEach(item => {
+                const li = document.createElement("li");
+                li.innerHTML = `
+    <img src="${item.image}" alt="${item.title}" style="width: 30px; height: 30px; margin-right: 10px;">
+    <span>${item.title} - ${item.price} tỷ - ${item.size} m²</span>
+    `;
+                cartItemsElement.appendChild(li);
+            });
+        }
+
+        // Hàm điều hướng đến trang giỏ hàng (nếu cần)
+        function goToCart() {
+            // Bạn có thể thay đổi đường dẫn trang giỏ hàng ở đây nếu cần
+            location.href = "cart.html";
+        }
+    </script>
     <div class="view-more">
         <a href="#" id="toggleButton">Xem thêm</a>
     </div>
@@ -641,53 +1157,64 @@
         <button id="next" style="position: absolute; right: 10px; z-index: 1;">&#10095;</button>
         <div class="project-list" style="display: flex; transition: transform 0.5s;" id="projectList">
             <div class="project-item"
-                 style="min-width: 200px; margin: 0 10px; border: 1px solid gainsboro;border-radius: 5px;padding-bottom: 20px">
-                <img src="../jpg/binhduong.jpg" style="width: 100%; height: auto; border-radius: 15px">
-                <h3>Dự án 1</h3>
-                <p>Mô tả ngắn về dự án 1.</p>
+                 style="min-width: 200px; margin: 0 10px; border: 1px solid gainsboro; border-radius: 5px; padding-bottom: 20px; cursor: pointer;"
+                 onclick="redirectToPropertyDetail(1)">
+                <img src="../jpg/1.webp" style="width: 100%; height: auto; border-radius: 5px">
+                <h3 style="margin-left: 10px">Dự án 1</h3>
+                <p style="margin-left: 10px">Mô tả ngắn về dự án 1.</p>
             </div>
             <div class="project-item"
-                 style="min-width: 200px; margin: 0 10px; border: 1px solid gainsboro;border-radius: 5px;padding-bottom: 20px">
-                <img src="../jpg/binhduong.jpg" style="width: 100%; height: auto; border-radius: 15px">
-                <h3>Dự án 1</h3>
-                <p>Mô tả ngắn về dự án 1.</p>
+                 style="min-width: 200px; margin: 0 10px; border: 1px solid gainsboro; border-radius: 5px; padding-bottom: 20px; cursor: pointer;"
+                 onclick="redirectToPropertyDetail(1)">
+                <img src="../jpg/2.jpg" style="width: 100%; height: auto; border-radius: 5px">
+                <h3 style="margin-left: 10px">Dự án 1</h3>
+                <p style="margin-left: 10px">Mô tả ngắn về dự án 1.</p>
             </div>
             <div class="project-item"
-                 style="min-width: 200px; margin: 0 10px; border: 1px solid gainsboro;border-radius: 5px;padding-bottom: 20px">
-                <img src="../jpg/binhduong.jpg" style="width: 100%; height: auto; border-radius: 15px">
-                <h3>Dự án 1</h3>
-                <p>Mô tả ngắn về dự án 1.</p>
+                 style="min-width: 200px; margin: 0 10px; border: 1px solid gainsboro; border-radius: 5px; padding-bottom: 20px; cursor: pointer;"
+                 onclick="redirectToPropertyDetail(1)">
+                <img src="../jpg/3.jpg" style="width: 100%; height: auto; border-radius: 5px">
+                <h3 style="margin-left: 10px">Dự án 1</h3>
+                <p style="margin-left: 10px">Mô tả ngắn về dự án 1.</p>
             </div>
             <div class="project-item"
-                 style="min-width: 200px; margin: 0 10px; border: 1px solid gainsboro;border-radius: 5px;padding-bottom: 20px">
-                <img src="../jpg/binhduong.jpg" style="width: 100%; height: auto; border-radius: 15px">
-                <h3>Dự án 1</h3>
-                <p>Mô tả ngắn về dự án 1.</p>
+                 style="min-width: 200px; margin: 0 10px; border: 1px solid gainsboro; border-radius: 5px; padding-bottom: 20px; cursor: pointer;"
+                 onclick="redirectToPropertyDetail(1)">
+                <img src="../jpg/4.jpg" style="width: 100%; height: auto; border-radius: 5px">
+                <h3 style="margin-left: 10px">Dự án 1</h3>
+                <p style="margin-left: 10px">Mô tả ngắn về dự án 1.</p>
             </div>
             <div class="project-item"
-                 style="min-width: 200px; margin: 0 10px; border: 1px solid gainsboro;border-radius: 5px;padding-bottom: 20px">
-                <img src="../jpg/binhduong.jpg" style="width: 100%; height: auto; border-radius: 15px">
-                <h3>Dự án 1</h3>
-                <p>Mô tả ngắn về dự án 1.</p>
+                 style="min-width: 200px; margin: 0 10px; border: 1px solid gainsboro; border-radius: 5px; padding-bottom: 20px; cursor: pointer;"
+                 onclick="redirectToPropertyDetail(1)">
+                <img src="../jpg/5.jpg" style="width: 100%; height: auto; border-radius: 5px">
+                <h3 style="margin-left: 10px">Dự án 1</h3>
+                <p style="margin-left: 10px">Mô tả ngắn về dự án 1.</p>
             </div>
             <div class="project-item"
-                 style="min-width: 200px; margin: 0 10px; border: 1px solid gainsboro;border-radius: 5px;padding-bottom: 20px">
-                <img src="../jpg/binhduong.jpg" style="width: 100%; height: auto; border-radius: 15px">
-                <h3>Dự án 1</h3>
-                <p>Mô tả ngắn về dự án 1.</p>
+                 style="min-width: 200px; margin: 0 10px; border: 1px solid gainsboro; border-radius: 5px; padding-bottom: 20px; cursor: pointer;"
+                 onclick="redirectToPropertyDetail(1)">
+                <img src="../jpg/6.jpg" style="width: 100%; height: auto; border-radius: 5px">
+                <h3 style="margin-left: 10px">Dự án 1</h3>
+                <p style="margin-left: 10px">Mô tả ngắn về dự án 1.</p>
             </div>
-            <div class="project-item"
-                 style="min-width: 200px; margin: 0 10px; border: 1px solid gainsboro;border-radius: 5px;padding-bottom: 20px">
-                <img src="../jpg/binhduong.jpg" style="width: 100%; height: auto; border-radius: 15px">
-                <h3>Dự án 1</h3>
-                <p>Mô tả ngắn về dự án 1.</p>
-            </div>
+
+
+
 
 
         </div>
+        <script>
+            // Hàm điều hướng đến trang chi tiết của sản phẩm
+            function redirectToPropertyDetail(id) {
+                // Chuyển hướng tới trang chi tiết sản phẩm với ID tương ứng
+                location.href = `property-detail.html?id=${id}`;
+            }
+
+        </script>
     </div>
 </div>
-</div>
+
 
 <script>
     let currentIndex = 0;

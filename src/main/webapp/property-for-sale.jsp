@@ -1,5 +1,7 @@
 <%@ page import="Entity.Property1" %>
 <%@ page import="java.util.List" %>
+<%@ page import="Dao.PropertyDAO" %>
+<%@ page import="Dao.PropertyBystatusDAO" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -131,11 +133,35 @@
                 <span>123 Đường ABC, Quận XYZ, TP.HCM</span>
             </div>
         </div>
+        <%
+            boolean isLoggedIn = session.getAttribute("username") != null;
+            String username = (String) session.getAttribute("username");
+        %>
+
         <div class="header-right" style="margin-top: 10px">
-            <a href="login.jsp" class="btn"><h3>Đăng nhập</h3></a>
-            <a href="register.jsp" class="btn"><h3>Đăng ký</h3></a>
-            <a href="post-status.jsp" class="btn"><h3>Đăng tin</h3></a>
+            <% if (isLoggedIn) { %>
+            <a href="account.jsp" class="btn">
+                <h3 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px;">
+                    Hello, <%= username %>
+                </h3>
+            </a>
+
+            <a href="logout" class="btn">
+                <h3>Đăng xuất</h3>
+            </a>
+            <% } else { %>
+            <a href="login.jsp" class="btn">
+                <h3>Đăng nhập</h3>
+            </a>
+            <a href="register.jsp" class="btn">
+                <h3>Đăng ký</h3>
+            </a>
+            <% } %>
+            <a href="post-status.html" class="btn">
+                <h3>Đăng tin</h3>
+            </a>
         </div>
+
         <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()"
            style="border: 1px solid #ccc; border-radius:100%;">
             <img src="jpg/heart%20(1).png" style="width: 30px; height: 30px;"
@@ -152,20 +178,25 @@
     <div class="menu">
         <div class="header-bottom" style="height:60px;margin-top: 0">
             <div class="store-name">
-                <h1><a href="homes">
-                    <span class="color1">HOME</span>
-                    <span class="color2">LANDER</span>
-                </a></h1>
+                <h1>
+                    <a href="<%= isLoggedIn ? "welcome" : "homes" %>">
+                        <span class="color1">HOME</span>
+                        <span class="color2">LANDER</span>
+                    </a>
+                </h1>
             </div>
+
+
             <nav>
                 <ul>
-                    <li><a href="property-for-sale.jsp">Nhà Đất Bán</a></li>
-                    <li><a href="property-for-rent.jsp">Nhà Đất Cho Thuê</a></li>
-                    <li><a href="project.jsp">Dự Án</a></li>
-                    <li><a href="news.jsp">Tin Tức</a></li>
-                    <li><a href="wiki.jsp">Wiki BĐS</a></li>
+                    <li><a href="#nhadatban">Nhà Đất Bán</a></li>
+                    <li><a href="#nhadatchochue">Nhà Đất Cho Thuê</a></li>
+                    <li><a href="#duan">Dự Án</a></li>
+                    <li><a href="#tintuc">Tin Tức</a></li>
+                    <li><a href="#wikibds">Wiki BĐS</a></li>
                 </ul>
             </nav>
+
             <div class="contact-info">
                 <img src="jpg/phone-call.png" alt="Phone Icon" class="phone-icon">
                 <span class="phone-number">0123 456 789</span>
@@ -182,33 +213,91 @@
     </div>
 </div>
 <div class="search-container">
-    <form class="search-form">
-        <input type="text" placeholder="Tìm kiếm..." name="search" required>
-
-        <fieldset class="price-group">
-            <legend>Giá <span class="arrow-down">▼</span></legend>
-            <div class="price-dropdown hidden">
-                <label for="min-price">Giá tối thiểu (tỷ):</label>
-                <input type="number" id="min-price" name="min-price" placeholder="Nhập giá tối thiểu">
-
-                <label for="max-price">Giá tối đa (tỷ):</label>
-                <input type="number" id="max-price" name="max-price" placeholder="Nhập giá tối đa">
-            </div>
-        </fieldset>
-
-        <fieldset class="area-group">
-            <legend>Diện Tích <span class="arrow-down">▼</span></legend>
-            <div class="area-dropdown hidden">
-                <label for="min-area">Diện tích tối thiểu (m²):</label>
-                <input type="number" id="min-area" name="min-area" placeholder="Nhập diện tích tối thiểu">
-
-                <label for="max-area">Diện tích tối đa (m²):</label>
-                <input type="number" id="max-area" name="max-area" placeholder="Nhập diện tích tối đa">
-            </div>
-        </fieldset>
+    <form class="search-form" id="search-form" method="post" action="SearchServlet">
+        <input type="text" id="search" placeholder="Tìm kiếm sản phẩm..." name="search" required>
+        <input type="text" id="city" placeholder="Tìm kiếm theo địa chỉ..." name="city">
         <button type="submit">Tìm Kiếm</button>
     </form>
 </div>
+
+<div class="product-section">
+    <div class="product-list" id="search-results">
+        <!-- Các sản phẩm sẽ được hiển thị tại đây -->
+    </div>
+    <button id="toggleButton">Xem thêm</button>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const toggleButton = document.getElementById('toggleButton');
+        let isExpanded = false; // Trạng thái để theo dõi việc mở rộng hay thu gọn
+
+        // Lắng nghe sự kiện submit của form tìm kiếm
+        document.getElementById('search-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Ngừng hành động mặc định của form (submit)
+
+            const searchText = document.getElementById('search').value;
+            const city = document.getElementById('city').value;
+
+            // Gửi yêu cầu tìm kiếm qua AJAX
+            fetch('SearchServlet', {
+                method: 'POST',
+                body: new URLSearchParams({
+                    search: searchText,
+                    city: city
+                }),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('search-results').innerHTML = data;
+                    initProductToggle(); // Sau khi nhận dữ liệu từ server, khởi tạo lại chức năng toggle
+                });
+        });
+
+        // Hàm toggle sản phẩm
+        function initProductToggle() {
+            const products = document.querySelectorAll('.product-item');
+            let isExpanded = false;
+
+            // Ban đầu hiển thị 8 sản phẩm đầu tiên
+            products.forEach((product, index) => {
+                if (index < 8) {
+                    product.style.display = 'block'; // Hiển thị 8 sản phẩm đầu tiên
+                } else {
+                    product.style.display = 'none'; // Ẩn các sản phẩm còn lại
+                }
+            });
+
+            toggleButton.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                if (isExpanded) {
+                    products.forEach((product, index) => {
+                        if (index >= 8) {
+                            product.style.display = 'none'; // Ẩn các sản phẩm ngoài 8 sản phẩm đầu tiên
+                        }
+                    });
+                    toggleButton.textContent = 'Xem thêm'; // Đổi lại thành "Xem thêm"
+                } else {
+                    products.forEach(product => product.style.display = 'block'); // Hiển thị tất cả sản phẩm
+                    toggleButton.textContent = 'Ẩn bớt'; // Đổi thành "Ẩn bớt"
+                }
+
+                isExpanded = !isExpanded;
+
+                // Cuộn mượt mà về đầu phần sản phẩm
+                document.querySelector('.product-section').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        }
+    });
+</script>
+
 <script src="JS/script.js"></script>
 
 
@@ -219,53 +308,72 @@
         <p>Hiện có <strong>181.125</strong> bất động sản.</p>
     </div>
 </div>
+<%
 
-</div>
+    PropertyBystatusDAO propertyDAO = new PropertyBystatusDAO();
+
+
+    List<Property1> properties = propertyDAO.getPropertiesByStatus(1);
+%>
+
 <div class="main">
-    <%
-        List<Property1> properties = (List<Property1>) request.getAttribute("properties");
+    <div class="main">
 
-        if (properties != null && !properties.isEmpty()) {
-    %>
-    <div class="property-list">
-        <%
-            for (Property1 property : properties) {
-        %>
-        <div class="container1">
-            <div class="property-container">
-                <img src="jpg/DaNang.jpg"
-                     alt="Hình ảnh bất động sản" class="property-image">
-                <div class="property-details">
-                    <h2 class="property-title"><%= property.getTitle() %>
-                    </h2>
-                    <p class="property-price">Giá: <%= property.getPrice() %>
-                    </p>
-                    <p class="property-area">Diện
-                        tích: <%= property.getArea() %>
-                    </p>
-                    <p class="property-address">Địa
-                        chỉ: <%= property.getAddress() %>
-                    </p>
+
+        <div class="property-list">
+            <%
+                if (properties != null && !properties.isEmpty()) {
+                    for (Property1 property : properties) {
+            %>
+            <style>
+                .property-link:hover {
+                    opacity: 0.8;
+                }
+            </style>
+            <a href="property-detail.jsp?id=<%= property.getId() %>" class="property-link"
+               style="text-decoration: none">
+                <div class="container1">
+                    <div class="property-container">
+                        <img src="<%= property.getImageUrl() %>" alt="Hình ảnh bất động sản" class="property-image">
+                        <div class="property-details">
+                            <h2 class="property-title">
+                                <i class="fas fa-building"></i> <%= property.getTitle() %>
+                            </h2>
+
+                            <p class="property-price">
+                                <i class="fas fa-dollar-sign"></i> <%= property.getPrice() %> tỷ
+                            </p>
+
+                            <p class="property-area">
+                                <i class="fas fa-ruler-combined"></i> <%= property.getArea() %> m²
+                            </p>
+
+                            <p class="property-address">
+                                <i class="fas fa-map-marker-alt"></i> <%= property.getAddress() %>
+                            </p>
+
+                            <p class="property-description">
+                                <i class="fas fa-info-circle"></i> <%= property.getDescription() %>
+                            </p>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </a>
+            <%
+                }
+            } else {
+            %>
+            <p>Không có bất động sản nào đang được bán.</p>
+            <%
+                }
+            %>
         </div>
-        <%
-            }
-        %>
     </div>
-    <%
-    } else {
-    %>
-    <p>Không có bất động sản nào đang được bán.</p>
-    <%
-        }
-    %>
 </div>
-
 
 <div class="filter-container">
     <h4>Lọc Theo Khoảng Giá</h4>
-    <form id="priceFilterForm">
+    <form id="priceFilterForm" method="GET" action="FilterServlet">
         <div class="form-group">
             <label>Chọn khoảng giá:</label>
             <ul class="price-options">
@@ -285,12 +393,13 @@
                 <li data-value="tren-60" class="price-option">Trên 60 tỷ</li>
             </ul>
         </div>
-        <button type="submit">Lọc</button>
+        <input type="hidden" name="priceRange" id="priceRange">
     </form>
 </div>
+
 <div class="filter-container1">
     <h4>Lọc Theo Diện Tích</h4>
-    <form id="areaFilterForm">
+    <form id="areaFilterForm" method="GET" action="FilterServlet">
         <div class="form-group">
             <label>Chọn diện tích:</label>
             <ul class="price-options">
@@ -307,10 +416,53 @@
                 <li data-value="tren-500" class="price-option">Trên 500 m²</li>
             </ul>
         </div>
-        <button type="submit">Lọc</button>
+        <input type="hidden" name="areaRange" id="areaRange">
     </form>
 </div>
 
+
+
+<script>
+    $(document).ready(function () {
+        // Khi người dùng chọn khoảng giá
+        $('.price-option').on('click', function () {
+            var selectedPrice = $(this).data('value');
+            $('#priceRange').val(selectedPrice); // Gán giá trị đã chọn vào input ẩn
+            $('#priceFilterForm').submit(); // Submit form để gửi dữ liệu tới servlet
+        });
+
+        // Khi người dùng chọn diện tích
+        $('.price-option').on('click', function () {
+            var selectedArea = $(this).data('value');
+            $('#areaRange').val(selectedArea); // Gán giá trị diện tích đã chọn vào input ẩn
+            $('#areaFilterForm').submit(); // Submit form để gửi dữ liệu tới servlet
+        });
+
+        // Khi người dùng gõ vào ô tìm kiếm
+        $('#search, #city').on('keyup', function () {
+            var searchText = $('#search').val();
+            var city = $('#city').val();
+
+            // Gửi dữ liệu tìm kiếm đến servlet
+            $.ajax({
+                url: 'SearchServlet',
+                type: 'POST',
+                data: {
+                    search: searchText,
+                    city: city
+                },
+                success: function (response) {
+                    // Hiển thị kết quả trả về trong phần product-list
+                    $('#search-results').html(response);
+                },
+                error: function () {
+                    $('#search-results').html('<p>Lỗi trong quá trình tìm kiếm.</p>');
+                }
+            });
+        });
+    });
+
+</script>
 
 <style>
     /* Thiết lập form hiển thị sản phẩm */
@@ -391,7 +543,7 @@
 <div class="footer">
     <div class="footer-top">
 
-        <h1><a href="homes">
+        <h1><a href="welcome">
             <span class="color1">HOME</span>
             <span class="color2">LANDER</span>
         </a></h1>
@@ -447,6 +599,5 @@
 
 
 </div>
-
 </body>
 </html>

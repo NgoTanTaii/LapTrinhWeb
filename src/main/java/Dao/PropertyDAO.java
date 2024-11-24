@@ -1,6 +1,7 @@
 package Dao;
 
 import DBcontext.ConnectDB;
+import DBcontext.Database;
 import DBcontext.DbConnection1;
 import Entity.Comment;
 import Entity.Property1;
@@ -28,16 +29,11 @@ public class PropertyDAO {
             e.printStackTrace();
 
         }
-
-
-    }
-
-
-    public Property1 getPropertyById(int id) {
+    }public Property1 getPropertyById(int id) {
         Property1 property = null;
-        String sql = "SELECT property_id, title, price, address, area, image_url, description, type, status FROM properties WHERE property_id = ?";
+        String query = "SELECT property_id, title, price, address, area, image_url, description, type, status, poster_id FROM properties WHERE property_id = ?";
 
-        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -48,16 +44,16 @@ public class PropertyDAO {
                 property.setAddress(rs.getString("address"));
                 property.setArea(rs.getDouble("area"));
                 property.setImageUrl(rs.getString("image_url"));
-                property.setDescription(rs.getString("description")); // Retrieve description
-                property.setType(rs.getString("type"));               // Retrieve type
-                property.setStatus(rs.getString("status"));           // Retrieve status
+                property.setDescription(rs.getString("description"));
+                property.setType(rs.getString("type"));
+                property.setStatus(rs.getString("status"));
+                property.setPosterId(rs.getInt("poster_id")); // Lưu poster_id vào property
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return property;
     }
-
 
     // Phương thức xóa bất động sản
     public void deleteProperty(int propertyId) {
@@ -125,8 +121,7 @@ public class PropertyDAO {
 
 
     private Connection getConnection() throws SQLException {
-        // Kết nối tới CSDL (cấu hình tùy thuộc vào hệ thống của bạn)
-        // Ví dụ sử dụng JDBC với MySQL
+
         String url = "jdbc:mysql://localhost:3306/webbds";  // Chỉnh sửa tên database nếu cần
         String user = "root";
         String password = "123456";  // Cập nhật mật khẩu nếu cần
@@ -407,6 +402,7 @@ public class PropertyDAO {
         }
         return properties;
     }
+
     public List<String> getThumbnailUrls(int propertyId) {
         List<String> thumbnailUrls = new ArrayList<>();
         String sql = "SELECT image_url FROM property_images WHERE property_id = ?";
@@ -421,6 +417,7 @@ public class PropertyDAO {
         }
         return thumbnailUrls;
     }
+
     public void addThumbnail(int propertyId, String imageUrl) {
         String sql = "INSERT INTO property_images (property_id, image_url) VALUES (?, ?)";
         try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -442,8 +439,24 @@ public class PropertyDAO {
             e.printStackTrace();
         }
     }
+    public int getTotalProducts() {
+        int totalProducts = 0;
+        String sql = "SELECT COUNT(*) AS total FROM properties";
 
+        try (Connection conn = Database.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
+            if (rs.next()) {
+                totalProducts = rs.getInt("total");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error fetching total products: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return totalProducts;
+    }
 
 }
 
