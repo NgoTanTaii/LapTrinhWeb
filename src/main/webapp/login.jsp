@@ -104,7 +104,7 @@
 <body>
 
 <div class="login-form-container">
-    <div class="login-form">
+    <div class="login-form" style="width: 70%">
         <h2>Đăng nhập để tiếp tục</h2>
         <form action="login" method="post">
             <label for="username">Tên đăng nhập:</label>

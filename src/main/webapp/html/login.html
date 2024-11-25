@@ -4,26 +4,135 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang Đăng Nhập</title>
-    <link rel="stylesheet" type="text/css" href=" ../css/login.css">
+    <link rel="stylesheet" type="text/css" href="../css/login.css">
+    <style>
+
+        .login-form-container {
+            max-width: 550px;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background: gainsboro;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fff;
+            width: 60%;
+            margin: auto;
+        }
+
+        .login-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .login-form label {
+            margin-bottom: 5px;
+        }
+
+        .login-form input {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            width: 95%;
+        }
+
+        .btn {
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+
+        .submit-btn {
+            border-radius: 5px;
+            height: 40px;
+            width: 100%;
+            background-color: red;
+            color: white;
+            border: none;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .submit-btn:hover {
+            background-color: darkred;
+        }
+
+        .btn-facebook {
+            background-color: white;
+            color: black;
+            margin: 5px 0;
+        }
+
+        .btn-facebook i {
+            margin-right: 8px;
+            color: #3b5998;
+        }
+
+        .social-login {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .link {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+
+
 </head>
 <body>
-    <div class="login-container">
-        <h2>Đăng Nhập</h2>
-        <form action="#" method="POST" class="login-form">
-            <div class="input-group">
-                <label for="username">Tên Đăng Nhập</label>
-                <input type="text" id="username" name="username" placeholder="Nhập tên đăng nhập" required>
-            </div>
-            <div class="input-group">
-                <label for="password">Mật Khẩu</label>
-                <input type="password" id="password" name="password" placeholder="Nhập mật khẩu" required>
-            </div>
-            <button type="submit" class="login-btn">Đăng Nhập</button>
+<div class="login-form-container">
+    <div class="login-form" style="width: 70%">
+        <h2>Đăng nhập để tiếp tục</h2>
+        <form action="login" method="post">
+            <label for="username">Tên đăng nhập:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Mật khẩu:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit" class="submit-btn">Đăng nhập</button>
         </form>
-        <div class="login-links">
-            <a href="register.html">Đăng Ký</a>
-            <a href="forgot-password.html">Quên Mật Khẩu?</a>
+
+
+        <div class="social-login">
+            <p>Hoặc đăng nhập bằng:</p>
+            <button class="btn btn-facebook" onclick="checkLoginState()">
+                <i class="fab fa-facebook-f"></i> Đăng nhập bằng Facebook
+            </button>
+            <button class="btn btn-facebook" onclick="checkLoginState()">
+                <i class="fab fa-facebook-f"></i> Đăng nhập bằng Google
+            </button>
+            <div id="g_id_onload"
+                 data-client_id="161137938230-6h6mbfajcfra9avc0762peh4556202hq.apps.googleusercontent.com"
+                 data-login_uri="http://localhost:8080/Batdongsan/loginWithGoogle">
+            </div>
+            <div class="g_id_signin" data-type="standard"></div>
+        </div>
+
+        <div class="link">
+            <p>Bạn chưa có tài khoản? <a href="register.html">Đăng ký ngay</a> | <a href="forgot-password.html">Quên mật
+                khẩu?</a></p>
         </div>
     </div>
+</div>
+
 </body>
 </html>
