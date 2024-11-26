@@ -17,11 +17,11 @@ public class OrderDAO {
 
     // Tạo đơn hàng mới
     public int createOrder(Order order) {
-        String query = "INSERT INTO orders (user_id, total_price, status) VALUES (?, ?, ?)";
+        String query = "INSERT INTO orders (user_id, status) VALUES (?, ?, ?)";
         try {
             PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             stmt.setInt(1, order.getUserId());
-            stmt.setDouble(2, order.getTotalPrice());
+
             stmt.setString(3, order.getStatus());
             stmt.executeUpdate();
 
@@ -51,7 +51,6 @@ public class OrderDAO {
                 orders.add(new Order(
                         orderId,
                         rs.getInt("user_id"),
-                        rs.getDouble("total_price"),
                         rs.getString("status"),
                         rs.getString("created_at"),
                         items
