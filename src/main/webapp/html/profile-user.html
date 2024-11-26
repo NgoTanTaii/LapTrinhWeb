@@ -1,205 +1,209 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-  <title>Tổng quan tài khoản</title>
-  <style>
+    <title>Tổng quan tài khoản</title>
+    <style>
 
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      background-color: #f8f9fa;
-    }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            background-color: #f8f9fa;
+        }
 
-    /* Sidebar styling */
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 80px;
-      height: 100vh;
-      background-color: #fff;
-      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 20px;
-      z-index: 1000;
-    }
+        /* Sidebar styling */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 80px;
+            height: 100vh;
+            background-color: #fff;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+            z-index: 1000;
+        }
 
-    /* Logo at the top */
-    .sidebar .logo {
-      margin-bottom: 20px;
-    }
+        /* Logo at the top */
+        .sidebar .logo {
+            margin-bottom: 20px;
+        }
 
-    .sidebar .logo img {
-      width: 40px;
-      height: auto;
-    }
+        .sidebar .logo img {
+            width: 40px;
+            height: auto;
+        }
 
-    /* Menu items */
-    .menu-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 20px;
-      text-decoration: none;
-      color: #333;
-      font-size: 14px;
-      text-align: center;
-    }
+        /* Menu items */
+        .menu-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+            text-align: center;
+        }
 
-    .menu-item:hover {
-      color: #007bff;
-    }
+        .menu-item:hover {
+            color: #007bff;
+        }
 
-    .menu-item img {
-      width: 24px;
-      height: auto;
-      margin-bottom: 5px;
-    }
+        .menu-item img {
+            width: 24px;
+            height: auto;
+            margin-bottom: 5px;
+        }
 
 
-    .container {
-      width: 90%;
-      max-width: 900px;
-      margin: 20px;
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-    h1 {
-      font-size: 24px;
-      color: #333;
-    }
+        h1 {
+            font-size: 24px;
+            color: #333;
+        }
 
-    .section {
-      margin-bottom: 20px;
-    }
+        .section {
+            margin-bottom: 20px;
+        }
 
-    .section h2 {
-      font-size: 18px;
-      color: #007bff;
-    }
+        .section h2 {
+            font-size: 18px;
+            color: #007bff;
+        }
 
-    .card {
-      display: flex;
-      justify-content: space-between;
-      padding: 15px;
-      background-color: #f1f3f5;
-      border-radius: 8px;
-      margin-top: 10px;
-    }
+        .card {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            background-color: #f1f3f5;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
 
-    .card h3 {
-      font-size: 16px;
-      color: #333;
-      
-    }
+        .card h3 {
+            font-size: 16px;
+            color: #333;
 
-    .value {
-      font-size: 22px;
-      font-weight: bold;
-      color: #333;
-      padding-bottom: 15px;
-    }
+        }
 
-    .button {
-      background-color: #007bff;
-      color: #fff;
-      padding: 8px 12px;
-      border: none;
-      border-radius: 4px;
-      text-decoration: none;
-      font-size: 14px;
-    }
+        .value {
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            padding-bottom: 15px;
+        }
 
-    .button:hover {
-      background-color: #0056b3;
-    }
-  </style>
+        .button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
 <div class="sidebar">
-  <div class="store-name">
-    <h1><a href="welcome.html">
-      <span class="color1">HOME</span>
+    <div class="store-name">
+        <h1><a href="welcome.html">
+            <span class="color1">HOME</span>
 
-    </a></h1><!-- Sidebar Menu Items -->
-    <a href="#" class="menu-item">
-      <i class="fas fa-chart-pie"></i> <!-- Dashboard Icon -->
-      <span>Tổng quan</span>
-    </a>
-    <a href="#" class="menu-item">
-      <i class="fas fa-list-alt"></i> <!-- Tin đăng Icon -->
-      <span>Tin đăng</span>
-    </a>
-    <a href="#" class="menu-item">
-      <i class="fas fa-plus-circle"></i> <!-- Đăng tin Icon -->
-      <span>Đăng tin</span>
-    </a>
-    <a href="#" class="menu-item">
-      <i class="fas fa-user-friends"></i> <!-- Khách hàng Icon -->
-      <span>Khách hàng</span>
-    </a>
-    <a href="#" class="menu-item">
-      <i class="fa-solid fa-ellipsis"></i>
-      <span>Thêm</span>
-    </a>
+        </a></h1><!-- Sidebar Menu Items -->
+        <a href="#" class="menu-item">
+            <i class="fas fa-chart-pie"></i> <!-- Dashboard Icon -->
+            <span>Tổng quan</span>
+        </a>
+        <a href="change-password.html" class="menu-item">
+            <i class="fas fa-chart-pie"></i> <!-- Dashboard Icon -->
+            <span> Đổi mật khẩu  </span>
+        </a>
+        <a href="#" class="menu-item">
+            <i class="fas fa-list-alt"></i> <!-- Tin đăng Icon -->
+            <span>Tin đăng</span>
+        </a>
+        <a href="#" class="menu-item">
+            <i class="fas fa-plus-circle"></i> <!-- Đăng tin Icon -->
+            <span>Đăng tin</span>
+        </a>
+        <a href="#" class="menu-item">
+            <i class="fas fa-user-friends"></i> <!-- Khách hàng Icon -->
+            <span>Khách hàng</span>
+        </a>
+        <a href="#" class="menu-item">
+            <i class="fa-solid fa-ellipsis"></i>
+            <span>Thêm</span>
+        </a>
 
-  </div>
+    </div>
 </div>
 
 
-<div class="container"style="margin-left: 82px">
-  <h1>Tổng quan tài khoản</h1>
+<div class="container" style="margin-left: 82px">
+    <h1>Tổng quan tài khoản</h1>
 
-  <!-- Account Summary Section -->
-  <div class="section">
-    <h2>Thông tin tài khoản</h2>
-    <div class="card">
-      <div>
-        <h3>Liên hệ trong 30 ngày</h3>
-        <div class="value">0 người</div>
-        <small>+ 0 mới vào hôm nay</small>
-      </div>
-      <div>
-        <h3>Tin đăng</h3>
-        <div class="value">0 tin</div>
-        <a href="#" class="button">Đăng tin</a>
-      </div>
-      <div>
-        <h3>Số dư</h3>
-        <div class="value">0 đ</div>
-        <a href="#" class="button">Nạp tiền</a>
-      </div>
+    <!-- Account Summary Section -->
+    <div class="section">
+        <h2>Thông tin tài khoản</h2>
+        <div class="card">
+            <div>
+                <h3>Liên hệ trong 30 ngày</h3>
+                <div class="value">0 người</div>
+                <small>+ 0 mới vào hôm nay</small>
+            </div>
+            <div>
+                <h3>Tin đăng</h3>
+                <div class="value">0 tin</div>
+                <a href="#" class="button">Đăng tin</a>
+            </div>
+            <div>
+                <h3>Số dư</h3>
+                <div class="value">0 đ</div>
+                <a href="#" class="button">Nạp tiền</a>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- Personalized Information Section -->
-  <div class="section">
-    <h2>Thông tin dành riêng cho bạn</h2>
-    <div class="card">
-      <h3>Quan trọng</h3>
-      <p>Bạn đã cập nhật tất cả thông tin của ngày hôm nay.</p>
+    <!-- Personalized Information Section -->
+    <div class="section">
+        <h2>Thông tin dành riêng cho bạn</h2>
+        <div class="card">
+            <h3>Quan trọng</h3>
+            <p>Bạn đã cập nhật tất cả thông tin của ngày hôm nay.</p>
+        </div>
     </div>
-  </div>
 
-  <!-- Notifications Section -->
-  <div class="section">
-    <h2>Gợi ý</h2>
-    <div class="card">
-      <h3>Làm quen với trang Tổng quan</h3>
-      <p>Hướng dẫn và các gợi ý để tận dụng hiệu quả trang Tổng quan của bạn.</p>
+    <!-- Notifications Section -->
+    <div class="section">
+        <h2>Gợi ý</h2>
+        <div class="card">
+            <h3>Làm quen với trang Tổng quan</h3>
+            <p>Hướng dẫn và các gợi ý để tận dụng hiệu quả trang Tổng quan của bạn.</p>
+        </div>
     </div>
-  </div>
 </div>
 
 </body>
