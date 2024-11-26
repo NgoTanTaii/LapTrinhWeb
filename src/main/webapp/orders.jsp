@@ -1,4 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +14,7 @@
         <tr class="bg-gray-200 text-left">
             <th class="px-4 py-2">Order ID</th>
             <th class="px-4 py-2">Customer</th>
-            <th class="px-4 py-2">Total Price</th>
+            <th class="px-4 py-2">Total Quantity</th>
             <th class="px-4 py-2">Status</th>
             <th class="px-4 py-2">Created At</th>
             <th class="px-4 py-2">Actions</th>
@@ -26,7 +25,7 @@
         <tr class="border-t">
             <td class="px-4 py-2">101</td>
             <td class="px-4 py-2">John Doe</td>
-            <td class="px-4 py-2">$250,000</td>
+            <td class="px-4 py-2">5</td> <!-- Example of total quantity -->
             <td class="px-4 py-2">
                 <span class="px-2 py-1 rounded-full text-white bg-yellow-500">Pending</span>
             </td>
@@ -39,7 +38,7 @@
         <tr class="border-t">
             <td class="px-4 py-2">102</td>
             <td class="px-4 py-2">Jane Smith</td>
-            <td class="px-4 py-2">$320,000</td>
+            <td class="px-4 py-2">3</td> <!-- Example of total quantity -->
             <td class="px-4 py-2">
                 <span class="px-2 py-1 rounded-full text-white bg-blue-500">Confirmed</span>
             </td>
@@ -52,7 +51,7 @@
         <tr class="border-t">
             <td class="px-4 py-2">103</td>
             <td class="px-4 py-2">Alice Johnson</td>
-            <td class="px-4 py-2">$180,000</td>
+            <td class="px-4 py-2">8</td> <!-- Example of total quantity -->
             <td class="px-4 py-2">
                 <span class="px-2 py-1 rounded-full text-white bg-green-500">Completed</span>
             </td>

@@ -226,31 +226,45 @@
             <button type="submit">Tìm Kiếm</button>
         </form>
     </div>
-    <script>// Lấy đối tượng của form và input
-    const searchForm = document.getElementById('searchForm');
-    const searchInput = document.getElementById('searchInput');
 
-    // Thêm sự kiện 'submit' cho form
-    searchForm.addEventListener('submit', function(event) {
-        // Ngăn chặn trang tự tải lại khi form được submit
-        event.preventDefault();
+    <script>
+        // Dữ liệu tĩnh với tên và địa chỉ
+        const data = [
+            { name: "Công ty ABC", address: "Hà Nội" },
+            { name: "Nhà hàng XYZ", address: "Hồ Chí Minh" },
+            { name: "Cửa hàng 123", address: "Đà Nẵng" },
+            { name: "Khách sạn Tự Do", address: "Nha Trang" }
+        ];
 
-        // Lấy giá trị người dùng nhập vào ô tìm kiếm
-        const searchTerm = searchInput.value.trim();
+        // Lấy đối tượng của form và input
+        const searchForm = document.getElementById('searchForm');
+        const searchInput = document.getElementById('searchInput');
 
-        // Kiểm tra xem người dùng đã nhập gì chưa
-        if (searchTerm) {
-            // Giả lập kết quả tìm kiếm hoặc điều hướng tới trang kết quả
-            console.log("Đang tìm kiếm từ khóa: " + searchTerm);
+        // Thêm sự kiện 'submit' cho form
+        searchForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Ngăn chặn trang tự tải lại khi form được submit
 
-            // Bạn có thể thay thế bằng logic tìm kiếm thực tế, ví dụ như gọi API hoặc lọc danh sách sản phẩm hiện tại.
-            // Ví dụ điều hướng sang trang tìm kiếm với từ khóa:
-            // location.href = `search-results.html?query=${encodeURIComponent(searchTerm)}`;
-        } else {
-            alert("Vui lòng nhập từ khóa tìm kiếm.");
-        }
-    });
+            const searchTerm = searchInput.value.trim().toLowerCase(); // Lấy từ khóa tìm kiếm và chuyển thành chữ thường
+
+            if (searchTerm) {
+                // Lọc dữ liệu dựa trên tên và địa chỉ
+                const results = data.filter(item =>
+                    item.name.toLowerCase().includes(searchTerm) ||
+                    item.address.toLowerCase().includes(searchTerm)
+                );
+
+                if (results.length > 0) {
+                    console.log("Kết quả tìm kiếm: ", results);
+                    // Hiển thị kết quả tìm kiếm hoặc xử lý khác tại đây
+                } else {
+                    console.log("Không có kết quả phù hợp.");
+                }
+            } else {
+                alert("Vui lòng nhập từ khóa tìm kiếm.");
+            }
+        });
     </script>
+
     <script src="../JS/script.js"></script>
 
 </header>
