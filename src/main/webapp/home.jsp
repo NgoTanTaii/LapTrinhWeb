@@ -175,7 +175,6 @@
 
 </header>
 
-
 <div class="product-section">
 
     <div class="product-list" id="search-results">

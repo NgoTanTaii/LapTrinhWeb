@@ -53,7 +53,19 @@ public class SearchServlet extends HttpServlet {
         response.setContentType("text/html");
 
         // Tạo header HTML cho phản hồi
-        response.getWriter().println("<html><head><title>Search Results</title></head><body>");
+        response.getWriter().println("<html><head><title>Search Results</title>");
+        response.getWriter().println("<style>");
+        // Định dạng cho phần kết quả tìm kiếm
+        response.getWriter().println("#search-results { display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; padding: 20px; }");
+        response.getWriter().println(".search-product-item { width: calc(20% - 20px); padding: 15px; border: 1px solid #ddd; border-radius: 8px; background-color: #fff; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease; }");
+        response.getWriter().println(".search-product-item:hover { transform: translateY(-5px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); }");
+        response.getWriter().println(".search-product-item img { width: 100%; height: auto; max-height: 200px; object-fit: cover; margin-bottom: 15px; border-radius: 5px; }");
+        response.getWriter().println(".search-product-item h3 { font-size: 18px; color: #333; margin-bottom: 10px; }");
+        response.getWriter().println(".search-product-item p { font-size: 14px; color: #777; margin-bottom: 10px; }");
+        response.getWriter().println(".search-product-item .price { font-size: 16px; color: #e74c3c; font-weight: bold; margin-bottom: 10px; }");
+        response.getWriter().println(".search-product-item button { background-color: #3498db; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-size: 14px; transition: background-color 0.3s ease; }");
+        response.getWriter().println(".search-product-item button:hover { background-color: #2980b9; }");
+        response.getWriter().println("</style></head><body>");
 
         // Hiển thị tiêu đề của trang
         response.getWriter().println("<h1>Kết quả tìm kiếm</h1>");
@@ -62,25 +74,29 @@ public class SearchServlet extends HttpServlet {
         if (properties.isEmpty()) {
             response.getWriter().println("<p>Không có bất động sản nào phù hợp với từ khóa: <strong>" + searchText + "</strong> và thành phố: <strong>" + city + "</strong>.</p>");
         } else {
-            // Thêm link vào phần hiển thị sản phẩm
-            response.getWriter().println("<ul>");
+            // Thêm phần hiển thị kết quả tìm kiếm
+            response.getWriter().println("<div id='search-results'>");
+
+            // Lặp qua danh sách các bất động sản và hiển thị chúng
             for (Property1 property : properties) {
-                // Tạo đường dẫn đến trang chi tiết sản phẩm
-                String detailPageUrl = "property-detail.jsp?id=" + property.getId(); // Giả sử bạn có một phương thức getId() để lấy id của sản phẩm
+                response.getWriter().println("<div class='search-product-item'>");
+                // Hiển thị hình ảnh bất động sản
+                response.getWriter().println("<a href='property-detail.jsp?id=" + property.getId() + "' style='text-decoration: none;'>");
+                response.getWriter().println("<img src='" + property.getImageUrl() + "' alt='" + property.getId() + "'>");
 
-                // Hiển thị sản phẩm với liên kết tới trang chi tiết
-                response.getWriter().println("<li>");
-                response.getWriter().println("<a href='" + detailPageUrl + "'>"); // Thêm thẻ <a> để tạo liên kết
-                response.getWriter().println("<img src='" + property.getImageUrl() + "' alt='" + property.getTitle() + "' style='width: 100px; height: 100px;'><br>");
-                response.getWriter().println("<strong>" + property.getTitle() + "</strong><br>");
-                response.getWriter().println("</a>"); // Đóng thẻ <a>
-                response.getWriter().println("</li>");
+                // Hiển thị tên và mô tả
+                response.getWriter().println("<h3>" + property.getTitle() + "</h3>");
+
+
+
+
+                response.getWriter().println("</div>");  // Đóng thẻ div cho mỗi sản phẩm
             }
-            response.getWriter().println("</ul>");
 
+            response.getWriter().println("</div>");  // Đóng thẻ div cho search-results
         }
 
-        // Tạo footer HTML cho phản hồi
         response.getWriter().println("</body></html>");
     }
 }
+
