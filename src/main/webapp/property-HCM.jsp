@@ -402,13 +402,13 @@
     <div class="image-gallery">
 
         <div class="large-image">
-            <img src="jpg/HCM.jpg" alt="Hình ảnh lớn">
+            <img src="jpg/1.jpg" alt="Hình ảnh lớn">
         </div>
 
 
         <div class="small-images">
             <div class="small-image">
-                <img src="jpg/binhduong.jpg" alt="Hình ảnh nhỏ 1">
+                <img src="jpg/2.jpg" alt="Hình ảnh nhỏ 1">
             </div>
             <div class="small-image with-overlay">
                 <img src="jpg/binhduong.jpg" alt="Hình ảnh nhỏ 2">
