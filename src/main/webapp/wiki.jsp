@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <style>
+
         /* Thiết lập cho menu chính */
         ul {
             list-style-type: none;
@@ -334,12 +335,36 @@
             </div>
 
         </div>
-        <div class="header-right" style="margin-top: 10px">
+        <%
+            boolean isLoggedIn = session.getAttribute("username") != null;
+            String username = (String) session.getAttribute("username");
+        %>
 
-            <a href="login.jsp" class="btn"><h3>Đăng nhập</h3></a>
-            <a href="register.jsp" class="btn"><h3>Đăng ký</h3></a>
-            <a href="post-status.jsp" class="btn"><h3>Đăng tin</h3></a>
+        <div class="header-right" style="margin-top: 10px">
+            <% if (isLoggedIn) { %>
+            <a href="account.jsp" class="btn">
+                <h3 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px;">
+                    Hello, <%= username %>
+                </h3>
+            </a>
+
+            <a href="logout" class="btn">
+                <h3>Đăng xuất</h3>
+            </a>
+            <% } else { %>
+            <a href="login.jsp" class="btn">
+                <h3>Đăng nhập</h3>
+            </a>
+            <a href="register.jsp" class="btn">
+                <h3>Đăng ký</h3>
+            </a>
+            <% } %>
+            <a href="post-status.html" class="btn">
+                <h3>Đăng tin</h3>
+            </a>
         </div>
+
+
         <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()"
            style="border: 1px solid #ccc; border-radius:100%;">
             <img src="jpg/heart%20(1).png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng"
