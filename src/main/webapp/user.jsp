@@ -148,7 +148,7 @@
     <div class="main-content">
         <div class="dashboard-header">
             <h2>Quản lý tài khoản</h2>
-            <a href="add-user.jsp" class="add-button">Thêm Người Dùng Mới</a>
+<%--            <a href="add-user.jsp" class="add-button">Thêm Người Dùng Mới</a>--%>
         </div>
 
         <table id="example" class="display user-table" style="width:100%">

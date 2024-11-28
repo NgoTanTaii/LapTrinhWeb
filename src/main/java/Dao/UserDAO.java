@@ -1,13 +1,10 @@
 package Dao;
 
+
 import Controller.User;
-import DBcontext.ConnectDB;
 import DBcontext.Database;
-import Entity.CartItem;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class UserDAO {
     public void updateUserRole(int userId, String role) {
@@ -66,62 +63,32 @@ public class UserDAO {
     }
 
 
-    public User addUser(User user) {
-        String sql = "INSERT INTO users (username, email, password, role, status, token) VALUES (?, ?, ?, ?, ?, ?)";
-        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            System.out.println("Inserting username: " + user.getUsername());
+    public void addUser(User user) throws SQLException {
+        if (user == null || user.getUsername() == null || user.getEmail() == null || user.getPassword() == null) {
+            System.out.println("Error: User object or required fields are null.");
+            return;
+        }
 
+        String sql = "INSERT INTO users (username, email, password, role, status) VALUES (?, ?, ?, ?, ?)";
+        try (Connection connection = getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getPassword());
             stmt.setString(4, user.getRole());
             stmt.setString(5, user.getStatus());
-            stmt.setString(6, user.getToken()); // Set token, could be null
-            stmt.executeUpdate();
+
+            int result = stmt.executeUpdate();
+            if (result > 0) {
+                System.out.println("User added successfully.");
+            } else {
+                System.out.println("Failed to add user.");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return user;
     }
 
 
-    public boolean userExists(String username) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-
-        try {
-            conn = ConnectDB.getConnection();
-            String query = "SELECT COUNT(*) FROM users WHERE username = ?";
-            stmt = conn.prepareStatement(query);
-            stmt.setString(1, username);
-            rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                return rs.getInt(1) > 0; // Nếu đếm được > 0, có nghĩa là tên người dùng đã tồn tại
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            // Đóng kết nối
-            if (rs != null) try {
-                rs.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            if (stmt != null) try {
-                stmt.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            if (conn != null) try {
-                conn.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return false; // Không tồn tại
-    }
 
 
     private Connection getConnection() throws SQLException {
@@ -132,42 +99,21 @@ public class UserDAO {
         return DriverManager.getConnection(url, user, password);
     }
 
-    public User getUserByUsername(String username) throws SQLException {
-        String query = "SELECT * FROM users WHERE username = ?";
-        try (Connection con = Database.getConnection();
-             PreparedStatement stmt = con.prepareStatement(query)) {
+
+    // Check if a user exists by Google ID
+    public boolean checkUserExists(String username) {
+        String sql = "SELECT COUNT(*) FROM users WHERE username = ?";
+        try (Connection connection = getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                User user = new User();
-                user.setId(rs.getInt("id"));
-                user.setUsername(rs.getString("username"));
-                user.setPassword(rs.getString("password"));
-                user.setEmail(rs.getString("email"));
-                user.setToken(rs.getString("token"));
-                user.setStatus(rs.getString("status"));
-                user.setRole(rs.getString("role"));
-                return user;
-            }
-        }
-        return null;
-    }
-
-
-    // Check if a user exists by Google ID
-    public boolean checkUserExists(String userId) {
-        String sql = "SELECT COUNT(*) FROM users WHERE google_id = ?";
-        try (Connection conn = Database.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, userId);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next() && rs.getInt(1) > 0) {
-                return true; // User exists
+                int count = rs.getInt(1);
+                return count > 0;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false; // User does not exist
+        return false;
     }
 
     // Add a new user to the database
@@ -184,47 +130,7 @@ public class UserDAO {
         }
     }
 
-    // Method to get cart items for a user
-    public List<CartItem> getCartItemsByUsername(String username) {
-        String getUserIdSql = "SELECT id FROM users WHERE username = ?";
-        String getCartItemsSql = "SELECT ci.* FROM cartitems ci " +
-                "JOIN cart c ON ci.cart_id = c.id " +
-                "WHERE c.user_id = ?";
 
-        List<CartItem> cartItems = new ArrayList<>();
-        try (Connection conn = getConnection();
-             PreparedStatement getUserStmt = conn.prepareStatement(getUserIdSql)) {
-
-            // Step 1: Get user ID by username
-            getUserStmt.setString(1, username);
-            ResultSet userRs = getUserStmt.executeQuery();
-
-            if (userRs.next()) {
-                int userId = userRs.getInt("id");
-
-                // Step 2: Use user ID to retrieve cart items
-                try (PreparedStatement getCartItemsStmt = conn.prepareStatement(getCartItemsSql)) {
-                    getCartItemsStmt.setInt(1, userId);
-                    ResultSet rs = getCartItemsStmt.executeQuery();
-
-                    while (rs.next()) {
-                        CartItem item = new CartItem();
-                        item.setCartId(rs.getInt("cart_id"));
-                        item.setPropertyId(rs.getInt("property_id"));
-                        item.setQuantity(rs.getInt("quantity"));
-                        item.setPrice(rs.getDouble("price"));
-                        item.setArea(rs.getInt("area"));
-                        item.setImageUrl(rs.getString("image_url"));
-                        cartItems.add(item);
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return cartItems;
 }
-}
-
 
 

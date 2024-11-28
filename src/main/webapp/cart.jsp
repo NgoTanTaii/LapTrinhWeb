@@ -258,7 +258,7 @@
             <a href="login.jsp" class="btn"><h3>Đăng nhập</h3></a>
             <a href="register.jsp" class="btn"><h3>Đăng ký</h3></a>
             <% } %>
-            <a href="post-status.html" class="btn"><h3>Đăng tin</h3></a>
+            <a href="post-status.jsp" class="btn"><h3>Đăng tin</h3></a>
         </div>
 
 
