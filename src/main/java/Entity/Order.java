@@ -1,39 +1,91 @@
 package Entity;
 
-import java.util.List;
+import java.sql.Date;
 
 public class Order {
     private int orderId;
     private int userId;
-    private String status;
-    private String createdAt;
-    private List<OrderItem> items;
+    private int propertyId;
+    private String title;
+    private double price;
+    private double area;
+    private String address;
+    private Date orderDate;
 
-    // Constructors, Getters, and Setters
-    public Order() {}
-
-    public Order(int orderId, int userId, String status, String createdAt, List<OrderItem> items) {
+    // Constructor
+    public Order(int orderId, int userId, int propertyId, String title, double price, double area, String address, Date orderDate) {
         this.orderId = orderId;
         this.userId = userId;
-
-        this.status = status;
-        this.createdAt = createdAt;
-        this.items = items;
+        this.propertyId = propertyId;
+        this.title = title;
+        this.price = price;
+        this.area = area;
+        this.address = address;
+        this.orderDate = orderDate;
     }
 
-    public int getOrderId() { return orderId; }
-    public void setOrderId(int orderId) { this.orderId = orderId; }
+    // Getters and setters
+    public int getOrderId() {
+        return orderId;
+    }
 
-    public int getUserId() { return userId; }
-    public void setUserId(int userId) { this.userId = userId; }
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
 
+    public int getUserId() {
+        return userId;
+    }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
-    public String getCreatedAt() { return createdAt; }
-    public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
+    public int getPropertyId() {
+        return propertyId;
+    }
 
-    public List<OrderItem> getItems() { return items; }
-    public void setItems(List<OrderItem> items) { this.items = items; }
+    public void setPropertyId(int propertyId) {
+        this.propertyId = propertyId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public double getArea() {
+        return area;
+    }
+
+    public void setArea(double area) {
+        this.area = area;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
+    }
 }

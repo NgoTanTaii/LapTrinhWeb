@@ -1,3 +1,6 @@
+<%@ page import="Entity.Order" %>
+<%@ page import="java.util.List" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,53 +17,42 @@
         <tr class="bg-gray-200 text-left">
             <th class="px-4 py-2">Order ID</th>
             <th class="px-4 py-2">Customer</th>
-            <th class="px-4 py-2">Total Quantity</th>
-            <th class="px-4 py-2">Status</th>
-            <th class="px-4 py-2">Created At</th>
+            <th class="px-4 py-2">Property</th>
+            <th class="px-4 py-2">Price</th>
+            <th class="px-4 py-2">Area</th>
+            <th class="px-4 py-2">Address</th>
+            <th class="px-4 py-2">Order Date</th>
             <th class="px-4 py-2">Actions</th>
         </tr>
         </thead>
         <tbody>
-        <!-- MOCK DATA -->
+        <%
+            // Retrieve the list of orders from the request attribute
+            List<Order> orders = (List<Order>) request.getAttribute("orders");
+            if (orders != null) {
+                for (Order order : orders) {
+        %>
         <tr class="border-t">
-            <td class="px-4 py-2">101</td>
-            <td class="px-4 py-2">John Doe</td>
-            <td class="px-4 py-2">5</td> <!-- Example of total quantity -->
+            <td class="px-4 py-2"><%= order.getOrderId() %></td>
+            <td class="px-4 py-2"><%= order.getUserId() %></td>
+            <td class="px-4 py-2"><%= order.getPropertyId() %></td>
+            <td class="px-4 py-2"><%= order.getPrice() %></td>
+            <td class="px-4 py-2"><%= order.getArea() %></td>
+            <td class="px-4 py-2"><%= order.getAddress() %></td>
+            <td class="px-4 py-2"><%= order.getOrderDate() %></td>
             <td class="px-4 py-2">
-                <span class="px-2 py-1 rounded-full text-white bg-yellow-500">Pending</span>
-            </td>
-            <td class="px-4 py-2">2024-11-18</td>
-            <td class="px-4 py-2">
-                <a href="order-detail.jsp" class="text-blue-600">View</a> |
-                <a href="#" class="text-green-600">Edit</a>
+                <a href="order-detail.jsp?orderId=<%= order.getOrderId() %>" class="text-blue-600">View</a> |
+                <a href="editOrder.jsp?orderId=<%= order.getOrderId() %>" class="text-green-600">Edit</a>
             </td>
         </tr>
-        <tr class="border-t">
-            <td class="px-4 py-2">102</td>
-            <td class="px-4 py-2">Jane Smith</td>
-            <td class="px-4 py-2">3</td> <!-- Example of total quantity -->
-            <td class="px-4 py-2">
-                <span class="px-2 py-1 rounded-full text-white bg-blue-500">Confirmed</span>
-            </td>
-            <td class="px-4 py-2">2024-11-17</td>
-            <td class="px-4 py-2">
-                <a href="#" class="text-blue-600">View</a> |
-                <a href="#" class="text-green-600">Edit</a>
-            </td>
-        </tr>
-        <tr class="border-t">
-            <td class="px-4 py-2">103</td>
-            <td class="px-4 py-2">Alice Johnson</td>
-            <td class="px-4 py-2">8</td> <!-- Example of total quantity -->
-            <td class="px-4 py-2">
-                <span class="px-2 py-1 rounded-full text-white bg-green-500">Completed</span>
-            </td>
-            <td class="px-4 py-2">2024-11-16</td>
-            <td class="px-4 py-2">
-                <a href="#" class="text-blue-600">View</a> |
-                <a href="#" class="text-green-600">Edit</a>
-            </td>
-        </tr>
+        <%
+            }
+        } else {
+        %>
+        <tr><td colspan="8" class="text-center px-4 py-2">No orders found.</td></tr>
+        <%
+            }
+        %>
         </tbody>
     </table>
 </div>

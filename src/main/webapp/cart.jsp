@@ -372,9 +372,32 @@
         <% } %>
     </ul>
 
-    <button id="checkout-button" class="btn btn-success w-100 mt-3" onclick="checkCartBeforeCheckout()">
-        Đặt lịch
-    </button>
+    <button id="checkout-button" class="btn btn-success w-100 mt-3" onclick="submitOrderForm()">Đặt lịch</button>
+
+    <form id="orderForm" action="createOrder" method="POST" style="display:none;">
+        <input type="hidden" name="userId" value="<%= userId %>">
+        <% for (CartItem item : cartItems) { %>
+        <input type="hidden" name="propertyId" value="<%= item.getPropertyId() %>">
+        <input type="hidden" name="title" value="<%= item.getTitle() %>">
+        <input type="hidden" name="price" value="<%= item.getPrice() %>">
+        <input type="hidden" name="area" value="<%= item.getArea() %>">
+        <input type="hidden" name="address" value="<%= item.getAddress() %>">
+        <% } %>
+        <input type="hidden" name="orderDate" value="<%= new java.util.Date() %>">
+    </form>
+
+    <script>
+        function submitOrderForm() {
+            const emptyCartMessage = document.querySelector('.list-group-item.text-muted');
+
+            if (emptyCartMessage) {
+                alert('Giỏ hàng của bạn hiện tại không có sản phẩm. Vui lòng thêm sản phẩm vào giỏ hàng để tiếp tục.');
+            } else {
+                document.getElementById('orderForm').submit();
+            }
+        }
+    </script>
+
 </div>
 
 <script>
