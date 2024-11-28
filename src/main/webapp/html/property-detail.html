@@ -368,29 +368,34 @@
 <div class="container" style="max-width:80%">
     <div class="property-detail">
         <h2> Nhà ở Bình Dương</h2>
-        <img id="mainImage" class="main-image" src="../jpg/binhduong.jpg" style="border-radius: 5px"
-             alt="Tiêu đề bất động sản">
-        <div class="thumbnails">
-            <div class="thumbnail" onclick="changeMainImage('default.jpg')">
-                <img src="../jpg/1.jpg" style="border-radius: 5px" alt="Thumbnail">
-            </div>
-            <div class="thumbnail" onclick="changeMainImage('thumbnail1.jpg')">
-                <img src="../jpg/2.jpg" style="border-radius: 5px" alt="Thumbnail">
-            </div>
-            <div class="thumbnail" onclick="changeMainImage('thumbnail2.jpg')">
-                <img src="../jpg/3.jpg" style="border-radius: 5px" alt="Thumbnail">
-            </div>
-            <!-- Thêm các thumbnail khác nếu cần -->
+
+        <!-- Main image to be zoomed -->
+        <div class="image-wrapper" onmousemove="zoomImage(event)" onmouseleave="resetZoom()">
+            <img id="mainImage" class="main-image" src="../jpg/HCM.jpg" alt="Tiêu đề bất động sản">
+            <!-- Zoom effect area -->
+            <div id="zoomArea" class="zoom-area"></div>
         </div>
+
+        <!-- Thumbnails -->
+        <div class="thumbnails">
+            <div class="thumbnail" onclick="changeMainImage('1.jpg', this)">
+                <img src="../jpg/1.jpg" alt="Thumbnail">
+            </div>
+            <div class="thumbnail" onclick="changeMainImage('2.jpg', this)">
+                <img src="../jpg/2.jpg" alt="Thumbnail">
+            </div>
+            <div class="thumbnail" onclick="changeMainImage('3.jpg', this)">
+                <img src="../jpg/3.jpg" alt="Thumbnail">
+            </div>
+        </div>
+
         <p><i class="fas fa-map-marker-alt"></i> Địa chỉ: Địa chỉ bất động sản</p>
         <p><i class="fas fa-tag"></i> Giá: 1.5 tỷ</p>
         <p><i class="fas fa-ruler-combined"></i> Diện tích: 100 m²</p>
         <p><i class="fas fa-info-circle"></i> Mô tả: Mô tả chi tiết về bất động sản.</p>
-        <div class="heart-icon"
-             onclick="addToFavorites('1', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
+        <div class="heart-icon" onclick="addToFavorites('1', 'Căn hộ cao cấp', 5.0, 100, 'jpg/property1.jpg', 'TP.HCM, Quận 1')">
             <img src="../jpg/heartred.png" alt="Heart Icon" class="heart-image">
         </div>
-
     </div>
 
     <div class="sender-info">
@@ -411,6 +416,85 @@
         </div>
     </div>
 </div>
+
+<style>
+    /* Khu vực zoom ngoài hình ảnh */
+    .zoom-area {
+        position: absolute;
+        width: 200px; /* Kích thước khu vực zoom */
+        height: 200px;
+        border: 2px solid #ddd;
+        display: none; /* Ẩn khu vực zoom khi không di chuột */
+        background-repeat: no-repeat;
+        background-size: 400%; /* Phóng to ảnh trong khu vực zoom */
+        pointer-events: none; /* Không cản trở các sự kiện chuột */
+        transition: all 0.2s ease-out; /* Chuyển động mượt mà */
+        z-index: 100; /* Đảm bảo khu vực zoom nằm trên ảnh */
+    }
+
+    /* Main image */
+    .image-wrapper {
+        position: relative;
+        width: 100%;
+        height: 400px; /* Điều chỉnh chiều cao nếu cần */
+        overflow: hidden;
+    }
+
+    .main-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.1s ease-out;
+    }
+
+    /* Thumbnail click effect */
+    .thumbnail.active img {
+        transform: scale(1.1); /* Zoom in the clicked thumbnail */
+    }
+
+    /* Hover effect on thumbnails */
+    .thumbnail:hover img {
+        transform: scale(1.1); /* Slight zoom effect */
+    }
+</style>
+
+<script>
+    // Hiệu ứng Zoom khi di chuột trên hình ảnh chính
+    function zoomImage(event) {
+        const zoomArea = document.getElementById('zoomArea');
+        const image = document.getElementById('mainImage');
+
+        // Hiển thị khu vực zoom khi chuột di chuyển trên ảnh chính
+        zoomArea.style.display = 'block';
+
+        const rect = image.getBoundingClientRect(); // Lấy vị trí của ảnh
+        const x = event.clientX - rect.left; // Vị trí X của chuột
+        const y = event.clientY - rect.top;  // Vị trí Y của chuột
+
+        // Đặt vị trí của khu vực zoom sao cho chuột luôn ở giữa khu vực zoom
+        zoomArea.style.left = `${event.clientX + 20}px`; // Vị trí bên phải ảnh chính
+        zoomArea.style.top = `${event.clientY + 20}px`; // Vị trí dưới ảnh chính
+
+        // Tạo hiệu ứng zoom cho ảnh chính
+        const zoomFactor = 2; // Hệ số zoom, có thể điều chỉnh giá trị này
+        image.style.transform = `scale(${zoomFactor})`;
+        image.style.transformOrigin = `${x}px ${y}px`; // Tập trung zoom vào vị trí chuột
+
+        // Hiển thị ảnh zoomed vào trong khu vực zoom
+        zoomArea.style.backgroundImage = `url(${image.src})`;
+        zoomArea.style.backgroundPosition = `-${x * zoomFactor - zoomArea.offsetWidth / 2}px -${y * zoomFactor - zoomArea.offsetHeight / 2}px`;
+    }
+
+    // Reset hiệu ứng zoom khi chuột rời khỏi ảnh
+    function resetZoom() {
+        const zoomArea = document.getElementById('zoomArea');
+        const image = document.getElementById('mainImage');
+
+        zoomArea.style.display = 'none';  // Ẩn khu vực zoom
+        image.style.transform = 'scale(1)'; // Reset zoom của ảnh chính
+    }
+</script>
+
 
 <div class="property-features">
     <h3>Đặc điểm bất động sản</h3>
