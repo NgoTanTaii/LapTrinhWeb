@@ -1,56 +1,69 @@
 package Entity;
 
 public class OrderItem {
-    private int id;
-    private int cartId;
+    private int orderItemId;
+    private int orderId;
     private int propertyId;
-    private String title;
-    private double price;
-    private float area;
-    private String imageUrl;
     private int quantity;
-    private String address;
+    private double price;
+    private String title;
 
-    // Constructors, Getters, and Setters
-    public OrderItem() {}
-
-    public OrderItem(int id, int cartId, int propertyId, String title, double price, float area,
-                     String imageUrl, int quantity, String address) {
-        this.id = id;
-        this.cartId = cartId;
+    // Constructor
+    public OrderItem(int orderItemId, int orderId, int propertyId, int quantity, double price, String title) {
+        this.orderItemId = orderItemId;
+        this.orderId = orderId;
         this.propertyId = propertyId;
-        this.title = title;
-        this.price = price;
-        this.area = area;
-        this.imageUrl = imageUrl;
         this.quantity = quantity;
-        this.address = address;
+        this.price = price;
+        this.title = title;
     }
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    // Getters and setters
+    public int getOrderItemId() {
+        return orderItemId;
+    }
 
-    public int getCartId() { return cartId; }
-    public void setCartId(int cartId) { this.cartId = cartId; }
+    public void setOrderItemId(int orderItemId) {
+        this.orderItemId = orderItemId;
+    }
 
-    public int getPropertyId() { return propertyId; }
-    public void setPropertyId(int propertyId) { this.propertyId = propertyId; }
+    public int getOrderId() {
+        return orderId;
+    }
 
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
 
-    public double getPrice() { return price; }
-    public void setPrice(double price) { this.price = price; }
+    public int getPropertyId() {
+        return propertyId;
+    }
 
-    public float getArea() { return area; }
-    public void setArea(float area) { this.area = area; }
+    public void setPropertyId(int propertyId) {
+        this.propertyId = propertyId;
+    }
 
-    public String getImageUrl() { return imageUrl; }
-    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+    public int getQuantity() {
+        return quantity;
+    }
 
-    public int getQuantity() { return quantity; }
-    public void setQuantity(int quantity) { this.quantity = quantity; }
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
-    public String getAddress() { return address; }
-    public void setAddress(String address) { this.address = address; }
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }

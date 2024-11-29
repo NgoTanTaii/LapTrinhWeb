@@ -1,27 +1,19 @@
 package Entity;
 
-import java.sql.Date;
+import DBcontext.Database;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Order {
     private int orderId;
     private int userId;
-    private int propertyId;
-    private String title;
-    private double price;
-    private double area;
-    private String address;
-    private Date orderDate;
 
     // Constructor
-    public Order(int orderId, int userId, int propertyId, String title, double price, double area, String address, Date orderDate) {
+    public Order(int orderId, int userId) {
         this.orderId = orderId;
         this.userId = userId;
-        this.propertyId = propertyId;
-        this.title = title;
-        this.price = price;
-        this.area = area;
-        this.address = address;
-        this.orderDate = orderDate;
     }
 
     // Getters and setters
@@ -41,51 +33,21 @@ public class Order {
         this.userId = userId;
     }
 
-    public int getPropertyId() {
-        return propertyId;
-    }
-
-    public void setPropertyId(int propertyId) {
-        this.propertyId = propertyId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public double getArea() {
-        return area;
-    }
-
-    public void setArea(double area) {
-        this.area = area;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Date getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
+    // Method to get orders from database
+    public static List<Order> getAllOrders() {
+        List<Order> orders = new ArrayList<>();
+        String sql = "SELECT order_id, user_id FROM Orders";  // Only select order_id and user_id
+        try (Connection conn = Database.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                int orderId = rs.getInt("order_id");
+                int userId = rs.getInt("user_id");
+                orders.add(new Order(orderId, userId));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orders;
     }
 }

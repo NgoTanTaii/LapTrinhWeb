@@ -16,13 +16,15 @@ import java.util.List;
 @WebServlet("/orders")
 public class OrderListServlet extends HttpServlet {
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // List to store orders
         List<Order> orders = new ArrayList<>();
 
         // Get database connection
         try (Connection conn = Database.getConnection()) {
-            String query = "SELECT order_id, user_id, property_id, title, price, area, address, order_date FROM orders";
+            // Only select order_id and user_id
+            String query = "SELECT order_id, user_id FROM orders";
             try (PreparedStatement stmt = conn.prepareStatement(query);
                  ResultSet rs = stmt.executeQuery()) {
 
@@ -30,13 +32,8 @@ public class OrderListServlet extends HttpServlet {
                 while (rs.next()) {
                     int orderId = rs.getInt("order_id");
                     int userId = rs.getInt("user_id");
-                    int propertyId = rs.getInt("property_id");
-                    String title = rs.getString("title");
-                    double price = rs.getDouble("price");
-                    double area = rs.getDouble("area");
-                    String address = rs.getString("address");
-                    Date orderDate = rs.getDate("order_date");
-                    orders.add(new Order(orderId, userId, propertyId, title, price, area, address, orderDate));
+                    // Add order with only orderId and userId
+                    orders.add(new Order(orderId, userId));
                 }
             }
         } catch (SQLException e) {
