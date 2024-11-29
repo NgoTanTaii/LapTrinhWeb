@@ -8,82 +8,70 @@ import java.sql.SQLException;
 
 public class TestMain {
     public static void main(String[] args) {
-        // Database connection information
+        // Thông tin kết nối cơ sở dữ liệu
         String url = "jdbc:mysql://localhost:3306/webbds";
         String dbUser = "root";
         String dbPassword = "123456";
 
-        // The user ID you want to test
-        int testUserId = 6;  // Replace with a valid user ID
+        // ID đơn hàng cần kiểm tra
+        int testOrderId = 23;  // Thay thế bằng một ID đơn hàng hợp lệ
 
         try {
-            // Establish database connection
+            // Kết nối tới cơ sở dữ liệu
             Connection conn = DriverManager.getConnection(url, dbUser, dbPassword);
             System.out.println("Database connection established.");
 
-            // Step 1: Retrieve the cart for the specified user ID
-            String cartQuery = "SELECT cart_id FROM cart WHERE user_id = ?";
-            PreparedStatement cartStmt = conn.prepareStatement(cartQuery);
-            cartStmt.setInt(1, testUserId);
-            ResultSet cartRs = cartStmt.executeQuery();
+            // Bước 1: Lấy thông tin đơn hàng theo orderId
+            String orderQuery = "SELECT order_id, user_id, order_date FROM orders WHERE order_id = ?";
+            PreparedStatement orderStmt = conn.prepareStatement(orderQuery);
+            orderStmt.setInt(1, testOrderId);
+            ResultSet orderRs = orderStmt.executeQuery();
 
-            int cartId;
-            if (cartRs.next()) {
-                cartId = cartRs.getInt("cart_id");
-                System.out.println("Cart ID for user ID '" + testUserId + "': " + cartId);
+            if (orderRs.next()) {
+                int orderId = orderRs.getInt("order_id");
+                int userId = orderRs.getInt("user_id");
+                java.sql.Date orderDate = orderRs.getDate("order_date");
+
+                System.out.println("Order ID: " + orderId);
+                System.out.println("User ID: " + userId);
+                System.out.println("Order Date: " + orderDate);
             } else {
-                // Create a new cart for the user if one does not exist
-                String insertCartQuery = "INSERT INTO cart (user_id) VALUES (?)";
-                PreparedStatement insertCartStmt = conn.prepareStatement(insertCartQuery, PreparedStatement.RETURN_GENERATED_KEYS);
-                insertCartStmt.setInt(1, testUserId);
-                insertCartStmt.executeUpdate();
-
-                ResultSet generatedKeys = insertCartStmt.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    cartId = generatedKeys.getInt(1);
-                    System.out.println("New cart created for user ID '" + testUserId + "' with Cart ID: " + cartId);
-                } else {
-                    throw new SQLException("Failed to create cart, no ID obtained.");
-                }
-
-                insertCartStmt.close();
+                System.out.println("No order found with Order ID: " + testOrderId);
+                return; // Không có đơn hàng thì dừng lại
             }
 
-            // Step 2: Retrieve items in the cart with property details
-            String cartItemsQuery = "SELECT ci.cart_item_id, ci.property_id, ci.quantity, p.title, p.image_url " +
-                    "FROM cart_item ci " +
-                    "JOIN properties p ON ci.property_id = p.property_id " +
-                    "WHERE ci.cart_id = ?";
-            PreparedStatement cartItemsStmt = conn.prepareStatement(cartItemsQuery);
-            cartItemsStmt.setInt(1, cartId);
-            ResultSet itemsRs = cartItemsStmt.executeQuery();
+            // Bước 2: Lấy các mục trong đơn hàng theo orderId
+            String orderItemsQuery = "SELECT order_item_id, property_id, quantity, price, title FROM orderitems WHERE order_id = ?";
+            PreparedStatement orderItemsStmt = conn.prepareStatement(orderItemsQuery);
+            orderItemsStmt.setInt(1, testOrderId);
+            ResultSet itemsRs = orderItemsStmt.executeQuery();
 
-            System.out.println("Items in cart with ID " + cartId + ":");
-            if (!itemsRs.isBeforeFirst()) { // Check if ResultSet is empty
-                System.out.println("No items in the cart.");
+            System.out.println("Items in Order ID " + testOrderId + ":");
+            if (!itemsRs.isBeforeFirst()) { // Kiểm tra nếu ResultSet rỗng
+                System.out.println("No items in this order.");
             }
 
             while (itemsRs.next()) {
-                int cartItemId = itemsRs.getInt("cart_item_id");
+                int orderItemId = itemsRs.getInt("order_item_id");
                 int propertyId = itemsRs.getInt("property_id");
                 int quantity = itemsRs.getInt("quantity");
-                String propertyName = itemsRs.getString("title");
-                String propertyImageUrl = itemsRs.getString("image_url");
+                double price = itemsRs.getDouble("price");
+                String title = itemsRs.getString("title");
 
-                System.out.println("Cart Item ID: " + cartItemId +
+                System.out.println("Order Item ID: " + orderItemId +
                         ", Property ID: " + propertyId +
                         ", Quantity: " + quantity +
-                        ", Property Name: " + propertyName +
-                        ", Image URL: " + propertyImageUrl);
+                        ", Price: " + price +
+                        ", Title: " + title);
             }
 
-            // Close resources
-            cartRs.close();
-            cartStmt.close();
+            // Đóng các tài nguyên
+            orderRs.close();
+            orderStmt.close();
             itemsRs.close();
-            cartItemsStmt.close();
+            orderItemsStmt.close();
             conn.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
