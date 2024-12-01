@@ -1,5 +1,6 @@
 package Controller;
 
+import DBcontext.Database;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,6 +19,7 @@ import java.util.Properties;
 @WebServlet("/schedule-appointment")
 public class ScheduleAppointmentServlet extends HttpServlet {
 
+    // Các thông tin cấu hình gửi email và cơ sở dữ liệu
     private static final String FROM_EMAIL = "khoangoquan@gmail.com";
     private static final String EMAIL_PASSWORD = "mzrs xvca qstr zegw";
     private static final String SMTP_HOST = "smtp.gmail.com";
@@ -27,7 +29,6 @@ public class ScheduleAppointmentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("username");
-
         // Kiểm tra xem người dùng đã đăng nhập chưa
         if (username == null) {
             response.sendRedirect("login.jsp");
@@ -41,6 +42,9 @@ public class ScheduleAppointmentServlet extends HttpServlet {
         String appointmentTime = request.getParameter("appointmentTime");
         int productCount = Integer.parseInt(request.getParameter("productCount"));
 
+
+        System.out.println(productCount);
+
         // Kiểm tra các thông tin nhập vào
         if (address == null || address.trim().isEmpty() || phone == null || phone.trim().isEmpty()) {
             request.setAttribute("message", "Vui lòng nhập đầy đủ địa chỉ và số điện thoại.");
@@ -48,15 +52,6 @@ public class ScheduleAppointmentServlet extends HttpServlet {
             return;
         }
 
-        StringBuilder productDetails = new StringBuilder();
-
-        // Duyệt qua các sản phẩm từ request và thêm vào productDetails
-        for (int i = 0; i < productCount; i++) {
-            String productName = request.getParameter("productName" + i);
-            double price = Double.parseDouble(request.getParameter("productPrice" + i));
-
-            productDetails.append(productName).append(": ").append(price).append("₫\n");
-        }
 
         // Lấy email người dùng từ cơ sở dữ liệu
         String userEmail = getUserEmailByUsername(username);
@@ -66,8 +61,11 @@ public class ScheduleAppointmentServlet extends HttpServlet {
             return;
         }
 
+        // Lưu thông tin đặt lịch vào cơ sở dữ liệu và lấy appointmentId
+        int appointmentId = saveAppointment(address, phone, appointmentDate, appointmentTime, productCount, username);
+
         // Gửi email xác nhận đặt lịch
-        boolean emailSent = sendAppointmentConfirmationEmail(userEmail, username, address, phone, appointmentDate, appointmentTime, productDetails.toString());
+        boolean emailSent = sendAppointmentConfirmationEmail(userEmail, username, address, phone, appointmentDate, appointmentTime);
         if (emailSent) {
             // Sau khi đặt lịch thành công, xóa tất cả sản phẩm trong giỏ hàng
             clearCart(username);  // Clear the cart after appointment is confirmed
@@ -86,7 +84,7 @@ public class ScheduleAppointmentServlet extends HttpServlet {
         String email = null;
         String query = "SELECT email FROM users WHERE username = ?";
 
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webbds", "root", "123456");
+        try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, username);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -100,8 +98,39 @@ public class ScheduleAppointmentServlet extends HttpServlet {
         return email;
     }
 
+
+    private int saveAppointment(String address, String phone, String appointmentDate, String appointmentTime, int productCount, String username) {
+        String query = "INSERT INTO appointments (address, phone, appointment_date, appointment_time, property_count, username) VALUES (?, ?, ?, ?, ?, ?)";
+        int appointmentId = -1;
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
+            // Cài đặt giá trị vào PreparedStatement
+            stmt.setString(1, address);
+            stmt.setString(2, phone);
+            stmt.setString(3, appointmentDate);
+            stmt.setString(4, appointmentTime);
+            stmt.setInt(5, productCount);
+            stmt.setString(6, username);
+
+            // Thực hiện câu lệnh và lấy ID của đơn đặt lịch vừa tạo
+            stmt.executeUpdate();
+
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    appointmentId = rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return appointmentId;
+    }
+
+
     // Phương thức gửi email xác nhận đặt lịch
-    private boolean sendAppointmentConfirmationEmail(String toEmail, String username, String address, String phone, String appointmentDate, String appointmentTime, String productDetails) {
+    private boolean sendAppointmentConfirmationEmail(String toEmail, String username, String address, String phone, String appointmentDate, String appointmentTime) {
         Properties props = new Properties();
         props.put("mail.smtp.host", SMTP_HOST);
         props.put("mail.smtp.port", SMTP_PORT);
@@ -146,7 +175,7 @@ public class ScheduleAppointmentServlet extends HttpServlet {
     private void clearCart(String username) {
         String query = "DELETE FROM cart WHERE user_id = (SELECT id FROM users WHERE username = ?)";
 
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webbds", "root", "123456");
+        try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, username);
             stmt.executeUpdate();

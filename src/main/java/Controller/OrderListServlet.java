@@ -24,7 +24,7 @@ public class OrderListServlet extends HttpServlet {
         // Get database connection
         try (Connection conn = Database.getConnection()) {
             // Only select order_id and user_id
-            String query = "SELECT order_id, user_id,order_date FROM orders";
+            String query = "SELECT order_id, user_id,username,order_date FROM orders";
             try (PreparedStatement stmt = conn.prepareStatement(query);
                  ResultSet rs = stmt.executeQuery()) {
 
@@ -32,9 +32,10 @@ public class OrderListServlet extends HttpServlet {
                 while (rs.next()) {
                     int orderId = rs.getInt("order_id");
                     int userId = rs.getInt("user_id");
+                    String username = rs.getString("username");
                     Date date = rs.getDate("order_date");
                     // Add order with only orderId and userId
-                    orders.add(new Order(orderId, userId, date));
+                    orders.add(new Order(orderId, userId,username, date));
                 }
             }
         } catch (SQLException e) {

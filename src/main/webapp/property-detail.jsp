@@ -1,13 +1,13 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="Dao.PropertyDAO" %>
 <%@ page import="Entity.Property1" %>
 <%@ page import="java.util.List" %>
-<%@ page import="Dao.PosterDAO" %>
 <%@ page import="Entity.Poster" %>
 <%@ page import="Entity.Comment" %>
 <%@ page import="java.util.ArrayList" %>
 
-<%@ page import="Dao.CommentDAO" %>
+<%@ page import="Entity.Review" %>
+
+<%@ page import="Dao.*" %>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
@@ -16,6 +16,62 @@
 <title>Property Details</title>
 <head>
     <style>
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-right: 0;
+            border-radius: 10px;
+        }
+
+        .u-lo li {
+            position: relative;
+            display: inline-block;
+            margin-right: 20px;
+            z-index: 10; /* Đảm bảo menu cha hiển thị trên cùng */
+        }
+
+        ul li a {
+            text-decoration: none;
+            display: inline-block;
+            color: #333;
+        }
+
+        /* Thiết lập cho menu con */
+        ul li ul {
+            display: none; /* Ẩn menu con mặc định */
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #f9f9f9;
+            min-width: 200px;
+            padding: 10px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 999; /* Đảm bảo menu con hiển thị trên các phần tử khác */
+        }
+
+        ul li ul li {
+            display: block;
+            margin: 0;
+        }
+
+        ul li ul li a {
+            padding: 10px 15px;
+            color: #333;
+            display: block;
+        }
+
+        /* Hiển thị menu con khi hover */
+        ul li:hover ul {
+            display: block;
+        }
+
+        /* Style cho menu con khi hover */
+        ul li ul li a:hover {
+            background-color: #eee;
+            text-decoration: none;
+        }
+
         .heart-icon {
             position: absolute;
             bottom: 5px; /* Di chuyển trái tim xuống góc dưới */
@@ -304,15 +360,17 @@
             const isLoggedIn = <%= isLoggedIn %>; // Chuyển trạng thái đăng nhập thành biến JavaScript
         </script>
 
+
         <div class="header-right" style="margin-top: 10px">
             <% if (isLoggedIn) { %>
-            <a href="account.jsp" class="btn">
+            <a href="account.jsp" class="btn user-name-link">
                 <h3 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px;">
                     Hello, <%= username %>
                 </h3>
             </a>
 
-            <a href="javascript:void(0)" id="logoutButton" class="btn" onclick="document.getElementById('logoutForm').submit();">
+            <a href="javascript:void(0)" id="logoutButton" class="btn logout-btn"
+               onclick="document.getElementById('logoutForm').submit();">
                 <h3>Đăng xuất</h3>
             </a>
 
@@ -321,12 +379,34 @@
                 <button type="submit" style="display: none;"></button> <!-- This button will not be visible -->
             </form>
             <% } else { %>
-            <a href="login.jsp" class="btn"><h3>Đăng nhập</h3></a>
-            <a href="register.jsp" class="btn"><h3>Đăng ký</h3></a>
+            <a href="login.jsp" class="btn">
+                <h3>Đăng nhập</h3>
+            </a>
+            <a href="register.jsp" class="btn">
+                <h3>Đăng ký</h3>
+            </a>
             <% } %>
-            <a href="post-status.html" class="btn"><h3>Đăng tin</h3></a>
+            <a href="create-poster.jsp" class="btn">
+                <h3>Đăng tin</h3>
+            </a>
         </div>
+        <style>
+            /* CSS cho hiệu ứng hover và làm nổi bật liên kết */
+            .user-name-link h3 {
+                display: inline-block;
+                cursor: pointer; /* Thêm con trỏ tay để người dùng biết đây là liên kết có thể click */
+                transition: color 0.3s ease, background-color 0.3s ease;
+            }
 
+            /* Thêm hiệu ứng hover */
+            .user-name-link:hover h3 {
+                color: #fff;
+                background-color: wheat; /* Màu nền khi hover */
+                padding: 5px 10px; /* Thêm khoảng cách để làm nổi bật */
+                border-radius: 5px; /* Bo góc */
+            }
+
+        </style>
     </div>
 
     <a href="javascript:void(0)" id="floating-cart" class="floating-cart" onclick="toggleMiniCart()"
@@ -437,8 +517,7 @@
                                     <p style="color:darkred">Giá: ${item.price} tỷ</p>
                                     <p style="color:darkred">Diện tích: ${item.area} m²</p>
                                     <p>Địa chỉ: ${item.address}</p>
-                                    <p>Số lượng: ${item.quantity}</p>
-                 <!-- Form xóa sản phẩm -->
+                     <!-- Form xóa sản phẩm -->
 <form action="removeMiniCartItem" method="POST" style="display: inline;">
     <input type="hidden" name="propertyId" value="${item.propertyId}">
     <button type="submit" class="btn btn-sm btn-danger ml-3" style="border: none; background-color: red; color: white; padding: 5px; border-radius: 4px; cursor: pointer;">
@@ -453,7 +532,7 @@
                                 cartItemsContainer.appendChild(li);
                             });
                         } else {
-                            cartItemsContainer.innerHTML = '<li>Giỏ hàng trống</li>';
+                            cartItemsContainer.innerHTML = '<li>Tin lưu trống</li>';
                         }
                     } else {
                         cartItemsContainer.innerHTML = `<li>${data.message}</li>`;
@@ -461,7 +540,7 @@
                 })
                 .catch(error => {
                     console.error('Error loading cart items:', error);
-                    document.getElementById('cart-items').innerHTML = '<li>Đã xảy ra lỗi khi tải giỏ hàng.</li>';
+                    document.getElementById('cart-items').innerHTML = '<li>Đã xảy ra lỗi khi tải tin lưu.</li>';
                 });
         }
 
@@ -480,12 +559,56 @@
 
 
             <nav>
-                <ul>
-                    <li><a href="#nhadatban">Nhà Đất Bán</a></li>
-                    <li><a href="#nhadatchochue">Nhà Đất Cho Thuê</a></li>
-                    <li><a href="#duan">Dự Án</a></li>
-                    <li><a href="#tintuc">Tin Tức</a></li>
-                    <li><a href="#wikibds">Wiki BĐS</a></li>
+                <ul class="u-lo">
+                    <!-- Mục Nhà Đất Hot -->
+                    <li><a href="property-hot.jsp">Nhà Đất Hot</a>
+                        <ul>
+                            <li><a href="#">Nhà đất bán hot</a></li>
+                            <li><a href="#">Nhà đất cho thuê hot</a></li>
+                            <li><a href="#">Nhà đất dự án hot</a></li>
+                        </ul>
+                    </li>
+                    <!-- Mục Nhà Đất Bán -->
+                    <li><a href="forsale">Nhà Đất Bán</a>
+                        <ul>
+                            <li><a href="#">Thông tin bán nhà đất</a></li>
+                            <li><a href="#">Mua bán bất động sản</a></li>
+                            <li><a href="#">Nhà đất giá rẻ</a></li>
+                        </ul>
+                    </li>
+                    <!-- Mục Nhà Đất Cho Thuê -->
+                    <li><a href="forrent">Nhà Đất Cho Thuê</a>
+                        <ul>
+                            <li><a href="#">Thông tin cho thuê nhà đất</a></li>
+                            <li><a href="#">Thuê nhà nguyên căn</a></li>
+                            <li><a href="#">Thuê căn hộ giá rẻ</a></li>
+                        </ul>
+                    </li>
+                    <!-- Mục Dự Án -->
+                    <li><a href="Project">Dự Án</a>
+                        <ul>
+                            <li><a href="#">Các dự án nổi bật</a></li>
+                            <li><a href="#">Dự án nhà ở</a></li>
+                            <li><a href="#">Dự án chung cư</a></li>
+                        </ul>
+                    </li>
+                    <!-- Mục Tin Tức -->
+                    <li><a href="news.jsp">Tin Tức</a>
+                        <ul>
+                            <li><a href="#">Tin thị trường</a></li>
+                            <li><a href="#">Xu hướng bất động sản</a></li>
+                            <li><a href="#">Phân tích và đánh giá</a></li>
+                        </ul>
+                    </li>
+                    <!-- Mục Wiki BĐS -->
+                    <li><a href="wiki.jsp">Wiki BĐS</a>
+                        <ul>
+                            <li><a href="#">Mua bán</a></li>
+                            <li><a href="#">Cho thuê</a></li>
+                            <li><a href="#">Tài chính</a></li>
+                            <li><a href="#">Phong thủy</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </nav>
 
@@ -515,7 +638,7 @@
         </h2>
 
 
-        <img id="mainImage" class="main-image"
+        <img id="mainImage" class="main-image" style="border-radius: 10px"
              src="<%= property.getImageUrl() != null ? property.getImageUrl() : "default.jpg" %>"
              alt="<%= property.getTitle() %>">
 
@@ -524,6 +647,7 @@
             <div class="thumbnail"
                  onclick="changeMainImage('<%= property.getImageUrl() != null ? property.getImageUrl() : "default.jpg" %>')">
                 <img src="<%= property.getImageUrl() != null ? property.getImageUrl() : "default.jpg" %>"
+                     style="border-radius: 10px"
                      alt="Thumbnail">
             </div>
 
@@ -534,7 +658,7 @@
                         String thumbnailUrl = thumbnailUrls.get(i);
             %>
             <div class="thumbnail" onclick="changeMainImage('<%= thumbnailUrl %>')">
-                <img src="<%= thumbnailUrl %>" alt="Thumbnail">
+                <img src="<%= thumbnailUrl %>" alt="Thumbnail" style="border-radius: 10px">
             </div>
             <%
                     }
@@ -549,22 +673,129 @@
             // Tạo URL nhúng Google Maps không có API key
             String mapUrl = "https://www.google.com/maps?q=" + formattedAddress + "&output=embed";
         %>
-        <p><i class="fas fa-map-marker-alt"></i> <%= property.getAddress() %>
-        </p>
-        <p style="color: darkred"><i class="fas fa-money-bill-wave"></i> <%= property.getPrice() %> tỷ</p>
-        <p style="color: darkred"><i class="fas fa-ruler-combined"></i> <%= property.getArea() %> m²</p>
-        <p><i class="fas fa-info-circle"></i><%= property.getDescription() %>
-        </p>
+        <head>
+            <style>
+                /* Sử dụng flexbox để căn chỉnh biểu tượng và chữ */
+                .info-item {
+                    display: flex;               /* Sử dụng flexbox */
+                    align-items: center;         /* Căn giữa theo chiều dọc */
+                    padding: -15px 0;              /* Khoảng cách giữa các dòng */
+                }
+
+                .info-item i {
+                    margin-right: 10px;          /* Khoảng cách giữa biểu tượng và chữ */
+                }
+
+                .info-item span {
+                    font-size: 16px;             /* Cỡ chữ */
+                }
+            </style>
+        </head>
+
+        <body>
+        <div class="info-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span><%= property.getAddress() %></span>
+        </div>
+
+        <div class="info-item" style="color: darkred;">
+            <i class="fas fa-money-bill-wave"></i>
+            <span>
+            <%
+                String status = property.getStatus();
+                if ("3".equals(status)) {  // Nếu status là "3" (Giá thoả thuận)
+            %>
+            Giá thoả thuận
+            <%
+            } else {  // Nếu không phải "Giá thoả thuận", hiển thị giá
+            %>
+            <%= property.getPrice() %>
+            <%
+                if ("1".equals(status)) {  // Nếu status là "1"
+            %>
+            tỷ
+            <%
+            } else if ("2".equals(status)) {  // Nếu status là "2"
+            %>
+            triệu
+            <%
+                }
+            %>
+            <%
+                }
+            %>
+        </span>
+        </div>
+
+        <div class="info-item" style="color: darkred;">
+            <i class="fas fa-ruler-combined"></i>
+            <span><%= property.getArea() %> m²</span>
+        </div>
+
+        <div class="info-item">
+            <i class="fas fa-info-circle"></i>
+            <span><%= property.getDescription() %></span>
+        </div>
+        </body>
 
         </p>
-        <%
+
+            <%
+
+    VideoDAO videoDAO = new VideoDAO();
+    String videoUrl = videoDAO.getVideoUrlByPropertyId(propertyId);
+%>
+
+        <div style="padding: 10px">
+            <!-- Nút chia sẻ Facebook -->
+            <form action="https://www.facebook.com/sharer/sharer.php" method="get" target="_blank"
+                  style="display:inline;">
+                <input type="hidden" name="u"
+                       value="http://localhost:8080/Batdongsan/property-detail.jsp?id=<%= property.getId() %>">
+                <button type="submit"
+                        style="background: #3b5998; color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                    Chia sẻ lên Facebook
+                </button>
+            </form>
+
+            <!-- Nút chia sẻ Zalo -->
+            <form action="https://chat.zalo.me" method="get" target="_blank" style="display:inline;">
+                <input type="hidden" name="link"
+                       value="http://localhost:8080/Batdongsan/property-detail.jsp?id=<%= property.getId() %>">
+                <button type="submit"
+                        style="background: #0078FF; color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                    Chia sẻ qua Zalo
+                </button>
+            </form>
+
+            <!-- Nút xem video BĐS -->
+            <% if (videoUrl != null && !videoUrl.isEmpty()) { %>
+            <form action="http://localhost:8080/Batdongsan/<%= videoUrl %>" method="get" target="_blank"
+                  style="display:inline;">
+                <button type="submit"
+                        style="background: #FF4500; color: white; padding: 15px 20px; border-radius: 5px; cursor: pointer;">
+                    Xem Video về BĐS
+                </button>
+            </form>
+            <% } else { %>
+            <p>Chưa có video cho bất động sản này.</p>
+            <% } %>
+        </div>
+
+
+        <%--        <p><i class=""></i><%= property.getDescription() %>--%>
+        <%--        </p>--%>
+
+
+            <%
             String message = (String) session.getAttribute("message");
             if (message != null) {
         %>
-        <div class="alert alert-info" style="color: darkred;padding-top: 30px;font-size: 30px   "><i class="fas fa-info-circle"></i>
+        <div class="alert alert-info" style="color: darkred;padding-top: 30px;font-size: 30px   "><i
+                class="fas fa-info-circle"></i>
             <%= message %>
         </div>
-        <%
+            <%
                 // Optionally remove the message after displaying it
                 session.removeAttribute("message");
             }
@@ -581,12 +812,128 @@
             <!-- Heart icon as submit button -->
             <button type="submit" class="heart-icon" style="border: none; background: transparent; padding: 0;">
                 <img src="jpg/heartred.png" alt="Heart Icon" class="heart-image">
+                <span class="favorite-text">Bấm vào đây để lưu tin</span>
             </button>
         </form>
+        <!-- Đánh giá sao -->
+        <!-- Nút Xem Đánh Giá và Bình Luận -->
+        <button type="button" id="toggleReviewsBtn" onclick="toggleReviews()">Xem Đánh Giá và Bình Luận</button>
+
+        <!-- Phần Đánh Giá và Bình Luận (Ẩn ban đầu) -->
+        <div id="reviewsSection" style="display:none;">
+            <h3>Đánh Giá và Bình Luận</h3>
+            <%
+
+                ReviewDAO reviewDAO = new ReviewDAO();
+                List<Review> reviews = reviewDAO.getReviewsByPropertyId(property.getId());
+                if (reviews != null && !reviews.isEmpty()) {
+                    for (Review rev : reviews) {
+            %>
+            <div class="review">
+                <p><strong>Sao:</strong> <%= rev.getRating() %> ⭐</p>
+                <p><strong>Đánh giá:</strong> <%= rev.getReview() %>
+                </p>
+                <p><small><%= rev.getCreatedAt() %>
+                </small></p>
+                <!-- Nút Xoá Đánh Giá -->
+                <form action="DeleteReviewServlet" method="post" style="display:inline;">
+                    <!-- Truyền reviewId và propertyId trong form -->
+                    <input type="hidden" name="reviewId" value="<%= rev.getId() %>">
+                    <input type="hidden" name="propertyId" value="<%= property.getId() %>">
+                    <button type="submit" onclick="return confirm('Bạn có chắc chắn muốn xóa đánh giá này không?')">Xoá
+                        Đánh Giá
+                    </button>
+                </form>
+            </div>
+            <%
+                }
+            } else {
+            %>
+            <p>Chưa có đánh giá nào.</p>
+            <%
+                }
+            %>
+
+            <!-- Form Đánh Giá mới -->
+            <div class="rating">
+                <h4>Thêm Đánh Giá của Bạn</h4>
+                <form action="ReviewServlet" method="post">
+                    <div class="stars">
+                        <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
+                        <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+                        <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+                        <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+                        <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+                    </div>
+                    <textarea name="review" placeholder="Viết bình luận của bạn..." rows="4" cols="50"></textarea><br>
+                    <input type="hidden" name="propertyId" value="<%= property.getId() %>">
+                    <button type="submit">Gửi Đánh Giá</button>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            // Hàm để ẩn/hiện phần đánh giá
+            function toggleReviews() {
+                var reviewsSection = document.getElementById("reviewsSection");
+                var btn = document.getElementById("toggleReviewsBtn");
+
+                // Kiểm tra xem phần đánh giá đang hiển thị hay không và thay đổi trạng thái
+                if (reviewsSection.style.display === "none") {
+                    reviewsSection.style.display = "block";
+                    btn.innerHTML = "Ẩn Đánh Giá và Bình Luận"; // Đổi nội dung nút
+                } else {
+                    reviewsSection.style.display = "none";
+                    btn.innerHTML = "Xem Đánh Giá và Bình Luận"; // Đổi lại nội dung nút
+                }
+            }
+        </script>
+
 
     </div>
+    <style>
+        .stars {
+            display: flex;
+
+            justify-content: flex-end;
+        }
+
+        .stars input[type="radio"] {
+            display: none;
+        }
+
+        .stars label {
+            font-size: 30px;
+            color: #ddd;
+            cursor: pointer;
+        }
+
+        .stars input[type="radio"]:checked ~ label {
+            color: #FFD700;
+        }
+
+    </style>
 
     <style>
+        .favorite-text {
+            position: absolute;
+            bottom: -25px; /* Đưa văn bản xuống dưới trái tim */
+            left: 50%;
+            transform: translateX(-50%); /* Căn giữa văn bản với trái tim */
+            visibility: hidden; /* Ẩn văn bản mặc định */
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            white-space: nowrap; /* Ngừng việc gãy dòng */
+            z-index: 1000; /* Đảm bảo văn bản nổi lên trên mọi phần tử khác */
+        }
+
+        .heart-icon:hover .favorite-text {
+            visibility: visible; /* Hiển thị khi hover vào icon trái tim */
+        }
+
         .container {
             max-width: 800px; /* Đặt chiều rộng tối đa cho container */
             margin: 0 auto; /* Center container */
@@ -594,7 +941,7 @@
 
         .property-detail {
             position: relative;
-            overflow: hidden; /* Ẩn phần vượt ra ngoài */
+
             margin-bottom: 20px; /* Khoảng cách giữa property-detail và sản phẩm liên quan */
         }
 
@@ -654,7 +1001,6 @@
         });
     </script>
 
-
     <%
 
         PosterDAO posterDAO = new PosterDAO();
@@ -668,8 +1014,7 @@
     <div class="sender-info">
         <h3>Thông tin người đăng</h3>
         <div class="sender-image">
-            <img src="<%= poster.getImgUrl() %>"
-                 alt="Người đăng" class="sender-avatar">
+            <img src="<%= poster.getImgUrl() %>" alt="Người đăng" class="sender-avatar">
         </div>
         <div class="info-box">
             <span id="sender-name"><%= poster.getName() %></span>
@@ -680,8 +1025,20 @@
         </div>
         <div class="info-box">
             <span class="icon" style="margin-bottom: 12px;">📱</span>
-            <span id="sender-zalo">https://zalo.me/<%= poster.getPhone() %></span>
+            <a <%= poster.getPhone() %> target="_blank" id="sender-phone">
+                <%= poster.getPhone() %> (Gọi)
+            </a>
         </div>
+        <!-- Font Awesome Messenger -->
+        <div class="info-box">
+    <span class="icon" style="margin-bottom: 12px;">
+        <i class="fab fa-facebook-messenger" style="font-size: 24px; color: #0078FF;"></i>
+    </span>
+            <a href="https://zalo.me/<%= poster.getPhone() %>" target="_blank" id="sender-zalo">
+                Nhắn tin qua Zalo
+            </a>
+        </div>
+
     </div>
 
     <% } %>
@@ -1086,15 +1443,14 @@
 
     button {
         padding: 10px 20px;
-        background-color: #4CAF50;
-        color: white;
+        color: black;
         border: none;
         border-radius: 5px;
         cursor: pointer;
     }
 
     button:hover {
-        background-color: #45a049;
+        background-color: dodgerblue;
     }
 
     .login-prompt p {

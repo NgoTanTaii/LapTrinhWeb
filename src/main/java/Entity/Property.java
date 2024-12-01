@@ -7,15 +7,17 @@ public class Property {
     private double price;
     private double area;
     private String imageUrl;
+    private String status;
 
 
-    public Property(int id, String title, String address, double price, double area, String imageUrl) {
+    public Property(int id, String title, String address, double price, double area, String imageUrl,String status) {
         this.id = id;
         this.title = title;
         this.address = address;
         this.price = price;
         this.area = area;
         this.imageUrl = imageUrl;
+        this.status = status;
     }
 
     // Getter và Setter
@@ -61,6 +63,15 @@ public class Property {
 
     public int getId() {
         return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

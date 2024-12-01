@@ -1,6 +1,6 @@
 package Controller;
 
-import DBcontext.DbConnection1;
+import DBcontext.Database;
 import Entity.Property;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 @WebServlet("/welcome")
 public class PropertyWelcomeServlet extends HttpServlet {
     @Override
@@ -21,11 +22,11 @@ public class PropertyWelcomeServlet extends HttpServlet {
 
         try {
             // Kết nối tới cơ sở dữ liệu
-            Connection conn = DbConnection1.initializeDatabase();  // Kết nối đến database
+            Connection conn = Database.getConnection();  // Kết nối đến database
             Statement stmt = conn.createStatement();
 
             // Truy vấn dữ liệu từ bảng Properties
-            String query = "SELECT property_id,title, address, price, area, image_url FROM properties";
+            String query = "SELECT property_id,title, address, price, area, image_url,status FROM properties";
             ResultSet rs = stmt.executeQuery(query);
 
             // Lấy dữ liệu từ ResultSet và thêm vào danh sách properties
@@ -37,7 +38,8 @@ public class PropertyWelcomeServlet extends HttpServlet {
                         rs.getString("address"),
                         rs.getDouble("price"),
                         rs.getDouble("area"),
-                        rs.getString("image_url")
+                        rs.getString("image_url"),
+                        rs.getString("status")
                 );
                 properties.add(property);
             }
@@ -56,8 +58,6 @@ public class PropertyWelcomeServlet extends HttpServlet {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
 
     }

@@ -61,7 +61,13 @@ public class LoginWithGoogleServlet extends HttpServlet {
                     response.sendRedirect("welcome"); // Redirect to the welcome page
                 } else {
                     // User does not exist, so create a new user
-                    userDAO.addUser(userId, name, email);
+                    String password = "defaultPassword"; // You can set a default password here
+                    String token = null; // Set token to null for new users
+                    String status = "active"; // Default status for new users
+                    String role = "user"; // Default role for new users
+
+                    // Add new user to the database
+                    userDAO.addUser( name, password, email, token, status, role);
 
                     // Store user info in session after adding to the database
                     request.getSession().setAttribute("username", name);

@@ -20,7 +20,7 @@ function showSlides() {
     slides[slideIndex - 1].style.display = "block";
 
     // Tự động chuyển slide sau 3 giây
-    setTimeout(showSlides, 3000);
+    setTimeout(showSlides, 60000);
 }
 
 // Gọi hàm để bắt đầu slideshow

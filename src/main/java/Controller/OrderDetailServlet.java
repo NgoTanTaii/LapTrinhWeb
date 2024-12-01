@@ -57,7 +57,7 @@ public class OrderDetailServlet extends HttpServlet {
     // Lấy thông tin đơn hàng theo orderId
     private Order getOrderById(int orderId) {
         Order order = null;
-        String query = "SELECT order_id, user_id, order_date FROM orders WHERE order_id = ?";
+        String query = "SELECT order_id, user_id, order_date,username FROM orders WHERE order_id = ?";
 
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -66,7 +66,8 @@ public class OrderDetailServlet extends HttpServlet {
                 if (rs.next()) {
                     int userId = rs.getInt("user_id");
                     Date orderDate = rs.getDate("order_date");
-                    order = new Order(orderId, userId, orderDate);
+                    String username = rs.getString("username");
+                    order = new Order(orderId, userId,username, orderDate);
                 }
             }
         } catch (SQLException e) {

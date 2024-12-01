@@ -2,7 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="Dao.PropertyDAO" %>
 <%@ page import="Entity.Property1" %>
-<%@ page import="Entity.CartItem" %>
+
 
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -36,20 +36,19 @@
         </div>
 
         <%
-            Integer userId = (Integer) session.getAttribute("userId");
+            boolean isLoggedIn = session.getAttribute("username") != null;
             String username = (String) session.getAttribute("username");
-            boolean isLoggedIn = userId != null;
         %>
 
         <div class="header-right" style="margin-top: 10px">
             <% if (isLoggedIn) { %>
-            <a href="account.jsp" class="btn">
+            <a href="account.jsp" class="btn user-name-link">
                 <h3 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px;">
                     Hello, <%= username %>
                 </h3>
             </a>
 
-            <a href="javascript:void(0)" id="logoutButton" class="btn"
+            <a href="javascript:void(0)" id="logoutButton" class="btn logout-btn"
                onclick="document.getElementById('logoutForm').submit();">
                 <h3>Đăng xuất</h3>
             </a>
@@ -58,9 +57,7 @@
             <form id="logoutForm" action="logout" method="POST" style="display: none;">
                 <button type="submit" style="display: none;"></button> <!-- This button will not be visible -->
             </form>
-
             <% } else { %>
-            <!-- Display login and registration options if not logged in -->
             <a href="login.jsp" class="btn">
                 <h3>Đăng nhập</h3>
             </a>
@@ -68,13 +65,27 @@
                 <h3>Đăng ký</h3>
             </a>
             <% } %>
-
-            <!-- "Post Status" button, visible to both logged-in and non-logged-in users -->
-            <a href="post-status.html" class="btn">
+            <a href="create-poster.jsp" class="btn">
                 <h3>Đăng tin</h3>
             </a>
         </div>
+        <style>
+            /* CSS cho hiệu ứng hover và làm nổi bật liên kết */
+            .user-name-link h3 {
+                display: inline-block;
+                cursor: pointer; /* Thêm con trỏ tay để người dùng biết đây là liên kết có thể click */
+                transition: color 0.3s ease, background-color 0.3s ease;
+            }
 
+            /* Thêm hiệu ứng hover */
+            .user-name-link:hover h3 {
+                color: #fff;
+                background-color: wheat; /* Màu nền khi hover */
+                padding: 5px 10px; /* Thêm khoảng cách để làm nổi bật */
+                border-radius: 5px; /* Bo góc */
+            }
+
+        </style>
         <a href="javascript:void(0)" id="floating-cart" class="floating-cart" onclick="toggleMiniCart()"
            style="border: 1px solid #ccc; border-radius: 50%; position: fixed; bottom: 20px; right: 20px; z-index: 999; padding: 10px; background-color: white;">
             <img src="jpg/heart%20(1).png" style="width: 30px; height: 30px;" alt="Giỏ hàng" class="cart-icon">
@@ -183,7 +194,7 @@
                                     <p style="color:darkred">Giá: ${item.price} tỷ</p>
                                     <p style="color:darkred">Diện tích: ${item.area} m²</p>
                                     <p>Địa chỉ: ${item.address}</p>
-                                    <p>Số lượng: ${item.quantity}</p>
+
                  <!-- Form xóa sản phẩm -->
 <form action="removeMiniCartItem" method="POST" style="display: inline;">
     <input type="hidden" name="propertyId" value="${item.propertyId}">
@@ -263,6 +274,15 @@
 
             <nav>
                 <ul class="u-lo">
+                    <!-- Mục Nhà Đất Hot -->
+                    <li><a href="property-hot.jsp">Nhà Đất Hot</a>
+                        <ul>
+                            <li><a href="#">Nhà đất bán hot</a></li>
+                            <li><a href="#">Nhà đất cho thuê hot</a></li>
+                            <li><a href="#">Nhà đất dự án hot</a></li>
+                        </ul>
+                    </li>
+                    <!-- Mục Nhà Đất Bán -->
                     <li><a href="forsale">Nhà Đất Bán</a>
                         <ul>
                             <li><a href="#">Thông tin bán nhà đất</a></li>
@@ -270,6 +290,7 @@
                             <li><a href="#">Nhà đất giá rẻ</a></li>
                         </ul>
                     </li>
+                    <!-- Mục Nhà Đất Cho Thuê -->
                     <li><a href="forrent">Nhà Đất Cho Thuê</a>
                         <ul>
                             <li><a href="#">Thông tin cho thuê nhà đất</a></li>
@@ -277,6 +298,7 @@
                             <li><a href="#">Thuê căn hộ giá rẻ</a></li>
                         </ul>
                     </li>
+                    <!-- Mục Dự Án -->
                     <li><a href="Project">Dự Án</a>
                         <ul>
                             <li><a href="#">Các dự án nổi bật</a></li>
@@ -284,14 +306,16 @@
                             <li><a href="#">Dự án chung cư</a></li>
                         </ul>
                     </li>
-                    <li><a href="news.html">Tin Tức</a>
+                    <!-- Mục Tin Tức -->
+                    <li><a href="news.jsp">Tin Tức</a>
                         <ul>
                             <li><a href="#">Tin thị trường</a></li>
                             <li><a href="#">Xu hướng bất động sản</a></li>
                             <li><a href="#">Phân tích và đánh giá</a></li>
                         </ul>
                     </li>
-                    <li><a href="wiki.html">Wiki BĐS</a>
+                    <!-- Mục Wiki BĐS -->
+                    <li><a href="wiki.jsp">Wiki BĐS</a>
                         <ul>
                             <li><a href="#">Mua bán</a></li>
                             <li><a href="#">Cho thuê</a></li>
@@ -417,7 +441,21 @@
 
 
 <div class="product-section">
-    <h2>Bất động sản dành cho bạn</h2>
+    <h2 style="text-align: center;">
+        Bất động sản dành cho bạn </h2>
+    <div style="display: flex; justify-content: center; font-size: 14px; margin-bottom: 20px;margin-left: 550px">
+        <a href="forsale" style="margin-right: 20px; text-decoration: none; color: darkred;">
+            Tin nhà đất bán mới nhất
+        </a>
+        |
+        <a href="forrent" style="margin-right: 20px; text-decoration: none; color: darkred;">
+            Tin nhà đất cho thuê mới nhất
+        </a>
+        |
+        <a href="property-hot.jsp" style="text-decoration: none; color: darkred;">
+            Tin nhà đất hot
+        </a>
+    </div>
 
 
     <%
@@ -525,27 +563,30 @@
         <%
             List<Property> properties = (List<Property>) request.getAttribute("properties");
             if (properties != null && !properties.isEmpty()) {
-                int index = 0;
-                for (Property property : properties) {
-        %>
-        <div class="product-item" <%= index >= 8 ? "style='display: none;'" : "" %> >
-           <span onclick="location.href='property-detail.jsp?id=<%= property.getId() %>'"
-                 style="cursor: pointer; color: blue; text-decoration: none;">
-                <img src="<%= property.getImageUrl() %>" alt="<%= property.getTitle() %>" class="product-image">
-                <h3><%= property.getTitle() %></h3>
-                <p class="address">
-                    <img src="jpg/location.png" alt="Location Icon" class="location-icon">
-                    <%= property.getAddress() %>
-                </p>
-                <div class="details">
-                    <div class="price-size">
-                        <p class="price"><%= property.getPrice() %> tỷ</p>
-                        <p class="size"><%= property.getArea() %> m²</p>
-                    </div>
-                </div>
-            </span>
+                int index = properties.size() - 1;  // Lấy chỉ số cuối cùng của danh sách
+                for (int i = index; i >= 0; i--) {
+                    Property property = properties.get(i);
 
-            <!-- Form to add product to cart using a heart icon -->
+                    // Kiểm tra trạng thái `status` và `available`
+                    if (!"0".equals(property.getStatus()) && (property.getAvailable() == 1)) {
+        %>
+        <div class="product-item" <%= i >= 8 ? "style='display: none;'" : "" %> >
+        <span onclick="location.href='property-detail.jsp?id=<%= property.getId() %>'"
+              style="cursor: pointer; color: blue; text-decoration: none;">
+            <img src="<%= property.getImageUrl() %>" alt="<%= property.getTitle() %>" class="product-image">
+            <h3><%= property.getTitle() %></h3>
+            <p class="address">
+                <img src="jpg/location.png" alt="Location Icon" class="location-icon">
+                <%= property.getAddress() %>
+            </p>
+            <div class="details">
+                <div class="price-size">
+                    <p class="price"><%= property.getPrice() %> tỷ</p>
+                    <p class="size"><%= property.getArea() %> m²</p>
+                </div>
+            </div>
+        </span>
+
             <form action="addToCart" method="post" style="display: inline;">
                 <input type="hidden" name="propertyId" value="<%= property.getId() %>">
                 <input type="hidden" name="title" value="<%= property.getTitle() %>">
@@ -553,15 +594,42 @@
                 <input type="hidden" name="area" value="<%= property.getArea() %>">
                 <input type="hidden" name="imageUrl" value="<%= property.getImageUrl() %>">
                 <input type="hidden" name="address" value="<%= property.getAddress() %>">
-
-                <!-- Heart icon as submit button -->
                 <button type="submit" class="heart-icon" style="border: none; background: transparent; padding: 0;">
                     <img src="jpg/heartred.png" alt="Heart Icon" class="heart-image">
+                    <span class="favorite-text">Bấm vào đây để lưu tin</span>
                 </button>
             </form>
+            <style>
+                form {
+                    position: relative;
+                }
+
+                .heart-icon {
+                    position: absolute;
+                    top: 2px;
+                    left: 95px;
+                    cursor: pointer;
+                    display: inline-flex;
+                    align-items: end;
+                    background: transparent;
+                    border: none;
+                    padding: 0;
+                }
+
+                .heart-image {
+                    width: 25px;
+                    height: 25px;
+                    transition: transform 0.2s ease-in-out;
+                }
+
+                .heart-icon.clicked .heart-image {
+                    filter: brightness(1.5);
+                    transform: scale(1.2);
+                }
+            </style>
         </div>
         <%
-                    index++;
+                    }
                 }
             }
         %>
@@ -616,6 +684,24 @@
     });
 </script>
 <style>
+    .favorite-text {
+        position: absolute;
+        bottom: -25px; /* Đưa văn bản xuống dưới trái tim */
+        left: 50%;
+        transform: translateX(-50%); /* Căn giữa văn bản với trái tim */
+        visibility: hidden; /* Ẩn văn bản mặc định */
+        background-color: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 12px;
+        white-space: nowrap; /* Ngừng việc gãy dòng */
+    }
+
+    .heart-icon:hover .favorite-text {
+        visibility: visible; /* Hiển thị khi hover vào icon trái tim */
+    }
+
     /* Basic styling */
     .featured-properties-section {
         max-width: 85%;
@@ -743,6 +829,7 @@
     </div>
 </div>
 
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const productList = document.getElementById("productList");
@@ -751,16 +838,31 @@
 
         // Function to scroll the product list by a set amount
         function scrollProductList(amount) {
+            // Scroll the product list
             productList.scrollBy({
                 left: amount,
                 behavior: 'smooth'
             });
+
+            // Check if the list has reached the end or the beginning
+            if (productList.scrollLeft + productList.offsetWidth >= productList.scrollWidth) {
+                // If it has reached the end, scroll back to the beginning
+                setTimeout(() => {
+                    productList.scrollLeft = 0;
+                }, 300);  // Delay to allow the scroll action to finish before resetting
+            } else if (productList.scrollLeft <= 0) {
+                // If it has reached the beginning, scroll to the end
+                setTimeout(() => {
+                    productList.scrollLeft = productList.scrollWidth;
+                }, 300);  // Delay to allow the scroll action to finish before resetting
+            }
         }
 
         // Event listeners for the buttons
         prevButton.addEventListener("click", () => scrollProductList(-300));
         nextButton.addEventListener("click", () => scrollProductList(300));
     });
+
 </script>
 
 <div class="banner">
@@ -832,7 +934,9 @@
     </style>
 
 </div>
-
+<div style="text-align: center; padding: 10px; margin: 20px auto; width: fit-content;background: floralwhite">
+    &copy; 2024 Your Website Name. All rights reserved.
+</div>
 <div class="footer">
     <div class="footer-top">
 
@@ -1071,177 +1175,7 @@
 
 </style>
 
-<%--<script>--%>
-<%--    let cartItems = JSON.parse(sessionStorage.getItem('cartItems')) || []; // Load cart from sessionStorage--%>
-<%--    let miniCartVisible = false; // Track mini cart visibility--%>
 
-<%--    // Fetch cart items from the database when the user logs in--%>
-<%--    const fetchCartItems = async () => {--%>
-<%--        const userId = sessionStorage.getItem('userId');--%>
-<%--        alert("Giá trị cuả userId là : " + userId);--%>
-<%--        if (userId) {--%>
-<%--            try {--%>
-<%--                const response = await fetch(`/getCartItems?userId=${userId}`);--%>
-<%--                const data = await response.json();--%>
-<%--                if (data.success) {--%>
-<%--                    cartItems = data.cartItems;--%>
-<%--                    updateSessionStorage();--%>
-<%--                    updateCartDisplay();--%>
-<%--                }--%>
-<%--            } catch (error) {--%>
-<%--                console.error("Failed to fetch cart items:", error);--%>
-<%--            }--%>
-<%--        }--%>
-<%--    };--%>
-
-
-<%--    const addToFavorites = async (id, title, price, area, imageUrl, address) => {--%>
-<%--        // Check if the item is already in the cart--%>
-<%--        if (cartItems.find(item => item.id === id)) {--%>
-<%--            alert("Bất động sản này đã được quan tâm!");--%>
-<%--        } else {--%>
-<%--            const product = { id, title, price: parseFloat(price), area, imageUrl, address, quantity: 1 };--%>
-<%--            cartItems.push(product);--%>
-<%--            updateSessionStorage();--%>
-<%--            updateCartDisplay();--%>
-<%--            showMiniCart();--%>
-
-<%--            try {--%>
-<%--                // Send the cart item to the server--%>
-<%--                const response = await fetch('/addToCart', {--%>
-<%--                    method: 'POST',--%>
-<%--                    headers: {--%>
-<%--                        'Content-Type': 'application/json'--%>
-<%--                    },--%>
-<%--                    body: JSON.stringify({--%>
-<%--                        userId: userId, // Ensure userId is passed correctly--%>
-<%--                        cartItem: product--%>
-<%--                    })--%>
-<%--                });--%>
-<%--                const result = await response.json();--%>
-
-<%--                if (result.success) {--%>
-<%--                    console.log("Cart item added successfully.");--%>
-<%--                } else {--%>
-<%--                    console.error("Error adding cart item:", result.message);--%>
-<%--                    alert("Error adding to cart: " + result.message);--%>
-<%--                }--%>
-<%--            } catch (error) {--%>
-<%--                console.error("Có lỗi xảy ra:", error);--%>
-<%--                alert("Có lỗi xảy ra khi thêm vào giỏ hàng.");--%>
-<%--            }--%>
-<%--        }--%>
-<%--    };--%>
-
-
-<%--    // const saveCartToDatabase = () => {--%>
-<%--    //     const userId = sessionStorage.getItem('userId');--%>
-<%--    //     if (userId) {--%>
-<%--    //         fetch('/saveCart', {--%>
-<%--    //             method: 'POST',--%>
-<%--    //             headers: { 'Content-Type': 'application/json' },--%>
-<%--    //             body: JSON.stringify({ userId, cartItems })--%>
-<%--    //         })--%>
-<%--    //             .then(response => response.json())--%>
-<%--    //             .then(data => {--%>
-<%--    //                 if (data.success) {--%>
-<%--    //                     console.log("Giỏ hàng đã được lưu vào cơ sở dữ liệu.");--%>
-<%--    //                 } else {--%>
-<%--    //                     console.error("Lỗi khi lưu giỏ hàng.");--%>
-<%--    //                 }--%>
-<%--    //             })--%>
-<%--    //             .catch(error => console.error("Có lỗi xảy ra:", error));--%>
-<%--    //     }--%>
-<%--    // };--%>
-
-<%--    // Update session storage with the latest cart data--%>
-<%--    const updateSessionStorage = () => {--%>
-<%--        sessionStorage.setItem('cartItems', JSON.stringify(cartItems));--%>
-<%--    };--%>
-
-<%--    // Redirect to the cart page--%>
-<%--    const goToCart = () => {--%>
-<%--        window.location.href = 'cart.jsp';--%>
-<%--    };--%>
-
-<%--    // Update the cart display in the mini cart--%>
-<%--    const updateCartDisplay = () => {--%>
-<%--        const itemCount = document.querySelector('.item-count');--%>
-<%--        const cartList = document.getElementById('cart-items');--%>
-<%--        cartList.innerHTML = cartItems.length === 0 ? '<li>Bạn chưa có bất động sản đã lưu.</li>' : '';--%>
-
-<%--        cartItems.forEach(item => {--%>
-<%--            const listItem = document.createElement('li');--%>
-<%--            listItem.innerHTML = `--%>
-<%--                <img src="${item.imageUrl}" alt="${item.title}" width="40" height="40">--%>
-<%--                <div class="item-info">--%>
-<%--                    <h4>${item.title}</h4>--%>
-<%--                    <p>Địa chỉ: ${item.address}</p>--%>
-<%--                    <p>Diện tích: ${item.area} m²</p>--%>
-<%--                    <span>Giá: ${item.price.toLocaleString()} tỷ</span>--%>
-<%--                </div>--%>
-<%--                <button onclick="removeFromCart('${item.id}')">Xóa</button>--%>
-<%--            `;--%>
-<%--            cartList.appendChild(listItem);--%>
-<%--        });--%>
-
-<%--        itemCount.innerText = cartItems.length; // Update item count--%>
-<%--    };--%>
-
-<%--    // Show mini cart when adding an item--%>
-<%--    const showMiniCart = () => {--%>
-<%--        document.querySelector('.mini-cart').style.display = 'block';--%>
-<%--        updateCartDisplay();--%>
-<%--    };--%>
-
-<%--    // Remove item from the cart--%>
-<%--    const removeFromCart = id => {--%>
-<%--        cartItems = cartItems.filter(item => item.id !== id);--%>
-<%--        updateSessionStorage();--%>
-<%--        updateCartDisplay();--%>
-<%--    };--%>
-
-<%--    // Logout function that clears cart and session data--%>
-<%--    const logout = () => {--%>
-<%--        sessionStorage.removeItem('cartItems');--%>
-<%--        const userId = sessionStorage.getItem('userId');--%>
-<%--        if (userId) {--%>
-<%--            fetch('/logout', {--%>
-<%--                method: 'POST',--%>
-<%--                headers: {'Content-Type': 'application/json'},--%>
-<%--                body: JSON.stringify({userId})--%>
-<%--            })--%>
-<%--                .then(response => {--%>
-<%--                    if (response.ok) {--%>
-<%--                        console.log("Giỏ hàng đã được xóa khỏi cơ sở dữ liệu.");--%>
-<%--                    } else {--%>
-<%--                        console.error("Không thể xóa giỏ hàng từ cơ sở dữ liệu.");--%>
-<%--                    }--%>
-<%--                })--%>
-<%--                .catch(error => console.error("Có lỗi xảy ra khi xóa giỏ hàng:", error));--%>
-<%--        }--%>
-<%--        window.location.href = 'homes';--%>
-<%--    };--%>
-
-<%--    // Toggle mini cart visibility--%>
-<%--    const toggleMiniCart = () => {--%>
-<%--        const miniCart = document.querySelector('.mini-cart');--%>
-<%--        miniCartVisible = !miniCartVisible;--%>
-<%--        miniCart.style.display = miniCartVisible ? 'block' : 'none';--%>
-<%--        updateCartDisplay();--%>
-<%--    };--%>
-
-<%--    // Event listeners--%>
-<%--    document.querySelector("#logoutButton").addEventListener("click", logout);--%>
-<%--    document.addEventListener("DOMContentLoaded", () => {--%>
-<%--        const userId = sessionStorage.getItem("userId");--%>
-<%--        if (userId) {--%>
-<%--            fetchCartItems(); // Load cart items if user is logged in--%>
-<%--        }--%>
-<%--        updateCartDisplay(); // Initialize cart display on page load--%>
-<%--    });--%>
-
-<%--</script>--%>
 <style>
     .footer-top {
         display: flex; /* Sử dụng flexbox để căn chỉnh */

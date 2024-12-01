@@ -1,7 +1,8 @@
 package Dao;
 
-import DBcontext.DBUser;
 
+
+import DBcontext.Database;
 import Entity.User;
 
 import java.sql.Connection;
@@ -14,7 +15,7 @@ public class LoginDao {
     public User login(String user, String pass) {
         String query = "SELECT * FROM users WHERE username = ? AND password = ?";
 
-        try (Connection connection = DBUser.initializeDatabase();
+        try (Connection connection = Database.getConnection();
              PreparedStatement pst = connection.prepareStatement(query)) {
 
             // Thiết lập giá trị cho câu lệnh SQL
@@ -30,7 +31,7 @@ public class LoginDao {
                 return u;
             }
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 

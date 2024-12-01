@@ -319,16 +319,24 @@
                 <ul class="u-lo">
                     <li><a href="property-for-sale.html">Nhà Đất Bán</a>
                         <ul>
-                            <li><a href="#">Thông tin bán nhà đất</a></li>
-                            <li><a href="#">Mua bán bất động sản</a></li>
-                            <li><a href="#">Nhà đất giá rẻ</a></li>
+                            <li><a href="apartment-sale.html">Bán căn hộ chung cư</a></li>
+                            <li><a href="house-sale.html">Bán nhà riêng</a></li>
+                            <li><a href="villa-sale.html">Bán nhà biệt thự liền kề</a></li>
+                            <li><a href="street_houses-sale.html">Bán nhà mặt phố</a></li>
+                            <li><a href="farm_resort-sale.html">Bán trang trại khu nghỉ dưỡng</a></li>
+                            <li><a href="warehouses_factories-sale.html">Bán kho , nhà xưởng</a></li>
+                            <li><a href="other_real_estate-sale.html">Bán loại bất động sản khác</a></li>
                         </ul>
                     </li>
                     <li><a href="property-for-rent.html">Nhà Đất Cho Thuê</a>
                         <ul>
-                            <li><a href="#">Thông tin cho thuê nhà đất</a></li>
-                            <li><a href="#">Thuê nhà nguyên căn</a></li>
-                            <li><a href="#">Thuê căn hộ giá rẻ</a></li>
+                            <li><a href="apartment-rental.html">Cho thuê căn hộ chung cư</a></li>
+                            <li><a href="house-rental.html">Cho thuê nhà riêng</a></li>
+                            <li><a href="villa-rental.html">Cho thuê nhà biệt thự, liền kề</a></li>
+                            <li><a href="street_houses-rental.html">Cho thuê nhà mặt phố</a></li>
+                            <li><a href="accommodation-rental.html">Cho thuê phòng trọ , nhà trọ</a></li>
+                            <li><a href="office-rental.html">Cho thuê văn phòng</a></li>
+                            <li><a href="other_real_estate-rental.html">Cho thuê loại bất động sản khác</a></li>
                         </ul>
                     </li>
                     <li><a href="project.html">Dự Án</a>
@@ -616,7 +624,7 @@
         </a>
         <a href="property-detail.html?id=1" style="text-decoration: none;">
             <div class="related-property">
-                <img src="../jpg/3.jpg" alt="Sản phẩm 3">
+                <img src="../jpg/20.jpg" alt="Sản phẩm 3">
                 <h4>Nhà Masteri Thảo Điền</h4>
                 <p style="display: flex; justify-content: space-between; color: red;">
                     <span>Giá: 1.5 tỷ</span>
@@ -630,7 +638,7 @@
         </a>
         <a href="property-detail.html?id=1" style="text-decoration: none;">
             <div class="related-property">
-                <img src="../jpg/4.jpg" alt="Sản phẩm 4">
+                <img src="../jpg/18.jpg" alt="Sản phẩm 4">
                 <h4>Nhà Landmark 81</h4>
                 <p style="display: flex; justify-content: space-between; color: red;">
                     <span>Giá: 1.5 tỷ</span>
@@ -644,7 +652,7 @@
         </a>
         <a href="property-detail.html?id=1" style="text-decoration: none;">
             <div class="related-property">
-                <img src="../jpg/5.jpg" alt="Sản phẩm 5">
+                <img src="../jpg/22.jpg" alt="Sản phẩm 5">
                 <h4>Nhà Sala Đại Quang Minh</h4>
                 <p style="display: flex; justify-content: space-between; color: red;">
                     <span>Giá: 1.5 tỷ</span>
@@ -686,10 +694,10 @@
         </a>
 
 
-        <div class="more-products">
-            <button id="scrollLeftBtn"> <</button>
-            <button id="scrollRightBtn">️ ></button>
-        </div>
+        <<div class="more-products">
+        <button class="scroll-left-btn"> < </button>
+        <button class="scroll-right-btn"> > </button>
+    </div>
     </div>
 </div>
 
@@ -754,7 +762,7 @@
         </a>
         <a href="property-detail.html?id=1" style="text-decoration: none;">
             <div class="related-property">
-                <img src="../jpg/13.jpg" alt="Nhà The Vista">
+                <img src="../jpg/20.jpg" alt="Nhà The Vista">
                 <h4>Nhà The Vista</h4>
                 <p style="display: flex; justify-content: space-between; color: red;">
                     <span>Giá: 1.5 tỷ</span>
@@ -769,41 +777,86 @@
 
 
         <div class="more-products">
-            <button id="scrollLeftBtn1"> < </button>
-            <button id="scrollRightBtn1"> > </button>
+            <button class="scroll-left-btn"> < </button>
+            <button class="scroll-right-btn"> > </button>
         </div>
 
     </div>
 </div>
 
-<script>
-    const container1 = document.getElementById('relatedProductsContainer1');
 
-    document.getElementById('scrollLeftBtn1').addEventListener('click', function () {
-        container1.scrollBy({
-            top: 0,
-            left: -200, // Cuộn 200px sang trái
-            behavior: 'smooth'
+<script>
+    // Lấy tất cả các nút cuộn và container
+    const scrollLeftBtns = document.querySelectorAll('.scroll-left-btn');
+    const scrollRightBtns = document.querySelectorAll('.scroll-right-btn');
+    const containers = document.querySelectorAll('.related-properties-container');
+
+    // Lặp qua tất cả các nút cuộn trái
+    scrollLeftBtns.forEach((btn, index) => {
+        btn.addEventListener('click', function () {
+            containers[index].scrollBy({
+                top: 0,
+                left: -200, // Cuộn 200px sang trái
+                behavior: 'smooth'
+            });
         });
     });
 
-    document.getElementById('scrollRightBtn1').addEventListener('click', function () {
-        container1.scrollBy({
-            top: 0,
-            left: 200, // Cuộn 200px sang phải
-            behavior: 'smooth'
+    // Lặp qua tất cả các nút cuộn phải
+    scrollRightBtns.forEach((btn, index) => {
+        btn.addEventListener('click', function () {
+            containers[index].scrollBy({
+                top: 0,
+                left: 200, // Cuộn 200px sang phải
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // Lắng nghe sự kiện cuộn hết bên trái và quay lại từ đầu
+    containers.forEach((container) => {
+        let isScrolling = false; // Biến để kiểm tra trạng thái cuộn
+
+        container.addEventListener('scroll', function () {
+            if (isScrolling) return; // Ngừng nếu đang cuộn
+
+            if (container.scrollLeft <= 0) {
+                // Nếu cuộn hết bên trái
+                container.scrollTo({
+                    top: 0,
+                    left: container.scrollWidth / 2, // Quay lại từ đầu
+                    behavior: 'smooth'
+                });
+            } else if (container.scrollLeft + container.clientWidth >= container.scrollWidth) {
+                // Nếu cuộn hết bên phải
+                container.scrollTo({
+                    top: 0,
+                    left: 0, // Quay lại từ đầu
+                    behavior: 'smooth'
+                });
+            }
+        });
+
+        // Đặt lại trạng thái khi cuộn xong
+        container.addEventListener('scrollend', function () {
+            isScrolling = false;
+        });
+
+        // Giả lập sự kiện scrollend khi ngừng cuộn (tùy vào hỗ trợ của trình duyệt)
+        container.addEventListener('wheel', function () {
+            if (container.scrollLeft <= 0 || container.scrollLeft + container.clientWidth >= container.scrollWidth) {
+                isScrolling = true;
+            }
         });
     });
 </script>
-
-
 <div class="comment-section" style="padding-left: 135px">
     <h3>Để lại bình luận của bạn:</h3>
-    <form action="SubmitCommentServlet" method="POST">
+
         <input type="hidden" name="productId">
         <textarea name="comment" rows="5" placeholder="Nhập bình luận của bạn..." required></textarea>
         <button type="submit">Gửi bình luận</button>
-    </form>
+
 </div>
 
 <div class="login-prompt">
@@ -818,26 +871,6 @@
 <div class="copyright">
     <p>© Mọi quyền thuộc về Homelander. Mọi thông tin liên quan vui lòng liên hệ với chúng tôi.</p>
 </div>
-<script>
-    const container = document.getElementById('relatedProductsContainer');
-
-    document.getElementById('scrollLeftBtn').addEventListener('click', function () {
-        container.scrollBy({
-            top: 0,
-            left: -200, // Cuộn 200px sang trái
-            behavior: 'smooth'
-        });
-    });
-
-    document.getElementById('scrollRightBtn').addEventListener('click', function () {
-        container.scrollBy({
-            top: 0,
-            left: 200, // Cuộn 200px sang phải
-            behavior: 'smooth'
-        });
-    });
-
-</script>
 
 <style>
 
@@ -895,7 +928,7 @@
         padding-bottom: 5px;
     }
 
-    #scrollLeftBtn, #scrollRightBtn {
+    #scroll-left-btn, #scroll-right-Btn {
         background-color: whitesmoke; /* Màu nền cho nút */
         color: black; /* Màu chữ */
         border: none; /* Không có đường viền */
@@ -906,7 +939,7 @@
         margin-left: 5px; /* Khoảng cách giữa các nút */
     }
 
-    #scrollLeftBtn:hover, #scrollRightBtn:hover {
+    #scroll-left-btn:hover, #scroll-right-Btn:hover {
         background-color: wheat; /* Màu nền khi di chuột qua */
     }
 

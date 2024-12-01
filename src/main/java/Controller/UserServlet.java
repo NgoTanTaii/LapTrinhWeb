@@ -1,6 +1,7 @@
 package Controller;
 
-import DBcontext.ConnectDB;
+
+import DBcontext.Database;
 import Dao.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -34,7 +35,7 @@ public class UserServlet extends HttpServlet {
             String loggedInUsername = (String) session.getAttribute("username"); // Giả sử username của admin đang đăng nhập có trong session
 
             // Kết nối cơ sở dữ liệu
-            conn = ConnectDB.getConnection();
+            conn = Database.getConnection();
 
             // Truy vấn dữ liệu người dùng
             String query = "SELECT id, username, email, role FROM users";

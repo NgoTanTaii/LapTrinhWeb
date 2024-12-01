@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="Dao.CommentDAO" %>
 <%@ page import="Dao.PropertyDAO" %>
+<%@ page import="Dao.PropertyBystatusDAO" %>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <%
     // Sử dụng biến session có sẵn trong JSP
@@ -32,29 +34,50 @@
             <li><a href="admin.jsp">Main Dashboard</a></li>
             <li><a href="users">Quản lý tài khoản</a></li>
             <li><a href="home-manager">Quản lý sản phẩm</a></li>
-            <li><a href="top-property.jsp">Quản lý sản phẩm bán chạy</a></li>
-            <li><a href="home-manager">Quản lý nhà phân phối</a></li>
-            <li><a href="top-user-manager">Quản lý top 5 khách</a></li>
-            <li><a href="top-employee-manager.jsp">Quản lý top 5 nhân viên</a></li>
+            <li><a href="top5-new-property.jsp">Quản lý top 5 bds mới</a></li>
+            <li><a href="home-unavailable">Phê duyệt động sản</a></li>
+            <li><a href="top5-posters.jsp">Quản lý top 5 người đăng</a></li>
+            <%--            <li><a href="top-employee-manager.jsp">Quản lý top 5 nhân viên</a></li>--%>
             <li><a href="orders">Quản lý đơn đặt hàng</a></li>
             <li><a href="comments-manager.jsp">Quản lý bình luận</a></li>
+            <li><a href="appointment-manager">Quản lý lịch hẹn</a></li>
+
 
         </ul>
     </div>
+    <%
+        PropertyBystatusDAO propertyDAO = new PropertyBystatusDAO();
+    %>
 
     <div class="main-content">
         <div class="dashboard-header">
             <div class="dashboard-item">
-                <h3><i class="fas fa-box"></i> Total Products</h3>
-                <p><%= totalProducts %></p>
+                <h3><i class="fas fa-box"></i> Tổng bất động sản</h3>
+                <p><%= totalProducts %>
+                </p>
+            </div>
+
+            <div class="dashboard-item">
+                <h3><i class="fas fa-box"></i> Bất động sản - bán</h3>
+                <p><%= propertyDAO.countPropertiesByStatus("1") %>
+                </p> <!-- Số lượng sản phẩm có sẵn -->
             </div>
             <div class="dashboard-item">
-                <h3><i class="fas fa-dollar-sign"></i> Total Sales</h3>
-                <p>$21292.0</p>
+                <h3><i class="fas fa-box"></i> Bất động sản - cho thuê</h3>
+                <p><%= propertyDAO.countPropertiesByStatus("2") %>
+                </p> <!-- Số lượng sản phẩm đã bán -->
             </div>
             <div class="dashboard-item">
-                <h3><i class="fas fa-comments"></i> Total Comments</h3>
-                <p><%= totalComments %></p>
+                <h3><i class="fas fa-box"></i> Dự án</h3>
+                <p><%= propertyDAO.countPropertiesByStatus("3") %>
+                </p> <!-- Số lượng sản phẩm hết hàng -->
+            </div>
+
+
+            <div class="dashboard-item">
+                <h3><i class="fas fa-comments"></i> Tổng bình luận</h3>
+                <p><%= totalComments %>
+                </p>
             </div>
         </div>
     </div>

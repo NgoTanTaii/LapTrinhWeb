@@ -1,5 +1,6 @@
 package Controller;
 
+import DBcontext.Database;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,7 +15,6 @@ import java.sql.PreparedStatement;
 
 @WebServlet("/verify")
 public class VerifyServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -40,7 +40,7 @@ public class VerifyServlet extends HttpServlet {
 
     // Xác thực token
     private boolean verifyToken(String token) throws Exception {
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webbds", "root", "123456");
+        Connection conn = Database.getConnection();
         PreparedStatement stmt = conn.prepareStatement("UPDATE user SET status = 'ACTIVE' WHERE token = ?");
         stmt.setString(1, token);
         int rowsUpdated = stmt.executeUpdate();

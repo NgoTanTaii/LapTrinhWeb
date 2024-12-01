@@ -5,11 +5,13 @@ import java.util.Date;
 public class Order {
     private int orderId;
     private int userId;
+    private String userName;
     private Date orderDate;
 
-    public Order(int orderId, int userId, Date orderDate) {
+    public Order(int orderId, int userId,String userName, Date orderDate) {
         this.orderId = orderId;
         this.userId = userId;
+        this.userName = userName;
         this.orderDate = orderDate;
     }
 
@@ -35,5 +37,12 @@ public class Order {
 
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

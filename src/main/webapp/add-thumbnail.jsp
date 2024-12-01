@@ -3,12 +3,18 @@
 <%@ page import="java.util.List" %>
 <%
     String propertyIdParam = request.getParameter("property_id");
-    int propertyId = Integer.parseInt(propertyIdParam);
+    int propertyId = -1;
+
+    if (propertyIdParam != null && !propertyIdParam.isEmpty()) {
+        propertyId = Integer.parseInt(propertyIdParam);
+    } else {
+        // Thêm thông báo lỗi nếu không có property_id
+        out.println("<p style='color: red;'>Property ID is required!</p>");
+    }
 
     PropertyDAO propertyDAO = new PropertyDAO();
     List<String> thumbnailUrls = propertyDAO.getThumbnailUrls(propertyId); // Retrieve current thumbnails
 %>
-
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -37,13 +43,22 @@
 <div class="container">
     <h2>Quản lý Thumbnails cho Bất Động Sản ID: <%= propertyId %></h2>
 
-    <!-- Form to add a new thumbnail URL -->
-    <form action="AddThumbnailServlet" method="POST">
+    <form action="AddThumbnailServlet" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="property_id" value="<%= propertyId %>">
+
+        <!-- Thêm URL Hình Ảnh -->
         <label>Thêm URL Hình Ảnh Nhỏ:</label>
-        <input type="text" name="thumbnailUrl" placeholder="Nhập URL hình ảnh" required>
+        <input type="text" name="thumbnailUrl" placeholder="Nhập URL hình ảnh" style="width: 100%;" />
+        <br><br>
+
+        <!-- Hoặc Tải Hình Ảnh từ Máy Tính -->
+        <label>Hoặc Tải Hình Ảnh từ Máy Tính:</label>
+        <input type="file" name="thumbnailFile" accept="image/*" />
+        <br><br>
+
         <button type="submit">Thêm Thumbnail</button>
     </form>
+
 
     <h3>Danh sách Hình Ảnh Nhỏ</h3>
     <div class="thumbnails">
@@ -62,7 +77,6 @@
         <p>Không có hình ảnh nhỏ nào.</p>
         <% } %>
     </div>
-
 
     <a href="home-manager">Quay lại Quản lý Bất Động Sản</a>
 </div>

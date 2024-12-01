@@ -239,13 +239,14 @@
 
         <div class="header-right" style="margin-top: 10px">
             <% if (isLoggedIn) { %>
-            <a href="account.jsp" class="btn">
+            <a href="account.jsp" class="btn user-name-link">
                 <h3 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px;">
                     Hello, <%= username %>
                 </h3>
             </a>
 
-            <a href="javascript:void(0)" id="logoutButton" class="btn" onclick="document.getElementById('logoutForm').submit();">
+            <a href="javascript:void(0)" id="logoutButton" class="btn logout-btn"
+               onclick="document.getElementById('logoutForm').submit();">
                 <h3>Đăng xuất</h3>
             </a>
 
@@ -253,15 +254,35 @@
             <form id="logoutForm" action="logout" method="POST" style="display: none;">
                 <button type="submit" style="display: none;"></button> <!-- This button will not be visible -->
             </form>
-
             <% } else { %>
-            <a href="login.jsp" class="btn"><h3>Đăng nhập</h3></a>
-            <a href="register.jsp" class="btn"><h3>Đăng ký</h3></a>
+            <a href="login.jsp" class="btn">
+                <h3>Đăng nhập</h3>
+            </a>
+            <a href="register.jsp" class="btn">
+                <h3>Đăng ký</h3>
+            </a>
             <% } %>
-            <a href="post-status.jsp" class="btn"><h3>Đăng tin</h3></a>
+            <a href="create-poster.jsp" class="btn">
+                <h3>Đăng tin</h3>
+            </a>
         </div>
+        <style>
+            /* CSS cho hiệu ứng hover và làm nổi bật liên kết */
+            .user-name-link h3 {
+                display: inline-block;
+                cursor: pointer; /* Thêm con trỏ tay để người dùng biết đây là liên kết có thể click */
+                transition: color 0.3s ease, background-color 0.3s ease;
+            }
 
+            /* Thêm hiệu ứng hover */
+            .user-name-link:hover h3 {
+                color: #fff;
+                background-color: wheat; /* Màu nền khi hover */
+                padding: 5px 10px; /* Thêm khoảng cách để làm nổi bật */
+                border-radius: 5px; /* Bo góc */
+            }
 
+        </style>
     </div>
     <div class="menu">
         <div class="header-bottom">
@@ -276,35 +297,35 @@
 
             <nav>
                 <ul class="u-lo">
-                    <li><a href="property-for-sale.html">Nhà Đất Bán</a>
+                    <li><a href="forsale">Nhà Đất Bán</a>
                         <ul>
                             <li><a href="#">Thông tin bán nhà đất</a></li>
                             <li><a href="#">Mua bán bất động sản</a></li>
                             <li><a href="#">Nhà đất giá rẻ</a></li>
                         </ul>
                     </li>
-                    <li><a href="property-for-rent.html">Nhà Đất Cho Thuê</a>
+                    <li><a href="forrent">Nhà Đất Cho Thuê</a>
                         <ul>
                             <li><a href="#">Thông tin cho thuê nhà đất</a></li>
                             <li><a href="#">Thuê nhà nguyên căn</a></li>
                             <li><a href="#">Thuê căn hộ giá rẻ</a></li>
                         </ul>
                     </li>
-                    <li><a href="project.html">Dự Án</a>
+                    <li><a href="Project">Dự Án</a>
                         <ul>
                             <li><a href="#">Các dự án nổi bật</a></li>
                             <li><a href="#">Dự án nhà ở</a></li>
                             <li><a href="#">Dự án chung cư</a></li>
                         </ul>
                     </li>
-                    <li><a href="news.html">Tin Tức</a>
+                    <li><a href="news.jsp">Tin Tức</a>
                         <ul>
                             <li><a href="#">Tin thị trường</a></li>
                             <li><a href="#">Xu hướng bất động sản</a></li>
                             <li><a href="#">Phân tích và đánh giá</a></li>
                         </ul>
                     </li>
-                    <li><a href="wiki.html">Wiki BĐS</a>
+                    <li><a href="wiki.jsp">Wiki BĐS</a>
                         <ul>
                             <li><a href="#">Mua bán</a></li>
                             <li><a href="#">Cho thuê</a></li>
@@ -332,7 +353,7 @@
 <body>
 
 <div class="container mt-4">
-    <h3 class="text-center mb-4">Giỏ hàng của bạn</h3>
+    <h3 class="text-center mb-4">Tin đã lưu của bạn</h3>
 
     <ul class="list-group">
         <%
@@ -368,7 +389,7 @@
             }
         } else {
         %>
-        <li class="list-group-item text-center text-muted">Giỏ hàng của bạn đang trống.</li>
+        <li class="list-group-item text-center text-muted">Bạn chưa lưu tin nào.</li>
         <% } %>
     </ul>
 
@@ -376,6 +397,8 @@
 
     <form id="orderForm" action="createOrder" method="POST" style="display:none;">
         <input type="hidden" name="userId" value="<%= userId %>">
+        <input type="hidden" name="username" value="<%= username %>">
+
         <% for (CartItem item : cartItems) { %>
         <input type="hidden" name="propertyId" value="<%= item.getPropertyId() %>">
         <input type="hidden" name="title" value="<%= item.getTitle() %>">

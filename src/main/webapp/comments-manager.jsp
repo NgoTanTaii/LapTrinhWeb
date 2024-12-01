@@ -35,6 +35,7 @@
             display: flex;
             max-width: 1200px;
             margin: auto;
+            flex-direction: column;
         }
 
         .sidebar {
@@ -78,22 +79,9 @@
             margin-bottom: 20px;
         }
 
-        .add-button {
-            padding: 10px 20px;
-
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 4px;
-
-            margin-left: 700px;
-
-        }
-
-        a {
-            text-align: right;
+        .back-link {
             margin-bottom: 20px;
+            text-align: right;
         }
 
         .property-table {
@@ -109,8 +97,14 @@
         }
 
         .property-table th {
-            background-color: #4CAF50;
-            color: white;
+            background-color: #eee;
+            color: black;
+            text-align: center; /* Căn giữa tiêu đề */
+        }
+
+
+        .property-table td {
+            text-align: center; /* Căn giữa nội dung cột */
         }
 
         .property-table img {
@@ -118,35 +112,39 @@
             height: auto;
             border-radius: 5px;
         }
+
+        button {
+            padding: 5px 10px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #d32f2f;
+        }
+
     </style>
 
 </head>
 <body>
 
 <div class="container">
-    <div class="sidebar" style="height: 550px">
-        <ul>
-            <li><a href="admin.jsp">Main Dashboard</a></li>
-            <li><a href="users">Quản lý tài khoản</a></li>
-            <li><a href="home-manager">Quản lý sản phẩm</a></li>
-            <li><a href="top-property.jsp">Quản lý sản phẩm bán chạy</a></li>
-            <li><a href="home-manager">Quản lý nhà phân phối</a></li>
-            <li><a href="top-user-manager">Quản lý top 5 khách</a></li>
-            <li><a href="top-employee-manager.jsp">Quản lý top 5 nhân viên</a></li>
-            <li><a href="orders">Quản lý đơn đặt hàng</a></li>
-            <li><a href="comments-manager.jsp">Quản lý bình luận</a></li>
+    <h2>Danh sách bình luận</h2>
 
-        </ul>
+    <div class="back-link">
+        <a href="admin.jsp">Quay lại trang Quản trị</a>
     </div>
 
-    <table border="1" cellpadding="10" cellspacing="0">
+    <table class="property-table" border="1" cellpadding="10" cellspacing="0">
         <thead>
         <tr>
-
-            <th>Username</th>
-            <th>Content</th>
-            <th>Date</th>
-            <th>Actions</th>
+            <th> Tên nguời bình luận </th>
+            <th>Nội dung</th>
+            <th>Ngày</th>
+            <th>Thao tác</th>
         </tr>
         </thead>
         <tbody>
@@ -155,7 +153,6 @@
                 for (Comment comment : comments) {
         %>
         <tr>
-
             <td><%= comment.getUserName() != null ? comment.getUserName() : "Unknown" %></td>
             <td><%= comment.getContent() %></td>
             <td><%= comment.getCommentDate() %></td>
@@ -165,7 +162,6 @@
                     <input type="hidden" name="redirectPage" value="commentsManager">
                     <button type="submit" onclick="return confirm('Are you sure you want to delete this comment?');">Delete</button>
                 </form>
-
             </td>
         </tr>
         <%
@@ -173,7 +169,7 @@
         } else {
         %>
         <tr>
-            <td colspan="6">No comments available.</td>
+            <td colspan="4" style="text-align:center;">No comments available.</td>
         </tr>
         <%
             }

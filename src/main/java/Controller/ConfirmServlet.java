@@ -1,6 +1,8 @@
 package Controller;
 
+import DBcontext.Database;
 import Dao.CartDAO;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,22 +11,12 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @WebServlet("/confirm")
 public class ConfirmServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-
-    public void init() throws ServletException {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver"); // Ensure MySQL driver is in classpath
-        } catch (ClassNotFoundException e) {
-            throw new ServletException("Cannot load JDBC driver", e);
-        }
-    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -37,9 +29,7 @@ public class ConfirmServlet extends HttpServlet {
             return;
         }
 
-        try (Connection conn = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/webbds?useSSL=false&serverTimezone=UTC", "root", "123456")) {
-
+        try (Connection conn = Database.getConnection()) {  // Use Database.getConnection() here
             // Check if the token is valid
             String checkQuery = "SELECT * FROM users WHERE token = ?";
             PreparedStatement checkStmt = conn.prepareStatement(checkQuery);
@@ -59,9 +49,9 @@ public class ConfirmServlet extends HttpServlet {
                     // Retrieve user ID from the result set
                     int userId = rs.getInt("id");
 
-//                    // Create cart for the user after activation
-//                    CartDAO cartDAO = new CartDAO();
-//                    cartDAO.createCart(userId);
+                    // Create cart for the user after activation
+                    CartDAO cartDAO = new CartDAO();
+                    cartDAO.createCartIfNotExists(userId);
 
                     // Display confirmation message after successful activation and cart creation
                     response.setContentType("text/html; charset=UTF-8");

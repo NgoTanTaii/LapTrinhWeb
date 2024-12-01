@@ -1,3 +1,14 @@
+<%@ page import="Entity.CartItem" %>
+<%@ page import="java.util.List" %>
+<%@ page import="Dao.CartItemDAO" %>
+<%@ page import="java.sql.SQLException" %>
+<%
+    String username = (String) session.getAttribute("username");
+    if (username == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -15,8 +26,6 @@
             background-color: antiquewhite;
             margin: 0;
             padding: 20px;
-
-
         }
 
         .appointment-form {
@@ -78,6 +87,21 @@
     </style>
 </head>
 <body>
+<%
+    Integer userId = (Integer) session.getAttribute("userId");
+    List<CartItem> cartItems = null;
+
+    if (userId != null) {
+        CartItemDAO cartItemDAO = new CartItemDAO();
+        try {
+            cartItems = cartItemDAO.getCartItemsByUserId(userId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    System.out.println(cartItems.size());
+%>
+
 <div class="appointment-form">
     <h2>Nhập thông tin đặt lịch</h2>
     <form id="schedule-form" method="post" action="schedule-appointment">
@@ -98,15 +122,25 @@
             <label for="appointment-time">Giờ hẹn:</label>
             <input type="time" id="appointment-time" name="appointmentTime" required>
         </div>
-        <div id="product-list"></div>
+
+        <!-- Truyền username vào dưới dạng input ẩn -->
+        <input type="hidden" name="username" value="<%= session.getAttribute("username") %>">
+
+
+        <input type="hidden" name="productCount" value="<%= cartItems.size() %>">
+
         <button type="submit" class="submit-btn">Xác nhận đặt lịch</button>
     </form>
 </div>
 
 <script>
+    // Lấy giỏ hàng từ sessionStorage
     const cartItems = JSON.parse(sessionStorage.getItem('cartItems')) || [];
+
+    // Lấy phần tử div để hiển thị các sản phẩm
     const productListDiv = document.getElementById('product-list');
 
+    // Duyệt qua từng sản phẩm trong giỏ hàng và thêm vào productDetails
     cartItems.forEach((item, index) => {
         const productNameInput = document.createElement('input');
         productNameInput.type = 'hidden';
@@ -116,21 +150,24 @@
         const productQuantityInput = document.createElement('input');
         productQuantityInput.type = 'hidden';
         productQuantityInput.name = 'productQuantity' + index;
-        productQuantityInput.value = 1;
+        productQuantityInput.value = 1;  // Giả sử mỗi sản phẩm có số lượng là 1
 
         const productPriceInput = document.createElement('input');
         productPriceInput.type = 'hidden';
         productPriceInput.name = 'productPrice' + index;
         productPriceInput.value = item.price;
 
+        // Thêm các input vào div product-list
         productListDiv.appendChild(productNameInput);
+        productListDiv.appendChild(productQuantityInput);
         productListDiv.appendChild(productPriceInput);
     });
 
+    // Tạo input ẩn để truyền số lượng sản phẩm vào form
     const productCountInput = document.createElement('input');
     productCountInput.type = 'hidden';
     productCountInput.name = 'productCount';
-    productCountInput.value = cartItems.length;
+    productCountInput.value = cartItems.length;  // Lấy số lượng sản phẩm trong giỏ
     productListDiv.appendChild(productCountInput);
 </script>
 </body>

@@ -1,30 +1,22 @@
 package Controller;
 
+
+import DBcontext.Database;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.IOException;
 import javax.mail.*;
 import javax.mail.internet.*;
-
+import java.io.IOException;
 import java.sql.*;
 import java.util.Properties;
 import java.util.Random;
 
 @WebServlet("/ForgotPasswordServlet")
 public class ForgotPasswordServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-
-    // Kết nối đến CSDL
-    private Connection connect() throws SQLException {
-        String jdbcURL = "jdbc:mysql://localhost:3306/webbds"; // Thay thế bằng tên database của bạn
-        String dbUser = "root"; // Thay thế bằng username CSDL của bạn
-        String dbPassword = "123456"; // Thay thế bằng mật khẩu CSDL của bạn
-        return DriverManager.getConnection(jdbcURL, dbUser, dbPassword);
-    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -34,7 +26,7 @@ public class ForgotPasswordServlet extends HttpServlet {
         String username = request.getParameter("username");
         String email = request.getParameter("email");
 
-        try (Connection conn = connect()) {
+        try (Connection conn = Database.getConnection()) {  // Use the central database connection
             // Kiểm tra username và email trong CSDL
             String query = "SELECT * FROM users WHERE username = ? AND email = ?";
             PreparedStatement statement = conn.prepareStatement(query);

@@ -6,14 +6,29 @@ public class Poster {
     private String mail;
     private String phone;
     private String imgUrl;
+    private int userId; // Thêm userId vào đây
+
 
     public Poster(int id, String name, String mail, String phone, String imgUrl) {
+        this.id = id;
         this.name = name;
         this.mail = mail;
         this.phone = phone;
         this.imgUrl = imgUrl;
 
     }
+
+    public Poster(String name, String mail, String phone, String imageUrl, int userId) {
+        this.name = name;
+        this.mail = mail;
+        this.phone = phone;
+        this.imgUrl = imageUrl;
+        this.userId = userId;
+
+    }
+
+
+
 
     public String getName() {
         return name;
@@ -66,5 +81,13 @@ public class Poster {
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }
+    public int getUserId() {
+        return userId;
+
+    }
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
 
 }

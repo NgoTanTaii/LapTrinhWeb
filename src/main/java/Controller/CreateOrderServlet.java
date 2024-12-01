@@ -22,7 +22,7 @@ public class CreateOrderServlet extends HttpServlet {
         // Get user ID and order date from request
         int userId = Integer.parseInt(request.getParameter("userId"));
         String orderDateStr = request.getParameter("orderDate");
-
+        String username = request.getParameter("username");
         // Convert the order date to MySQL-compatible format (yyyy-MM-dd HH:mm:ss)
         String formattedOrderDate = formatOrderDate(orderDateStr);
 
@@ -35,12 +35,13 @@ public class CreateOrderServlet extends HttpServlet {
             conn = Database.getConnection();
 
             // SQL query to insert order data (into orders table)
-            String insertOrderSQL = "INSERT INTO orders (user_id, order_date) VALUES (?, ?)";
+            String insertOrderSQL = "INSERT INTO orders (user_id, order_date, username) VALUES (?, ?, ?)";
             stmtOrder = conn.prepareStatement(insertOrderSQL, PreparedStatement.RETURN_GENERATED_KEYS);
 
             // Set the parameters for the order
             stmtOrder.setInt(1, userId);
             stmtOrder.setString(2, formattedOrderDate);
+            stmtOrder.setString(3, username);  // Set the username
 
             // Execute and get the generated order_id for the new order
             stmtOrder.executeUpdate();

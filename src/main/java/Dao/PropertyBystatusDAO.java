@@ -1,5 +1,6 @@
 package Dao;
 
+import DBcontext.Database;
 import Entity.Property1;
 
 import java.sql.Connection;
@@ -15,21 +16,19 @@ public class PropertyBystatusDAO {
 
     // Phương thức để lấy kết nối đến cơ sở dữ liệu
     private Connection getConnection() throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/webbds";  // Chỉnh sửa tên database nếu cần
-        String user = "root";
-        String password = "123456";  // Cập nhật mật khẩu nếu cần
-        return DriverManager.getConnection(url, user, password);
+
+        return Database.getConnection();
     }
 
 
-    public List<Property1> getPropertiesByStatus(int status) {
+    public List<Property1> getPropertiesByStatus(String status) {
         List<Property1> properties = new ArrayList<>();
-        String sql = "SELECT * FROM properties WHERE status = ?";  // Truy vấn SQL
+        String sql = "SELECT * FROM properties WHERE status like ?";  // Truy vấn SQL
 
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setInt(1, status);  // Thiết lập giá trị cho tham số status
+            preparedStatement.setString(1, status);  // Thiết lập giá trị cho tham số status
             ResultSet resultSet = preparedStatement.executeQuery();  // Thực thi truy vấn
 
             // Duyệt qua kết quả và thêm vào danh sách properties
@@ -52,4 +51,23 @@ public class PropertyBystatusDAO {
         }
         return properties;  // Trả về danh sách bất động sản
     }
+    public int countPropertiesByStatus(String status) {
+        int count = 0;
+        String sql = "SELECT COUNT(*) FROM properties WHERE status like ?";  // Truy vấn SQL để đếm số lượng bất động sản
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, status);  // Thiết lập giá trị cho tham số status
+            ResultSet resultSet = preparedStatement.executeQuery();  // Thực thi truy vấn
+
+            if (resultSet.next()) {
+                count = resultSet.getInt(1);  // Lấy số lượng bất động sản từ kết quả truy vấn
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();  // In ra lỗi nếu có
+        }
+        return count;  // Trả về số lượng bất động sản
+    }
+
 }

@@ -169,7 +169,7 @@
             <% } %>
 
             <!-- "Post Status" button, visible to both logged-in and non-logged-in users -->
-            <a href="post-status.html" class="btn">
+            <a href="create-poster.jsp" class="btn">
                 <h3>Đăng tin</h3>
             </a>
         </div>
@@ -224,14 +224,14 @@
                             <li><a href="#">Dự án chung cư</a></li>
                         </ul>
                     </li>
-                    <li><a href="news.html">Tin Tức</a>
+                    <li><a href="news.jsp">Tin Tức</a>
                         <ul>
                             <li><a href="#">Tin thị trường</a></li>
                             <li><a href="#">Xu hướng bất động sản</a></li>
                             <li><a href="#">Phân tích và đánh giá</a></li>
                         </ul>
                     </li>
-                    <li><a href="wiki.html">Wiki BĐS</a>
+                    <li><a href="wiki.jsp">Wiki BĐS</a>
                         <ul>
                             <li><a href="#">Mua bán</a></li>
                             <li><a href="#">Cho thuê</a></li>
@@ -255,13 +255,14 @@
 
     <div class="slideshow-container">
         <div class="mySlides fade">
-            <img src="jpg/1.webp" alt="Banner 1">
+            <img src="jpg/1%20(1).webp" alt="Banner 1">
         </div>
         <div class="mySlides fade">
-            <img src="jpg/1.webp" alt="Banner 2">
+            <img src="jpg/1%20(1).webp" alt="Banner 2">
         </div>
 
     </div>
+
 
 
     <div class="search-container">

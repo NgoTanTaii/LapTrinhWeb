@@ -1,27 +1,85 @@
+<%@ page import="Controller.User" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thêm Người Dùng Mới</title>
     <style>
-        .message {
-            font-weight: bold;
+        /* Các kiểu CSS cho form */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"], select {
+            width: 100%;
             padding: 10px;
-            margin: 10px 0;
+            margin: 5px 0 20px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .submit-button:hover {
+            background-color: #45a049;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        /* Thêm kiểu cho các thông báo */
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
             border-radius: 5px;
         }
-        .error {
-            color: red;
-            background-color: #f8d7da;
-            border: 1px solid red;
-        }
-        .success {
-            color: green;
+
+        .alert-success {
             background-color: #d4edda;
-            border: 1px solid green;
+            color: #155724;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
         }
     </style>
 </head>
@@ -30,53 +88,35 @@
 <div class="container">
     <h2>Thêm Người Dùng Mới</h2>
 
-    <!-- Display error or success messages -->
-    <div>
-        <%
-            String error = request.getParameter("error");
-            String success = request.getParameter("success");
-
-            if (error != null) {
-                out.print("<div class='message error'>");
-                if ("UserAlreadyExists".equals(error)) {
-                    out.print("Người dùng đã tồn tại!");
-                } else if ("Username cannot be null".equals(error)) {
-                    out.print("Tên người dùng không được để trống!");
-                } else if ("ErrorAddingUser".equals(error)) {
-                    out.print("Có lỗi khi thêm người dùng. Vui lòng thử lại.");
-                }
-                out.print("</div>");
-            }
-
-            if (success != null && "UserAddedSuccessfully".equals(success)) {
-                out.print("<div class='message success'>Người dùng đã được thêm thành công!</div>");
-            }
-        %>
-    </div>
-
-    <!-- User form -->
-    <form action="AddUserServlet" method="POST">
-        <input type="hidden" name="action" value="create">
+    <form action="addUser" method="POST">
         <label for="username">Tên Người Dùng:</label>
         <input type="text" id="username" name="username" required>
+
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
+
         <label for="password">Mật Khẩu:</label>
         <input type="password" id="password" name="password" required>
+
         <label for="role">Vai Trò:</label>
-        <select id="role" name="role" required>
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
+        <select name="role" id="role">
+            <option value="user">Người Dùng</option>
+            <option value="admin">Quản Trị</option>
         </select>
+
         <label for="status">Trạng Thái:</label>
-        <select id="status" name="status" required>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
+        <select name="status" id="status">
+            <option value="active">Hoạt Động</option>
+            <option value="inactive">Không Hoạt Động</option>
         </select>
-        <button type="submit">Thêm Người Dùng</button>
+
+
+        <button type="submit" class="submit-button">Thêm Người Dùng</button>
     </form>
 
-    <a href="users" class="cancel-link">Hủy</a>
+    <div class="back-link">
+        <a href="users">Quay lại trang Quản trị</a>
+    </div>
 </div>
 
 </body>

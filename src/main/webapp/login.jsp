@@ -130,7 +130,7 @@
         <div class="social-login">
             <p>Hoặc đăng nhập bằng:</p>
             <button class="btn btn-facebook" onclick="checkLoginState()">
-                <i class="fab fa-facebook-f"></i> Đăng nhập bằng Facebook
+                <i class="fab fa-facebook-f" style="margin-right: 45px"></i> Đăng nhập bằng Facebook
             </button>
             <div id="g_id_onload"
                  data-client_id="161137938230-6h6mbfajcfra9avc0762peh4556202hq.apps.googleusercontent.com"
@@ -178,6 +178,10 @@
 
     function fetchUserData() {
         FB.api('/me', {fields: 'id,name,email'}, function (response) {
+            // Lấy thông tin từ response, bao gồm tên người dùng
+            const username = response.name;
+
+            // Gửi tên người dùng qua một request POST
             const xhr = new XMLHttpRequest();
             xhr.open("POST", "/LoginServlet", true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -185,7 +189,7 @@
 
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
-                    window.location.href = "welcome";
+                    window.location.href = "welcome"; // Chuyển hướng sau khi đăng nhập thành công
                 }
             };
         });

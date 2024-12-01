@@ -13,9 +13,10 @@
     Property1 property = propertyDAO.getPropertyById(Integer.parseInt(propertyId));
 
     if (property == null) {
-        out.print("Không tìm thấy bất động sản.");
+        response.sendRedirect("error.jsp");  // Chuyển hướng nếu không tìm thấy bất động sản
         return;
     }
+    String role = (String) session.getAttribute("role");
 %>
 
 <!DOCTYPE html>
@@ -25,6 +26,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chỉnh sửa Bất Động Sản</title>
     <style>
+        /* Styles for the form and other elements */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -93,16 +95,40 @@
         .cancel-link:hover {
             text-decoration: underline;
         }
+
+        .image-preview {
+            max-width: 100%;
+            max-height: 200px;
+            margin-bottom: 15px;
+        }
+
+        .edit-thumbnail-link {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 10px;
+            padding: 5px 10px;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .edit-thumbnail-link:hover {
+            background-color: #007bff;
+            color: white;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h2>Chỉnh sửa Bất Động Sản</h2>
-    <form action="EditPropertyServlet" method="POST">
-        <!-- Hidden fields to pass property ID and action type -->
-        <input type="hidden" name="property_id" value="<%= property.getId() %>">
-        <input type="hidden" name="action" value="update">
+
+    <form action="editProperty" method="POST" enctype="multipart/form-data">
+        <%--@declare id="currentimage"--%><%--@declare id="newimage"--%><input type="hidden" name="property_id"
+                                                                               value="<%= property.getId() %>">
 
         <label for="title">Tên:</label>
         <input type="text" id="title" name="title" value="<%= property.getTitle() %>" required>
@@ -116,8 +142,20 @@
         <label for="area">Diện tích (m²):</label>
         <input type="number" id="area" name="area" value="<%= property.getArea() %>" required>
 
-        <label for="imageUrl">URL Hình Ảnh:</label>
-        <input type="text" id="imageUrl" name="imageUrl" value="<%= property.getImageUrl() %>" required>
+        <!-- Hiển thị ảnh hiện tại nếu có -->
+        <label for="currentImage">Ảnh hiện tại:</label>
+        <img src="<%= property.getImageUrl() %>" alt="Current Image" class="image-preview" id="current-image">
+
+        <!-- Hiển thị ảnh mới nếu có lựa chọn -->
+        <label for="newImage">Ảnh mới:</label>
+        <img id="new-image-preview" class="image-preview" style="display:none;"/>
+
+        <label for="image">Chọn hình ảnh mới:</label>
+        <input type="file" id="image" name="image" onchange="previewNewImage(event)">
+
+        <!-- Liên kết chỉnh sửa ảnh nhỏ -->
+        <a href="add-thumbnail.jsp?property_id=<%= property.getId() %>" class="edit-thumbnail-link">Chỉnh sửa hình ảnh
+            nhỏ</a>
 
         <label for="description">Mô tả:</label>
         <textarea id="description" name="description" required><%= property.getDescription() %></textarea>
@@ -130,7 +168,27 @@
 
         <button type="submit">Cập nhật Bất Động Sản</button>
     </form>
-    <a href="home-manager" class="cancel-link">Hủy</a>
+    <a href="javascript:void(0);" class="cancel-link" onclick="goBack()">Hủy</a>
+
+    <% if ("admin".equals(role)) { %>
+    <a href="home-manager" class="cancel-link">Về trang quản lý</a>
+    <% } %>
+    <script>
+        function goBack() {
+            window.history.back(); // Quay lại trang trước đó
+        }
+
+        // Hàm để hiển thị ảnh mới trước khi tải lên
+        function previewNewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function () {
+                var output = document.getElementById('new-image-preview');
+                output.src = reader.result;  // Đặt hình ảnh mới vào thẻ <img>
+                output.style.display = "block";  // Hiển thị ảnh mới
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
 </div>
 
 </body>

@@ -564,6 +564,7 @@ legend {
 
 /* Cấu hình cho biểu tượng trái tim */
 .heart-icon {
+
     position: absolute;
     bottom: 5px; /* Di chuyển trái tim xuống góc dưới */
     right: 5px; /* Đặt trái tim ở góc phải */
@@ -574,12 +575,13 @@ legend {
 }
 
 .heart-icon img {
+    visibility: visible;
     width: 20px !important; /* Kích thước nhỏ hơn của trái tim */
     height: 20px !important; /* Kích thước nhỏ hơn của trái tim */
     transition: transform 0.3s ease, filter 0.3s ease; /* Hiệu ứng chuyển động */
 
-
 }
+
 
 .heart-icon:hover img {
     transform: scale(1.2); /* Phóng to biểu tượng trái tim khi hover */

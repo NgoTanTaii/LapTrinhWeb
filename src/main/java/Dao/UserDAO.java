@@ -1,7 +1,6 @@
 package Dao;
 
 
-import Controller.User;
 import DBcontext.Database;
 
 import java.sql.*;
@@ -63,44 +62,30 @@ public class UserDAO {
     }
 
 
-    public void addUser(User user) throws SQLException {
-        if (user == null || user.getUsername() == null || user.getEmail() == null || user.getPassword() == null) {
-            System.out.println("Error: User object or required fields are null.");
-            return;
-        }
+    private Connection getConnection() throws SQLException {
 
-        String sql = "INSERT INTO users (username, email, password, role, status) VALUES (?, ?, ?, ?, ?)";
-        try (Connection connection = getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, user.getUsername());
-            stmt.setString(2, user.getEmail());
-            stmt.setString(3, user.getPassword());
-            stmt.setString(4, user.getRole());
-            stmt.setString(5, user.getStatus());
 
-            int result = stmt.executeUpdate();
-            if (result > 0) {
-                System.out.println("User added successfully.");
-            } else {
-                System.out.println("Failed to add user.");
-            }
+        return Database.getConnection();
+    }
+
+
+    public void addUser(String username, String password, String email, String token, String status, String role) {
+        String query = "INSERT INTO users (username, password, email, token, status, role) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection connection = getConnection(); PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, username);
+            stmt.setString(2, password);  // Có thể mã hóa mật khẩu trước khi lưu
+            stmt.setString(3, email);
+            stmt.setString(4, token);  // Token có thể là NULL
+            stmt.setString(5, status);
+            stmt.setString(6, role);
+
+            stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-
-
-
-    private Connection getConnection() throws SQLException {
-
-        String url = "jdbc:mysql://localhost:3306/webbds";
-        String user = "root";
-        String password = "123456";
-        return DriverManager.getConnection(url, user, password);
-    }
-
-
-    // Check if a user exists by Google ID
     public boolean checkUserExists(String username) {
         String sql = "SELECT COUNT(*) FROM users WHERE username = ?";
         try (Connection connection = getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -116,21 +101,5 @@ public class UserDAO {
         return false;
     }
 
-    // Add a new user to the database
-    public void addUser(String userId, String name, String email) {
-        String sql = "INSERT INTO users (google_id, name, email, status) VALUES (?, ?, ?, 'active')";
-        try (Connection conn = Database.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, userId);
-            stmt.setString(2, name);
-            stmt.setString(3, email);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
 
 }
-
-

@@ -13,6 +13,8 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -117,26 +119,49 @@ public class LoginServlet extends HttpServlet {
 
     private String checkLogin(String username, String password) {
         String status = null;
-        String sql = "SELECT role, status FROM users WHERE username = ? AND password = ?";
+        String sql = "SELECT role, status, password FROM users WHERE username = ?";
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, username);
-            stmt.setString(2, password);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
+                String dbPassword = rs.getString("password"); // Mật khẩu đã hash trong DB
                 String role = rs.getString("role");
                 String accountStatus = rs.getString("status");
-                if ("admin".equals(role)) {
-                    status = "admin";
-                } else if ("active".equals(accountStatus)) {
-                    status = "active";
-                } else if ("inactive".equals(accountStatus)) {
-                    status = "inactive";
+
+                // Mã hóa mật khẩu người dùng nhập vào bằng MD5
+                String hashedPassword = hashPasswordWithMD5(password);
+
+                // So sánh mật khẩu đã mã hóa
+                if (hashedPassword.equals(dbPassword)) {
+                    if ("admin".equals(role)) {
+                        status = "admin";
+                    } else if ("active".equals(accountStatus)) {
+                        status = "active";
+                    } else if ("inactive".equals(accountStatus)) {
+                        status = "inactive";
+                    }
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return status;
+    }
+
+    // Hàm mã hóa mật khẩu bằng MD5
+    private String hashPasswordWithMD5(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] hashedBytes = md.digest(password.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hashedBytes) {
+                sb.append(String.format("%02x", b)); // Convert each byte to hexadecimal
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

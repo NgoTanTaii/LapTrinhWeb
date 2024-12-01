@@ -93,9 +93,14 @@
         }
 
         .user-table th {
-            background-color: #4CAF50;
-            color: white;
+            color: black;
             text-transform: uppercase;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid #ddd;
         }
 
         .delete-button {
@@ -128,29 +133,18 @@
 <body>
 
 <div class="container">
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <ul>
-            <li><a href="admin.jsp">Main Dashboard</a></li>
-            <li><a href="users">Quản lý tài khoản</a></li>
-            <li><a href="home-manager">Quản lý sản phẩm</a></li>
-            <li><a href="top-property.jsp">Quản lý sản phẩm bán chạy</a></li>
-            <li><a href="home-manager">Quản lý nhà phân phối</a></li>
-            <li><a href="top-user-manager">Quản lý top 5 khách</a></li>
-            <li><a href="top-employee-manager.jsp">Quản lý top 5 nhân viên</a></li>
-            <li><a href="orders">Quản lý đơn đặt hàng</a></li>
-            <li><a href="comments-manager.jsp">Quản lý bình luận</a></li>
 
-        </ul>
-    </div>
 
     <!-- Main content -->
     <div class="main-content">
         <div class="dashboard-header">
             <h2>Quản lý tài khoản</h2>
-<%--            <a href="add-user.jsp" class="add-button">Thêm Người Dùng Mới</a>--%>
+            <%--            <a href="add-user.jsp" class="add-button">Thêm Người Dùng Mới</a>--%>
         </div>
 
+        <div class="back-link">
+            <a href="admin.jsp">Quay lại trang Quản trị</a>
+        </div>
         <table id="example" class="display user-table" style="width:100%">
             <thead>
             <tr>
@@ -196,6 +190,13 @@
                                 onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này không?')"
                                 class="delete-button">Xóa
                         </button>
+                        <button type="button"
+                                onclick="window.location.href='http://localhost:8080/Batdongsan/user-posts.jsp?userId=<%= o.getId() %>'"
+                                <%= o.getId() %>
+                                class="delete-button">
+                            Xem bds đã đăng
+                        </button>
+
                     </td>
                 </form>
             </tr>

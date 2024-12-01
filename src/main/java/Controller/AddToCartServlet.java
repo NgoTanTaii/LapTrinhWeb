@@ -32,7 +32,7 @@ public class AddToCartServlet extends HttpServlet {
 
         if (userId == null) {
             // User not logged in, redirect to login page with a message
-            session.setAttribute("message", "Vui lòng đăng nhập để thêm vào giỏ hàng.");
+
             response.sendRedirect("login.jsp");
             return;
         }
@@ -52,7 +52,7 @@ public class AddToCartServlet extends HttpServlet {
 
             // Check if property exists
             if (!cartItemDAO.checkPropertyExists(propertyId)) {
-                session.setAttribute("message", "Sản phẩm không tồn tại.");
+                session.setAttribute("message", "Bất động sản không tồn tại.");
                 response.sendRedirect(getRefererPage(request));  // Redirect to the referring page
                 return;
             }
@@ -63,12 +63,12 @@ public class AddToCartServlet extends HttpServlet {
             if (itemExists) {
                 int currentQuantity = cartItemDAO.getItemQuantity(cartId, propertyId);
                 cartItemDAO.updateCartItemQuantity(cartId, propertyId, currentQuantity + 1);
-                session.setAttribute("message", "Sản phẩm đã có trong giỏ hàng.");
+                session.setAttribute("message", "Bất động sản đã có trong tin đã lưu .");
             } else {
                 // Add new item to the cart
                 CartItem cartItem = new CartItem(propertyId, title, price, area, imageUrl, cartId, 1, address);
                 cartItemDAO.addCartItem(cartId, cartItem);
-                session.setAttribute("message", "Sản phẩm đã được thêm vào giỏ hàng!");
+                session.setAttribute("message", "Bất động sản đã được thêm vào tin đã lưu!");
             }
 
             // Redirect to the referring page (same page as before)
@@ -76,7 +76,7 @@ public class AddToCartServlet extends HttpServlet {
 
         } catch (SQLException | NumberFormatException e) {
             e.printStackTrace();
-            session.setAttribute("message", "Lỗi khi thêm sản phẩm vào giỏ hàng: " + e.getMessage());
+            session.setAttribute("message", "Lỗi khi thêm sản phẩm vào tin đã lưu: " + e.getMessage());
             response.sendRedirect(getRefererPage(request));  // Redirect to the referring page
         }
     }

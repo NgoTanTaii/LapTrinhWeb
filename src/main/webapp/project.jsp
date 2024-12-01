@@ -1,5 +1,7 @@
 <%@ page import="Entity.PropertyProject" %>
 <%@ page import="java.util.List" %>
+<%@ page import="Entity.Property1" %>
+<%@ page import="Dao.PropertyBystatusDAO" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -338,15 +340,21 @@
 
         <div class="header-right" style="margin-top: 10px">
             <% if (isLoggedIn) { %>
-            <a href="account.jsp" class="btn">
+            <a href="account.jsp" class="btn user-name-link">
                 <h3 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px;">
                     Hello, <%= username %>
                 </h3>
             </a>
 
-            <a href="logout" class="btn">
+            <a href="javascript:void(0)" id="logoutButton" class="btn logout-btn"
+               onclick="document.getElementById('logoutForm').submit();">
                 <h3>Đăng xuất</h3>
             </a>
+
+            <!-- Hidden Form to Logout -->
+            <form id="logoutForm" action="logout" method="POST" style="display: none;">
+                <button type="submit" style="display: none;"></button> <!-- This button will not be visible -->
+            </form>
             <% } else { %>
             <a href="login.jsp" class="btn">
                 <h3>Đăng nhập</h3>
@@ -355,24 +363,165 @@
                 <h3>Đăng ký</h3>
             </a>
             <% } %>
-            <a href="post-status.jsp" class="btn">
+            <a href="create-poster.jsp" class="btn">
                 <h3>Đăng tin</h3>
             </a>
         </div>
+        <style>
+            /* CSS cho hiệu ứng hover và làm nổi bật liên kết */
+            .user-name-link h3 {
+                display: inline-block;
+                cursor: pointer; /* Thêm con trỏ tay để người dùng biết đây là liên kết có thể click */
+                transition: color 0.3s ease, background-color 0.3s ease;
+            }
 
+            /* Thêm hiệu ứng hover */
+            .user-name-link:hover h3 {
+                color: #fff;
+                background-color: wheat; /* Màu nền khi hover */
+                padding: 5px 10px; /* Thêm khoảng cách để làm nổi bật */
+                border-radius: 5px; /* Bo góc */
+            }
 
-        <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()"
-           style="border: 1px solid #ccc; border-radius:100%;">
-            <img src="jpg/heart%20(1).png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng"
-                 class="cart-icon">
-            <div class="item-count">0</div>
-            <div class="mini-cart">
-                <h4>Bất động sản đã lưu</h4>
-                <ul id="cart-items"></ul>
-                <button id="go-to-cart" onclick="goToCart()">Đi tới xem bất động sản đã lưu</button>
+        </style>
+
+        <a href="javascript:void(0)" id="floating-cart" class="floating-cart" onclick="toggleMiniCart()"
+           style="border: 1px solid #ccc; border-radius: 50%; position: fixed; bottom: 20px; right: 20px; z-index: 999; padding: 10px; background-color: white;">
+            <img src="jpg/heart%20(1).png" style="width: 30px; height: 30px;" alt="Giỏ hàng" class="cart-icon">
+            <div class="item-count" id="item-count"
+                 style="position: absolute; top: 0; right: 0; background-color: red; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px;">
+                0
+            </div>
+            <div class="mini-cart" id="mini-cart"
+                 style="display: none; position: absolute; bottom: 50px; right: 0; width: 250px; background-color: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                <h4 style="margin-top: 0;">Bất động sản đã lưu</h4>
+                <ul id="cart-items" style="list-style-type: none; padding: 0; margin: 10px 0;">
+                    <!-- Mỗi sản phẩm có một form để xóa -->
+                    <li id="mini-cart-item-1">
+                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+
+                            <form action="removeMiniCartItem" method="POST" style="display: inline;">
+                                <input type="hidden" name="propertyId" value="1">
+                                <button type="submit" class="btn btn-sm btn-danger ml-3"
+                                        style="border: none; background-color: red; color: white; padding: 5px; border-radius: 4px; cursor: pointer;">
+                                    <i class="fas fa-trash-alt"></i> Xóa
+                                </button>
+                            </form>
+                        </div>
+                    </li>
+                    <!-- Thêm các mục khác tương tự với ID và giá trị khác nhau -->
+                </ul>
+                <button id="go-to-cart" onclick="goToCart()"
+                        style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer;">
+                    Đi tới xem bất động sản đã lưu
+                </button>
             </div>
         </a>
 
+        <script>
+            // Tự động tải số lượng sản phẩm trong giỏ hàng khi trang được tải
+            document.addEventListener("DOMContentLoaded", function () {
+                loadCartCount(); // Gọi hàm để tải số lượng mục trong giỏ hàng
+            });
+
+            // Toggle Mini Cart visibility
+            function toggleMiniCart() {
+                var miniCart = document.getElementById('mini-cart');
+                if (miniCart.style.display === 'none' || miniCart.style.display === '') {
+                    miniCart.style.display = 'block';
+                    loadCartItems(); // Load cart items khi mở mini-cart
+                } else {
+                    miniCart.style.display = 'none';
+                }
+            }
+
+            // Hàm tải số lượng sản phẩm trong giỏ hàng
+            function loadCartCount() {
+                fetch('http://localhost:8080/Batdongsan/getMiniCart', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            document.getElementById('item-count').innerText = data.itemCount;
+                        } else {
+                            document.getElementById('item-count').innerText = 0;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error loading cart count:', error);
+                        document.getElementById('item-count').innerText = 0;
+                    });
+            }
+
+            // Redirect to Cart Page
+            function goToCart() {
+                window.location.href = 'cart.jsp';  // Thay đổi nếu cần
+            }
+
+            // Load Cart Items via AJAX
+            function loadCartItems() {
+                fetch('http://localhost:8080/Batdongsan/getMiniCart', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        const cartItemsContainer = document.getElementById('cart-items');
+                        cartItemsContainer.innerHTML = '';
+
+                        if (data.success) {
+                            document.getElementById('item-count').innerText = data.itemCount;
+
+                            if (data.cartItems.length > 0) {
+                                data.cartItems.forEach(item => {
+                                    const li = document.createElement('li');
+                                    li.id = `cart-item-${item.propertyId}`;
+
+                                    li.innerHTML = `
+                            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                <img src="${item.imageUrl}" alt="${item.title}" class="cart-item-image" style="width: 50px; height: 50px; margin-right: 10px;">
+                                <div>
+                                    <h5>${item.title}</h5>
+                                    <p style="color:darkred">Giá: ${item.price} tỷ</p>
+                                    <p style="color:darkred">Diện tích: ${item.area} m²</p>
+                                    <p>Địa chỉ: ${item.address}</p>
+                                    <p>Số lượng: ${item.quantity}</p>
+                 <!-- Form xóa sản phẩm -->
+<form action="removeMiniCartItem" method="POST" style="display: inline;">
+    <input type="hidden" name="propertyId" value="${item.propertyId}">
+    <button type="submit" class="btn btn-sm btn-danger ml-3" style="border: none; background-color: red; color: white; padding: 5px; border-radius: 4px; cursor: pointer;">
+        <i class="fas fa-trash-alt"></i> Xóa
+    </button>
+</form>
+
+
+                                </div>
+                            </div>
+                        `;
+                                    cartItemsContainer.appendChild(li);
+                                });
+                            } else {
+                                cartItemsContainer.innerHTML = '<li>Giỏ hàng trống</li>';
+                            }
+                        } else {
+                            cartItemsContainer.innerHTML = `<li>${data.message}</li>`;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error loading cart items:', error);
+                        document.getElementById('cart-items').innerHTML = '<li>Đã xảy ra lỗi khi tải giỏ hàng.</li>';
+                    });
+            }
+
+        </script>
     </div>
     <div class="menu">
         <div class="header-bottom" style="height:60px;margin-top: 0">
@@ -520,20 +669,24 @@
         ⟲
     </button>
 </div>
+<%
+    // Lấy số lượng dự án từ request
+    Integer projectCount = (Integer) request.getAttribute("projectCount");
+    // Lấy danh sách các dự án từ request
+    List<PropertyProject> projects = (List<PropertyProject>) request.getAttribute("projects");
+%>
 
 <div class="container">
     <!-- Phần danh sách dự án -->
     <div class="project-list">
         <div class="project-header">
-            <H4>Dự án/ Dự án BDS toàn quốc</H4>
+            <h4>Dự án/ Dự án BDS toàn quốc</h4>
             <h2>Dự án toàn quốc</h2>
-            <span>Hiện đang có 5,710 dự án</span>
+            <p>Hiện có <strong><%= projectCount != null ? projectCount : 0 %></strong> bất động sản.</p>
         </div>
-
 
         <div id="project-container">
             <%
-                List<PropertyProject> projects = (List<PropertyProject>) request.getAttribute("projects");
                 if (projects != null && !projects.isEmpty()) {
                     for (PropertyProject project : projects) {
             %>
@@ -548,7 +701,7 @@
                 <div class="project-details">
                     <span class="project-title"><%= project.getTitle() %></span>
                     <p class="project-size"><%= project.getArea() %> ha</p>
-                    <p class="houses">1 căn hộ <i class="fas fa-house"></i></p>
+                    <p class="houses">1 căn hộ <i class="fas fa-house"></i></p>
                     <p class="project-location"><%= project.getAddress() %></p>
 
                     <%
@@ -570,12 +723,10 @@
                 }
             %>
         </div>
-
-
     </div>
 
     <div id="pagination">
-        <button id="prev" onclick="changePage(-1)"> Trước</button>
+        <button id="prev" onclick="changePage(-1)"> Trước</button>
         <span id="page-number">1</span>
         <button id="next" onclick="changePage(1)">Sau</button>
     </div>

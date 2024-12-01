@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet("/home-manager")
@@ -29,7 +30,8 @@ public class HomeManagerServlet extends HttpServlet {
         }
 
         // Lấy toàn bộ danh sách bất động sản từ DAO
-        PropertyDAO propertyDAO = new PropertyDAO();
+        PropertyDAO propertyDAO = null;
+        propertyDAO = new PropertyDAO();
         List<Property1> properties = null;
         try {
             properties = propertyDAO.getAllProperties();

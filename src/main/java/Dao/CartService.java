@@ -1,6 +1,8 @@
 package Dao;
 
 import java.sql.*;
+
+import DBcontext.Database;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -8,11 +10,8 @@ public class CartService {
 
     // Method to save cart to the database
     public boolean saveCartToDatabase(int userId, int cartId, JSONArray cartItems) {
-        String url = "jdbc:mysql://localhost:3306/webbds";
-        String dbUser = "root";
-        String dbPassword = "123456";
 
-        try (Connection conn = DriverManager.getConnection(url, dbUser, dbPassword)) {
+        try (Connection conn = Database.getConnection()) {
             // Start a transaction
             conn.setAutoCommit(false);
 

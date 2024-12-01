@@ -1,5 +1,6 @@
 package Dao;
 
+import DBcontext.Database;
 import Entity.Property1;
 import java.sql.*;
 import java.text.Normalizer;
@@ -32,7 +33,7 @@ public class PropertySearchDAO {
         String sql = "SELECT * FROM properties WHERE LOWER(REPLACE(title, 'đ', 'd')) LIKE ? AND LOWER(REPLACE(address, 'đ', 'd')) LIKE ?";
 
         // Kết nối đến cơ sở dữ liệu
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/webbds", "root", "123456");
+        try (Connection connection = Database.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             // Set giá trị cho tham số trong câu truy vấn (tìm kiếm theo tên sản phẩm)
