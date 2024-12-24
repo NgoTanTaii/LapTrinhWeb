@@ -40,7 +40,7 @@ public class RegisterServlet extends HttpServlet {
         try (Connection conn = Database.getConnection()) {
 
             // Kiểm tra tài khoản đã tồn tại chưa
-            String checkQuery = "SELECT COUNT(*) FROM users WHERE username =?";
+            String checkQuery = "SELECT COUNT(*) FROM users WHERE username = ?";
             PreparedStatement checkStmt = conn.prepareStatement(checkQuery);
             checkStmt.setString(1, username);
 

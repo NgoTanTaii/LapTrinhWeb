@@ -67,7 +67,7 @@ public class OrderDetailServlet extends HttpServlet {
                     int userId = rs.getInt("user_id");
                     Date orderDate = rs.getDate("order_date");
                     String username = rs.getString("username");
-                    order = new Order(orderId, userId,username, orderDate);
+                    order = new Order(orderId, orderDate, username, userId);
                 }
             }
         } catch (SQLException e) {

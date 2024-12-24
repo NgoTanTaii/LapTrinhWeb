@@ -12,7 +12,14 @@ public class User {
     public User(String username, String email, String password, String role, String status) {
     }
 
-    public User(String username, String password, String email) {
+    public User(int id, String username, String email, String role, String password, String status, String token) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.role = role;
+        this.password = password;
+        this.status = status;
+        this.token = token;
     }
 
     public void setStatus(String status) {

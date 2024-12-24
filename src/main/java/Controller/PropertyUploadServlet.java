@@ -55,7 +55,7 @@ public class PropertyUploadServlet extends HttpServlet {
         String status = request.getParameter("status");
         double area = Double.parseDouble(request.getParameter("area"));
         int posterId = Integer.parseInt(request.getParameter("poster_id"));
-
+        int available = 0;
         // Xử lý ảnh chính
         Part mainImagePart = request.getPart("file");
         String mainImageUrl = null;
@@ -74,7 +74,7 @@ public class PropertyUploadServlet extends HttpServlet {
         }
 
         // Tạo đối tượng Property1
-        Property1 property = new Property1(title, description, price, address, type, status, area, posterId, mainImageUrl);
+        Property1 property = new Property1(title, description, price, address, type, status, area, posterId, mainImageUrl, available);
 
         // Thêm bất động sản vào bảng properties và lấy property_id
         int propertyId = propertyDAO.insertProperty(property);

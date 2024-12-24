@@ -1,6 +1,5 @@
 package Controller;
 
-import DBcontext.Database;
 import Dao.PosterDAO;
 import Entity.Poster;
 import Service.CloudinaryService;
