@@ -15,6 +15,7 @@ public class Property1 {
     private int posterId;         // ID của người đăng
     private Timestamp createdAt;
     private String videoUrl;
+    private int available;
 
     // Constructor đầy đủ
     public Property1(int id, String title, double price, double area, String address, String type, String status, String imageUrl, String description, int posterId, Timestamp createdAt) {
@@ -98,14 +99,29 @@ public class Property1 {
         this.address = address;
         this.type = type;
         this.status = status;
+        this.area = area;
         this.imageUrl = mainImageUrl;
         this.posterId = posterId;
         this.videoUrl = videoUrl;
- 
+
+    }
+
+    public Property1(String title, String description, double price, String address, String type, String status, double area, int posterId, String mainImageUrl, int available) {
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.address = address;
+        this.type = type;
+        this.status = status;
+        this.area = area;
+        this.imageUrl = mainImageUrl;
+        this.posterId = posterId;
+        this.available = available;
+
+
     }
 
 
-    // Getter và Setter cho các trường
     public int getId() {
         return id;
     }
@@ -214,5 +230,11 @@ public class Property1 {
                 '}';
     }
 
+    public int getAvailable() {
+        return available;
+    }
 
+    public void setAvailable(int available) {
+        this.available = available;
+    }
 }

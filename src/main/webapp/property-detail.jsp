@@ -4,6 +4,8 @@
 <%@ page import="Entity.Poster" %>
 <%@ page import="Entity.Comment" %>
 <%@ page import="java.util.ArrayList" %>
+<!-- Thêm CKEditor từ CDN -->
+<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
 
 <%@ page import="Entity.Review" %>
 
@@ -677,17 +679,17 @@
             <style>
                 /* Sử dụng flexbox để căn chỉnh biểu tượng và chữ */
                 .info-item {
-                    display: flex;               /* Sử dụng flexbox */
-                    align-items: center;         /* Căn giữa theo chiều dọc */
-                    padding: -15px 0;              /* Khoảng cách giữa các dòng */
+                    display: flex; /* Sử dụng flexbox */
+                    align-items: center; /* Căn giữa theo chiều dọc */
+                    padding: -15px 0; /* Khoảng cách giữa các dòng */
                 }
 
                 .info-item i {
-                    margin-right: 10px;          /* Khoảng cách giữa biểu tượng và chữ */
+                    margin-right: 10px; /* Khoảng cách giữa biểu tượng và chữ */
                 }
 
                 .info-item span {
-                    font-size: 16px;             /* Cỡ chữ */
+                    font-size: 16px; /* Cỡ chữ */
                 }
             </style>
         </head>
@@ -740,11 +742,10 @@
 
         </p>
 
-            <%
-
-    VideoDAO videoDAO = new VideoDAO();
-    String videoUrl = videoDAO.getVideoUrlByPropertyId(propertyId);
-%>
+        <%
+            VideoDAO videoDAO = new VideoDAO();
+            String videoUrl = videoDAO.getVideoUrlByPropertyId(propertyId);
+        %>
 
         <div style="padding: 10px">
             <!-- Nút chia sẻ Facebook -->
@@ -778,7 +779,7 @@
                 </button>
             </form>
             <% } else { %>
-            <p>Chưa có video cho bất động sản này.</p>
+            <p style="padding-top: 10px">Chưa có video cho bất động sản này.</p>
             <% } %>
         </div>
 
@@ -787,7 +788,7 @@
         <%--        </p>--%>
 
 
-            <%
+        <%
             String message = (String) session.getAttribute("message");
             if (message != null) {
         %>
@@ -795,7 +796,7 @@
                 class="fas fa-info-circle"></i>
             <%= message %>
         </div>
-            <%
+        <%
                 // Optionally remove the message after displaying it
                 session.removeAttribute("message");
             }
@@ -817,15 +818,18 @@
         </form>
         <!-- Đánh giá sao -->
         <!-- Nút Xem Đánh Giá và Bình Luận -->
-        <button type="button" id="toggleReviewsBtn" onclick="toggleReviews()">Xem Đánh Giá và Bình Luận</button>
+        <button style="padding-top: 10px;" type="button" id="toggleReviewsBtn" onclick="toggleReviews()">Xem Đánh Giá và
+            Bình Luận
+        </button>
 
-        <!-- Phần Đánh Giá và Bình Luận (Ẩn ban đầu) -->
+
         <div id="reviewsSection" style="display:none;">
-            <h3>Đánh Giá và Bình Luận</h3>
-            <%
+            <h3 style="padding-top: 10px;">Đánh Giá và Bình Luận</h3>
 
+            <%
                 ReviewDAO reviewDAO = new ReviewDAO();
                 List<Review> reviews = reviewDAO.getReviewsByPropertyId(property.getId());
+
                 if (reviews != null && !reviews.isEmpty()) {
                     for (Review rev : reviews) {
             %>
@@ -835,13 +839,76 @@
                 </p>
                 <p><small><%= rev.getCreatedAt() %>
                 </small></p>
+
+                <!-- Hiển thị hình ảnh của đánh giá -->
+                <%
+                    List<String> imageUrls = reviewDAO.getImagesByReviewId(rev.getId());
+                    if (imageUrls != null && !imageUrls.isEmpty()) {
+                %>
+                <div class="review-images-container">
+                    <h4>Hình ảnh của đánh giá:</h4>
+                    <div class="image-gallery">
+                        <% for (String imageUrl : imageUrls) { %>
+                        <div class="image-item">
+                            <img src="<%= imageUrl %>" alt="Review Image" class="review-image">
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+                <style>
+                    .review-images-container {
+                        margin-top: 20px;
+                        padding: 15px;
+                        background-color: #f9f9f9;
+                        border-radius: 8px;
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    }
+
+                    .review-images-container h4 {
+                        font-size: 18px;
+                        margin-bottom: 10px;
+                    }
+
+                    .image-gallery {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                        gap: 15px;
+                        padding: 10px;
+                    }
+
+                    .image-item {
+                        background-color: #fff;
+                        border: 1px solid #ddd;
+                        border-radius: 8px;
+                        overflow: hidden;
+                        text-align: center;
+                    }
+
+                    .review-image {
+                        width: 100%;
+                        height: auto;
+                        object-fit: cover;
+                        border-radius: 5px;
+                        transition: transform 0.3s ease-in-out;
+                    }
+
+                    .review-image:hover {
+                        transform: scale(1.05);
+                    }
+
+                </style>
+                <%
+                } else {
+                %>
+                <p>Không có hình ảnh cho đánh giá này.</p>
+                <% } %>
+
                 <!-- Nút Xoá Đánh Giá -->
                 <form action="DeleteReviewServlet" method="post" style="display:inline;">
-                    <!-- Truyền reviewId và propertyId trong form -->
                     <input type="hidden" name="reviewId" value="<%= rev.getId() %>">
                     <input type="hidden" name="propertyId" value="<%= property.getId() %>">
-                    <button type="submit" onclick="return confirm('Bạn có chắc chắn muốn xóa đánh giá này không?')">Xoá
-                        Đánh Giá
+                    <button style="margin: 10px 10px" type="submit"
+                            onclick="return confirm('Bạn có chắc chắn muốn xóa đánh giá này không?')">Xoá Đánh Giá
                     </button>
                 </form>
             </div>
@@ -854,23 +921,36 @@
                 }
             %>
 
-            <!-- Form Đánh Giá mới -->
+            <!-- Phần thêm đánh giá -->
             <div class="rating">
                 <h4>Thêm Đánh Giá của Bạn</h4>
-                <form action="ReviewServlet" method="post">
+                <form action="ReviewServlet" method="post" enctype="multipart/form-data">
+                    <!-- Phần đánh giá sao -->
                     <div class="stars">
-                        <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
-                        <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
-                        <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
-                        <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
-                        <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+                        <input type="radio" id="star5" name="rating" value="5" required><label for="star5">★</label>
+                        <input type="radio" id="star4" name="rating" value="4" required><label for="star4">★</label>
+                        <input type="radio" id="star3" name="rating" value="3" required><label for="star3">★</label>
+                        <input type="radio" id="star2" name="rating" value="2" required><label for="star2">★</label>
+                        <input type="radio" id="star1" name="rating" value="1" required><label for="star1">★</label>
                     </div>
-                    <textarea name="review" placeholder="Viết bình luận của bạn..." rows="4" cols="50"></textarea><br>
+
+                    <!-- Phần bình luận -->
+                    <textarea name="review" id="review" placeholder="Viết bình luận của bạn..." rows="4" cols="50"
+                              required></textarea><br>
+
+                    <!-- Phần upload ảnh -->
+                    <div class="image-upload">
+                        <label for="images">Chọn ảnh (Bạn có thể chọn nhiều ảnh):</label><br>
+                        <input type="file" id="images" name="images" accept="image/*" multiple><br><br>
+                    </div>
+
                     <input type="hidden" name="propertyId" value="<%= property.getId() %>">
-                    <button type="submit">Gửi Đánh Giá</button>
+                    <button style="margin-top:10px ;" type="submit">Gửi Đánh Giá</button>
                 </form>
             </div>
+
         </div>
+
 
         <script>
             // Hàm để ẩn/hiện phần đánh giá
@@ -1136,7 +1216,7 @@
 %>
 
 <div class="related-properties" style="width:63%">
-    <h3>Các sản phẩm liên quan</h3>
+    <h3>Các bất động sản liên quan</h3>
 
     <div class="related-properties-container" id="relatedProductsContainer">
         <%
@@ -1149,17 +1229,46 @@
                style="text-decoration: none; color: inherit;">
 
                 <img src="<%= relatedProperty.getImageUrl() %>" alt="Sản phẩm <%= relatedProperty.getTitle() %>">
-                <h4><%= relatedProperty.getTitle() %>
+                <h4 class="property-title"><%= relatedProperty.getTitle() %>
                 </h4>
+                <style>
+                    .property-title {
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        width: 100%;
+                        display: block;
+                        font-size: 16px;
+                        line-height: 1.5;
+                    }
+
+                </style>
                 <p style="display: flex; justify-content: space-between; color: red;">
-                    <span>Giá: <%= relatedProperty.getPrice() %> tỷ</span>
-                    <span>Diện tích: <%= relatedProperty.getArea() %> m²</span>
+                    <span style="font-size: 14px">Giá: <%= relatedProperty.getPrice() %> tỷ</span>
+                    <span style="font-size: 14px">Diện tích: <%= relatedProperty.getArea() %> m²</span>
                 </p>
                 <p style="display: flex; align-items: center;">
-                    <img src="jpg/location.png" alt="Location Icon" class="location-icon"
-                         style="width: 16px; height: 16px; margin-right: 5px;">
-                    Địa chỉ: <%= relatedProperty.getAddress() %>
+                <p class="location" style="display: flex; align-items: center;">
+                    <!-- Thay thế hình ảnh bằng biểu tượng Font Awesome -->
+                    <i class="fas fa-map-marker-alt" style="font-size: 16px; margin-right: 5px;"></i>
+
+                    <%
+                        if (address != null && !address.isEmpty()) {
+                            String[] words = address.split("\\s+");
+                            int start = Math.max(words.length - 4, 0);
+                            StringBuilder lastFourWords = new StringBuilder();
+                            for (int i = start; i < words.length; i++) {
+                                if (i > start) {
+                                    lastFourWords.append(" ");  // Chỉ thêm khoảng trắng giữa các từ
+                                }
+                                lastFourWords.append(words[i]);
+                            }
+                            out.print(lastFourWords.toString());
+                        }
+                    %>
                 </p>
+
+
             </a>
         </div>
         <%
@@ -1211,7 +1320,7 @@
 %>
 
 <div class="related-properties" style="width:63%">
-    <h3>Các sản phẩm bạn có thể sẽ quan tâm</h3>
+    <h3>Các bất động sản bạn có thể sẽ quan tâm</h3>
     <div class="related-properties-container" id="relatedProductsContainer1">
 
         <%
@@ -1221,16 +1330,49 @@
             <a href="property-detail.jsp?id=<%= property1.getId() %>" style="text-decoration: none; color: inherit;">
 
                 <img src="<%= property1.getImageUrl() %>" alt="Sản phẩm <%= property1.getTitle() %>">
-                <h4><%= property1.getTitle() %>
+                <h4 class="property-title"><%=property1.getTitle() %>
                 </h4>
+                <style>
+                    .property-title {
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        width: 100%;
+                        display: block;
+                        font-size: 16px;
+                        line-height: 1.5;
+                    }
+
+                </style>
                 <p style="display: flex; justify-content: space-between; color: red;">
-                    <span>Giá: <%= property1.getPrice() %> tỷ</span>
-                    <span>Diện tích: <%= property1.getArea() %> m²</span>
+                    <span style="font-size: 14px">Giá: <%= property1.getPrice() %> tỷ</span>
+                    <span style="font-size: 14px">Diện tích: <%= property1.getArea() %> m²</span>
                 </p>
                 <p style="display: flex; align-items: center;">
-                    <img src="jpg/location.png" alt="Location Icon" class="location-icon"
-                         style="width: 16px; height: 16px; margin-right: 5px;">
-                    Địa chỉ: <%= property1.getAddress() %>
+                    <i class="fas fa-map-marker-alt" style="font-size: 16px; margin-right: 5px;"></i>
+
+                    <%
+
+                        if (address != null && !address.isEmpty()) {
+                            // Tách địa chỉ thành các từ
+                            String[] words = address.split("\\s+");
+
+                            // Nếu địa chỉ có ít hơn 4 từ, lấy toàn bộ
+                            int start = Math.max(words.length - 4, 0);
+
+                            // Tạo một chuỗi để chứa 4 từ cuối
+                            StringBuilder lastFourWords = new StringBuilder();
+                            for (int i = start; i < words.length; i++) {
+                                if (i > start) {
+                                    lastFourWords.append(" ");  // Chỉ thêm khoảng trắng giữa các từ
+                                }
+                                lastFourWords.append(words[i]);
+                            }
+
+                            // In ra chuỗi địa chỉ đã xử lý
+                            out.print(lastFourWords.toString());
+                        }
+                    %>
                 </p>
             </a>
         </div>
@@ -1245,16 +1387,49 @@
             <a href="property-detail.jsp?id=<%= property2.getId() %>" style="text-decoration: none; color: inherit;">
 
                 <img src="<%= property2.getImageUrl() %>" alt="Sản phẩm <%= property2.getTitle() %>">
-                <h4><%= property2.getTitle() %>
+                <h4 class="property-title"><%=property2.getTitle() %>
                 </h4>
+                <style>
+                    .property-title {
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        width: 100%;
+                        display: block;
+                        font-size: 16px;
+                        line-height: 1.5;
+                    }
+
+                </style>
                 <p style="display: flex; justify-content: space-between; color: red;">
-                    <span>Giá: <%= property2.getPrice() %> tỷ</span>
-                    <span>Diện tích: <%= property2.getArea() %> m²</span>
+                    <span style="font-size: 14px">Giá: <%= property2.getPrice() %> tỷ</span>
+                    <span style="font-size: 14px">Diện tích: <%= property2.getArea() %> m²</span>
                 </p>
                 <p style="display: flex; align-items: center;">
-                    <img src="jpg/location.png" alt="Location Icon" class="location-icon"
-                         style="width: 16px; height: 16px; margin-right: 5px;">
-                    Địa chỉ: <%= property2.getAddress() %>
+                    <i class="fas fa-map-marker-alt" style="font-size: 16px; margin-right: 5px;"></i>
+
+                    <%
+
+                        if (address != null && !address.isEmpty()) {
+                            // Tách địa chỉ thành các từ
+                            String[] words = address.split("\\s+");
+
+                            // Nếu địa chỉ có ít hơn 4 từ, lấy toàn bộ
+                            int start = Math.max(words.length - 4, 0);
+
+                            // Tạo một chuỗi để chứa 4 từ cuối
+                            StringBuilder lastFourWords = new StringBuilder();
+                            for (int i = start; i < words.length; i++) {
+                                if (i > start) {
+                                    lastFourWords.append(" ");  // Chỉ thêm khoảng trắng giữa các từ
+                                }
+                                lastFourWords.append(words[i]);
+                            }
+
+                            // In ra chuỗi địa chỉ đã xử lý
+                            out.print(lastFourWords.toString());
+                        }
+                    %>
                 </p>
             </a>
 

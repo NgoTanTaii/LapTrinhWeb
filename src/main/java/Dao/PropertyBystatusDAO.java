@@ -43,6 +43,7 @@ public class PropertyBystatusDAO {
                 property.setImageUrl(resultSet.getString("image_url"));
                 property.setAddress(resultSet.getString("address"));
                 property.setType(resultSet.getString("type"));
+                property.setAvailable(resultSet.getInt("available"));
 
                 properties.add(property);  // Thêm bất động sản vào danh sách
             }
@@ -51,6 +52,7 @@ public class PropertyBystatusDAO {
         }
         return properties;  // Trả về danh sách bất động sản
     }
+
     public int countPropertiesByStatus(String status) {
         int count = 0;
         String sql = "SELECT COUNT(*) FROM properties WHERE status like ?";  // Truy vấn SQL để đếm số lượng bất động sản

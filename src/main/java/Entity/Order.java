@@ -7,12 +7,21 @@ public class Order {
     private int userId;
     private String userName;
     private Date orderDate;
+    private String status;  // Thêm trường status
 
-    public Order(int orderId, int userId,String userName, Date orderDate) {
+    public Order(int orderId, int userId, String userName, Date orderDate, String status) {
         this.orderId = orderId;
         this.userId = userId;
         this.userName = userName;
         this.orderDate = orderDate;
+        this.status = status;  // Khởi tạo status
+    }
+
+    public Order(int orderId, Date orderDate, String userName, int userId) {
+        this.orderId = orderId;
+        this.orderDate = orderDate;
+        this.userName = userName;
+        this.userId = userId;
     }
 
     public int getOrderId() {
@@ -42,7 +51,17 @@ public class Order {
     public String getUserName() {
         return userName;
     }
+
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    // Getter và Setter cho status
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

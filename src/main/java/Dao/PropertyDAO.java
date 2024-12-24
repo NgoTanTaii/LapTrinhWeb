@@ -77,17 +77,37 @@ public class PropertyDAO {
         return null;
     }
 
-    public void deleteProperty(int propertyId) {
-        String sql = "DELETE FROM properties WHERE property_id = ?";
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, propertyId);
-            stmt.executeUpdate();
+
+    // Trong PropertyDAO.java
+
+    public void deleteProperty(int id) {
+        String deleteOrderItemsSql = "DELETE FROM orderitems WHERE property_id = ?";
+        String deletePropertySql = "DELETE FROM properties WHERE property_id = ?";
+
+        try (Connection conn = Database.getConnection()) {
+            conn.setAutoCommit(false); // Bắt đầu giao dịch
+
+            try (PreparedStatement psOrderItems = conn.prepareStatement(deleteOrderItemsSql)) {
+                psOrderItems.setInt(1, id);
+                psOrderItems.executeUpdate();
+            }
+
+            try (PreparedStatement psProperty = conn.prepareStatement(deletePropertySql)) {
+                psProperty.setInt(1, id);
+                psProperty.executeUpdate();
+            }
+
+            conn.commit(); // Cam kết giao dịch
         } catch (SQLException e) {
             e.printStackTrace();
+            // Bạn nên rollback giao dịch nếu có lỗi xảy ra
+            try (Connection conn = Database.getConnection()) {
+                conn.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
     }
-
 
     public List<Property1> getPropertiesByPage(int start, int total) {
         List<Property1> list = new ArrayList<>();
@@ -266,17 +286,6 @@ public class PropertyDAO {
         return thumbnails;
     }
 
-    public void deleteProperty(String id) {
-        String sql = "DELETE FROM properties WHERE property_id = ?\n"; // Thay "properties" bằng tên bảng thực tế
-
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, id);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public boolean createProperty(Property1 property) {
         String sql = "INSERT INTO properties (title, price, address, area, image_url, description, type, status, poster_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -498,7 +507,7 @@ public class PropertyDAO {
 //    }
 
     public int insertProperty(Property1 property) {
-        String sql = "INSERT INTO properties (title, description, price, address, type, status, image_url, area, poster_id, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
+        String sql = "INSERT INTO properties (title, description, price, address, type, status, image_url, area, poster_id, created_at, updated_at,available) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(),?)";
 
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -512,6 +521,7 @@ public class PropertyDAO {
             stmt.setString(7, property.getImageUrl()); // Ảnh chính
             stmt.setDouble(8, property.getArea());
             stmt.setInt(9, property.getPosterId());
+            stmt.setInt(10, property.getAvailable());
 
             int affectedRows = stmt.executeUpdate();
 
@@ -658,7 +668,68 @@ public class PropertyDAO {
         return topProperties;
     }
 
+    public int getReviewCountByPropertyId(int propertyId) {
+        int count = 0;
+        try {
+            // Truy vấn SQL để đếm số lượng đánh giá cho bất động sản theo propertyId
+            String sql = "SELECT COUNT(*) FROM Reviews WHERE property_id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, propertyId);  // Thiết lập giá trị propertyId vào câu truy vấn
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                count = rs.getInt(1);  // Lấy số lượng đánh giá từ kết quả truy vấn
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+
+    public int getCommentCountByPropertyId(int propertyId) {
+        int count = 0;
+        try {
+            // Truy vấn SQL để đếm số lượng bình luận cho bất động sản theo propertyId
+            String sql = "SELECT COUNT(*) FROM Comments WHERE property_id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, propertyId);  // Thiết lập giá trị propertyId vào câu truy vấn
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                count = rs.getInt(1);  // Lấy số lượng bình luận từ kết quả truy vấn
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public List<Property1> getPropertyUnavailable() throws SQLException {
+        List<Property1> property1s = new ArrayList<>();
+        Connection connection = Database.getConnection();
+        String sql = "SELECT * FROM properties WHERE available = 0";
+        PreparedStatement ps = connection.prepareStatement(sql);
+
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Property1 property = new Property1();
+            property.setId(rs.getInt("property_id"));
+            property.setTitle(rs.getString("title"));
+            property.setPrice(rs.getDouble("price"));
+            property.setArea(rs.getDouble("area"));
+            property.setAddress(rs.getString("address"));
+            property.setStatus(rs.getString("status"));
+            property.setImageUrl(rs.getString("image_url"));
+            property.setCreatedAt(rs.getTimestamp("created_at"));
+            property1s.add(property);
+
+        }
+        return property1s;
+    }
 }
+
+
 
 
 

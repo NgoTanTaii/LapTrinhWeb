@@ -6,6 +6,12 @@ import DBcontext.Database;
 import java.sql.*;
 
 public class UserDAO {
+    private Connection getConnection() throws SQLException {
+
+
+        return Database.getConnection();
+    }
+
     public void updateUserRole(int userId, String role) {
         String sql = "UPDATE users SET role = ? WHERE id = ?";
         try (Connection conn = getConnection();
@@ -62,13 +68,6 @@ public class UserDAO {
     }
 
 
-    private Connection getConnection() throws SQLException {
-
-
-        return Database.getConnection();
-    }
-
-
     public void addUser(String username, String password, String email, String token, String status, String role) {
         String query = "INSERT INTO users (username, password, email, token, status, role) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -100,6 +99,5 @@ public class UserDAO {
         }
         return false;
     }
-
 
 }

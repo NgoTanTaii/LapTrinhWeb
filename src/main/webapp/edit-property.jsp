@@ -119,6 +119,24 @@
             background-color: #007bff;
             color: white;
         }
+
+        #status, #type {
+            font-size: 18px; /* Tăng kích thước chữ */
+            padding: 10px; /* Tăng không gian bên trong */
+            width: 100%; /* Để select chiếm hết chiều rộng của phần tử cha */
+            height: 40px; /* Tăng chiều cao của select */
+            border: 1px solid #ccc; /* Đường viền */
+            border-radius: 4px; /* Bo tròn các góc */
+            background-color: #f8f8f8; /* Màu nền */
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
+
+        /* Tăng kích thước font cho các option */
+        #status option, #type option {
+            font-size: 18px; /* Tăng kích thước chữ trong các tùy chọn */
+        }
+
     </style>
 </head>
 <body>
@@ -160,12 +178,24 @@
         <label for="description">Mô tả:</label>
         <textarea id="description" name="description" required><%= property.getDescription() %></textarea>
 
-        <label for="type">Loại sản phẩm:</label>
-        <input type="text" id="type" name="type" value="<%= property.getType() %>" required>
+        <label for="type">Loại:</label>
+        <select name="type" id="type" required>
+            <option>Nhà ở</option>
+            <option>Chung cư</option>
+            <option>Biệt thự</option>
+            <option>Nhà phố</option>
+            <option>Căn hộ dịch vụ</option>
+            <option>Nhà mặt phố</option>
+            <option>Căn hộ cao cấp</option>
+            <option>Nhà trọ cho thuê</option> <!-- Sửa value bị trùng -->
+        </select>
 
-        <label for="status">Trạng thái:</label>
-        <input type="text" id="status" name="status" value="<%= property.getStatus() %>" required>
-
+        <label for="status">Tình trạng:</label>
+        <select name="status" id="status" required>
+            <option value="1">Nhà đất bán</option>
+            <option value="2">Nhà đất cho thuê</option>
+            <option value="3">Dự án</option>
+        </select>
         <button type="submit">Cập nhật Bất Động Sản</button>
     </form>
     <a href="javascript:void(0);" class="cancel-link" onclick="goBack()">Hủy</a>

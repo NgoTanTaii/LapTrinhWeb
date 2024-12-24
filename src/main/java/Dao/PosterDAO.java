@@ -75,11 +75,13 @@ public class PosterDAO {
         return false;
     }
 
-//    public static void main(String[] args) {
-//        PosterDAO posterDAO = new PosterDAO();
-//        Poster poster = posterDAO.getPosterByPropertyId(1);
-//        System.out.println(poster);
-//        Poster poster2 = new Poster("tao","may","123456789","1",2);
-//        System.out.println(posterDAO.addPoster(poster));
-//    }
+    public void deletePoster(int posterId, int propertyId) throws SQLException {
+        String query = "DELETE FROM posters WHERE poster_id = ?  AND property_id = ?";
+        try (Connection connection = getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, posterId);
+            ps.setInt(2, propertyId);
+            ps.executeUpdate();
+        }
+    }
 }

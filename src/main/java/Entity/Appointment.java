@@ -2,6 +2,7 @@ package Entity;
 
 public class Appointment {
     private int id;
+    private int orderId;
     private String address;
     private String phone;
     private String appointmentDate;
@@ -14,6 +15,18 @@ public class Appointment {
     public Appointment(int id, String address, String phone, String appointmentDate, String appointmentTime,
                        int propertyCount, String createdAt, String username) {
         this.id = id;
+        this.address = address;
+        this.phone = phone;
+        this.appointmentDate = appointmentDate;
+        this.appointmentTime = appointmentTime;
+        this.propertyCount = propertyCount;
+        this.createdAt = createdAt;
+        this.username = username;
+    }
+
+    public Appointment(int id, int orderId, String address, String phone, String appointmentDate, String appointmentTime, int propertyCount, String createdAt, String username) {
+        this.id = id;
+        this.orderId = orderId;
         this.address = address;
         this.phone = phone;
         this.appointmentDate = appointmentDate;
@@ -88,18 +101,13 @@ public class Appointment {
         this.username = username;
     }
 
-    // Override toString for better logging
-    @Override
-    public String toString() {
-        return "Appointment{" +
-                "id=" + id +
-                ", address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
-                ", appointmentDate='" + appointmentDate + '\'' +
-                ", appointmentTime='" + appointmentTime + '\'' +
-                ", propertyCount=" + propertyCount +
-                ", createdAt='" + createdAt + '\'' +
-                ", username='" + username + '\'' +
-                '}';
+    public int getOrderId() {
+        return orderId;
     }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+
 }

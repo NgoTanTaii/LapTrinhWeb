@@ -35,7 +35,7 @@ public class OrderListServlet extends HttpServlet {
                     String username = rs.getString("username");
                     Date date = rs.getDate("order_date");
                     // Add order with only orderId and userId
-                    orders.add(new Order(orderId, userId,username, date));
+                    orders.add(new Order(orderId, date, username, userId));
                 }
             }
         } catch (SQLException e) {

@@ -27,7 +27,9 @@ public class Poster {
 
     }
 
+    public Poster() {
 
+    }
 
 
     public String getName() {
@@ -81,10 +83,12 @@ public class Poster {
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }
+
     public int getUserId() {
         return userId;
 
     }
+
     public void setUserId(int userId) {
         this.userId = userId;
     }

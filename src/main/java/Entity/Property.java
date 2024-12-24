@@ -8,9 +8,9 @@ public class Property {
     private double area;
     private String imageUrl;
     private String status;
+    private int available;
 
-
-    public Property(int id, String title, String address, double price, double area, String imageUrl,String status) {
+    public Property(int id, String title, String address, double price, double area, String imageUrl, String status, int available) {
         this.id = id;
         this.title = title;
         this.address = address;
@@ -18,6 +18,7 @@ public class Property {
         this.area = area;
         this.imageUrl = imageUrl;
         this.status = status;
+        this.available = available;
     }
 
     // Getter và Setter
@@ -64,14 +65,25 @@ public class Property {
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
+
     public String getStatus() {
         return status;
     }
+
     public void setStatus(String status) {
         this.status = status;
     }
 
+
+    public int getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(int available) {
+        this.available = available;
+    }
 }
