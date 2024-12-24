@@ -8,8 +8,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.UUID;
 
-@WebServlet("/addUser")
+@WebServlet("/AddUserServlet")
 public class AddUserServlet extends HttpServlet {
     private UserDAO userDAO;
 
@@ -22,62 +25,67 @@ public class AddUserServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         if ("create".equals(action)) {
-            String username = request.getParameter("username");
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            String role = request.getParameter("role");
-            String status = request.getParameter("status");
-            System.out.println(username);
-            System.out.println(email);
-            System.out.println(password);
-            System.out.println(role);
-            System.out.println(status);
-
-            String token = null;
-
-            // Kiểm tra dữ liệu đầu vào
-            if (username == null || username.isEmpty()) {
-                request.setAttribute("error", "Tên người dùng không được để trống");
-                request.getRequestDispatcher("add-user.jsp").forward(request, response);
-                return;
-            }
-
-            if (email == null || email.isEmpty()) {
-                request.setAttribute("error", "Email không được để trống");
-                request.getRequestDispatcher("add-user.jsp").forward(request, response);
-                return;
-            }
-
-            if (password == null || password.isEmpty()) {
-                request.setAttribute("error", "Mật khẩu không được để trống");
-                request.getRequestDispatcher("users").forward(request, response);
-                return;
-            }
-
-            // Kiểm tra nếu người dùng đã tồn tại
-            try {
-                boolean userCount = userDAO.checkUserExists(username);
-                if (userCount) {
-                    request.setAttribute("error", "Tên người dùng đã tồn tại");
-                    request.getRequestDispatcher("users").forward(request, response);
-                    return;
-                }
-
-
-                request.setAttribute("success", "Thêm người dùng thành công");
-                request.getRequestDispatcher("users").forward(request, response);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                request.setAttribute("error", "Có lỗi xảy ra khi thêm người dùng");
-                request.getRequestDispatcher("users").forward(request, response);
-            }
+            createUser(request, response);
         }
     }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+    private void createUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String username = request.getParameter("username");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String role = request.getParameter("role");
+        String status = request.getParameter("status");
+
+        // Tạo token duy nhất cho người dùng mới
+        String token = UUID.randomUUID().toString();
+
+        // Kiểm tra dữ liệu đầu vào
+        if (username == null || username.isEmpty()) {
+            request.setAttribute("error", "Tên người dùng không được để trống");
+            request.getRequestDispatcher("add-user.jsp").forward(request, response);
+            return;
+        }
+
+        if (email == null || email.isEmpty()) {
+            request.setAttribute("error", "Email không được để trống");
+            request.getRequestDispatcher("add-user.jsp").forward(request, response);
+            return;
+        }
+
+        if (password == null || password.isEmpty()) {
+            request.setAttribute("error", "Mật khẩu không được để trống");
+            request.getRequestDispatcher("users").forward(request, response);
+            return;
+        }
+
+        // Kiểm tra nếu người dùng đã tồn tại
+        try {
+            boolean userCount = userDAO.checkUserExists(username);
+            if (userCount) {
+                request.setAttribute("error", "Tên người dùng đã tồn tại");
+                request.getRequestDispatcher("users").forward(request, response);
+                return;
+            }
+
+            // Thêm người dùng vào cơ sở dữ liệu
+            userDAO.addUser(username, password, email, token, status, role);
+            request.setAttribute("success", "Thêm người dùng thành công");
+            request.getRequestDispatcher("users").forward(request, response);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("error", "Có lỗi xảy ra khi thêm người dùng");
+            request.getRequestDispatcher("users").forward(request, response);
+        }
+
+
+        // Thêm người dùng vào cơ sở dữ liệu
+        userDAO.addUser(username, password, email, token, status, role);
+        request.setAttribute("success", "Thêm người dùng thành công");
+        request.getRequestDispatcher("users").forward(request, response);
+
 
     }
+
+
 }

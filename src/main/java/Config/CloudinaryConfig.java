@@ -1,8 +1,6 @@
 package Config;
 
 
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
 
 public class CloudinaryConfig {
 

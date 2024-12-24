@@ -67,7 +67,7 @@ public class LoginWithGoogleServlet extends HttpServlet {
                     String role = "user"; // Default role for new users
 
                     // Add new user to the database
-                    userDAO.addUser(name, password, email, token, status, role);
+                    userDAO.addUser( name, password, email, token, status, role);
 
                     // Store user info in session after adding to the database
                     request.getSession().setAttribute("username", name);

@@ -78,7 +78,7 @@
 
     <a href="user-posts.jsp?userId=<%= userId %>" class="btn">Quản lý bất động sản đã đăng (<%= numProperties %>
         bds) </a>
-    <a href="view-userOder.jsp?userId=<%= userId %>" class="btn">Xem những bất động sản đã đặt (<%= numProperties %>
+    <a href="user-posts.jsp?userId=<%= userId %>" class="btn">Xem những bất động sản đã đặt (<%= numProperties %>
         bds) </a>
 
     <a href="change-password.jsp" class="btn">Đổi mật khẩu</a>

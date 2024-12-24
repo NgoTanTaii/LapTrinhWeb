@@ -12,7 +12,7 @@
 //import java.util.ArrayList;
 //import java.util.List;
 //
-//@WebServlet("/filter")
+//@WebServlet("/filterProperties")
 //public class PropertyFilterServlet extends HttpServlet {
 //
 //    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -20,16 +20,38 @@
 //        String areaRange = request.getParameter("areaRange");
 //
 //        PropertyCityDAO propertyDAO = new PropertyCityDAO();
+//        List<Property1> properties = new ArrayList<>();
 //
-//        // Gọi phương thức DAO để lọc bất động sản theo các khoảng giá và diện tích
-//        List<Property1> filteredProperties = propertyDAO.filterProperties(priceRange, areaRange);
+//        // Lọc theo khoảng giá nếu có
+//        if (priceRange != null && !priceRange.isEmpty()) {
+//            properties = propertyDAO.filterPropertiesByPrice(priceRange);
+//        }
+//        // Lọc theo diện tích nếu có
+//        else if (areaRange != null && !areaRange.isEmpty()) {
+//            properties = propertyDAO.filterPropertiesByArea(areaRange);
+//        }
+//        // Trả về HTML động
+//        StringBuilder propertiesHtml = new StringBuilder();
 //
-//        // Truyền dữ liệu đã lọc vào request
-//        request.setAttribute("properties", filteredProperties);
+//        if (properties != null && !properties.isEmpty()) {
+//            for (Property1 property : properties) {
+//                propertiesHtml.append("<div class='property-container' data-price='")
+//                        .append(property.getPrice()).append("' data-area='").append(property.getArea()).append("'>")
+//                        .append("<img src='").append(property.getImageUrl()).append("' alt='Hình ảnh bất động sản' class='property-image'>")
+//                        .append("<div class='property-details'>")
+//                        .append("<h2 class='property-title'><i class='fas fa-building'></i>").append(property.getTitle()).append("</h2>")
+//                        .append("<p class='property-price'><i class='fas fa-dollar-sign'></i>").append(property.getPrice()).append(" tỷ</p>")
+//                        .append("<p class='property-area'><i class='fas fa-ruler-combined'></i>").append(property.getArea()).append(" m²</p>")
+//                        .append("<p class='property-address'><i class='fas fa-map-marker-alt'></i>").append(property.getAddress()).append("</p>")
+//                        .append("<p class='property-description'><i class='fas fa-info-circle'></i>").append(property.getDescription()).append("</p>")
+//                        .append("</div></div>");
+//            }
+//        } else {
+//            propertiesHtml.append("<p>Không có bất động sản nào phù hợp với tiêu chí lọc.</p>");
+//        }
 //
-//        // Chuyển tiếp đến JSP để hiển thị kết quả
-//        RequestDispatcher dispatcher = request.getRequestDispatcher("property-list.jsp");
-//        dispatcher.forward(request, response);
+//        // Trả về HTML hoặc JSON
+//        response.setContentType("application/json");
+//        response.getWriter().write("{\"propertiesHtml\": \"" + propertiesHtml.toString() + "\"}");
 //    }
 //}
-//

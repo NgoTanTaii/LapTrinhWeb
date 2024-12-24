@@ -1,8 +1,6 @@
 package Controller;
 
-import Dao.PosterDAO;
 import Dao.PropertyDAO;
-import Entity.Poster;
 import Entity.Property1;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,7 +9,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 @WebServlet("/properties")
 public class DeletePropertyServlet extends HttpServlet {
@@ -20,15 +17,13 @@ public class DeletePropertyServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         PropertyDAO propertyDAO = new PropertyDAO();
-        PosterDAO posterDAO = new PosterDAO();
+
         if ("delete".equals(action)) {
             String id = request.getParameter("id");
 
             if (id != null && !id.isEmpty()) {
                 try {
                     propertyDAO.deleteProperty(Integer.parseInt(id)); // Xóa bất động sản
-
-
                 } catch (NumberFormatException e) {
                     // Xử lý lỗi khi id không phải là một số
                     request.setAttribute("errorMessage", "ID không hợp lệ.");
