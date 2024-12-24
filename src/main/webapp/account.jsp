@@ -11,6 +11,7 @@
 <head>
     <style>
         body {
+            background-color: wheat;
             font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
@@ -75,7 +76,10 @@
         <i class="fas fa-bell"></i> Thông báo về bds
     </a>
 
-    <a href="user-posts.jsp?userId=<%= userId %>" class="btn">Quản lý bất động sản đã đăng (<%= numProperties %>  bds) </a>
+    <a href="user-posts.jsp?userId=<%= userId %>" class="btn">Quản lý bất động sản đã đăng (<%= numProperties %>
+        bds) </a>
+    <a href="view-userOder.jsp?userId=<%= userId %>" class="btn">Xem những bất động sản đã đặt (<%= numProperties %>
+        bds) </a>
 
     <a href="change-password.jsp" class="btn">Đổi mật khẩu</a>
     <a href="welcome" class="btn">Quay trở lại trang chính</a>

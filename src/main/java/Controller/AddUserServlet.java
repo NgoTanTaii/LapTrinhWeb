@@ -27,8 +27,12 @@ public class AddUserServlet extends HttpServlet {
             String password = request.getParameter("password");
             String role = request.getParameter("role");
             String status = request.getParameter("status");
+            System.out.println(username);
+            System.out.println(email);
+            System.out.println(password);
+            System.out.println(role);
+            System.out.println(status);
 
-            // Tạo token ban đầu bằng null
             String token = null;
 
             // Kiểm tra dữ liệu đầu vào
@@ -69,5 +73,11 @@ public class AddUserServlet extends HttpServlet {
                 request.getRequestDispatcher("users").forward(request, response);
             }
         }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doGet(req, resp);
+
     }
 }
