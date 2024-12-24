@@ -12,6 +12,7 @@ public class CloudinaryConfig {
                 "cloud_name", "dg0f7bdho", // Thay thế bằng Cloud Name của bạn
                 "api_key", "551574467338612", // Thay thế bằng API Key của bạn
                 "api_secret", "c_u8F_nzao8gzflLQtx9lvOnsEw" // Thay thế bằng API Secret của bạn
+
         ));
     }
 }
