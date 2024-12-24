@@ -9,62 +9,107 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4; /* Màu nền */
-            color: #333; /* Màu chữ */
+            background-color: #f2f2f2; /* Màu nền nhẹ nhàng */
+            color: #333; /* Màu chữ tối */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Chiếm hết chiều cao màn hình */
         }
 
         .register-form-container {
-            max-width: 400px;
+            max-width: 500px;
             margin: auto;
-            padding: 20px;
-            background-color: white; /* Nền trắng cho form */
+            padding: 30px;
+            border: 1px solid #ccc;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background: gainsboro;
+        }
+
+        .register-form {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fff;
+            width: 80%;
+            margin: auto;
         }
 
         .register-form h2 {
             text-align: center;
             margin-bottom: 20px;
-
+            font-size: 24px;
+            color: #444; /* Màu chữ cho tiêu đề */
         }
 
         .register-form label {
+            display: block;
             margin-bottom: 5px;
-            color: #555; /* Màu chữ cho nhãn */
+            font-size: 14px;
+            color: #555; /* Màu chữ nhãn */
         }
 
         .register-form input {
-            padding: 10px;
-            margin-bottom: 15px;
+            width: 90%;
+            padding: 12px;
+            margin-bottom: 18px;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 16px;
-            width: 280px;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s ease;
+        }
+
+        .register-form input:focus {
+            border-color: #ff5722; /* Đổi màu viền khi focus */
+            outline: none;
         }
 
         .btn.submit-btn {
-            padding: 10px;
-            border-radius: 4px;
-            cursor: pointer;
+            width: 100%;
+            padding: 14px;
             font-size: 16px;
-            background-color: #ff5722; /* Màu nền nút */
-            color: white; /* Màu chữ nút */
-            border: none; /* Không viền */
-            width: 100%; /* Nút rộng 100% */
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
         .btn.submit-btn:hover {
-            background-color: #e64a19; /* Màu nút khi hover */
+            background-color: #e64a19; /* Màu nền khi hover */
         }
 
         p {
+
             text-align: center;
             margin-top: 15px;
+            font-size: 14px;
+            color: #666;
         }
 
+        p a {
+            color: red;
+            text-decoration: none;
+            font-weight: bold;
+        }
 
-        a:hover {
+        p a:hover {
             text-decoration: underline; /* Gạch chân khi hover */
+        }
+
+        /* Thông báo lỗi */
+        .error-message {
+            color: red;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 15px;
         }
     </style>
 </head>
@@ -93,7 +138,8 @@
             String errorMessage = (String) request.getAttribute("errorMessage");
             if (errorMessage != null) {
         %>
-        <p style="color: red; text-align: center;"><%= errorMessage %></p>
+        <p class="error-message"><%= errorMessage %>
+        </p>
         <%
             }
         %>

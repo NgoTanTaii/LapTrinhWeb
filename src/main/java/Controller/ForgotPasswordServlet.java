@@ -1,6 +1,5 @@
 package Controller;
 
-
 import DBcontext.Database;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,6 +10,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.Properties;
 import java.util.Random;
@@ -39,10 +40,13 @@ public class ForgotPasswordServlet extends HttpServlet {
                 // Tạo mật khẩu mới
                 String newPassword = generateNewPassword();
 
-                // Cập nhật mật khẩu trong CSDL (Không mã hóa)
+                // Mã hóa mật khẩu mới bằng MD5
+                String hashedPassword = hashPasswordMD5(newPassword);
+
+                // Cập nhật mật khẩu đã mã hóa vào CSDL
                 String updateQuery = "UPDATE users SET password = ? WHERE username = ? AND email = ?";
                 PreparedStatement updateStmt = conn.prepareStatement(updateQuery);
-                updateStmt.setString(1, newPassword);  // Save plain text password
+                updateStmt.setString(1, hashedPassword);  // Lưu mật khẩu đã mã hóa
                 updateStmt.setString(2, username);
                 updateStmt.setString(3, email);
                 int rowsUpdated = updateStmt.executeUpdate();
@@ -76,6 +80,21 @@ public class ForgotPasswordServlet extends HttpServlet {
             sb.append(chars.charAt(random.nextInt(chars.length())));
         }
         return sb.toString();
+    }
+
+    // Hàm mã hóa mật khẩu bằng MD5
+    private String hashPasswordMD5(String password) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(password.getBytes());
+        byte[] byteData = md.digest();
+
+        // Chuyển đổi byte[] thành chuỗi hex
+        StringBuilder sb = new StringBuilder();
+        for (byte b : byteData) {
+            sb.append(String.format("%02x", b));
+        }
+
+        return sb.toString();  // Trả về mật khẩu đã mã hóa (dưới dạng chuỗi hex)
     }
 
     // Hàm gửi email chứa mật khẩu mới
@@ -112,5 +131,6 @@ public class ForgotPasswordServlet extends HttpServlet {
 
         // Gửi email
         Transport.send(message);
+
     }
 }

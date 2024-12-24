@@ -19,7 +19,7 @@
         }
 
         .forgot-container {
-            max-width: 500px;
+            max-width: 450px;
             margin: auto;
             padding: 30px;
             border: 1px solid #ccc;
@@ -28,7 +28,7 @@
         }
 
         .form-container {
-            width: 60%; /* Đặt chiều rộng cho form nhỏ */
+            width: 55%; /* Đặt chiều rộng cho form nhỏ */
             border: 2px solid #ccc; /* Đường viền lớn hơn */
             padding: 30px;
             border-radius: 8px;
@@ -43,7 +43,7 @@
         }
 
         input[type="text"], input[type="email"] {
-            width: 95%;
+            width: 90%;
             padding: 12px;
             margin: 10px 0;
             border-radius: 4px;
@@ -52,7 +52,8 @@
         }
 
         input[type="submit"] {
-            background-color: #ff5722; /* Màu nút giống form đăng ký */
+
+            background-color: red;
             color: white;
             padding: 12px 20px;
             border: none;
@@ -60,7 +61,7 @@
             cursor: pointer;
             font-size: 18px;
             transition: background-color 0.3s; /* Hiệu ứng chuyển màu */
-            width: 95%; /* Nút rộng 95% */
+            width: 100%; /* Nút rộng 95% */
             margin: 15px auto 0; /* Căn giữa nút và khoảng cách bên trên */
             display: block; /* Để căn giữa */
         }
@@ -84,23 +85,24 @@
 </head>
 <body>
 <div class="forgot-container">
-<div class="form-container">
-    <h2>Lấy lại mật khẩu</h2>
-    <form action="ForgotPasswordServlet" method="post">
-        <input type="text" name="username" placeholder="Nhập tên tài khoản" required>
-        <input type="email" name="email" placeholder="Nhập email của bạn" required>
-        <input type="submit" value="Gửi yêu cầu">
-    </form>
-    <!-- Thông báo lỗi nếu có -->
-    <%
-        String errorMessage = (String) request.getAttribute("errorMessage");
-        if (errorMessage != null) {
-    %>
-    <p class="error-message"><%= errorMessage %></p>
-    <%
-        }
-    %>
-</div>
+    <div class="form-container">
+        <h2>Lấy lại mật khẩu</h2>
+        <form action="ForgotPasswordServlet" method="post">
+            <input type="text" name="username" placeholder="Nhập tên tài khoản" required>
+            <input type="email" name="email" placeholder="Nhập email của bạn" required>
+            <input type="submit" value="Gửi yêu cầu">
+        </form>
+        <!-- Thông báo lỗi nếu có -->
+        <%
+            String errorMessage = (String) request.getAttribute("errorMessage");
+            if (errorMessage != null) {
+        %>
+        <p class="error-message"><%= errorMessage %>
+        </p>
+        <%
+            }
+        %>
+    </div>
 </div>
 </body>
 </html>

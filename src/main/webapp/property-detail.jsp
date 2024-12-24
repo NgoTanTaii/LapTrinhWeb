@@ -939,7 +939,7 @@
                               required></textarea><br>
 
                     <!-- Phần upload ảnh -->
-                    <div class="image-upload">
+                    <div class="image-upload" style="margin-top: 20px">
                         <label for="images">Chọn ảnh (Bạn có thể chọn nhiều ảnh):</label><br>
                         <input type="file" id="images" name="images" accept="image/*" multiple><br><br>
                     </div>
