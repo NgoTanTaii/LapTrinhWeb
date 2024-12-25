@@ -14,25 +14,25 @@
     <style>
         .bell-icon {
             font-size: 24px;
-            color: #4b5563; /* Màu mặc định của chuông */
+            color: #4b5563;
             cursor: pointer;
             transition: color 0.3s, transform 0.2s, box-shadow 0.3s;
-            margin-left: 50px; /* Khoảng cách bên ngoài chuông */
+            margin-left: 50px;
         }
 
         .bell-icon:hover {
-            color: #4CAF50; /* Màu khi hover */
-            transform: scale(1.2); /* Phóng to biểu tượng khi hover */
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); /* Thêm bóng đổ khi hover */
+            color: #4CAF50;
+            transform: scale(1.2);
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
         }
 
         .bell-icon:active {
-            color: #FF5722; /* Màu khi click */
-            transform: scale(0.95); /* Thu nhỏ khi click */
+            color: #FF5722;
+            transform: scale(0.95);
         }
 
         .bell-icon:focus {
-            outline: none; /* Tắt viền khi nhấn chuột vào chuông */
+            outline: none;
         }
     </style>
 </head>
@@ -43,21 +43,19 @@
     <%-- Kiểm tra quyền admin --%>
     <%
         String role = (String) session.getAttribute("role");  // Lấy thông tin phân quyền từ session (ví dụ: "admin" hoặc "user")
-
         if (role == null || !role.equals("admin")) {  // Nếu không phải admin
             response.sendRedirect("access-denied.jsp");  // Chuyển hướng đến trang access-denied.jsp
             return;
         }
     %>
 
-    <%-- Nút quay lại trang admin --%>
     <div class="mb-5">
-        <a href="admin.jsp" class="text-blue-600">Quay lại trang quản trị</a>  <!-- Nút quay lại trang admin -->
+        <a href="admin.jsp" class="text-blue-600">Quay lại trang quản trị</a>
     </div>
     <div class="mb-5">
         <a href="processed-order" class="text-red-600">Xem đơn hàng đã xác nhận</a>
-        <!-- Nút quay lại trang admin -->
     </div>
+
     <%-- Lấy danh sách đơn hàng từ thuộc tính yêu cầu --%>
     <%
         List<Order> orders = (List<Order>) request.getAttribute("orders");
@@ -74,7 +72,7 @@
             <th class="px-4 py-2">Tên khách hàng</th>
             <th class="px-4 py-2">Mã khách hàng</th>
             <th class="px-4 py-2">Hành động</th>
-            <th class="px-4 py-2">Xác nhận</th> <!-- Cột xác nhận -->
+            <th class="px-4 py-2">Xác nhận</th>
         </tr>
         </thead>
         <tbody>
@@ -82,16 +80,16 @@
         <%
             for (Order order : orders) {
         %>
-        <tr class="border-t">
+        <tr id="order-row-<%= order.getOrderId() %>" class="border-t">
             <td class="px-4 py-2"><%= order.getOrderId() %></td>
             <td class="px-4 py-2"><%= order.getUserName() %></td>
             <td class="px-4 py-2"><%= order.getUserId() %></td>
             <td class="px-4 py-2 action-cell">
                 <a href="order-detail?orderId=<%= order.getOrderId() %>" class="text-blue-600">Xem</a> |
-                <a href="editOrder.jsp?orderId=<%= order.getOrderId() %>" class="text-green-600">Sửa</a>
+                <a href="editOrder.jsp?orderId=<%= order.getOrderId() %>" class="text-green-600">Sửa</a> |
+                <a href="javascript:void(0);" class="text-red-600" onclick="deleteOrder('<%= order.getOrderId() %>')">Xóa</a>
             </td>
             <td class="px-4 py-2">
-                <%-- Nút xác nhận đơn hàng --%>
                 <a href="confirmOrder?orderId=<%= order.getOrderId() %>" class="text-yellow-600">Xác nhận</a>
             </td>
         </tr>
@@ -110,6 +108,39 @@
     %>
 
 </div>
+
+<script>
+    function deleteOrder(orderId) {
+        // Hỏi người dùng có chắc chắn muốn xóa không
+        if (confirm('Bạn có chắc chắn muốn xóa đơn hàng này?')) {
+            // Gửi yêu cầu xóa qua fetch
+            fetch('deleteOrder?orderId=' + orderId, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())  // Chuyển phản hồi về JSON
+                .then(data => {
+                    if (data.status === 'success') {
+                        // Nếu xóa thành công, xóa dòng trong bảng
+                        const row = document.getElementById('order-row-' + orderId);
+                        if (row) {
+                            row.remove();
+                        }
+                        alert(data.message);  // Thông báo thành công
+                    } else {
+                        // Nếu có lỗi, hiển thị thông báo lỗi
+                        alert('Lỗi: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Lỗi khi xóa đơn hàng:', error);
+                    alert('Có lỗi xảy ra khi xóa đơn hàng');
+                });
+        }
+    }
+</script>
 
 </body>
 </html>

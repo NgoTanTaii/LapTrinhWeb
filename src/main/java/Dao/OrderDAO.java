@@ -120,5 +120,17 @@ public class OrderDAO {
 
     }
 
-}
+    public boolean deleteOrderItemsByOrderId(String orderId) {
+        String sql = "DELETE FROM orderitems WHERE order_id = ?";
 
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, orderId);
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+}
