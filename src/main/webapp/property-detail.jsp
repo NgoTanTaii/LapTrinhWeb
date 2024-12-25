@@ -1281,9 +1281,10 @@
         %>
 
         <div class="more-products">
-            <button id="scrollLeftBtn"> <</button>
-            <button id="scrollRightBtn">️ ></button>
+            <button id="scrollLeftBtn"><i class="fas fa-chevron-left"></i></button>
+            <button id="scrollRightBtn"><i class="fas fa-chevron-right"></i></button>
         </div>
+
     </div>
 </div>
 
@@ -1439,13 +1440,34 @@
         %>
 
         <div class="more-products">
-            <button id="scrollLeftBtn1"> <</button>
-            <button id="scrollRightBtn1">️ ></button>
+            <button id="scrollLeftBtn1"><i class="fas fa-chevron-left"></i></button>
+            <button id="scrollRightBtn1"><i class="fas fa-chevron-right"></i></button>
         </div>
+
     </div>
 </div>
 
+<style>
+    .more-products button {
+        background-color: whitesmoke; /* Nền trong suốt */
 
+        border-radius: 5px; /* Bo tròn viền */
+        padding: 5px 10px; /* Điều chỉnh kích thước nút */
+        font-size: 16px; /* Kích thước biểu tượng */
+        cursor: pointer; /* Con trỏ chuột thành hình bàn tay khi di chuột vào */
+        transition: background-color 0.3s, border-color 0.3s; /* Hiệu ứng chuyển đổi cho viền và nền */
+    }
+
+    .more-products button:hover {
+        background-color: #f0f0f0; /* Màu nền khi hover */
+        border-color: #007bff; /* Màu viền khi hover */
+    }
+
+    .more-products button i {
+        font-size: 20px; /* Kích thước biểu tượng FontAwesome */
+    }
+
+</style>
 <script>
     const container1 = document.getElementById('relatedProductsContainer1');
 

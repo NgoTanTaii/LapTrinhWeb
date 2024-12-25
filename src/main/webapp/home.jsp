@@ -80,8 +80,10 @@
         <div class="mini-cart">
             <h4>Bất động sản đã lưu</h4>
             <ul id="cart-items"></ul>
-            <button id="go-to-cart" onclick="goToCart()">Đi tới xem bất động sản đã lưu</button>
-        </div>
+            <button id="go-to-cart" onclick="goToCart()"
+                    style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer;">
+                Đi tới xem bất động sản đã lưu
+            </button>        </div>
     </a>
 
 
