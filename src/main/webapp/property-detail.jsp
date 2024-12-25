@@ -922,6 +922,7 @@
             %>
 
             <!-- Phần thêm đánh giá -->
+            <!-- Phần thêm đánh giá -->
             <div class="rating">
                 <h4>Thêm Đánh Giá của Bạn</h4>
                 <form action="ReviewServlet" method="post" enctype="multipart/form-data">
@@ -935,24 +936,65 @@
                     </div>
 
                     <!-- Phần bình luận -->
-                    <textarea name="review" id="review" placeholder="Viết bình luận của bạn..." rows="4" cols="50"
-                              required></textarea><br>
+                    <textarea name="review" id="review" placeholder="Viết bình luận của bạn..." rows="4" cols="50" required></textarea><br>
 
                     <!-- Phần upload ảnh -->
                     <div class="image-upload" style="margin-top: 20px">
-                        <label for="images">Chọn ảnh (Bạn có thể chọn nhiều ảnh):</label><br>
-                        <input type="file" id="images" name="images" accept="image/*" multiple><br><br>
+                        <label for="images">Chọn ảnh về bds (Bạn có thể chọn nhiều ảnh):</label><br>
+                        <input type="file" id="images" name="images" accept="image/*" multiple onchange="previewImages()"><br><br>
+                        <div id="imagePreviewContainer" class="image-preview-container"></div>
                     </div>
 
                     <input type="hidden" name="propertyId" value="<%= property.getId() %>">
-                    <button style="margin-top:10px ;" type="submit">Gửi Đánh Giá</button>
+                    <button style="margin-top:10px;" type="submit">Gửi Đánh Giá</button>
                 </form>
             </div>
+
 
         </div>
 
 
         <script>
+            // Hàm xem trước ảnh và xóa ảnh đã chọn
+            function previewImages() {
+                var files = document.getElementById('images').files;
+                var previewContainer = document.getElementById('imagePreviewContainer');
+                previewContainer.innerHTML = ''; // Xóa ảnh đã có trước đó
+
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        var imgElement = document.createElement('img');
+                        imgElement.src = e.target.result;
+                        imgElement.classList.add('preview-img');
+
+                        var closeButton = document.createElement('span');
+                        closeButton.classList.add('close-btn');
+                        closeButton.innerText = '×';
+                        closeButton.onclick = function () {
+                            removeImage(this);
+                        };
+
+                        var imageWrapper = document.createElement('div');
+                        imageWrapper.classList.add('image-wrapper');
+                        imageWrapper.appendChild(imgElement);
+                        imageWrapper.appendChild(closeButton);
+
+                        previewContainer.appendChild(imageWrapper);
+                    };
+
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            // Hàm để xóa ảnh
+            function removeImage(button) {
+                var imageWrapper = button.parentElement;
+                imageWrapper.remove();
+            }
+
             // Hàm để ẩn/hiện phần đánh giá
             function toggleReviews() {
                 var reviewsSection = document.getElementById("reviewsSection");
@@ -972,6 +1014,41 @@
 
     </div>
     <style>
+        /* Container chứa các ảnh xem trước */
+        .image-preview-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* Mỗi ảnh xem trước */
+        .preview-img {
+            max-width: 100px;
+            max-height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        /* Wrapper chứa ảnh và dấu "x" */
+        .image-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Dấu "x" để xóa ảnh */
+        .close-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
         .stars {
             display: flex;
 
