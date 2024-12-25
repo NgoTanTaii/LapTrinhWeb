@@ -63,7 +63,7 @@ public class AddToCartServlet extends HttpServlet {
             if (itemExists) {
                 int currentQuantity = cartItemDAO.getItemQuantity(cartId, propertyId);
                 cartItemDAO.updateCartItemQuantity(cartId, propertyId, currentQuantity + 1);
-                session.setAttribute("message", "Bất động sản đã có trong tin đã lưu .");
+                session.setAttribute("message", "Bất động sản đã có trong tin đã lưu!");
             } else {
                 // Add new item to the cart
                 CartItem cartItem = new CartItem(propertyId, title, price, area, imageUrl, cartId, 1, address);
