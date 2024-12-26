@@ -392,6 +392,15 @@
 
             <nav>
                 <ul class="u-lo">
+                    <!-- Mục Nhà Đất Hot -->
+                    <li><a href="property-hot.jsp">Nhà Đất Hot</a>
+                        <ul>
+                            <li><a href="#">Nhà đất bán hot</a></li>
+                            <li><a href="#">Nhà đất cho thuê hot</a></li>
+                            <li><a href="#">Nhà đất dự án hot</a></li>
+                        </ul>
+                    </li>
+                    <!-- Mục Nhà Đất Bán -->
                     <li><a href="forsale">Nhà Đất Bán</a>
                         <ul>
                             <li><a href="#">Thông tin bán nhà đất</a></li>
@@ -399,6 +408,7 @@
                             <li><a href="#">Nhà đất giá rẻ</a></li>
                         </ul>
                     </li>
+                    <!-- Mục Nhà Đất Cho Thuê -->
                     <li><a href="forrent">Nhà Đất Cho Thuê</a>
                         <ul>
                             <li><a href="#">Thông tin cho thuê nhà đất</a></li>
@@ -406,6 +416,7 @@
                             <li><a href="#">Thuê căn hộ giá rẻ</a></li>
                         </ul>
                     </li>
+                    <!-- Mục Dự Án -->
                     <li><a href="Project">Dự Án</a>
                         <ul>
                             <li><a href="#">Các dự án nổi bật</a></li>
@@ -413,6 +424,7 @@
                             <li><a href="#">Dự án chung cư</a></li>
                         </ul>
                     </li>
+                    <!-- Mục Tin Tức -->
                     <li><a href="news.jsp">Tin Tức</a>
                         <ul>
                             <li><a href="#">Tin thị trường</a></li>
@@ -420,6 +432,7 @@
                             <li><a href="#">Phân tích và đánh giá</a></li>
                         </ul>
                     </li>
+                    <!-- Mục Wiki BĐS -->
                     <li><a href="wiki.jsp">Wiki BĐS</a>
                         <ul>
                             <li><a href="#">Mua bán</a></li>
