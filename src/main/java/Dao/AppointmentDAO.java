@@ -57,7 +57,8 @@ public class AppointmentDAO {
                         rs.getString("appointment_time"),
                         rs.getInt("property_count"),
                         rs.getString("created_at"),
-                        rs.getString("username")
+                        rs.getString("username"),
+                        rs.getInt("contacted")
                 );
                 appointments.add(appointment);
             }
@@ -67,4 +68,20 @@ public class AppointmentDAO {
 
         return appointments;
     }
+
+
+    public void updateContactedStatus(int appointmentId, int contacted) {
+        String query = "UPDATE appointments SET contacted = ? WHERE id = ?";
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, contacted);
+            stmt.setInt(2, appointmentId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
+
+

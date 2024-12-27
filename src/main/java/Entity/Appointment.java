@@ -10,10 +10,11 @@ public class Appointment {
     private int propertyCount;
     private String createdAt;
     private String username;
+    private int Contacted;
 
 
     public Appointment(int id, String address, String phone, String appointmentDate, String appointmentTime,
-                       int propertyCount, String createdAt, String username) {
+                       int propertyCount, String createdAt, String username, int Contacted) {
         this.id = id;
         this.address = address;
         this.phone = phone;
@@ -22,6 +23,7 @@ public class Appointment {
         this.propertyCount = propertyCount;
         this.createdAt = createdAt;
         this.username = username;
+        this.Contacted = Contacted;
     }
 
     public Appointment(int id, int orderId, String address, String phone, String appointmentDate, String appointmentTime, int propertyCount, String createdAt, String username) {
@@ -110,4 +112,11 @@ public class Appointment {
     }
 
 
+    public int getContacted() {
+        return Contacted;
+    }
+
+    public void setContacted(int contacted) {
+        Contacted = contacted;
+    }
 }
