@@ -53,7 +53,7 @@
         <a href="admin.jsp" class="text-blue-600">Quay lại trang quản trị</a>
     </div>
     <div class="mb-5">
-        <a href="processed-order" class="text-red-600">Xem đơn hàng đã xác nhận</a>
+        <a href="processed-order" class="text-red-600">Xem đơn bất động sản đã xác nhận</a>
     </div>
 
     <%-- Lấy danh sách đơn hàng từ thuộc tính yêu cầu --%>
@@ -68,7 +68,7 @@
     <table class="table-auto w-full bg-white shadow-md rounded">
         <thead>
         <tr class="bg-gray-200 text-left">
-            <th class="px-4 py-2">Mã đơn hàng</th>
+            <th class="px-4 py-2">Mã đơn bất động sản</th>
             <th class="px-4 py-2">Tên khách hàng</th>
             <th class="px-4 py-2">Mã khách hàng</th>
             <th class="px-4 py-2">Hành động</th>
@@ -81,9 +81,12 @@
             for (Order order : orders) {
         %>
         <tr id="order-row-<%= order.getOrderId() %>" class="border-t">
-            <td class="px-4 py-2"><%= order.getOrderId() %></td>
-            <td class="px-4 py-2"><%= order.getUserName() %></td>
-            <td class="px-4 py-2"><%= order.getUserId() %></td>
+            <td class="px-4 py-2"> Mã <%= order.getOrderId() %>
+            </td>
+            <td class="px-4 py-2"><%= order.getUserName() %>
+            </td>
+            <td class="px-4 py-2"><%= order.getUserId() %>
+            </td>
             <td class="px-4 py-2 action-cell">
                 <a href="order-detail?orderId=<%= order.getOrderId() %>" class="text-blue-600">Xem</a> |
                 <a href="editOrder.jsp?orderId=<%= order.getOrderId() %>" class="text-green-600">Sửa</a> |

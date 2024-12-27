@@ -33,12 +33,12 @@
         <ul>
             <li><a href="admin.jsp">Main Dashboard</a></li>
             <li><a href="users">Quản lý tài khoản</a></li>
-            <li><a href="home-manager">Quản lý sản phẩm</a></li>
+            <li><a href="home-manager">Quản lý bất động sản</a></li>
             <li><a href="top5-new-property.jsp">Quản lý top 5 bds mới</a></li>
-            <li><a href="home-unavailable">Phê duyệt động sản</a></li>
+            <li><a href="home-unavailable">Phê duyệt bất động sản</a></li>
             <li><a href="top5-posters.jsp">Quản lý top 5 người đăng</a></li>
             <%--            <li><a href="top-employee-manager.jsp">Quản lý top 5 nhân viên</a></li>--%>
-            <li><a href="orders">Quản lý đơn đặt hàng</a></li>
+            <li><a href="orders">Quản lý đơn đặt bất động sản</a></li>
             <li><a href="comments-manager.jsp">Quản lý bình luận</a></li>
             <li><a href="appointment-manager">Quản lý lịch hẹn</a></li>
 
