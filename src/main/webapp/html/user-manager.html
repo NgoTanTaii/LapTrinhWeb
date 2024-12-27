@@ -166,7 +166,7 @@
             <tr>
                 <td>1</td>
                 <td>Nguyễn Văn A</td>
-                <td>nguyenvana@example.com</td>
+                <td>nguyenvana@ckfinder.example.com</td>
                 <td>
                     <select class="role-select">
                         <option value="Admin" selected>Admin</option>
@@ -181,7 +181,7 @@
             <tr>
                 <td>2</td>
                 <td>Trần Thị B</td>
-                <td>tranthib@example.com</td>
+                <td>tranthib@ckfinder.example.com</td>
                 <td>
                     <select class="role-select">
                         <option value="Admin">Admin</option>
@@ -196,7 +196,7 @@
             <tr>
                 <td>3</td>
                 <td>Phan Văn C</td>
-                <td>phanvanc@example.com</td>
+                <td>phanvanc@ckfinder.example.com</td>
                 <td>
                     <select class="role-select">
                         <option value="Admin" selected>Admin</option>
@@ -217,22 +217,22 @@
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function () {
-        var table = $('#example').DataTable({
+        var table = $('#ckfinder.example').DataTable({
             "paging": true,
             "searching": true,
             "ordering": true
         });
 
         // Event for Update and Delete Buttons
-        $('#example tbody').on('click', 'button.update-button', function () {
-            var data = $('#example').DataTable().row($(this).parents('tr')).data();
+        $('#ckfinder.example tbody').on('click', 'button.update-button', function () {
+            var data = $('#ckfinder.example').DataTable().row($(this).parents('tr')).data();
             var selectedRole = $(this).parents('tr').find('.role-select').val();
             alert('Bạn đã chọn Cập nhật cho người dùng: ' + data[1] + ' với vai trò: ' + selectedRole);
             // Code xử lý cập nhật vai trò ở đây
         });
 
-        $('#example tbody').on('click', 'button.delete-button', function () {
-            var data = $('#example').DataTable().row($(this).parents('tr')).data();
+        $('#ckfinder.example tbody').on('click', 'button.delete-button', function () {
+            var data = $('#ckfinder.example').DataTable().row($(this).parents('tr')).data();
             if (confirm('Bạn có chắc chắn muốn xóa người dùng này không?')) {
                 alert('Đã xóa người dùng: ' + data[1]);
                 // Code xử lý xóa người dùng ở đây
