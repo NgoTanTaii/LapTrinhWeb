@@ -1203,43 +1203,43 @@
 </div>
 
 
-<%--<div class="property-features">--%>
-<%--    <h3>Đặc điểm bất động sản</h3>--%>
-<%--    <div class="features-container">--%>
-<%--        <div class="features-column">--%>
-<%--            <div class="feature-item">--%>
-<%--                <i class="fas fa-border-all feature-icon"></i>--%>
-<%--                <span><strong>Mặt tiền:</strong> <%= property.getFrontWidth() %> m</span>--%>
-<%--            </div>--%>
-<%--            <div class="feature-item">--%>
-<%--                <i class="fas fa-road feature-icon"></i>--%>
-<%--                <span><strong>Đường vào:</strong> <%= property.getRoadWidth() %> m</span>--%>
-<%--            </div>--%>
-<%--            <div class="feature-item">--%>
-<%--                <i class="fas fa-building feature-icon"></i>--%>
-<%--                <span><strong>Số tầng:</strong> <%= property.getFloors() %> tầng</span>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--        <div class="features-column">--%>
-<%--            <div class="feature-item">--%>
-<%--                <i class="fas fa-bed feature-icon"></i>--%>
-<%--                <span><strong>Số phòng ngủ:</strong> <%= property.getBedrooms() %> phòng</span>--%>
-<%--            </div>--%>
-<%--            <div class="feature-item">--%>
-<%--                <i class="fas fa-bath feature-icon"></i>--%>
-<%--                <span><strong>Số toilet:</strong> <%= property.getBathrooms() %> phòng</span>--%>
-<%--            </div>--%>
-<%--            <div class="feature-item">--%>
-<%--                <i class="fas fa-file-alt feature-icon"></i>--%>
-<%--                <span><strong>Pháp lý:</strong> <%= property.getLegalStatus() %></span>--%>
-<%--            </div>--%>
-<%--            <div class="feature-item">--%>
-<%--                <i class="fas fa-couch feature-icon"></i>--%>
-<%--                <span><strong>Nội thất:</strong> Đầy đủ</span>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</div>--%>
+<div class="property-features">
+    <h3>Đặc điểm bất động sản</h3>
+    <div class="features-container">
+        <div class="features-column">
+            <div class="feature-item">
+                <i class="fas fa-border-all feature-icon"></i>
+                <span><strong>Mặt tiền:</strong> 5 m</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-road feature-icon"></i>
+                <span><strong>Đường vào:</strong> 10 m</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-building feature-icon"></i>
+                <span><strong>Số tầng:</strong>  2 tầng</span>
+            </div>
+        </div>
+        <div class="features-column">
+            <div class="feature-item">
+                <i class="fas fa-bed feature-icon"></i>
+                <span><strong>Số phòng ngủ:</strong> 4 phòng</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-bath feature-icon"></i>
+                <span><strong>Số toilet:</strong>2 phòng</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-file-alt feature-icon"></i>
+                <span><strong>Pháp lý:</strong>.. </span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-couch feature-icon"></i>
+                <span><strong>Nội thất:</strong> Đầy đủ</span>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="bottom-banner">
     <img src="jpg/bank-loan-offer-banner-web.jpg" alt="Banner quảng cáo" style="width: 100%; border-radius: 5px;">
@@ -1262,11 +1262,11 @@
     <div class="info-container">
         <div class="info-item">
             <i class="fas fa-calendar-alt info-icon"></i>
-            <span><strong>Ngày đăng:</strong> 22/10/2024</span>
+            <span><strong>Ngày đăng:</strong> 31/12/2024</span>
         </div>
         <div class="info-item">
             <i class="fas fa-calendar-times info-icon"></i>
-            <span><strong>Ngày hết hạn:</strong> 01/11/2024</span>
+            <span><strong>Ngày hết hạn:</strong> 14/1/2025</span>
         </div>
         <div class="info-item">
             <i class="fas fa-info-circle info-icon"></i>
