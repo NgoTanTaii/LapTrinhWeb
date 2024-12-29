@@ -69,7 +69,7 @@
         <thead>
         <tr class="bg-gray-200 text-left">
             <th class="px-4 py-2">Mã đơn bất động sản</th>
-            <th class="px-4 py-2">Tên khách hàng</th>
+            <th class="px-4 py-2">Tên tài khoản</th>
             <th class="px-4 py-2">Mã khách hàng</th>
             <th class="px-4 py-2">Hành động</th>
             <th class="px-4 py-2">Xác nhận</th>

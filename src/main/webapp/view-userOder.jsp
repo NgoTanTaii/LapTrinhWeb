@@ -45,7 +45,7 @@
 
     <%-- Nút quay lại trang admin --%>
     <div class="mb-5">
-        <a href="admin.jsp" class="text-blue-600">Quay lại trang quản trị</a>
+        <a href="account.jsp?userId=<%= userId %>" class="text-blue-600">Quay lại trang tài khoản </a>
     </div>
 
     <%-- Truy vấn và lấy danh sách đơn hàng từ DAO --%>
@@ -61,7 +61,7 @@
         <thead>
         <tr class="bg-gray-200 text-left">
             <th class="px-4 py-2">Mã đơn hàng</th>
-            <th class="px-4 py-2">Tên khách hàng</th>
+            <th class="px-4 py-2">Tên Tài Khoản</th>
             <th class="px-4 py-2">Hành động</th>
         </tr>
         </thead>
@@ -71,8 +71,10 @@
             for (Order order : orders) {
         %>
         <tr class="border-t">
-            <td class="px-4 py-2">Mã <%= order.getOrderId() %></td>
-            <td class="px-4 py-2"><%= order.getUserName() %></td>
+            <td class="px-4 py-2">Mã <%= order.getOrderId() %>
+            </td>
+            <td class="px-4 py-2"><%= order.getUserName() %>
+            </td>
             <td class="px-4 py-2">
                 <a href="order-detail?orderId=<%= order.getOrderId() %>" class="text-blue-600">Xem</a>
             </td>
