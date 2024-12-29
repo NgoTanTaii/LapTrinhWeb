@@ -68,7 +68,7 @@ public class UserDAO {
     }
 
 
-    public void addUser(String username, String password, String email, String token, String status, String role) {
+    public void addUser(String username, String password, String email, String token, String status, String role, String s) {
         String query = "INSERT INTO users (username, password, email, token, status, role) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = getConnection(); PreparedStatement stmt = connection.prepareStatement(query)) {
