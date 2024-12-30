@@ -936,12 +936,14 @@
                     </div>
 
                     <!-- Phần bình luận -->
-                    <textarea name="review" id="review" placeholder="Viết bình luận của bạn..." rows="4" cols="50" required></textarea><br>
+                    <textarea name="review" id="review" placeholder="Viết bình luận của bạn..." rows="4" cols="50"
+                              required></textarea><br>
 
                     <!-- Phần upload ảnh -->
                     <div class="image-upload" style="margin-top: 20px">
                         <label for="images">Chọn ảnh về bds (Bạn có thể chọn nhiều ảnh):</label><br>
-                        <input type="file" id="images" name="images" accept="image/*" multiple onchange="previewImages()"><br><br>
+                        <input type="file" id="images" name="images" accept="image/*" multiple
+                               onchange="previewImages()"><br><br>
                         <div id="imagePreviewContainer" class="image-preview-container"></div>
                     </div>
 

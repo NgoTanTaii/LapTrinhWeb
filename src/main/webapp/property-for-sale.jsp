@@ -761,7 +761,17 @@
         color: #e74c3c;
         font-weight: bold;
     }
-
+    .copyright {
+        width: 52%;
+        margin-left: 135px;
+        margin-top: 40px; /* Khoảng cách trên cho phần bản quyền */
+        padding: 10px; /* Padding bên trong */
+        text-align: center; /* Căn giữa nội dung */
+        font-size: 0.8em; /* Kích thước chữ nhỏ hơn */
+        color: #555; /* Màu chữ */
+        border-top: 1px solid #ccc; /* Đường viền trên */
+        background-color: #f9f9f9; /* Màu nền nhẹ cho phần bản quyền */
+    }
 </style>
 
 <script>
@@ -782,7 +792,9 @@
     });
 </script>
 
-
+<div class="copyright">
+    <p>© Mọi quyền thuộc về Homelander. Mọi thông tin liên quan vui lòng liên hệ với chúng tôi.</p>
+</div>
 <div class="footer">
     <div class="footer-top">
 

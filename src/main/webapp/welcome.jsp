@@ -940,7 +940,7 @@
 <div class="footer">
     <div class="footer-top">
 
-        <h1><a href="homes">
+        <h1><a href="<%= isLoggedIn ? "welcome" : "homes" %>">
             <span class="color1">HOME</span>
             <span class="color2">LANDER</span>
         </a></h1>
