@@ -155,5 +155,6 @@
 <footer>
     <p>&copy; 2024 Tư Vấn BĐS | Liên hệ: info@bds.com</p>
 </footer>
-<script src="JS/agent.js" defer></script></body>
+<script src="JS/agent.js" defer></script>
+</body>
 </html>

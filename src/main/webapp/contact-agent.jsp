@@ -4,135 +4,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/contact-agent.css"/>
+
     <title>Liên Hệ Tư Vấn Viên</title>
     <style>
-        /* General Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* Style chung cho form */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 5px; /* Giảm khoảng cách giữa các trường */
+            padding: 15px;
+            max-width: 400px;
+            margin: 0 auto;
         }
 
-        /* Body */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            padding: 20px;
-        }
-
-        /* Header */
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        header h1 {
-            font-size: 36px;
-            color: #3498db;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7); /* Background tối */
-            padding-top: 60px;
-        }
-
-        .modal-content {
-            background-color: #fff;
-            margin: 5% auto;
-            padding: 40px;
-            border-radius: 10px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Close Button */
-        .close {
-            color: #aaa;
-            font-size: 30px;
+        /* Style cho label */
+        form label {
+            font-size: 14px;
             font-weight: bold;
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            cursor: pointer;
-        }
-
-        .close:hover,
-        .close:focus {
             color: #333;
+            margin-bottom: 3px; /* Giảm khoảng cách giữa label và input */
         }
 
-        /* Modal Title */
-        .modal-content h2 {
-            text-align: center;
-            font-size: 24px;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        /* Form Inputs */
-        input[type="text"], input[type="email"], textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
+        /* Style cho input và textarea */
+        form input,
+        form textarea {
+            padding: 8px;
+            font-size: 14px;
             border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-            font-size: 16px;
+            border-radius: 4px;
+            width: 100%; /* Chiếm đầy chiều rộng của form */
+            box-sizing: border-box; /* Đảm bảo padding không ảnh hưởng đến chiều rộng */
         }
 
-        input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
+        /* Style riêng cho textarea (có chiều cao lớn hơn input) */
+        form textarea {
+            resize: vertical;
+            min-height: 80px; /* Đặt chiều cao tối thiểu cho textarea */
+        }
+
+        /* Style cho nút Gửi */
+        .contact-button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        /* Hiệu ứng khi hover vào nút Gửi */
+        .contact-button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Hiệu ứng focus cho các trường nhập liệu */
+        form input:focus,
+        form textarea:focus {
             border-color: #3498db;
             outline: none;
         }
 
-        /* Submit Button */
-        button[type="submit"] {
-            background-color: #3498db;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
+        /* Đóng modal */
+        .close {
+            font-size: 24px;
             cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: #aaa;
         }
 
-        button[type="submit"]:hover {
-            background-color: #2980b9;
+        .close:hover {
+            color: #000;
         }
 
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #333;
-            color: white;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
-
-        footer p {
-            font-size: 14px;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 600px) {
-            .modal-content {
-                padding: 20px;
-                width: 90%;
-            }
+        /* Hiệu ứng khi mở modal */
+        .modal-content {
+            padding: 10px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
         }
 
     </style>
@@ -150,43 +105,28 @@
 <!-- Modal Liên Hệ -->
 <div id="contactModal" class="modal">
     <div class="modal-content">
+
         <span class="close" onclick="closeModal()">&times;</span>
-        <h2>Liên Hệ với Tư Vấn Viên</h2>
+        <h2> Để lại thông tin cá nhân</h2>
         <form method="POST">
             <label for="name">Họ Tên:</label>
             <input type="text" id="name" name="name" required><br><br>
+
+            <label for="phone">Số Điện Thoại:</label>
+            <input type="tel" id="phone" name="phone" placeholder="Nhập số điện thoại" required><br><br>
+
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required><br><br>
+
             <label for="message">Nội Dung:</label><br>
             <textarea id="message" name="message" rows="4" required></textarea><br><br>
+
             <button type="submit" class="contact-button">Gửi</button>
         </form>
     </div>
 </div>
+<script src="JS/contact-agent.js" defer></script>
 
-<!-- Footer -->
-<footer>
-    <p>&copy; 2024 Tư Vấn BĐS | Liên hệ: info@bds.com</p>
-</footer>
-
-<script>
-    // Mở modal
-    function openModal() {
-        document.getElementById("contactModal").style.display = "block";
-    }
-
-    // Đóng modal
-    function closeModal() {
-        document.getElementById("contactModal").style.display = "none";
-    }
-
-    // Đảm bảo rằng người dùng có thể đóng modal khi bấm ra ngoài
-    window.onclick = function(event) {
-        if (event.target == document.getElementById("contactModal")) {
-            closeModal();
-        }
-    }
-</script>
 
 </body>
 </html>
