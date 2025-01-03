@@ -1,0 +1,201 @@
+
+.filter {
+    padding: 20px;
+    background-color: #fff;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.filter select {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.filter label {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+/* Tư Vấn Viên */
+.consultant-card p {
+    font-size: 14px;
+    color: #555;
+}
+
+.consultant-card p strong {
+    font-weight: bold;
+}
+
+/* Thêm một số style cho địa chỉ */
+.consultant-card p {
+    margin-top: 10px;
+}
+
+.consultant-card p strong {
+    color: #3498db;
+}
+
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body and Layout */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+}
+
+header .logo h1 {
+    font-size: 24px;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+}
+
+header nav ul li {
+    margin-left: 20px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Banner Section */
+.banner {
+    background-image: url('../jpg/1.webp');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.banner h2 {
+    font-size: 36px;
+}
+
+.banner p {
+    font-size: 18px;
+}
+
+.cta-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #f1c40f;
+    border: none;
+    cursor: pointer;
+}
+
+.cta-button:hover {
+    background-color: #e1b40f;
+}
+
+/* Consultants Section */
+.consultants {
+    padding: 40px 20px;
+    text-align: center;
+    background-color: #fff;
+}
+
+.consultant-card {
+    display: inline-block;
+    width: 250px;
+    margin: 10px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.consultant-card img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+
+.contact-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.contact-button a {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.contact-button a:hover {
+    background-color: #2980b9;
+}
+
+.contact-button:hover {
+    background-color: #2980b9;
+}
+
+/* Services Section */
+.services {
+    padding: 40px 20px;
+    background-color: #ecf0f1;
+    text-align: center;
+}
+
+.service-item {
+    background-color: white;
+    margin: 10px;
+    padding: 20px;
+    display: inline-block;
+    width: 30%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.service-item h4 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+}
+
+footer p {
+    font-size: 14px;
+}
+
