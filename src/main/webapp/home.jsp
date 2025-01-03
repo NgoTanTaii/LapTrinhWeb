@@ -83,7 +83,8 @@
             <button id="go-to-cart" onclick="goToCart()"
                     style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer;">
                 Đi tới xem bất động sản đã lưu
-            </button>        </div>
+            </button>
+        </div>
     </a>
 
 
@@ -512,7 +513,7 @@
 
 <%
     // Tạo danh sách các thành phố lớn
-    List<String> majorCities = List.of("TP.HCM", "Hà Nội", "Đà Nẵng", "Vũng Tàu");
+    List<String> majorCities = List.of("TP.HCM", "Đà Nẵng", "Vũng Tàu");
 
     // Lấy danh sách bất động sản từ các thành phố này
     PropertyDAO propertyDAO = new PropertyDAO();

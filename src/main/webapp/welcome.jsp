@@ -773,7 +773,7 @@
 </style>
 <%
     // Tạo danh sách các thành phố lớn
-    List<String> majorCities = List.of("TP.HCM", "Hà Nội", "Đà Nẵng", "Vũng Tàu");
+    List<String> majorCities = List.of("TP.HCM", "Đà Nẵng", "Vũng Tàu");
 
     // Lấy danh sách bất động sản từ các thành phố này
     PropertyDAO propertyDAO = new PropertyDAO();
