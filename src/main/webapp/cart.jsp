@@ -502,7 +502,7 @@
 <div class="footer">
     <div class="footer-top">
 
-        <h1><a href="homes">
+        <h1><a href="welcome">
             <span class="color1">HOME</span>
             <span class="color2">LANDER</span>
         </a></h1>
@@ -527,6 +527,7 @@
                 <li><a href="#">Dự án</a></li>
                 <li><a href="#">Tin tức</a></li>
                 <li><a href="#">Liên hệ</a></li>
+                <li><a href="agent.jsp">Thuê người môi giới</a> </li>
             </ul>
         </div>
 
@@ -540,6 +541,7 @@
             <a href="https://mail.google.com/mail/u/0/?hl=vi#inbox" class="social-icon"><i
                     class="fas fa-envelope"></i>
                 Mail</a>
+            <a href="agent.jsp"><i class="fas fa-user-tie"></i> Thuê người môi giới</a>
         </div>
 
         <!-- Form nhập email -->
