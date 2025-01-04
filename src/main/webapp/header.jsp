@@ -3,6 +3,8 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="css/bds.css">
+
 </head>
 <header class="header">
     <div class="header-top" style="width: 100%; position: sticky; top: 0; z-index: 1000;">
@@ -78,7 +80,7 @@
         </style>
         <a href="javascript:void(0)" id="floating-cart" class="floating-cart" onclick="toggleMiniCart()"
            style="border: 1px solid #ccc; border-radius: 50%; position: fixed; bottom: 20px; right: 20px; z-index: 999; padding: 10px; background-color: white;">
-            <img src="jpg/heart%20(1).png" style="width: 30px; height: 30px;" alt="Giỏ hàng" class="cart-icon">
+            <img src="jpg/heart (1).png" style="width: 30px; height: 30px;" alt="Giỏ hàng" class="cart-icon">
             <div class="item-count" id="item-count"
                  style="position: absolute; top: 0; right: 0; background-color: red; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px;">
                 0
@@ -245,6 +247,61 @@
                 border-radius: 4px;
             }
 
+            ul {
+                list-style-type: none;
+                padding: 0;
+                margin-right: 0;
+                border-radius: 10px;
+            }
+
+            .u-lo li {
+                position: relative;
+                display: inline-block;
+                margin-right: 20px;
+                z-index: 10; /* Đảm bảo menu cha hiển thị trên cùng */
+            }
+
+            ul li a {
+                text-decoration: none;
+                display: inline-block;
+                color: #333;
+            }
+
+            /* Thiết lập cho menu con */
+            ul li ul {
+                display: none; /* Ẩn menu con mặc định */
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background-color: #f9f9f9;
+                min-width: 200px;
+                padding: 10px 0;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                z-index: 999; /* Đảm bảo menu con hiển thị trên các phần tử khác */
+            }
+
+            ul li ul li {
+                display: block;
+                margin: 0;
+            }
+
+            ul li ul li a {
+                padding: 10px 15px;
+                color: #333;
+                display: block;
+            }
+
+            /* Hiển thị menu con khi hover */
+            ul li:hover ul {
+                display: block;
+            }
+
+            /* Style cho menu con khi hover */
+            ul li ul li a:hover {
+                background-color: #eee;
+                text-decoration: none;
+            }
+
         </style>
 
 
@@ -326,10 +383,10 @@
 
     <div class="slideshow-container">
         <div class="mySlides fade">
-            <img src="jpg/1%20(1).webp" alt="Banner 1">
+            <img src="jpg/1 (1).webp" alt="Banner 1">
         </div>
         <div class="mySlides fade">
-            <img src="jpg/1%20(1).webp" alt="Banner 2">
+            <img src="jpg/1 (1).webp" alt="Banner 2">
         </div>
     </div>
 
