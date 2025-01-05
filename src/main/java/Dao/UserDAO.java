@@ -3,6 +3,8 @@ package Dao;
 
 import DBcontext.Database;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 
 public class UserDAO {
@@ -68,20 +70,53 @@ public class UserDAO {
     }
 
 
-    public void addUser(String username, String password, String email, String token, String status, String role, String s) {
+    public boolean addUser(String username, String password, String email, String token, String status, String role) {
+        // Mã hóa mật khẩu
+        String encryptedPassword = encryptPassword(password);
+
+        if (encryptedPassword == null) {
+            return false;  // Trả về false nếu có lỗi trong quá trình mã hóa
+        }
+
+        // Câu truy vấn SQL để thêm người dùng
         String query = "INSERT INTO users (username, password, email, token, status, role) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = getConnection(); PreparedStatement stmt = connection.prepareStatement(query)) {
+            // Thiết lập các tham số cho PreparedStatement
             stmt.setString(1, username);
-            stmt.setString(2, password);  // Có thể mã hóa mật khẩu trước khi lưu
+            stmt.setString(2, encryptedPassword);  // Mật khẩu đã mã hóa
             stmt.setString(3, email);
             stmt.setString(4, token);  // Token có thể là NULL
             stmt.setString(5, status);
             stmt.setString(6, role);
 
-            stmt.executeUpdate();
+            // Thực thi câu lệnh và kiểm tra kết quả
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;  // Nếu ít nhất 1 dòng bị ảnh hưởng, trả về true
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;  // Trả về false nếu có lỗi trong quá trình thực thi câu lệnh SQL
+        }
+    }
+
+    private String encryptPassword(String password) {
+        try {
+            // Tạo đối tượng MessageDigest với thuật toán MD5
+            MessageDigest md = MessageDigest.getInstance("MD5");
+
+            // Mã hóa chuỗi đầu vào thành mảng byte
+            byte[] messageDigest = md.digest(password.getBytes());
+
+            // Chuyển đổi mảng byte thành chuỗi hex
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : messageDigest) {
+                hexString.append(String.format("%02x", b));
+            }
+
+            return hexString.toString();  // Trả về mật khẩu đã mã hóa
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -100,4 +135,8 @@ public class UserDAO {
         return false;
     }
 
+    public static void main(String[] args) {
+        UserDAO us = new UserDAO();
+        System.out.println(us.addUser("123", "123", "khoangoquan@gmail.com", null, "active", "user"));
+    }
 }

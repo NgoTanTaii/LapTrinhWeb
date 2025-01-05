@@ -74,7 +74,7 @@ public class LoginWithGoogleServlet extends HttpServlet {
 
                     // Add new user to the database with google_id
                     String userId = "";
-                    userDAO.addUser(userId, name, password, email, token, status, role);
+//                    userDAO.addUser(userId, name, password, email, token, status, role);
 
                     // Store user info in session after adding to the database
                     request.getSession().setAttribute("username", name);

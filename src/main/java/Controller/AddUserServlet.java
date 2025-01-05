@@ -18,6 +18,7 @@ public class AddUserServlet extends HttpServlet {
         userDAO = new UserDAO();
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
 
@@ -27,13 +28,6 @@ public class AddUserServlet extends HttpServlet {
             String password = request.getParameter("password");
             String role = request.getParameter("role");
             String status = request.getParameter("status");
-            System.out.println(username);
-            System.out.println(email);
-            System.out.println(password);
-            System.out.println(role);
-            System.out.println(status);
-
-            String token = null;
 
             // Kiểm tra dữ liệu đầu vào
             if (username == null || username.isEmpty()) {
@@ -50,7 +44,7 @@ public class AddUserServlet extends HttpServlet {
 
             if (password == null || password.isEmpty()) {
                 request.setAttribute("error", "Mật khẩu không được để trống");
-                request.getRequestDispatcher("users").forward(request, response);
+                request.getRequestDispatcher("add-user.jsp").forward(request, response);
                 return;
             }
 
@@ -59,25 +53,32 @@ public class AddUserServlet extends HttpServlet {
                 boolean userCount = userDAO.checkUserExists(username);
                 if (userCount) {
                     request.setAttribute("error", "Tên người dùng đã tồn tại");
-                    request.getRequestDispatcher("users").forward(request, response);
+                    request.getRequestDispatcher("add-user.jsp").forward(request, response);
                     return;
                 }
 
+                // Thêm người dùng vào cơ sở dữ liệu
+                boolean isUserAdded = userDAO.addUser(username, password, email, null, status, role);
 
-                request.setAttribute("success", "Thêm người dùng thành công");
-                request.getRequestDispatcher("users").forward(request, response);
+                // Sử dụng sendRedirect để chuyển hướng người dùng tới trang users
+                if (isUserAdded) {
+                    response.sendRedirect("users?success=true"); // Chuyển hướng tới trang quản lý người dùng và truyền tham số success
+                } else {
+                    response.sendRedirect("users?error=true"); // Nếu thêm người dùng thất bại, chuyển hướng về trang users với thông báo lỗi
+                }
 
             } catch (Exception e) {
                 e.printStackTrace();
-                request.setAttribute("error", "Có lỗi xảy ra khi thêm người dùng");
-                request.getRequestDispatcher("users").forward(request, response);
+                response.sendRedirect("users?error=true"); // Lỗi xảy ra, chuyển hướng về trang users với thông báo lỗi
             }
         }
     }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
 
-    }
+
+
+//    @Override
+//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        super.doGet(req, resp);
+//    }
 }

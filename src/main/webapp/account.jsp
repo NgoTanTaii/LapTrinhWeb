@@ -137,7 +137,7 @@
             <span class="count-text">(<%= numProperties %> bất động sản)</span>
         </a>
 
-        <a href="view-userOder.jsp?userId=<%= userId %>" class="btn">Xem những bất động sản đã đặt</a>
+        <a href="view-userOder.jsp?userId=<%= userId %>" class="btn">Xem những bất động sản đã hẹn</a>
 
         <a href="change-password.jsp" class="btn">Đổi mật khẩu</a>
 
