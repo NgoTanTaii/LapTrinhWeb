@@ -128,7 +128,7 @@
 <script src="JS/contact-agent.js" defer></script>
 
 <footer>
-    <p>&copy; 2024 Tư Vấn BĐS | Liên hệ: info@bds.com</p>
+    <p>&copy; 2024 Tư Vấn BĐS | Liên hệ: khoangoquan@bds.com</p>
 </footer>
 <style>
     body {
@@ -145,6 +145,11 @@
 
         text-align: center;
         padding: 10px;
+    }
+
+    footer p {
+        color: whitesmoke;
+        font-size: 16px;
     }
 
 </style>

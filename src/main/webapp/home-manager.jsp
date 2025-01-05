@@ -26,11 +26,12 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
     <style>
         .btn-enable {
-            color: white;
+
             border: none;
             padding: 5px 10px;
             cursor: pointer;
             font-size: 14px;
+            color: black;
         }
 
         .btn-disable {
@@ -42,10 +43,15 @@
             font-size: 14px;
         }
 
-        .btn-enable:hover, .btn-disable:hover {
+        .btn-enable:hover {
+            background-color: greenyellow;
             opacity: 0.8;
         }
 
+        .btn-disable:hover {
+            background-color: darkred;
+            opacity: 0.8;
+        }
 
         /* CSS giữ nguyên như bạn đã tạo */
         body {
@@ -115,6 +121,10 @@
 
         }
 
+        .add-button:hover {
+            color: #0d6efd;
+        }
+
         a {
             text-align: right;
             margin-bottom: 20px;
@@ -151,8 +161,6 @@
 </head>
 <body>
 <div class="container">
-
-
     <!-- Main content -->
     <div class="main-content">
         <h2>Danh sách bất động sản</h2>

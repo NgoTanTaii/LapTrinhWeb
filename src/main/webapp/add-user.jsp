@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thêm Người Dùng Mới</title>
     <style>
+
         /* Các kiểu CSS cho form */
         body {
             font-family: Arial, sans-serif;
@@ -63,6 +64,10 @@
         .back-link a {
             color: #007bff;
             text-decoration: none;
+        }
+        .back-link a:hover {
+             text-decoration: underline;
+
         }
 
         /* Thêm kiểu cho các thông báo */

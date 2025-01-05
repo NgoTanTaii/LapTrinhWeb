@@ -606,7 +606,7 @@ public class PropertyDAO {
 
     public List<Map<String, Object>> getTopPosterPosts() {
         List<Map<String, Object>> topPosters = new ArrayList<>();
-        String sql = "SELECT p.poster_id, pr.name AS poster_name, COUNT(*) AS post_count " +
+        String sql = "SELECT p.poster_id,pr.email,pr.phone, pr.name AS poster_name, COUNT(*) AS post_count " +
                 "FROM properties p " +
                 "INNER JOIN posters pr ON p.poster_id = pr.poster_id " +
                 "GROUP BY p.poster_id " +
@@ -624,6 +624,9 @@ public class PropertyDAO {
                 posterData.put("poster_id", resultSet.getInt("poster_id"));
                 posterData.put("poster_name", resultSet.getString("poster_name"));
                 posterData.put("post_count", resultSet.getInt("post_count"));
+                posterData.put("poster_email", resultSet.getString("email"));
+                posterData.put("poster_phone", resultSet.getString("phone"));
+
                 topPosters.add(posterData);
             }
 

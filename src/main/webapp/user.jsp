@@ -74,13 +74,17 @@
 
         .add-button {
             padding: 10px 20px;
-            background-color: #4CAF50;
+            background-color: blue;
             color: white;
             text-align: center;
             text-decoration: none;
             border-radius: 4px;
         }
-
+.add-button:hover {
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+}
         .user-table th {
             color: black;
             text-transform: uppercase;
