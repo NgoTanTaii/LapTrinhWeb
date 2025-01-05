@@ -49,7 +49,7 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 14px;
-            width: 95%;
+            width: 100%;
         }
 
         .btn {
@@ -129,9 +129,12 @@
 
         <div class="social-login">
             <p>Hoặc đăng nhập bằng:</p>
-            <button class="btn btn-facebook" onclick="checkLoginState()">
-                <i class="fab fa-facebook-f" style="margin-right: 45px"></i> Đăng nhập bằng Facebook
+            <button class="btn btn-facebook" style="display: flex; align-items: center; justify-content: center; padding-right: 20px" onclick="checkLoginState()">
+                <i class="fab fa-facebook-f" style="margin-left: 6px;"></i>
+                <span style="flex-grow: 1; text-align: center;margin-left: 25px">Đăng nhập bằng Facebook</span>
+
             </button>
+
             <div id="g_id_onload"
                  data-client_id="161137938230-6h6mbfajcfra9avc0762peh4556202hq.apps.googleusercontent.com"
                  data-login_uri="http://localhost:8080/Batdongsan/loginWithGoogle">
@@ -222,7 +225,7 @@
     // Render the Google Sign-In button
     google.accounts.id.renderButton(
         document.getElementById("g_id_onload"),
-        { theme: "outline", size: "large" }
+        {theme: "outline", size: "large"}
     );
 
     google.accounts.id.prompt();

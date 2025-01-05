@@ -127,6 +127,26 @@
 </div>
 <script src="JS/contact-agent.js" defer></script>
 
+<footer>
+    <p>&copy; 2024 Tư Vấn BĐS | Liên hệ: info@bds.com</p>
+</footer>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
 
+    footer {
+        margin-top: auto; /* Đẩy footer xuống dưới cùng */
+        background-color: #333;
+
+        text-align: center;
+        padding: 10px;
+    }
+
+</style>
 </body>
 </html>

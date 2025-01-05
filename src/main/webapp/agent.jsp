@@ -15,11 +15,11 @@
     </div>
     <nav>
         <ul>
-            <li><a href="#">Trang Chủ</a></li>
+            <li><a href="welcome">Trang Chủ</a></li>
             <li><a href="#">Dịch Vụ</a></li>
             <li><a href="#">Tư Vấn Viên</a></li>
             <li><a href="#">Liên Hệ</a></li>
-            <li><a href="#">Đăng Nhập</a></li>
+
         </ul>
     </nav>
 </header>
