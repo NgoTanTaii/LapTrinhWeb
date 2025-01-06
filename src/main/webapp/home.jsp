@@ -374,8 +374,8 @@
     </div>
 
     <!-- Nút xem thêm và ẩn bớt -->
-    <div class="view-more">
-        <a href="#" id="toggleButton">Xem thêm</a>
+    <div class="view-more" style="padding-top: 20px;padding-bottom: 20px">
+        <a href="#"  id="toggleButton">Xem thêm</a>
     </div>
 </div>
 <script>

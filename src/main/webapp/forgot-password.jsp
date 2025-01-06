@@ -88,8 +88,12 @@
     <div class="form-container">
         <h2>Lấy lại mật khẩu</h2>
         <form action="ForgotPasswordServlet" method="post">
-            <input type="text" name="username" placeholder="Nhập tên tài khoản" required>
-            <input type="email" name="email" placeholder="Nhập email của bạn" required>
+            <label for="username">Tên tài khoản:</label>
+            <input type="text" id="username" name="username" placeholder="Nhập tên tài khoản" required>
+
+            <label for="email">Email của bạn:</label>
+            <input type="email" id="email" name="email" placeholder="Nhập email của bạn" required>
+
             <input type="submit" value="Gửi yêu cầu">
         </form>
         <!-- Thông báo lỗi nếu có -->
