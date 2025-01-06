@@ -76,7 +76,9 @@
        style="border: 1px solid #ccc; border-radius:100%;">
         <img src="jpg/heart%20(1).png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng"
              class="cart-icon">
-        <div class="item-count">0</div>
+        <div class="item-count" style="position: absolute; top: 0; right: 0; background-color: red; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px;">
+            >0</div>
+
         <div class="mini-cart">
             <h4>Bất động sản đã lưu</h4>
             <ul id="cart-items"></ul>
@@ -312,7 +314,7 @@
         </p>
         <div class="details">
             <div class="price-size">
-                <p class="price"><%= property.getPrice() %> tỷ</p>
+                <p class="price"><%= property.getPrice() %> <%= property.getStatus().equals("2") ? "triệu" : "tỷ"%></p>
                 <p class="size"><%= property.getArea() %> m²</p>
             </div>
         </div>

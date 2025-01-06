@@ -119,8 +119,8 @@
 
         /* Styling for product image */
         .list-group-item img {
-            width: 150px;  /* Larger image */
-            height: 150px;  /* Maintain aspect ratio */
+            width: 150px; /* Larger image */
+            height: 150px; /* Maintain aspect ratio */
             object-fit: cover;
             border-radius: 8px;
             margin-right: 20px;
@@ -191,6 +191,7 @@
             color: #d9534f; /* Màu đỏ */
             font-weight: bold;
         }
+
         .title-cart {
             display: flex;
             justify-content: space-between; /* Đẩy các phần tử ra hai đầu */
@@ -208,21 +209,23 @@
             width: auto; /* Đảm bảo nút không chiếm hết chiều rộng */
             padding: 10px 20px; /* Đảm bảo kích thước nút phù hợp */
         }
+
         .hire-agent-btn {
-            display: inline-block;  /* Hiển thị dưới dạng khối nội tuyến */
-            padding: 12px 20px;     /* Khoảng cách bên trong nút */
-            background-color: #007bff; /* Màu nền của nút */
-            color: #fff;            /* Màu chữ trắng */
-            font-size: 16px;        /* Kích thước chữ */
-            text-align: center;     /* Căn giữa nội dung của nút */
-            text-decoration: none;  /* Bỏ gạch dưới mặc định của thẻ a */
-            border-radius: 5px;     /* Bo góc cho nút */
+            display: inline-block; /* Hiển thị dưới dạng khối nội tuyến */
+            padding: 12px 20px; /* Khoảng cách bên trong nút */
+            background-color: darkred; /* Màu nền của nút */
+            color: #fff; /* Màu chữ trắng */
+            font-size: 16px; /* Kích thước chữ */
+            text-align: center; /* Căn giữa nội dung của nút */
+            text-decoration: none; /* Bỏ gạch dưới mặc định của thẻ a */
+            border-radius: 5px; /* Bo góc cho nút */
             transition: background-color 0.3s, transform 0.2s; /* Thêm hiệu ứng chuyển màu và hiệu ứng nhấn */
-            cursor: pointer;       /* Thay đổi con trỏ thành dạng tay khi hover */
+            cursor: pointer; /* Thay đổi con trỏ thành dạng tay khi hover */
         }
 
         /* Khi người dùng hover (di chuột qua) */
         .hire-agent-btn:hover {
+
             background-color: #0056b3; /* Màu nền thay đổi khi hover */
             transform: scale(1.05); /* Tăng kích thước nút khi hover */
         }
@@ -250,8 +253,6 @@
         }
     }
 %>
-
-
 
 
 <header class="header">
@@ -394,8 +395,8 @@
 <body>
 
 <div class="container mt-4">
-    <div class ="title-cart">
-    <h3 class="text-center mb-4">Tin đã lưu của bạn</h3>
+    <div class="title-cart">
+        <h3 class="text-center mb-4">Tin đã lưu của bạn</h3>
         <a href="agent.jsp" class="hire-agent-btn">Thuê người môi giới</a> <!-- Liên kết tới agent.jsp -->
 
     </div>
@@ -414,17 +415,22 @@
                 </a>
 
                 <div>
-                    <h5 class="mb-1"><%= item.getTitle() %></h5>
-                    <p class="mb-1 text-muted"><i class="fas fa-map-marker-alt"></i> Địa chỉ: <%= item.getAddress() %></p>
-                    <p class="mb-1"><i class="fas fa-ruler-combined"></i> Diện tích: <strong><%= item.getArea() %> m²</strong></p>
-                    <p class="mb-0 text-danger"><i class="fas fa-dollar-sign"></i> Giá: <strong><%= item.getPrice() %> tỷ</strong></p>
+                    <h5 class="mb-1"><%= item.getTitle() %>
+                    </h5>
+                    <p class="mb-1 text-muted"><i class="fas fa-map-marker-alt"></i> Địa chỉ: <%= item.getAddress() %>
+                    </p>
+                    <p class="mb-1"><i class="fas fa-ruler-combined"></i> Diện tích: <strong><%= item.getArea() %>
+                        m²</strong></p>
+                    <p class="mb-0 text-danger"><i class="fas fa-dollar-sign"></i> Giá: <strong><%= item.getPrice() %>
+                        tỷ</strong></p>
                 </div>
             </div>
 
             <!-- Remove button (form to delete product) -->
             <form action="removeItemFromCart" method="POST" style="display: inline;">
                 <input type="hidden" name="propertyId" value="<%= item.getPropertyId() %>">
-                <button type="submit" class="btn btn-sm btn-danger ml-3" onclick="return confirm(' Bạn có chắc chắn muốn xóa bất động sản này không?')">
+                <button type="submit" class="btn btn-sm btn-danger ml-3"
+                        onclick="return confirm(' Bạn có chắc chắn muốn xóa bất động sản này không?')">
                     <i class="fas fa-trash-alt"></i> Xóa
                 </button>
             </form>
@@ -484,7 +490,7 @@
     }
 
     // Disable the checkout button initially if the cart is empty
-    window.onload = function() {
+    window.onload = function () {
         const checkoutButton = document.getElementById('checkout-button');
         const emptyCartMessage = document.querySelector('.list-group-item.text-muted');
 
@@ -494,9 +500,6 @@
         }
     };
 </script>
-
-
-
 
 
 <div class="footer">
@@ -527,7 +530,7 @@
                 <li><a href="#">Dự án</a></li>
                 <li><a href="#">Tin tức</a></li>
                 <li><a href="#">Liên hệ</a></li>
-                <li><a href="agent.jsp">Thuê người môi giới</a> </li>
+                <li><a href="agent.jsp">Thuê người môi giới</a></li>
             </ul>
         </div>
 
