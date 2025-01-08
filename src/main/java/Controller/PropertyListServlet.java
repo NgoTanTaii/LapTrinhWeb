@@ -25,7 +25,7 @@ public class PropertyListServlet extends HttpServlet {
              Statement stmt = conn.createStatement()) {
 
             // Truy vấn lấy danh sách các dự án với status = 3
-            ResultSet rs = stmt.executeQuery("SELECT * FROM properties WHERE status=3");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM properties WHERE status= 3");
             while (rs.next()) {
                 PropertyProject property = new PropertyProject();
                 property.setId(rs.getInt("property_id"));

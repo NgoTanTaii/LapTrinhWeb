@@ -46,7 +46,8 @@ public class ManageAppointmentsServlet extends HttpServlet {
                         rs.getString("appointment_time"),
                         rs.getInt("property_count"),
                         rs.getString("created_at"),
-                        rs.getString("username")
+                        rs.getString("username"),
+                        rs.getInt("contacted")
                 );
                 appointments.add(appointment);
             }

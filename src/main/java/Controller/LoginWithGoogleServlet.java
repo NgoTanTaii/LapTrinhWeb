@@ -48,26 +48,33 @@ public class LoginWithGoogleServlet extends HttpServlet {
                 GoogleIdToken.Payload payload = idToken.getPayload();
 
                 // Get user details from Google
-                String userId = payload.getSubject();  // Google user ID (unique to the user)
+                String googleUserId = payload.getSubject();  // Google user ID (unique to the user)
                 String email = payload.getEmail();
                 String name = (String) payload.get("name");
 
-                // Check if the user already exists in the database
+                // Kiểm tra xem googleUserId có phải là chuỗi rỗng không
+                if (googleUserId == null || googleUserId.isEmpty()) {
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid Google user ID.");
+                    return;
+                }
+
+                // Check if the user already exists in the database by googleUserId
                 UserDAO userDAO = new UserDAO();
-                if (userDAO.checkUserExists(userId)) {
+                if (userDAO.checkUserExists(googleUserId)) {
                     // User exists, just log them in
                     request.getSession().setAttribute("username", name);
                     request.getSession().setAttribute("email", email);
                     response.sendRedirect("welcome"); // Redirect to the welcome page
                 } else {
                     // User does not exist, so create a new user
-                    String password = "defaultPassword"; // You can set a default password here
+                    String password = ""; // You can set a default password here
                     String token = null; // Set token to null for new users
                     String status = "active"; // Default status for new users
                     String role = "user"; // Default role for new users
 
-                    // Add new user to the database
-                    userDAO.addUser(name, password, email, token, status, role);
+                    // Add new user to the database with google_id
+                    String userId = "";
+//                    userDAO.addUser(userId, name, password, email, token, status, role);
 
                     // Store user info in session after adding to the database
                     request.getSession().setAttribute("username", name);

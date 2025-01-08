@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 @WebServlet("/approveProperty")
 public class ApprovePropertyServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
         String propertyId = request.getParameter("property_id");
 
         response.setContentType("text/plain");
@@ -22,13 +23,30 @@ public class ApprovePropertyServlet extends HttpServlet {
 
         if (propertyId != null) {
             try (Connection conn = Database.getConnection()) {
-                String sql = "UPDATE properties SET available = 1 WHERE property_id = ?";
-                PreparedStatement stmt = conn.prepareStatement(sql);
-                stmt.setInt(1, Integer.parseInt(propertyId));
-                int rowsUpdated = stmt.executeUpdate();
+                if ("approve".equals(action)) {
+                    // Duyệt bất động sản
+                    String sql = "UPDATE properties SET available = 1 WHERE property_id = ?";
+                    PreparedStatement stmt = conn.prepareStatement(sql);
+                    stmt.setInt(1, Integer.parseInt(propertyId));
+                    int rowsUpdated = stmt.executeUpdate();
 
-                if (rowsUpdated > 0) {
-                    response.getWriter().write("success");
+                    if (rowsUpdated > 0) {
+                        response.getWriter().write("success");
+                    } else {
+                        response.getWriter().write("error");
+                    }
+                } else if ("delete".equals(action)) {
+                    // Xóa bất động sản
+                    String sql = "DELETE FROM properties WHERE property_id = ?";
+                    PreparedStatement stmt = conn.prepareStatement(sql);
+                    stmt.setInt(1, Integer.parseInt(propertyId));
+                    int rowsDeleted = stmt.executeUpdate();
+
+                    if (rowsDeleted > 0) {
+                        response.getWriter().write("success");
+                    } else {
+                        response.getWriter().write("error");
+                    }
                 } else {
                     response.getWriter().write("error");
                 }
@@ -41,5 +59,6 @@ public class ApprovePropertyServlet extends HttpServlet {
         }
     }
 }
+
 
 

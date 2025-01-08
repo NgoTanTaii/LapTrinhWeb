@@ -191,7 +191,7 @@
                                 <img src="${item.imageUrl}" alt="${item.title}" class="cart-item-image" style="width: 50px; height: 50px; margin-right: 10px;">
                                 <div>
                                     <h5>${item.title}</h5>
-                                    <p style="color:darkred">Giá: ${item.price} tỷ</p>
+                                    <p style="color:darkred">Giá: ${item.price}tỷ</p>
                                     <p style="color:darkred">Diện tích: ${item.area} m²</p>
                                     <p>Địa chỉ: ${item.address}</p>
 
@@ -210,7 +210,7 @@
                                     cartItemsContainer.appendChild(li);
                                 });
                             } else {
-                                cartItemsContainer.innerHTML = '<li>Giỏ hàng trống</li>';
+                                cartItemsContainer.innerHTML = '<li>Bạn chưa có bất động sản đã lưu.</li>';
                             }
                         } else {
                             cartItemsContainer.innerHTML = `<li>${data.message}</li>`;
@@ -581,7 +581,7 @@
             </p>
             <div class="details">
                 <div class="price-size">
-                    <p class="price"><%= property.getPrice() %> tỷ</p>
+                    <p class="price"><%= property.getPrice() %> <%= property.getStatus().equals("2") ? "triệu" : "tỷ" %> </p>
                     <p class="size"><%= property.getArea() %> m²</p>
                 </div>
             </div>
@@ -634,7 +634,7 @@
             }
         %>
     </div>
-    <div class="view-more">
+    <div class="view-more" style="padding-top: 20px;padding-bottom: 20px">
         <a href="#" id="toggleButton">Xem thêm</a>
     </div>
 </div>
@@ -773,7 +773,7 @@
 </style>
 <%
     // Tạo danh sách các thành phố lớn
-    List<String> majorCities = List.of("TP.HCM", "Hà Nội", "Đà Nẵng", "Vũng Tàu");
+    List<String> majorCities = List.of("TP.HCM", "Đà Nẵng", "Vũng Tàu");
 
     // Lấy danh sách bất động sản từ các thành phố này
     PropertyDAO propertyDAO = new PropertyDAO();
@@ -940,7 +940,7 @@
 <div class="footer">
     <div class="footer-top">
 
-        <h1><a href="homes">
+        <h1><a href="<%= isLoggedIn ? "welcome" : "homes" %>">
             <span class="color1">HOME</span>
             <span class="color2">LANDER</span>
         </a></h1>

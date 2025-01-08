@@ -747,7 +747,7 @@
             String videoUrl = videoDAO.getVideoUrlByPropertyId(propertyId);
         %>
 
-        <div style="padding: 10px">
+        <div style="padding: 10px;margin-left: -10px">
             <!-- Nút chia sẻ Facebook -->
             <form action="https://www.facebook.com/sharer/sharer.php" method="get" target="_blank"
                   style="display:inline;">
@@ -921,7 +921,7 @@
                 }
             %>
 
-            <!-- Phần thêm đánh giá -->
+
             <div class="rating">
                 <h4>Thêm Đánh Giá của Bạn</h4>
                 <form action="ReviewServlet" method="post" enctype="multipart/form-data">
@@ -935,24 +935,171 @@
                     </div>
 
                     <!-- Phần bình luận -->
-                    <textarea name="review" id="review" placeholder="Viết bình luận của bạn..." rows="4" cols="50"
-                              required></textarea><br>
+                    <textarea name="review" id="review" placeholder="Viết bình luận của bạn..." rows="4" cols="50" required></textarea><br>
 
                     <!-- Phần upload ảnh -->
-                    <div class="image-upload" style="margin-top: 20px">
-                        <label for="images">Chọn ảnh (Bạn có thể chọn nhiều ảnh):</label><br>
-                        <input type="file" id="images" name="images" accept="image/*" multiple><br><br>
+                    <div class="image-upload" style="margin-top: 20px;">
+                        <label for="images">Chọn ảnh về bất động sản (Bạn có thể chọn nhiều ảnh):</label><br>
+                        <input type="file" id="images" name="images" accept="image/*" multiple onchange="previewImages()"><br><br>
+                        <div id="imagePreviewContainer" class="image-preview-container"></div>
+
+                        <!-- Thêm Form Kéo Thả Hình Ảnh -->
+                        <div class="drag-drop-upload" style="margin-top: 20px; border: 2px dashed #ccc; padding: 20px;">
+                            <label for="dragAndDropImages">Hoặc kéo và thả ảnh vào đây:</label><br>
+                            <input type="file" id="dragAndDropImages" name="dragAndDropImages" accept="image/*" multiple style="display:none" onchange="previewImages()">
+                            <div id="dropZone" style="width: 100%; height: 150px; border: 2px dashed #aaa; text-align: center; line-height: 150px;">
+                                Kéo thả ảnh vào đây
+                            </div>
+                            <div id="dragDropImagePreviewContainer" class="drag-drop-image-preview-container"></div>
+                        </div>
                     </div>
 
+                    <!-- Form Đăng Video -->
+                    <!-- Form Đăng Video -->
+                    <div class="video-upload" style="margin-top: 20px;">
+                        <label for="video">Chọn video về bất động sản (Bạn có thể chọn video từ máy tính hoặc nhập URL):</label><br>
+                        <!-- Chọn video từ máy tính -->
+                        <input type="file" id="video" name="video" accept="video/*"><br><br>
+                        <!-- Hoặc nhập URL video -->
+
+                        <div id="videoPreviewContainer" class="video-preview-container"></div>
+                    </div>
+
+                    <script>
+                        // Xử lý khi kéo ảnh vào vùng drop zone
+                        var dropZone = document.getElementById('dropZone');
+                        var dragAndDropInput = document.getElementById('dragAndDropImages');
+                        var previewContainer = document.getElementById('imagePreviewContainer'); // Cập nhật lại container
+
+                        // Thêm sự kiện "dragover" để cho phép thả file
+                        dropZone.addEventListener('dragover', function (event) {
+                            event.preventDefault();
+                            dropZone.style.backgroundColor = '#f0f0f0'; // Thay đổi màu nền khi kéo vào
+                        });
+
+                        // Thêm sự kiện "dragleave" để trả lại màu nền khi kéo ra ngoài
+                        dropZone.addEventListener('dragleave', function () {
+                            dropZone.style.backgroundColor = ''; // Trả lại màu nền ban đầu
+                        });
+
+                        // Xử lý khi người dùng thả ảnh vào vùng drop zone
+                        dropZone.addEventListener('drop', function (event) {
+                            event.preventDefault();
+                            dropZone.style.backgroundColor = ''; // Trả lại màu nền khi thả
+
+                            // Lấy danh sách ảnh từ sự kiện drop
+                            var files = event.dataTransfer.files;
+                            previewImagesFromFiles(files);
+                        });
+
+                        // Xử lý khi người dùng chọn ảnh từ input file
+                        function previewImages() {
+                            var files = dragAndDropInput.files;
+                            previewImagesFromFiles(files);
+                        }
+
+                        // Hàm xử lý hiển thị preview và nút xóa
+                        function previewImagesFromFiles(files) {
+                            previewContainer.innerHTML = ''; // Xóa ảnh cũ trước khi thêm ảnh mới
+
+                            for (var i = 0; i < files.length; i++) {
+                                var file = files[i];
+                                var reader = new FileReader();
+
+                                reader.onload = function (event) {
+                                    var imgElement = document.createElement('img');
+                                    imgElement.src = event.target.result;
+                                    imgElement.style.width = '100px';
+                                    imgElement.style.margin = '5px';
+                                    imgElement.classList.add('preview-image');
+
+                                    // Tạo nút xóa
+                                    var deleteBtn = document.createElement('button');
+                                    deleteBtn.innerText = 'Xóa';
+                                    deleteBtn.classList.add('delete-button');
+                                    deleteBtn.onclick = function () {
+                                        imgElement.remove();  // Xóa ảnh
+                                        deleteBtn.remove();   // Xóa nút xóa
+                                    };
+
+                                    // Thêm ảnh và nút xóa vào preview container
+                                    previewContainer.appendChild(imgElement);
+                                    previewContainer.appendChild(deleteBtn);
+                                };
+
+                                reader.readAsDataURL(file); // Đọc file ảnh để hiển thị
+                            }
+                        }
+
+                        // Hàm xử lý video (nếu muốn hiển thị preview cho video)
+                        document.getElementById('video').addEventListener('change', function (event) {
+                            var file = event.target.files[0];
+                            if (file) {
+                                var reader = new FileReader();
+                                reader.onload = function (e) {
+                                    var videoElement = document.createElement('video');
+                                    videoElement.src = e.target.result;
+                                    videoElement.controls = true;
+                                    videoElement.style.width = '100px';
+                                    document.getElementById('videoPreviewContainer').appendChild(videoElement);
+                                };
+                                reader.readAsDataURL(file);
+                            }
+                        });
+                    </script>
+
+                    <!-- Thêm thông tin về bất động sản -->
                     <input type="hidden" name="propertyId" value="<%= property.getId() %>">
-                    <button style="margin-top:10px ;" type="submit">Gửi Đánh Giá</button>
+
+                    <button style="margin-top:10px;" type="submit">Gửi Đánh Giá</button>
                 </form>
             </div>
+
 
         </div>
 
 
         <script>
+            // Hàm xem trước ảnh và xóa ảnh đã chọn
+            function previewImages() {
+                var files = document.getElementById('images').files;
+                var previewContainer = document.getElementById('imagePreviewContainer');
+                previewContainer.innerHTML = ''; // Xóa ảnh đã có trước đó
+
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        var imgElement = document.createElement('img');
+                        imgElement.src = e.target.result;
+                        imgElement.classList.add('preview-img');
+
+                        var closeButton = document.createElement('span');
+                        closeButton.classList.add('close-btn');
+                        closeButton.innerText = '×';
+                        closeButton.onclick = function () {
+                            removeImage(this);
+                        };
+
+                        var imageWrapper = document.createElement('div');
+                        imageWrapper.classList.add('image-wrapper');
+                        imageWrapper.appendChild(imgElement);
+                        imageWrapper.appendChild(closeButton);
+
+                        previewContainer.appendChild(imageWrapper);
+                    };
+
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            // Hàm để xóa ảnh
+            function removeImage(button) {
+                var imageWrapper = button.parentElement;
+                imageWrapper.remove();
+            }
+
             // Hàm để ẩn/hiện phần đánh giá
             function toggleReviews() {
                 var reviewsSection = document.getElementById("reviewsSection");
@@ -972,6 +1119,41 @@
 
     </div>
     <style>
+        /* Container chứa các ảnh xem trước */
+        .image-preview-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* Mỗi ảnh xem trước */
+        .preview-img {
+            max-width: 100px;
+            max-height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        /* Wrapper chứa ảnh và dấu "x" */
+        .image-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Dấu "x" để xóa ảnh */
+        .close-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
         .stars {
             display: flex;
 
@@ -1126,43 +1308,43 @@
 </div>
 
 
-<%--<div class="property-features">--%>
-<%--    <h3>Đặc điểm bất động sản</h3>--%>
-<%--    <div class="features-container">--%>
-<%--        <div class="features-column">--%>
-<%--            <div class="feature-item">--%>
-<%--                <i class="fas fa-border-all feature-icon"></i>--%>
-<%--                <span><strong>Mặt tiền:</strong> <%= property.getFrontWidth() %> m</span>--%>
-<%--            </div>--%>
-<%--            <div class="feature-item">--%>
-<%--                <i class="fas fa-road feature-icon"></i>--%>
-<%--                <span><strong>Đường vào:</strong> <%= property.getRoadWidth() %> m</span>--%>
-<%--            </div>--%>
-<%--            <div class="feature-item">--%>
-<%--                <i class="fas fa-building feature-icon"></i>--%>
-<%--                <span><strong>Số tầng:</strong> <%= property.getFloors() %> tầng</span>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--        <div class="features-column">--%>
-<%--            <div class="feature-item">--%>
-<%--                <i class="fas fa-bed feature-icon"></i>--%>
-<%--                <span><strong>Số phòng ngủ:</strong> <%= property.getBedrooms() %> phòng</span>--%>
-<%--            </div>--%>
-<%--            <div class="feature-item">--%>
-<%--                <i class="fas fa-bath feature-icon"></i>--%>
-<%--                <span><strong>Số toilet:</strong> <%= property.getBathrooms() %> phòng</span>--%>
-<%--            </div>--%>
-<%--            <div class="feature-item">--%>
-<%--                <i class="fas fa-file-alt feature-icon"></i>--%>
-<%--                <span><strong>Pháp lý:</strong> <%= property.getLegalStatus() %></span>--%>
-<%--            </div>--%>
-<%--            <div class="feature-item">--%>
-<%--                <i class="fas fa-couch feature-icon"></i>--%>
-<%--                <span><strong>Nội thất:</strong> Đầy đủ</span>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</div>--%>
+<div class="property-features">
+    <h3>Đặc điểm bất động sản</h3>
+    <div class="features-container">
+        <div class="features-column">
+            <div class="feature-item" style="padding-left: 10px;">
+                <i class="fas fa-border-all feature-icon" style="margin-left: -5px"></i>
+                <span><strong> Mặt tiền:</strong> 5 m</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-road feature-icon" style="margin-left: -1px"></i>
+                <span><strong> Đường vào:</strong> 10 m</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-building feature-icon"style="margin-left: 5px"></i>
+                <span><strong style="margin-left: 3px"> Số tầng:</strong> 2 tầng</span>
+            </div>
+        </div>
+        <div class="features-column">
+            <div class="feature-item">
+                <i class="fas fa-bed feature-icon"></i>
+                <span><strong>Số phòng ngủ:</strong> 4 phòng</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-bath feature-icon"></i>
+                <span><strong style="margin-left: 6px">Số toilet:</strong>2 phòng</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-file-alt feature-icon" style="margin-left:5px"></i>
+                <span><strong style="margin-left:7px ">Pháp lý:</strong>.. </span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-couch feature-icon"></i>
+                <span><strong>Nội thất:</strong> Đầy đủ</span>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="bottom-banner">
     <img src="jpg/bank-loan-offer-banner-web.jpg" alt="Banner quảng cáo" style="width: 100%; border-radius: 5px;">
@@ -1185,11 +1367,11 @@
     <div class="info-container">
         <div class="info-item">
             <i class="fas fa-calendar-alt info-icon"></i>
-            <span><strong>Ngày đăng:</strong> 22/10/2024</span>
+            <span><strong>Ngày đăng:</strong> 31/12/2024</span>
         </div>
         <div class="info-item">
             <i class="fas fa-calendar-times info-icon"></i>
-            <span><strong>Ngày hết hạn:</strong> 01/11/2024</span>
+            <span><strong>Ngày hết hạn:</strong> 14/1/2025</span>
         </div>
         <div class="info-item">
             <i class="fas fa-info-circle info-icon"></i>
@@ -1281,9 +1463,10 @@
         %>
 
         <div class="more-products">
-            <button id="scrollLeftBtn"> <</button>
-            <button id="scrollRightBtn">️ ></button>
+            <button id="scrollLeftBtn"><i class="fas fa-chevron-left"></i></button>
+            <button id="scrollRightBtn"><i class="fas fa-chevron-right"></i></button>
         </div>
+
     </div>
 </div>
 
@@ -1439,13 +1622,34 @@
         %>
 
         <div class="more-products">
-            <button id="scrollLeftBtn1"> <</button>
-            <button id="scrollRightBtn1">️ ></button>
+            <button id="scrollLeftBtn1"><i class="fas fa-chevron-left"></i></button>
+            <button id="scrollRightBtn1"><i class="fas fa-chevron-right"></i></button>
         </div>
+
     </div>
 </div>
 
+<style>
+    .more-products button {
+        background-color: whitesmoke; /* Nền trong suốt */
 
+        border-radius: 5px; /* Bo tròn viền */
+        padding: 5px 10px; /* Điều chỉnh kích thước nút */
+        font-size: 16px; /* Kích thước biểu tượng */
+        cursor: pointer; /* Con trỏ chuột thành hình bàn tay khi di chuột vào */
+        transition: background-color 0.3s, border-color 0.3s; /* Hiệu ứng chuyển đổi cho viền và nền */
+    }
+
+    .more-products button:hover {
+        background-color: #f0f0f0; /* Màu nền khi hover */
+        border-color: #007bff; /* Màu viền khi hover */
+    }
+
+    .more-products button i {
+        font-size: 20px; /* Kích thước biểu tượng FontAwesome */
+    }
+
+</style>
 <script>
     const container1 = document.getElementById('relatedProductsContainer1');
 

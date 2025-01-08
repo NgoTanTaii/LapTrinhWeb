@@ -1,7 +1,6 @@
 package Dao;
 
 import DBcontext.Database;
-import DBcontext.DbConnection1;
 import Entity.Property1;
 
 import java.sql.*;
@@ -112,7 +111,7 @@ public class PropertyDAO {
     public List<Property1> getPropertiesByPage(int start, int total) {
         List<Property1> list = new ArrayList<>();
         try {
-            Connection conn = DbConnection1.initializeDatabase();
+            Connection conn = Database.getConnection();
             String query = "SELECT * FROM properties LIMIT ?, ?";
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setInt(1, start);
@@ -142,7 +141,7 @@ public class PropertyDAO {
     public int getTotalRecords() {
         int total = 0;
         try {
-            Connection conn = DbConnection1.initializeDatabase();
+            Connection conn = Database.getConnection();
             String query = "SELECT COUNT(*) FROM properties";
             PreparedStatement stmt = conn.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
@@ -321,7 +320,7 @@ public class PropertyDAO {
         }
         String query = queryBuilder.toString();
 
-        try (Connection conn = DbConnection1.initializeDatabase();
+        try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             // Thiết lập giá trị cho từng dấu ? trong câu truy vấn
@@ -341,7 +340,7 @@ public class PropertyDAO {
 
                 properties.add(property);
             }
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return properties;
@@ -351,7 +350,7 @@ public class PropertyDAO {
         List<Property1> properties = new ArrayList<>();
         String query = "SELECT property_id,title, description, address, area, image_url, price FROM properties WHERE address LIKE ?";
 
-        try (Connection conn = DbConnection1.initializeDatabase();
+        try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, "%" + city + "%");
             ResultSet rs = stmt.executeQuery();
@@ -368,8 +367,6 @@ public class PropertyDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
         return properties;
     }
@@ -379,7 +376,7 @@ public class PropertyDAO {
         String query = "SELECT property_id,title, description, address, area, image_url, price FROM properties " +
                 "WHERE address LIKE ? ORDER BY area DESC LIMIT ?"; // Lấy sản phẩm có diện tích lớn nhất
 
-        try (Connection conn = DbConnection1.initializeDatabase();
+        try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, "%" + city + "%");
             stmt.setInt(2, limit); // Số lượng sản phẩm muốn lấy
@@ -397,8 +394,6 @@ public class PropertyDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
         return properties;
     }
@@ -408,7 +403,7 @@ public class PropertyDAO {
         String query = "SELECT property_id,title, description, address, area, image_url, price FROM properties " +
                 "WHERE address LIKE ? ORDER BY price DESC LIMIT ?"; // Lấy sản phẩm có giá cao nhất
 
-        try (Connection conn = DbConnection1.initializeDatabase();
+        try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, "%" + city + "%");
             stmt.setInt(2, limit); // Số lượng sản phẩm muốn lấy
@@ -426,8 +421,6 @@ public class PropertyDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
         return properties;
     }
@@ -613,7 +606,7 @@ public class PropertyDAO {
 
     public List<Map<String, Object>> getTopPosterPosts() {
         List<Map<String, Object>> topPosters = new ArrayList<>();
-        String sql = "SELECT p.poster_id, pr.name AS poster_name, COUNT(*) AS post_count " +
+        String sql = "SELECT p.poster_id,pr.email,pr.phone, pr.name AS poster_name, COUNT(*) AS post_count " +
                 "FROM properties p " +
                 "INNER JOIN posters pr ON p.poster_id = pr.poster_id " +
                 "GROUP BY p.poster_id " +
@@ -631,6 +624,9 @@ public class PropertyDAO {
                 posterData.put("poster_id", resultSet.getInt("poster_id"));
                 posterData.put("poster_name", resultSet.getString("poster_name"));
                 posterData.put("post_count", resultSet.getInt("post_count"));
+                posterData.put("poster_email", resultSet.getString("email"));
+                posterData.put("poster_phone", resultSet.getString("phone"));
+
                 topPosters.add(posterData);
             }
 

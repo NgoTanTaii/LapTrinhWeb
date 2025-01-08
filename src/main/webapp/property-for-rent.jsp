@@ -391,6 +391,15 @@
 
             <nav>
                 <ul class="u-lo">
+                    <!-- Mục Nhà Đất Hot -->
+                    <li><a href="property-hot.jsp">Nhà Đất Hot</a>
+                        <ul>
+                            <li><a href="#">Nhà đất bán hot</a></li>
+                            <li><a href="#">Nhà đất cho thuê hot</a></li>
+                            <li><a href="#">Nhà đất dự án hot</a></li>
+                        </ul>
+                    </li>
+                    <!-- Mục Nhà Đất Bán -->
                     <li><a href="forsale">Nhà Đất Bán</a>
                         <ul>
                             <li><a href="#">Thông tin bán nhà đất</a></li>
@@ -398,6 +407,7 @@
                             <li><a href="#">Nhà đất giá rẻ</a></li>
                         </ul>
                     </li>
+                    <!-- Mục Nhà Đất Cho Thuê -->
                     <li><a href="forrent">Nhà Đất Cho Thuê</a>
                         <ul>
                             <li><a href="#">Thông tin cho thuê nhà đất</a></li>
@@ -405,6 +415,7 @@
                             <li><a href="#">Thuê căn hộ giá rẻ</a></li>
                         </ul>
                     </li>
+                    <!-- Mục Dự Án -->
                     <li><a href="Project">Dự Án</a>
                         <ul>
                             <li><a href="#">Các dự án nổi bật</a></li>
@@ -412,6 +423,7 @@
                             <li><a href="#">Dự án chung cư</a></li>
                         </ul>
                     </li>
+                    <!-- Mục Tin Tức -->
                     <li><a href="news.jsp">Tin Tức</a>
                         <ul>
                             <li><a href="#">Tin thị trường</a></li>
@@ -419,6 +431,7 @@
                             <li><a href="#">Phân tích và đánh giá</a></li>
                         </ul>
                     </li>
+                    <!-- Mục Wiki BĐS -->
                     <li><a href="wiki.jsp">Wiki BĐS</a>
                         <ul>
                             <li><a href="#">Mua bán</a></li>
@@ -702,7 +715,17 @@
         color: #e74c3c;
         font-weight: bold;
     }
-
+    .copyright {
+        width: 52%;
+        margin-left: 135px;
+        margin-top: 40px; /* Khoảng cách trên cho phần bản quyền */
+        padding: 10px; /* Padding bên trong */
+        text-align: center; /* Căn giữa nội dung */
+        font-size: 0.8em; /* Kích thước chữ nhỏ hơn */
+        color: #555; /* Màu chữ */
+        border-top: 1px solid #ccc; /* Đường viền trên */
+        background-color: #f9f9f9; /* Màu nền nhẹ cho phần bản quyền */
+    }
 </style>
 
 <script>
@@ -722,7 +745,9 @@
         });
     });
 </script>
-
+<div class="copyright">
+    <p>© Mọi quyền thuộc về Homelander. Mọi thông tin liên quan vui lòng liên hệ với chúng tôi.</p>
+</div>
 
 <!-- Footer -->
 <div class="footer">

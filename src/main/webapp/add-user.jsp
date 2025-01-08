@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thêm Người Dùng Mới</title>
     <style>
+
         /* Các kiểu CSS cho form */
         body {
             font-family: Arial, sans-serif;
@@ -64,6 +65,10 @@
             color: #007bff;
             text-decoration: none;
         }
+        .back-link a:hover {
+             text-decoration: underline;
+
+        }
 
         /* Thêm kiểu cho các thông báo */
         .alert {
@@ -88,7 +93,25 @@
 <div class="container">
     <h2>Thêm Người Dùng Mới</h2>
 
+    <!-- Thông báo lỗi hoặc thành công nếu có -->
+    <%
+        String error = (String) request.getAttribute("error");
+        String success = (String) request.getAttribute("success");
+
+        if (error != null) {
+    %>
+    <div class="alert alert-danger"><%= error %></div>
+    <%
+    } else if (success != null) {
+    %>
+    <div class="alert alert-success"><%= success %></div>
+    <%
+        }
+    %>
+
     <form action="addUser" method="POST">
+        <input type="hidden" name="action" value="create">
+
         <label for="username">Tên Người Dùng:</label>
         <input type="text" id="username" name="username" required>
 
@@ -109,7 +132,6 @@
             <option value="active">Hoạt Động</option>
             <option value="inactive">Không Hoạt Động</option>
         </select>
-
 
         <button type="submit" class="submit-button">Thêm Người Dùng</button>
     </form>

@@ -76,11 +76,16 @@
        style="border: 1px solid #ccc; border-radius:100%;">
         <img src="jpg/heart%20(1).png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng"
              class="cart-icon">
-        <div class="item-count">0</div>
+        <div class="item-count" style="position: absolute; top: 0; right: 0; background-color: red; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px;">
+            >0</div>
+
         <div class="mini-cart">
             <h4>Bất động sản đã lưu</h4>
             <ul id="cart-items"></ul>
-            <button id="go-to-cart" onclick="goToCart()">Đi tới xem bất động sản đã lưu</button>
+            <button id="go-to-cart" onclick="goToCart()"
+                    style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer;">
+                Đi tới xem bất động sản đã lưu
+            </button>
         </div>
     </a>
 
@@ -309,7 +314,7 @@
         </p>
         <div class="details">
             <div class="price-size">
-                <p class="price"><%= property.getPrice() %> tỷ</p>
+                <p class="price"><%= property.getPrice() %> <%= property.getStatus().equals("2") ? "triệu" : "tỷ"%></p>
                 <p class="size"><%= property.getArea() %> m²</p>
             </div>
         </div>
@@ -369,8 +374,8 @@
     </div>
 
     <!-- Nút xem thêm và ẩn bớt -->
-    <div class="view-more">
-        <a href="#" id="toggleButton">Xem thêm</a>
+    <div class="view-more" style="padding-top: 20px;padding-bottom: 20px">
+        <a href="#"  id="toggleButton">Xem thêm</a>
     </div>
 </div>
 <script>
@@ -510,7 +515,7 @@
 
 <%
     // Tạo danh sách các thành phố lớn
-    List<String> majorCities = List.of("TP.HCM", "Hà Nội", "Đà Nẵng", "Vũng Tàu");
+    List<String> majorCities = List.of("TP.HCM", "Đà Nẵng", "Vũng Tàu");
 
     // Lấy danh sách bất động sản từ các thành phố này
     PropertyDAO propertyDAO = new PropertyDAO();

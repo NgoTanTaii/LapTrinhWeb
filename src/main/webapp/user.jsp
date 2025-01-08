@@ -1,14 +1,3 @@
-<%
-
-    // Sử dụng biến session có sẵn trong JSP
-    String role = (String) session.getAttribute("role");
-
-    if (!"admin".equals(role)) {
-        // Nếu không phải admin, chuyển hướng đến trang không có quyền truy cập
-        response.sendRedirect("access-denied.jsp");
-        return;
-    }
-%>
 <%@ page import="Controller.User" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
@@ -85,13 +74,17 @@
 
         .add-button {
             padding: 10px 20px;
-            background-color: #4CAF50;
+            background-color: blue;
             color: white;
             text-align: center;
             text-decoration: none;
             border-radius: 4px;
         }
-
+.add-button:hover {
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+}
         .user-table th {
             color: black;
             text-transform: uppercase;
@@ -139,7 +132,7 @@
     <div class="main-content">
         <div class="dashboard-header">
             <h2>Quản lý tài khoản</h2>
-            <%--            <a href="add-user.jsp" class="add-button">Thêm Người Dùng Mới</a>--%>
+            <a href="add-user.jsp" class="add-button">Thêm Người Dùng Mới</a>
         </div>
 
         <div class="back-link">
@@ -196,7 +189,6 @@
                                 class="delete-button">
                             Xem bds đã đăng
                         </button>
-
                     </td>
                 </form>
             </tr>
@@ -218,7 +210,8 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
+        // Khởi tạo DataTable cho bảng có id 'example'
         $('#example').DataTable();
     });
 </script>
