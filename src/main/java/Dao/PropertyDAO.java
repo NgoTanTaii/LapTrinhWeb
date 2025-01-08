@@ -4,6 +4,7 @@ import DBcontext.ConnectDB;
 import DBcontext.Database;
 import DBcontext.DbConnection1;
 import Entity.Comment;
+import Entity.Property;
 import Entity.Property1;
 
 import java.sql.*;
@@ -29,7 +30,9 @@ public class PropertyDAO {
             e.printStackTrace();
 
         }
-    }public Property1 getPropertyById(int id) {
+    }
+
+    public Property1 getPropertyById(int id) {
         Property1 property = null;
         String query = "SELECT property_id, title, price, address, area, image_url, description, type, status, poster_id FROM properties WHERE property_id = ?";
 
@@ -439,6 +442,7 @@ public class PropertyDAO {
             e.printStackTrace();
         }
     }
+
     public int getTotalProducts() {
         int totalProducts = 0;
         String sql = "SELECT COUNT(*) AS total FROM properties";
@@ -458,7 +462,56 @@ public class PropertyDAO {
         return totalProducts;
     }
 
+    public List<Property> getListPropertiesType(String nameType)   throws Exception {
+
+        List<Property> propertyList = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            // Kết nối đến cơ sở dữ liệu
+            conn = DbConnection1.initializeDatabase();
+            // Truy vấn tất cả các bất động sản từ bảng 'properties'
+            String query ="SELECT * FROM properties WHERE type=?";
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1, nameType);
+            rs = stmt.executeQuery();
+
+            // Duyệt qua kết quả trả về và thêm vào danh sách 'properties'
+            while (rs.next()) {
+                Property property = new Property(
+                        rs.getInt(
+                                "property_id"),
+                        rs.getString("title"),
+                        rs.getString("address"),
+                        rs.getDouble("price"),
+                        rs.getDouble("area"),
+                        rs.getString("image_url")
+                );
+                propertyList.add(property);
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+                return propertyList;
+            }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
