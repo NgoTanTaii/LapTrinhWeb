@@ -135,7 +135,7 @@
             <a href="add-user.jsp" class="add-button">Thêm Người Dùng Mới</a>
         </div>
 
-        <div class="back-link">
+        <div class="back-link" style="margin-bottom: 20px">
             <a href="admin.jsp">Quay lại trang Quản trị</a>
         </div>
         <table id="example" class="display user-table" style="width:100%">

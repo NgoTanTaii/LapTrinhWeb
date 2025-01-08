@@ -134,7 +134,7 @@
 <div class="container">
     <h2>Danh sách bình luận</h2>
 
-    <div class="back-link">
+    <div class="back-link" style="text-align: left">
         <a href="admin.jsp">Quay lại trang Quản trị</a>
     </div>
 
