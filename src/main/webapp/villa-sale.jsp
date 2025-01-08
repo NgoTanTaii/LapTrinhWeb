@@ -3,10 +3,11 @@
 <%@ page import="Dao.PropertyDAO" %>
 <%@ page import="Entity.Property1" %>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="stylesheet" href="css/bds.css">
+
 <!DOCTYPE html>
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/bds.css">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Trang JSP với UTF-8</title>
 </head>
@@ -30,6 +31,7 @@
 
 
         </div>
+
         <div class="header-right" style="margin-top: 10px">
 
 
@@ -69,7 +71,7 @@
                         <ul>
                             <li><a href="#">Bán căn hộ chung cư</a></li>
                             <li><a href="#">Bán nhà riêng</a></li>
-                            <li><a href="villa-sale.jsp">Bán nhà biệt thự liền kề</a></li>
+                            <li><a href="villaS.jsp">Bán nhà biệt thự liền kề</a></li>
                             <li><a href="#">Bán nhà mặt phố</a></li>
                             <li><a href="#">Bán trang trại, khu nghỉ dưỡng</a></li>
                             <li><a href="#">Bán kho , nhà xưởng</a></li>
@@ -194,11 +196,49 @@
 
 </div>
 
+<div class="news-section">
+    <h2>Tin Tức Bất Động Sản</h2>
+
+    <!-- Danh mục -->
+    <ul class="news-categories">
+        <li><a href="#">Tin nổi bật</a></li>
+        <li><a href="#">BĐS TP.HCM</a></li>
+        <li><a href="#">BĐS Hà Nội</a></li>
+    </ul>
+
+    <!-- List các tin tức -->
+    <div class="news-list">
+        <div class="news-item">
+            <img src="jpg/HaNoi.jpg" alt="Image">
+            <h3><a href="#">Đất Hà Nội tăng giá mạnh </a></h3>
+            <p class="summary">Hà Nội có tiền cũng không mua đất đuược?...</p>
+            <span class="date">Ngày đăng: 01/01/2024</span>
+        </div>
+        <div class="news-item">
+            <img src="jpg/HCM.jpg" alt="Image">
+            <h3><a href="#">HCM ngày càng xấu đi trong mắt du khách nuước ngoài</a></h3>
+            <p class="summary">Người nước ngoài kêu ca về du lịch...</p>
+            <span class="date">Ngày đăng: 01/01/2024</span>
+        </div>
+        <div class="news-item">
+            <img src="jpg/binhduong.jpg" alt="Image">
+            <h3><a href="#">Bình Dương thành phố mới</a></h3>
+            <p class="summary">Thành phố trong thành phố...</p>
+            <span class="date">Ngày đăng: 01/01/2024</span>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
 <div class="product-section">
-    <h2>Bất động sản dành cho bạn</h2>
+    <h2>Danh sách nhà biệt thự dành cho bạn</h2>
     <div class="product-list">
         <%
-            List<Property> properties = (List<Property>) request.getAttribute("properties");
+            List<Property> properties = (List<Property>) request.getAttribute("propertiesS");
             if (properties != null && !properties.isEmpty()) {
                 int index = 0;
                 for (Property property : properties) {
@@ -207,8 +247,7 @@
            <span onclick="location.href='property-detail.jsp?id=<%= property.getId() %>'"
                  style="cursor: pointer; color: blue; text-decoration: none;">
                 <img src="<%= property.getImageUrl() %>" alt="<%= property.getTitle() %>" class="product-image">
-                <h3><%= property.getTitle() %>
-                </h3>
+                <h3><%= property.getTitle() %></h3>
                 <p class="address">
                     <img src="jpg/location.png" alt="Location Icon" class="location-icon">
                     <%= property.getAddress() %>
@@ -238,6 +277,7 @@
         %>
     </div>
 
+
     <!-- Nút xem thêm và ẩn bớt -->
     <div class="view-more">
         <a href="#" id="toggleButton">Xem thêm</a>
@@ -260,7 +300,6 @@
 
         toggleButton.addEventListener('click', function (e) {
             e.preventDefault();
-
             if (isExpanded) {
                 // Khi trạng thái đang mở rộng, thu gọn lại và chỉ hiển thị 8 sản phẩm
                 products.forEach((product, index) => {
@@ -392,16 +431,18 @@
                     }
         %>
         <div class="property-card">
-            <a href="property-detail.jsp?id=<%= property.getId() %>" style="text-decoration: none; color: inherit;">
-                <img src="<%= property.getImageUrl() %>" alt="<%= property.getTitle() %>" style="width: 100%; height: auto;">
-                <h3><%= property.getTitle() %></h3>
-                <p>
-                    <%= property.getDescription().length() > 50 ? property.getDescription().substring(0, 50) + "..." : property.getDescription() %>
-                </p>
-                <div style="display: flex; justify-content: space-between; color: red; margin-top: 5px;">
-                    <span><%= property.getArea() %> m²</span>
-                    <span><i class="fas fa-map-marker-alt"></i> <%= preCityWord + ", " + cityPart %></span>
-                </div>
+            <%--            <a href="property-detail.jsp?id=<%= property.getId() %>" style="text-decoration: none; color: inherit;">--%>
+            <img src="<%= property.getImageUrl() %>" alt="<%= property.getTitle() %>"
+                 style="width: 100%; height: auto;">
+            <h3><%= property.getTitle() %>
+            </h3>
+            <p>
+                <%= property.getDescription().length() > 50 ? property.getDescription().substring(0, 50) + "..." : property.getDescription() %>
+            </p>
+            <div style="display: flex; justify-content: space-between; color: red; margin-top: 5px;">
+                <span><%= property.getArea() %> m²</span>
+                <span><i class="fas fa-map-marker-alt"></i> <%= preCityWord + ", " + cityPart %></span>
+            </div>
             </a>
         </div>
         <%
@@ -441,6 +482,7 @@
 
 <div class="product-section">
     <h2>Bất động sản theo địa điểm</h2>
+
     <div class="property-form">
         <div class="city hcm">
             <a href="property-HCM.jsp" class="city-link">
@@ -475,80 +517,6 @@
             </div>
         </div>
     </div>
-</div>
-    <div class="product-section">
-        <h2>Bất động sản theo khoảng giá</h2>
-        <div class="property-form">
-            <div class="city hcm">
-                <a href="property-HCM.jsp" class="city-link">
-                    <img src="jpg/HCM.jpg" alt="TP.HCM">
-                    <span class="city-name">TP.HCM</span>
-                </a>
-            </div>
-            <div class="other-cities">
-                <div class="city">
-                    <a href="property-HaNoi.jsp" class="city-link">
-                        <img src="jpg/HaNoi.jpg" alt="Hà Nội">
-                        <span class="city-name">Hà Nội</span>
-                    </a>
-                </div>
-                <div class="city">
-                    <a href="property-DaNang.jsp" class="city-link">
-                        <img src="jpg/DaNang.jpg" alt="Đà Nẵng">
-                        <span class="city-name">Đà Nẵng</span>
-                    </a>
-                </div>
-                <div class="city">
-                    <a href="property-BinhDuong.jsp" class="city-link">
-                        <img src="jpg/binhduong.jpg" alt="Bình Dương">
-                        <span class="city-name">Bình Dương</span>
-                    </a>
-                </div>
-                <div class="city">
-                    <a href="property-DongNai.jsp" class="city-link">
-                        <img src="jpg/DongNai.jpg" alt="Đồng Nai">
-                        <span class="city-name">Đồng Nai</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-        <div class="product-section">
-            <h2>Bất động sản theo diện tích</h2>
-            <div class="property-form">
-                <div class="city hcm">
-                    <a href="property-HCM.jsp" class="city-link">
-                        <img src="jpg/HCM.jpg" alt="TP.HCM">
-                        <span class="city-name">TP.HCM</span>
-                    </a>
-                </div>
-                <div class="other-cities">
-                    <div class="city">
-                        <a href="property-HaNoi.jsp" class="city-link">
-                            <img src="jpg/HaNoi.jpg" alt="Hà Nội">
-                            <span class="city-name">Hà Nội</span>
-                        </a>
-                    </div>
-                    <div class="city">
-                        <a href="property-DaNang.jsp" class="city-link">
-                            <img src="jpg/DaNang.jpg" alt="Đà Nẵng">
-                            <span class="city-name">Đà Nẵng</span>
-                        </a>
-                    </div>
-                    <div class="city">
-                        <a href="property-BinhDuong.jsp" class="city-link">
-                            <img src="jpg/binhduong.jpg" alt="Bình Dương">
-                            <span class="city-name">Bình Dương</span>
-                        </a>
-                    </div>
-                    <div class="city">
-                        <a href="property-DongNai.jsp" class="city-link">
-                            <img src="jpg/DongNai.jpg" alt="Đồng Nai">
-                            <span class="city-name">Đồng Nai</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
     <style>
         .property-form {
             position: relative;
@@ -633,6 +601,8 @@
     <div class="footer-bottom">
         <p>&copy; 2024 Công ty Bất Động Sản. Mọi quyền lợi thuộc về công ty.</p>
     </div>
+
+
 </div>
 <style>
 

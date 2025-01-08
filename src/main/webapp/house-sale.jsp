@@ -1025,7 +1025,7 @@
         background-color: #f4a261;
         border: none;
         color: #fff;
-        cursor: pointer;
+        cursor: pointer;    
         border-radius: 5px;
     }
 
