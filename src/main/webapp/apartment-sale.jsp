@@ -195,7 +195,7 @@
 </div>
 
 <div class="product-section">
-    <h2>Bất động sản dành cho bạn</h2>
+    <h2>DANH SÁCH CĂN HỘ CHUNG CƯ DÀNH CHO BẠN</h2>
     <div class="product-list">
         <%
             List<Property> properties = (List<Property>) request.getAttribute("properties");
