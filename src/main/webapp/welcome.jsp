@@ -108,6 +108,37 @@
                                     <i class="fas fa-trash-alt"></i> Xóa
                                 </button>
                             </form>
+                            <script>
+                                // JavaScript xử lý khi xóa sản phẩm từ mini cart
+                                function removeItem(propertyId) {
+                                    const form = new FormData();
+                                    form.append('propertyId', propertyId);
+
+                                    fetch('removeMiniCartItem', {
+                                        method: 'POST',
+                                        body: form
+                                    })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            const itemCountElement = document.getElementById('item-count');
+                                            const miniCartItem = document.getElementById('mini-cart-item-' + propertyId);
+
+                                            if (data.success) {
+                                                // Nếu xóa thành công
+                                                alert(data.message);  // Hiển thị thông báo thành công
+                                                miniCartItem.style.display = 'none';  // Ẩn sản phẩm đã xóa
+                                                itemCountElement.textContent = parseInt(itemCountElement.textContent) - 1;  // Cập nhật số lượng giỏ hàng
+                                            } else {
+                                                // Nếu có lỗi (ví dụ: đã đặt cọc)
+                                                alert(data.message);  // Hiển thị thông báo lỗi
+                                            }
+                                        })
+                                        .catch(error => {
+                                            console.error("Error:", error);
+                                            alert('Có lỗi xảy ra khi xóa sản phẩm.');
+                                        });
+                                }
+                            </script>
                         </div>
                     </li>
                     <!-- Thêm các mục khác tương tự với ID và giá trị khác nhau -->
