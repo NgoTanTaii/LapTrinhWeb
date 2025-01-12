@@ -3,10 +3,11 @@
 <%@ page import="Dao.PropertyDAO" %>
 <%@ page import="Entity.Property1" %>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="stylesheet" href="css/bds.css">
+
 <!DOCTYPE html>
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/bds.css">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Trang JSP với UTF-8</title>
 </head>
@@ -16,76 +17,39 @@
 
             <div class="contact-item">
                 <img src="jpg/phone-call.png" class="icon">
-                <span>098 664 1965</span>
+                <span>0123 456 789</span>
             </div>
             <div class="contact-item">
                 <img src="jpg/email.png" class="icon">
-                <span>khoangoquan@gmail.com</span>
+                <span>info@company.com</span>
             </div>
             <div class="contact-item">
 
                 <img src="jpg/location.png" class="icon">
-                <span>123 Đường 12, Quận 9, TP.HCM</span>
+                <span>123 Đường ABC, Quận XYZ, TP.HCM</span>
             </div>
 
 
         </div>
-        <%
-            Integer userId = (Integer) session.getAttribute("userId");
-            String username = (String) session.getAttribute("username");
-            boolean isLoggedIn = userId != null;
-        %>
 
         <div class="header-right" style="margin-top: 10px">
-            <% if (isLoggedIn) { %>
-            <a href="account.jsp" class="btn">
-                <h3 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px;">
-                    Hello, <%= username %>
-                </h3>
-            </a>
 
-            <a href="javascript:void(0)" id="logoutButton" class="btn"
-               onclick="document.getElementById('logoutForm').submit();">
-                <h3>Đăng xuất</h3>
-            </a>
 
-            <!-- Hidden Form to Logout -->
-            <form id="logoutForm" action="logout" method="POST" style="display: none;">
-                <button type="submit" style="display: none;"></button> <!-- This button will not be visible -->
-            </form>
-
-            <% } else { %>
-            <!-- Display login and registration options if not logged in -->
-            <a href="login.jsp" class="btn">
-                <h3>Đăng nhập</h3>
-            </a>
-            <a href="register.jsp" class="btn">
-                <h3>Đăng ký</h3>
-            </a>
-            <% } %>
-
-            <!-- "Post Status" button, visible to both logged-in and non-logged-in users -->
-            <a href="create-poster.jsp" class="btn">
-                <h3>Đăng tin</h3>
-            </a>
+            <a href="login.jsp" class="btn"><h3>Đăng nhập</h3></a>
+            <a href="register.jsp" class="btn"><h3>Đăng ký</h3></a>
+            <a href="post-status.jsp" class="btn"><h3>Đăng tin</h3></a>
         </div>
-
     </div>
 
     <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()"
        style="border: 1px solid #ccc; border-radius:100%;">
         <img src="jpg/heart%20(1).png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng"
              class="cart-icon">
-        <div class="item-count" style="position: absolute; top: 0; right: 0; background-color: red; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px;">
-            >0</div>
-
+        <div class="item-count">0</div>
         <div class="mini-cart">
             <h4>Bất động sản đã lưu</h4>
             <ul id="cart-items"></ul>
-            <button id="go-to-cart" onclick="goToCart()"
-                    style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer;">
-                Đi tới xem bất động sản đã lưu
-            </button>
+            <button id="go-to-cart" onclick="goToCart()">Đi tới xem bất động sản đã lưu</button>
         </div>
     </a>
 
@@ -103,27 +67,17 @@
 
             <nav>
                 <ul class="u-lo">
-                    <!-- Mục Nhà Đất Hot -->
-                    <li><a href="property-hot.jsp">Nhà Đất Hot</a>
-                        <ul>
-                            <li><a href="#">Nhà đất bán hot</a></li>
-                            <li><a href="#">Nhà đất cho thuê hot</a></li>
-                            <li><a href="#">Nhà đất dự án hot</a></li>
-                        </ul>
-                    </li>
-                    <!-- Mục Nhà Đất Bán -->
                     <li><a href="forsale">Nhà Đất Bán</a>
                         <ul>
                             <li><a href="#">Bán căn hộ chung cư</a></li>
                             <li><a href="#">Bán nhà riêng</a></li>
-                            <li><a href="#">Bán nhà biệt thự liền kề</a></li>
+                            <li><a href="villaS.jsp">Bán nhà biệt thự liền kề</a></li>
                             <li><a href="#">Bán nhà mặt phố</a></li>
                             <li><a href="#">Bán trang trại, khu nghỉ dưỡng</a></li>
                             <li><a href="#">Bán kho , nhà xưởng</a></li>
                             <li><a href="#">Bán loại bất động sản khác</a></li>
                         </ul>
                     </li>
-                    <!-- Mục Nhà Đất Cho Thuê -->
                     <li><a href="forrent">Nhà Đất Cho Thuê</a>
                         <ul>
                             <li><a href="#">Cho thuê căn hộ chung cư</a></li>
@@ -135,7 +89,6 @@
                             <li><a href="#">Cho thuê loại bất động sản khác</a></li>
                         </ul>
                     </li>
-                    <!-- Mục Dự Án -->
                     <li><a href="Project">Dự Án</a>
                         <ul>
                             <li><a href="#">Các dự án nổi bật</a></li>
@@ -143,7 +96,6 @@
                             <li><a href="#">Dự án chung cư</a></li>
                         </ul>
                     </li>
-                    <!-- Mục Tin Tức -->
                     <li><a href="news.jsp">Tin Tức</a>
                         <ul>
                             <li><a href="#">Tin thị trường</a></li>
@@ -151,7 +103,6 @@
                             <li><a href="#">Phân tích và đánh giá</a></li>
                         </ul>
                     </li>
-                    <!-- Mục Wiki BĐS -->
                     <li><a href="wiki.jsp">Wiki BĐS</a>
                         <ul>
                             <li><a href="#">Mua bán</a></li>
@@ -176,12 +127,11 @@
 
     <div class="slideshow-container">
         <div class="mySlides fade">
-            <img src="jpg/1%20(1).webp" alt="Banner 1">
+            <img src="jpg/1.webp" alt="Banner 1">
         </div>
         <div class="mySlides fade">
-            <img src="jpg/20.jpg" alt="Banner 2">
+            <img src="jpg/1.webp" alt="Banner 2">
         </div>
-
 
     </div>
 
@@ -204,13 +154,16 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
+            // Khi người dùng gõ vào ô tìm kiếm hoặc ô địa chỉ, thực hiện tìm kiếm ngay lập tức
             $('#search, #city').on('keyup', function () {
+                // Lấy giá trị của các trường tìm kiếm
                 var searchText = $('#search').val();
                 var city = $('#city').val();
 
+                // Kiểm tra nếu ô tìm kiếm không trống mới gửi yêu cầu Ajax
                 if (searchText.length > 0 || city.length > 0) {
                     $.ajax({
-                        url: 'SearchServlet',
+                        url: 'SearchServlet',  // Địa chỉ servlet xử lý tìm kiếm
                         type: 'POST',
                         data: {
                             search: searchText,
@@ -225,14 +178,15 @@
                         }
                     });
                 } else {
+                    // Nếu không có gì để tìm kiếm, xóa kết quả hiển thị
                     $('#search-results').html('');
                 }
             });
         });
 
     </script>
-
 </header>
+
 
 <div class="product-section">
 
@@ -281,109 +235,52 @@
 
 
 <div class="product-section">
-    <h2 style="text-align: center;">
-        Bất động sản dành cho bạn </h2>
-    <div style="display: flex; justify-content: center; font-size: 14px; margin-bottom: 20px;margin-left: 550px">
-        <a href="forsale" style="margin-right: 20px; text-decoration: none; color: darkred;">
-            Tin nhà đất bán mới nhất
-        </a>
-        |
-        <a href="forrent" style="margin-right: 20px; text-decoration: none; color: darkred;">
-            Tin nhà đất cho thuê mới nhất
-        </a>
-        |
-        <a href="property-hot.jsp" style="text-decoration: none; color: darkred;">
-            Tin nhà đất hot
-        </a>
-    </div>
-
-
+    <h2>Danh sách nhà biệt thự dành cho bạn</h2>
     <div class="product-list">
         <%
-            List<Property> properties = (List<Property>) request.getAttribute("properties");
+            List<Property> properties = (List<Property>) request.getAttribute("propertiesS");
             if (properties != null && !properties.isEmpty()) {
-                int index = properties.size() - 1;  // Lấy chỉ số cuối cùng của danh sách
-                for (int i = index; i >= 0; i--) {
-                    Property property = properties.get(i);
-
-                    // Kiểm tra trạng thái bất động sản (nếu status = "0" hoặc available != 1, không hiển thị)
-                    if ("0".equals(property.getStatus()) || property.getAvailable() != 1) {
-                        continue; // Bỏ qua sản phẩm không hợp lệ
-                    }
+                int index = 0;
+                for (Property property : properties) {
         %>
-        <div class="product-item" <%= i >= 8 ? "style='display: none;'" : "" %> >
-    <span onclick="location.href='property-detail.jsp?id=<%= property.getId() %>'"
-          style="cursor: pointer; color: blue; text-decoration: none;">
-        <img src="<%= property.getImageUrl() %>" alt="<%= property.getTitle() %>" class="product-image">
-        <h3><%= property.getTitle() %></h3>
-        <p class="address">
-            <img src="jpg/location.png" alt="Location Icon" class="location-icon">
-            <%= property.getAddress() %>
-        </p>
-        <div class="details">
-            <div class="price-size">
-                <p class="price"><%= property.getPrice() %> <%= property.getStatus().equals("2") ? "triệu" : "tỷ"%></p>
-                <p class="size"><%= property.getArea() %> m²</p>
+        <div class=" product-item" <%= index >= 8 ? "style='display: none;'" : "" %> >
+           <span onclick="location.href='property-detail.jsp?id=<%= property.getId() %>'"
+                 style="cursor: pointer; color: blue; text-decoration: none;">
+                <img src="<%= property.getImageUrl() %>" alt="<%= property.getTitle() %>" class="product-image">
+                <h3><%= property.getTitle() %></h3>
+                <p class="address">
+                    <img src="jpg/location.png" alt="Location Icon" class="location-icon">
+                    <%= property.getAddress() %>
+                </p>
+                <div class="details">
+                    <div class="price-size">
+                        <p class="price"><%= property.getPrice() %> tỷ</p>
+                        <p class="size"><%= property.getArea() %> m²</p>
+                    </div>
+                </div>
+            </span>
+            <div class="heart-icon"
+                 onclick="<% if (session.getAttribute("username") != null) { %>
+                         addToFavorites('<%= property.getId() %>', '<%= property.getTitle() %>', <%= property.getPrice() %>, <%= property.getArea() %>, '<%= property.getImageUrl() %>','<%= property.getAddress() %>');
+                     <% } else { %>
+                         alert('Vui lòng đăng nhập để thêm vào giỏ hàng.');
+                         window.location.href = 'login.jsp';
+                         <% } %>">
+                <img src="jpg/heartred.png" alt="Heart Icon" class="heart-image">
             </div>
         </div>
-    </span>
-            <form action="addToCart" method="post" style="display: inline;" onclick="checkLogin()">
-                <input type="hidden" name="propertyId" value="<%= property.getId() %>">
-                <input type="hidden" name="title" value="<%= property.getTitle() %>">
-                <input type="hidden" name="price" value="<%= property.getPrice() %>">
-                <input type="hidden" name="area" value="<%= property.getArea() %>">
-                <input type="hidden" name="imageUrl" value="<%= property.getImageUrl() %>">
-                <input type="hidden" name="address" value="<%= property.getAddress() %>">
-                <button type="submit" class="heart-icon" style="border: none; background: transparent; padding: 0;">
-                    <img src="jpg/heartred.png" alt="Heart Icon" class="heart-image">
-                    <span class="favorite-text">Bấm vào đây để lưu tin</span>
-                </button>
-            </form>
-            <style>
-                form {
-                    position: relative;
-                }
 
-                .heart-icon {
-                    position: absolute;
-                    top: 2px;
-                    left: 95px;
-                    cursor: pointer;
-                    display: inline-flex;
-                    align-items: end;
-                    background: transparent;
-                    border: none;
-                    padding: 0;
-                }
-
-                .heart-image {
-                    width: 25px;
-                    height: 25px;
-                    transition: transform 0.2s ease-in-out;
-                }
-
-                .heart-icon.clicked .heart-image {
-                    filter: brightness(1.5);
-                    transform: scale(1.2);
-                }
-            </style>
-
-            <script>
-                function checkLogin() {
-                    alert('Vui lòng đăng nhập để lưu tin.');
-                    window.location.href = 'login.jsp';
-                }
-            </script>
-        </div>
         <%
+                    index++;
                 }
             }
         %>
     </div>
 
+
     <!-- Nút xem thêm và ẩn bớt -->
-    <div class="view-more" style="padding-top: 20px;padding-bottom: 20px">
-        <a href="#"  id="toggleButton">Xem thêm</a>
+    <div class="view-more">
+        <a href="#" id="toggleButton">Xem thêm</a>
     </div>
 </div>
 <script>
@@ -403,7 +300,6 @@
 
         toggleButton.addEventListener('click', function (e) {
             e.preventDefault();
-
             if (isExpanded) {
                 // Khi trạng thái đang mở rộng, thu gọn lại và chỉ hiển thị 8 sản phẩm
                 products.forEach((product, index) => {
@@ -429,27 +325,7 @@
         });
     });
 </script>
-
 <style>
-
-    .favorite-text {
-        position: absolute;
-        bottom: -25px; /* Đưa văn bản xuống dưới trái tim */
-        left: 50%;
-        transform: translateX(-50%); /* Căn giữa văn bản với trái tim */
-        visibility: hidden; /* Ẩn văn bản mặc định */
-        background-color: rgba(0, 0, 0, 0.7);
-        color: #fff;
-        padding: 5px 10px;
-        border-radius: 5px;
-        font-size: 12px;
-        white-space: nowrap; /* Ngừng việc gãy dòng */
-    }
-
-    .heart-icon:hover .favorite-text {
-        visibility: visible; /* Hiển thị khi hover vào icon trái tim */
-    }
-
     /* Basic styling */
     .featured-properties-section {
         max-width: 85%;
@@ -523,7 +399,7 @@
 
 <%
     // Tạo danh sách các thành phố lớn
-    List<String> majorCities = List.of("TP.HCM", "Đà Nẵng", "Vũng Tàu");
+    List<String> majorCities = List.of("TP.HCM", "Hà Nội", "Đà Nẵng", "Vũng Tàu");
 
     // Lấy danh sách bất động sản từ các thành phố này
     PropertyDAO propertyDAO = new PropertyDAO();
@@ -555,18 +431,18 @@
                     }
         %>
         <div class="property-card">
-            <a href="property-detail.jsp?id=<%= property.getId() %>" style="text-decoration: none; color: inherit;">
-                <img src="<%= property.getImageUrl() %>" alt="<%= property.getTitle() %>"
-                     style="width: 100%; height: auto;">
-                <h3><%= property.getTitle() %>
-                </h3>
-                <p>
-                    <%= property.getDescription().length() > 50 ? property.getDescription().substring(0, 50) + "..." : property.getDescription() %>
-                </p>
-                <div style="display: flex; justify-content: space-between; color: red; margin-top: 5px;">
-                    <span><%= property.getArea() %> m²</span>
-                    <span><i class="fas fa-map-marker-alt"></i> <%= preCityWord + ", " + cityPart %></span>
-                </div>
+            <%--            <a href="property-detail.jsp?id=<%= property.getId() %>" style="text-decoration: none; color: inherit;">--%>
+            <img src="<%= property.getImageUrl() %>" alt="<%= property.getTitle() %>"
+                 style="width: 100%; height: auto;">
+            <h3><%= property.getTitle() %>
+            </h3>
+            <p>
+                <%= property.getDescription().length() > 50 ? property.getDescription().substring(0, 50) + "..." : property.getDescription() %>
+            </p>
+            <div style="display: flex; justify-content: space-between; color: red; margin-top: 5px;">
+                <span><%= property.getArea() %> m²</span>
+                <span><i class="fas fa-map-marker-alt"></i> <%= preCityWord + ", " + cityPart %></span>
+            </div>
             </a>
         </div>
         <%
@@ -1171,7 +1047,27 @@
         cursor: pointer;
     }
 
+    /* Định dạng dòng chữ "Tin đăng đã lưu" */
+    .hover-text {
+        position: absolute;
+        top: 30px; /* Điều chỉnh vị trí theo ý muốn */
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0.7); /* Màu nền của dòng chữ */
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 14px;
+        white-space: nowrap;
+        opacity: 0; /* Ẩn dòng chữ */
+        transition: opacity 0.3s ease; /* Hiệu ứng hiển thị mượt */
+        pointer-events: none; /* Vô hiệu hóa sự kiện trên hover-text */
+    }
 
+    /* Khi hover vào biểu tượng trái tim, hiển thị dòng chữ */
+    .heart-container:hover .hover-text {
+        opacity: 1;
+    }
 </style>
 
 
