@@ -165,7 +165,7 @@
     <div class="main-content">
         <h2>Danh sách bất động sản</h2>
         <a href="add-property.jsp" class="add-button">Thêm bất động sản mới</a>
-        <div class="back-link">
+        <div class="back-link" style="margin-bottom: 20px">
             <a href="admin.jsp">Quay lại trang Quản trị</a>
         </div>
         <!-- Property Table -->

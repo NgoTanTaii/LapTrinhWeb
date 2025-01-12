@@ -28,18 +28,13 @@ public class UserDAO {
 
     // Phương thức xóa người dùng
     public boolean deleteUser(int userId) {
-        String deleteCartItemsSql = "DELETE FROM cartitems WHERE user_id = ?";
+
         String deleteCartSql = "DELETE FROM cart WHERE user_id = ?";
         String deleteUserSql = "DELETE FROM users WHERE id = ?";
 
         try (Connection conn = getConnection()) {
             conn.setAutoCommit(false); // Start transaction
 
-            // Delete cart items
-            try (PreparedStatement stmt = conn.prepareStatement(deleteCartItemsSql)) {
-                stmt.setInt(1, userId);
-                stmt.executeUpdate();
-            }
 
             // Delete cart
             try (PreparedStatement stmt = conn.prepareStatement(deleteCartSql)) {

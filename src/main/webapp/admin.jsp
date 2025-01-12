@@ -38,9 +38,10 @@
             <li><a href="home-unavailable">Phê duyệt bất động sản</a></li>
             <li><a href="top5-posters.jsp">Quản lý top 5 người đăng</a></li>
             <%--            <li><a href="top-employee-manager.jsp">Quản lý top 5 nhân viên</a></li>--%>
-            <li><a href="orders">Quản lý đơn đặt bất động sản</a></li>
+            <li><a href="orders">Quản lý đơn bất động sản</a></li>
             <li><a href="comments-manager.jsp">Quản lý bình luận</a></li>
             <li><a href="appointment-manager">Quản lý lịch hẹn</a></li>
+            <li><a href="depositManager">Quản lý đặt cọc</a></li>
 
 
         </ul>

@@ -1,6 +1,7 @@
 package Controller;
 
 import Dao.CartItemDAO;
+import Dao.DepositOrderDAO;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
@@ -18,10 +19,12 @@ import java.util.stream.Collectors;
 @WebServlet("/removeItemFromCart")
 public class RemoveItemServlet extends HttpServlet {
     private CartItemDAO cartItemDAO;
+    private DepositOrderDAO depositOrderDAO; // Assuming this DAO exists to interact with deposit_orders
 
     @Override
     public void init() {
         cartItemDAO = new CartItemDAO();
+        depositOrderDAO = new DepositOrderDAO(); // Initialize the deposit order DAO
     }
 
     @Override
@@ -34,13 +37,23 @@ public class RemoveItemServlet extends HttpServlet {
         int userId = (Integer) request.getSession().getAttribute("userId");
 
         try {
-            // Call DAO to remove the item from the cart
-            cartItemDAO.removeCartItem(userId, propertyId);
-            jsonResponse.addProperty("success", true);
-            jsonResponse.addProperty("message", "Item removed successfully");
+            // Check if there is a deposit order for this propertyId and userId
+            boolean isDeposited = depositOrderDAO.isDeposited(userId, propertyId);
 
-            // After removing the item, redirect back to the cart page
-            response.sendRedirect("cart.jsp"); // Or send a success message if you want to use AJAX
+            if (isDeposited) {
+                // If already deposited, send a message
+                jsonResponse.addProperty("success", false);
+                jsonResponse.addProperty("message", "Item has already been deposited.");
+                response.getWriter().write(jsonResponse.toString());
+            } else {
+                // Call DAO to remove the item from the cart
+                cartItemDAO.removeCartItem(userId, propertyId);
+                jsonResponse.addProperty("success", true);
+                jsonResponse.addProperty("message", "Item removed successfully");
+
+                // After removing the item, redirect back to the cart page
+                response.sendRedirect("cart.jsp");
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();

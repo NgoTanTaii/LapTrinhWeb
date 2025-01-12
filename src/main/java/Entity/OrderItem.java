@@ -18,6 +18,13 @@ public class OrderItem {
         this.title = title;
     }
 
+    public OrderItem(int propertyId, String title, double price, int quantity) {
+        this.propertyId = propertyId;
+        this.title = title;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
     // Getters and setters
     public int getOrderItemId() {
         return orderItemId;

@@ -4,6 +4,7 @@
     <%@ page import="Dao.CartItemDAO" %>
     <%@ page import="Entity.CartItem" %>
     <%@ page import="java.sql.SQLException" %>
+    <%@ page import="Dao.DepositOrderDAO" %>
     <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <!DOCTYPE html>
     <meta charset="UTF-8">
@@ -426,14 +427,67 @@
                 </div>
             </div>
 
-            <!-- Remove button (form to delete product) -->
+            <%
+                DepositOrderDAO depositOrderDAO = new DepositOrderDAO();
+                int propertyId = item.getPropertyId();
+
+                boolean isDeposited = depositOrderDAO.isDeposited(userId, propertyId);
+            %>
+
+            <% if (!isDeposited) { %>
+            <!-- Show the remove button if not deposited -->
             <form action="removeItemFromCart" method="POST" style="display: inline;">
                 <input type="hidden" name="propertyId" value="<%= item.getPropertyId() %>">
                 <button type="submit" class="btn btn-sm btn-danger ml-3"
-                        onclick="return confirm(' Bạn có chắc chắn muốn xóa bất động sản này không?')">
+                        onclick="return confirm('Bạn có chắc chắn muốn xóa bất động sản này không?')">
                     <i class="fas fa-trash-alt"></i> Xóa
                 </button>
             </form>
+            <% } else { %>
+            <!-- Show "Already Deposited" if the item has been deposited -->
+            <span class="badge badge-success">Đã đặt cọc</span>
+            <% } %>
+
+
+
+            <form action="submitDeposit" method="POST" class="deposit-form" onsubmit="removeCommas()">
+                <input type="hidden" name="userId" value="<%= userId %>">
+                <input type="hidden" name="propertyId" value="<%= item.getPropertyId() %>">
+
+                <div class="form-group">
+                    <label for="depositAmount_<%= item.getPropertyId() %>">Số tiền đặt cọc</label>
+                    <input type="text" name="depositAmount" id="depositAmount_<%= item.getPropertyId() %>"
+                           class="form-control" required min="1000000" step="500000" placeholder="Nhập số tiền cọc" oninput="formatNumber(this)">
+                </div>
+
+                <div class="form-group">
+                    <label for="comments_<%= item.getPropertyId() %>">Ghi chú (nếu có)</label>
+                    <textarea name="comments" id="comments_<%= item.getPropertyId() %>" class="form-control" rows="3"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-success">Đặt cọc</button>
+            </form>
+
+            <script>
+                // Hàm để format số với dấu chấm (phân tách hàng nghìn)
+                function formatNumber(input) {
+                    let value = input.value.replace(/[^0-9]/g, ''); // Loại bỏ các ký tự không phải số
+                    if (value) {
+                        // Thêm dấu chấm sau mỗi 3 chữ số
+                        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                    }
+                    input.value = value;
+                }
+
+                // Hàm loại bỏ dấu chấm trước khi gửi form
+                function removeCommas() {
+                    const depositAmountInput = document.getElementById("depositAmount_<%= item.getPropertyId() %>");
+                    // Loại bỏ tất cả dấu chấm khỏi giá trị nhập
+                    depositAmountInput.value = depositAmountInput.value.replace(/\./g, '');
+                }
+            </script>
+
+
         </li>
         <%
             }
