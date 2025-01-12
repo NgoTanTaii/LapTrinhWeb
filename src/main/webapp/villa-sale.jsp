@@ -71,7 +71,7 @@
                         <ul>
                             <li><a href="#">Bán căn hộ chung cư</a></li>
                             <li><a href="#">Bán nhà riêng</a></li>
-                            <li><a href="villaS.jsp">Bán nhà biệt thự liền kề</a></li>
+                            <li><a href="villaS">Bán nhà biệt thự liền kề</a></li>
                             <li><a href="#">Bán nhà mặt phố</a></li>
                             <li><a href="#">Bán trang trại, khu nghỉ dưỡng</a></li>
                             <li><a href="#">Bán kho , nhà xưởng</a></li>
@@ -82,7 +82,7 @@
                         <ul>
                             <li><a href="#">Cho thuê căn hộ chung cư</a></li>
                             <li><a href="#">Cho thuê nhà riêng</a></li>
-                            <li><a href="#">Cho thuê nhà biệt thự, liền kề</a></li>
+                            <li><a href="villaR">Cho thuê nhà biệt thự, liền kề</a></li>
                             <li><a href="#">Cho thuê nhà mặt phố</a></li>
                             <li><a href="#">Cho thuê phòng trọ , nhà trọ</a></li>
                             <li><a href="#">Cho thuê văn phòng</a></li>
@@ -235,10 +235,10 @@
 
 
 <div class="product-section">
-    <h2>Danh sách nhà biệt thự dành cho bạn</h2>
+    <h2>DANH SÁCH NHÀ BIỆT THỰ DÀNH CHO BẠN</h2>
     <div class="product-list">
         <%
-            List<Property> properties = (List<Property>) request.getAttribute("propertiesS");
+            List<Property> properties = (List<Property>) request.getAttribute("properties");
             if (properties != null && !properties.isEmpty()) {
                 int index = 0;
                 for (Property property : properties) {

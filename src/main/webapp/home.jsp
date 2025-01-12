@@ -67,9 +67,9 @@
                 <ul class="u-lo">
                     <li><a href="forsale">Nhà Đất Bán</a>
                         <ul>
-                            <li><a href="#">Bán căn hộ chung cư</a></li>
+                            <li><a href="apartmentS">Bán căn hộ chung cư</a></li>
                             <li><a href="#">Bán nhà riêng</a></li>
-                            <li><a href="#">Bán nhà biệt thự liền kề</a></li>
+                            <li><a href="villaS">Bán nhà biệt thự liền kề</a></li>
                             <li><a href="#">Bán nhà mặt phố</a></li>
                             <li><a href="#">Bán trang trại, khu nghỉ dưỡng</a></li>
                             <li><a href="#">Bán kho , nhà xưởng</a></li>
@@ -80,7 +80,7 @@
                         <ul>
                             <li><a href="#">Cho thuê căn hộ chung cư</a></li>
                             <li><a href="#">Cho thuê nhà riêng</a></li>
-                            <li><a href="#">Cho thuê nhà biệt thự, liền kề</a></li>
+                            <li><a href="villaR">Cho thuê nhà biệt thự, liền kề</a></li>
                             <li><a href="#">Cho thuê nhà mặt phố</a></li>
                             <li><a href="#">Cho thuê phòng trọ , nhà trọ</a></li>
                             <li><a href="#">Cho thuê văn phòng</a></li>
@@ -245,8 +245,7 @@
            <span onclick="location.href='property-detail.jsp?id=<%= property.getId() %>'"
                  style="cursor: pointer; color: blue; text-decoration: none;">
                 <img src="<%= property.getImageUrl() %>" alt="<%= property.getTitle() %>" class="product-image">
-                <h3><%= property.getTitle() %>
-                </h3>
+                <h3><%= property.getTitle() %></h3>
                 <p class="address">
                     <img src="jpg/location.png" alt="Location Icon" class="location-icon">
                     <%= property.getAddress() %>
@@ -298,7 +297,6 @@
 
         toggleButton.addEventListener('click', function (e) {
             e.preventDefault();
-
             if (isExpanded) {
                 // Khi trạng thái đang mở rộng, thu gọn lại và chỉ hiển thị 8 sản phẩm
                 products.forEach((product, index) => {
@@ -399,7 +397,6 @@
 <%
     // Tạo danh sách các thành phố lớn
     List<String> majorCities = List.of("TP.HCM", "Hà Nội", "Đà Nẵng", "Vũng Tàu");
-
     // Lấy danh sách bất động sản từ các thành phố này
     PropertyDAO propertyDAO = new PropertyDAO();
     List<Property1> properties1 = propertyDAO.getPropertiesByCities(majorCities);

@@ -276,18 +276,26 @@
 
             <nav>
                 <ul class="u-lo">
-                    <li><a href="property-for-sale.html">Nhà Đất Bán</a>
+                    <li><a href="forsale">Nhà Đất Bán</a>
                         <ul>
-                            <li><a href="#">Thông tin bán nhà đất</a></li>
-                            <li><a href="#">Mua bán bất động sản</a></li>
-                            <li><a href="#">Nhà đất giá rẻ</a></li>
+                            <li><a href="#">Bán căn hộ chung cư</a></li>
+                            <li><a href="#">Bán nhà riêng</a></li>
+                            <li><a href="#">Bán nhà biệt thự liền kề</a></li>
+                            <li><a href="#">Bán nhà mặt phố</a></li>
+                            <li><a href="#">Bán trang trại, khu nghỉ dưỡng</a></li>
+                            <li><a href="#">Bán kho , nhà xưởng</a></li>
+                            <li><a href="#">Bán loại bất động sản khác</a></li>
                         </ul>
                     </li>
                     <li><a href="property-for-rent.html">Nhà Đất Cho Thuê</a>
                         <ul>
-                            <li><a href="#">Thông tin cho thuê nhà đất</a></li>
-                            <li><a href="#">Thuê nhà nguyên căn</a></li>
-                            <li><a href="#">Thuê căn hộ giá rẻ</a></li>
+                            <li><a href="#">Cho thuê căn hộ chung cư</a></li>
+                            <li><a href="#">Cho thuê nhà riêng</a></li>
+                            <li><a href="#">Cho thuê nhà biệt thự, liền kề</a></li>
+                            <li><a href="#">Cho thuê nhà mặt phố</a></li>
+                            <li><a href="#">Cho thuê phòng trọ , nhà trọ</a></li>
+                            <li><a href="#">Cho thuê văn phòng</a></li>
+                            <li><a href="#">Cho thuê loại bất động sản khác</a></li>
                         </ul>
                     </li>
                     <li><a href="project.html">Dự Án</a>

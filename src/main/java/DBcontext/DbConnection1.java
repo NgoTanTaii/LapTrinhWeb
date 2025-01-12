@@ -9,13 +9,14 @@ public class DbConnection1 {
         String dbURL = "jdbc:mysql://localhost:3306/";
         String dbName = "webbds";
         String dbUsername = "root";  // Tài khoản MySQL của bạn
-        String dbPassword = "123456";  // Mật khẩu MySQL của bạn
+        String dbPassword = "";  // Mật khẩu MySQL của bạn
 
 
         Class.forName(dbDriver);
 
 
-        return DriverManager.getConnection(dbURL + dbName, dbUsername, dbPassword);
+        return DriverManager.
+                getConnection(dbURL + dbName, dbUsername, dbPassword);
     }
 
     public static void main(String[] args) {

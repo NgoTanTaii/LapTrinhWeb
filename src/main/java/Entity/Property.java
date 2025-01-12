@@ -62,5 +62,7 @@ public class Property {
     public int getId() {
         return id;
     }
-
+public String toString()    {
+        return "Id: " + this.id+" Title "+ this.title + " Address "+ this.address+ " Price "+ this.price+ " Area "+ this.area+ " Image Url "+this.imageUrl;
+}
 }

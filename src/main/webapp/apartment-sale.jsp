@@ -67,9 +67,9 @@
                 <ul class="u-lo">
                     <li><a href="forsale">Nhà Đất Bán</a>
                         <ul>
-                            <li><a href="#">Bán căn hộ chung cư</a></li>
+                            <li><a href=apartmentS>Bán căn hộ chung cư</a></li>
                             <li><a href="#">Bán nhà riêng</a></li>
-                            <li><a href="villa-sale.jsp">Bán nhà biệt thự liền kề</a></li>
+                            <li><a href="villaS">Bán nhà biệt thự liền kề</a></li>
                             <li><a href="#">Bán nhà mặt phố</a></li>
                             <li><a href="#">Bán trang trại, khu nghỉ dưỡng</a></li>
                             <li><a href="#">Bán kho , nhà xưởng</a></li>
@@ -78,7 +78,7 @@
                     </li>
                     <li><a href="forrent">Nhà Đất Cho Thuê</a>
                         <ul>
-                            <li><a href="#">Cho thuê căn hộ chung cư</a></li>
+                            <li><a href="apartmentR">Cho thuê căn hộ chung cư</a></li>
                             <li><a href="#">Cho thuê nhà riêng</a></li>
                             <li><a href="#">Cho thuê nhà biệt thự, liền kề</a></li>
                             <li><a href="#">Cho thuê nhà mặt phố</a></li>

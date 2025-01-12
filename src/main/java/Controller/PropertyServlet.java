@@ -1,8 +1,11 @@
 package Controller;
 
 import DBcontext.DbConnection1;
+import Dao.PropertyDAO;
 import Entity.Property;
+import Entity.Property1;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -11,6 +14,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class PropertyServlet extends HttpServlet {
     @Override
@@ -58,6 +62,5 @@ public class PropertyServlet extends HttpServlet {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
     }
 }
