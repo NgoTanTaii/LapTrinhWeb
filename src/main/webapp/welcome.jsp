@@ -222,7 +222,7 @@
                                 <img src="${item.imageUrl}" alt="${item.title}" class="cart-item-image" style="width: 50px; height: 50px; margin-right: 10px;">
                                 <div>
                                     <h5>${item.title}</h5>
-                                    <p style="color:darkred">Giá: ${item.price}tỷ</p>
+                                    <p style="color:darkred">Giá: ${item.price} tỷ</p>
                                     <p style="color:darkred">Diện tích: ${item.area} m²</p>
                                     <p>Địa chỉ: ${item.address}</p>
 
