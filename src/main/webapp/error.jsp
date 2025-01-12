@@ -25,7 +25,7 @@
     </div>
 
     <div class="flex justify-center">
-        <a href="index.jsp" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Quay lại Trang Chủ</a>
+        <a href="welcome" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Quay lại Trang Chủ</a>
     </div>
 
 </div>
