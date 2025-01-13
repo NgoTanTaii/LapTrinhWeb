@@ -31,9 +31,6 @@ public class SubmitDepositServlet extends HttpServlet {
             return;
         }
 
-        // Tạo đối tượng DepositOrder để lưu trữ
-        DepositOrder depositOrder = new DepositOrder(userId, propertyId, depositAmount, comments);
-
         // Lưu thông tin vào cơ sở dữ liệu
         try (Connection connection = Database.getConnection()) {
             // Bắt đầu một giao dịch để đảm bảo tính toàn vẹn

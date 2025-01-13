@@ -63,22 +63,7 @@ public class UserServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Lỗi trong quá trình truy xuất dữ liệu.");
-        } finally {
-            if (rs != null) try {
-                rs.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            if (stmt != null) try {
-                stmt.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            if (conn != null) try {
-                conn.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+
         }
     }
 

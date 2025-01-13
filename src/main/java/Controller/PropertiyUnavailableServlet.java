@@ -24,8 +24,8 @@ public class PropertiyUnavailableServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
         request.setAttribute("properties", unavailableProperties);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("home-unavailable.jsp");
-        dispatcher.forward(request, response);
+        request.getRequestDispatcher("home-unavailable.jsp").forward(request, response);
+
     }
 
 }

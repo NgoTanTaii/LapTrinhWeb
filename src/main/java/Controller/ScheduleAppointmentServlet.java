@@ -58,9 +58,6 @@ public class ScheduleAppointmentServlet extends HttpServlet {
             return;
         }
 
-        // Lưu thông tin đặt lịch vào cơ sở dữ liệu và lấy appointmentId
-        int appointmentId = saveAppointment(address, phone, appointmentDate, appointmentTime, productCount, username);
-
         // Gửi email xác nhận đặt lịch
         boolean emailSent = sendAppointmentConfirmationEmail(userEmail, username, address, phone, appointmentDate, appointmentTime);
         if (emailSent) {

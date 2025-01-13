@@ -30,6 +30,7 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         HttpSession session = request.getSession();
+
         String loginStatus = checkLogin(username, password);
 
         if ("admin".equals(loginStatus) || "active".equals(loginStatus)) {
@@ -46,7 +47,7 @@ public class LoginServlet extends HttpServlet {
             initializeSession(session, userId, username, loginStatus);
 
             try {
-                CartItemDAO cartItemDAO = new CartItemDAO();
+
                 int cartId = new CartDAO().createCartIfNotExists(userId); // Ensure cart exists and get cartId
                 synchronizeSessionCartWithDatabase(session, userId, cartId); // Sync session cart with DB
             } catch (SQLException e) {

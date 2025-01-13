@@ -45,10 +45,6 @@ public class PropertyWelcomeServlet extends HttpServlet {
                 properties.add(property);
             }
 
-            // Đóng kết nối
-            rs.close();
-            stmt.close();
-            conn.close();
 
             // Truyền dữ liệu vào request để hiển thị trong JSP
             request.setAttribute("properties", properties);

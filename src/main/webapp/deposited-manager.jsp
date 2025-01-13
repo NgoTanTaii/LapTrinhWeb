@@ -36,6 +36,8 @@
             <th>Số Tiền Đặt Cọc</th>
             <th>Ngày Đặt Cọc</th>
             <th>Trạng Thái</th>
+            <th>Ghi Chú</th>
+
             <th>Hành Động</th>
         </tr>
         </thead>
@@ -87,8 +89,11 @@
             </td>
             <td><%= deposit.getDepositDate() %>
             </td>
+
             <td id="status-<%= deposit.getId() %>"><%= statusInVietnamese %>
+            <td><%= deposit.getComments() %>
             </td>
+
             <td>
                 <!-- Actions for managing deposits -->
                 <form action="updateDepositStatus" method="POST" style="display:inline;"

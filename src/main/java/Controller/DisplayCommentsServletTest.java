@@ -32,13 +32,7 @@ public class DisplayCommentsServletTest {
                 }
 
                 // Debug output: Display the retrieved comments
-                System.out.println("Number of comments retrieved for property_id " + propertyId + ": " + comments.size());
-                for (Comment comment : comments) {
-                    System.out.println("User ID: " + comment.getUserId());
-                    System.out.println("Content: " + comment.getContent());
-                    System.out.println("Date: " + comment.getCommentDate());
-                    System.out.println("---------------");
-                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

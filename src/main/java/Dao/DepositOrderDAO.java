@@ -52,9 +52,10 @@ public class DepositOrderDAO {
                 double depositAmount = rs.getDouble("deposit_amount");
                 Date depositDate = rs.getDate("deposit_date");
                 String status = rs.getString("status");
+                String comments = rs.getString("comments");
 
 
-                DepositOrder deposit = new DepositOrder(id, userId, propertyId, depositAmount, depositDate, status);
+                DepositOrder deposit = new DepositOrder(id, userId, propertyId, depositAmount, depositDate, status, comments);
                 deposits.add(deposit);
             }
         } catch (SQLException e) {
@@ -82,6 +83,11 @@ public class DepositOrderDAO {
 
             throw e; // Rethrow to handle it further in the servlet
         }
+    }
+
+    public static void main(String[] args) throws SQLException {
+        DepositOrderDAO dao = new DepositOrderDAO();
+        System.out.println(dao.getAllDeposits());
     }
     // Optionally, if you're working with a connection pool, you'd return the connection to the pool
     // after use, but since you're using a single connection, make sure to manage it properly in the

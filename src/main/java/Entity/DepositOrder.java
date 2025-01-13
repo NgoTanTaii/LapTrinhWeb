@@ -33,13 +33,14 @@ public class DepositOrder implements Serializable {
         this.comments = comments;
     }
 
-    public DepositOrder(int id, int userId, int propertyId, double depositAmount, java.sql.Date depositDate, String status) {
+    public DepositOrder(int id, int userId, int propertyId, double depositAmount, java.sql.Date depositDate, String status,String comments) {
         this.id = id;
         this.userId = userId;
         this.propertyId = propertyId;
         this.depositAmount = BigDecimal.valueOf(depositAmount);
         this.depositDate = depositDate;
         this.status = status;
+        this.comments = comments;
     }
 
 
@@ -91,6 +92,19 @@ public class DepositOrder implements Serializable {
     // Getter and Setter for `status`
     public String getStatus() {
         return status;
+    }
+
+    @Override
+    public String toString() {
+        return "DepositOrder{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", propertyId=" + propertyId +
+                ", depositAmount=" + depositAmount +
+                ", depositDate=" + depositDate +
+                ", status='" + status + '\'' +
+                ", comments='" + comments + '\'' +
+                '}';
     }
 
     public void setStatus(String status) {

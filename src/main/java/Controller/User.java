@@ -9,8 +9,7 @@ public class User {
     private String status;
     private String token;
 
-    public User(String username, String email, String password, String role, String status) {
-    }
+
 
     public User(int id, String username, String email, String role, String password, String status, String token) {
         this.id = id;

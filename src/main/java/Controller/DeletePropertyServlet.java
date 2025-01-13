@@ -20,7 +20,7 @@ public class DeletePropertyServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         PropertyDAO propertyDAO = new PropertyDAO();
-        PosterDAO posterDAO = new PosterDAO();
+
         if ("delete".equals(action)) {
             String id = request.getParameter("id");
 
