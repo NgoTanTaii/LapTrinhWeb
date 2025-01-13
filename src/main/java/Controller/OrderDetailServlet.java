@@ -1,6 +1,7 @@
 package Controller;
 
 import DBcontext.Database;
+import Dao.OrderItemDao;
 import Entity.Order;
 import Entity.OrderItem;
 import jakarta.servlet.ServletException;
@@ -11,7 +12,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/order-detail")
@@ -28,6 +28,7 @@ public class OrderDetailServlet extends HttpServlet {
         }
 
         int orderId;
+
         try {
             orderId = Integer.parseInt(orderIdParam);  // Chuyển orderId thành kiểu int
         } catch (NumberFormatException e) {
@@ -38,7 +39,8 @@ public class OrderDetailServlet extends HttpServlet {
 
         // Lấy thông tin đơn hàng từ database
         Order order = getOrderById(orderId);
-        List<OrderItem> orderItems = getOrderItemsByOrderId(orderId);
+        OrderItemDao orderItemDao = new OrderItemDao();  // Sử dụng OrderItemDao
+        List<OrderItem> orderItems = orderItemDao.getOrderItemsByOrderId(orderId);  // Lấy các mục trong đơn hàng
 
         if (order == null) {
             request.setAttribute("error", "Order not found.");
@@ -49,6 +51,7 @@ public class OrderDetailServlet extends HttpServlet {
         // Set dữ liệu vào request để truyền cho JSP
         request.setAttribute("order", order);
         request.setAttribute("orderItems", orderItems);
+        System.out.println(orderItems);
 
         // Forward tới order-detail.jsp
         request.getRequestDispatcher("order-detail.jsp").forward(request, response);
@@ -57,7 +60,7 @@ public class OrderDetailServlet extends HttpServlet {
     // Lấy thông tin đơn hàng theo orderId
     private Order getOrderById(int orderId) {
         Order order = null;
-        String query = "SELECT order_id, user_id, order_date,username FROM orders WHERE order_id = ?";
+        String query = "SELECT order_id, user_id, order_date, username FROM orders WHERE order_id = ?";
 
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -74,29 +77,5 @@ public class OrderDetailServlet extends HttpServlet {
             e.printStackTrace();
         }
         return order;
-    }
-
-    // Lấy các mục trong đơn hàng theo orderId
-    private List<OrderItem> getOrderItemsByOrderId(int orderId) {
-        List<OrderItem> orderItems = new ArrayList<>();
-        String query = "SELECT order_item_id, property_id, quantity, price, title FROM orderitems WHERE order_id = ?";
-
-        try (Connection conn = Database.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, orderId);
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    int orderItemId = rs.getInt("order_item_id");
-                    int propertyId = rs.getInt("property_id");
-                    int quantity = rs.getInt("quantity");
-                    double price = rs.getDouble("price");
-                    String title = rs.getString("title");
-                    orderItems.add(new OrderItem(orderItemId, orderId, propertyId, quantity, price, title));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return orderItems;
     }
 }

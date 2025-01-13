@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href=" ../css/villa-sale.css">
+    <link rel="stylesheet" type="text/css" href=" css/villa-sale.css">
 
 </head>
 
@@ -15,16 +15,16 @@
         <div class="header-left">
 
             <div class="contact-item">
-                <img src="../jpg/phone-call.png" class="icon">
+                <img src="jpg/phone-call.png" class="icon">
                 <span>0123 456 789</span>
             </div>
             <div class="contact-item">
-                <img src="../jpg/email.png" class="icon">
+                <img src="jpg/email.png" class="icon">
                 <span>info@company.com</span>
             </div>
             <div class="contact-item">
 
-                <img src="../jpg/location.png" class="icon">
+                <img src="jpg/location.png" class="icon">
                 <span>123 Đường ABC, Quận XYZ, TP.HCM</span>
             </div>
 
@@ -44,7 +44,7 @@
         </div>
         <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()"
            style="border: 1px solid #ccc; border-radius:100%;">
-            <img src="../jpg/heart%20(1).png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng"
+            <img src="jpg/heart%20(1).png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng"
                  class="cart-icon">
             <div class="item-count">0</div>
             <div class="mini-cart">

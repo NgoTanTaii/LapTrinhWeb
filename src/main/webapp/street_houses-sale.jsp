@@ -15,16 +15,16 @@
         <div class="header-left">
 
             <div class="contact-item">
-                <img src="../jpg/phone-call.png" class="icon">
+                <img src="jpg/phone-call.png" class="icon">
                 <span>0123 456 789</span>
             </div>
             <div class="contact-item">
-                <img src="../jpg/email.png" class="icon">
+                <img src="jpg/email.png" class="icon">
                 <span>info@company.com</span>
             </div>
             <div class="contact-item">
 
-                <img src="../jpg/location.png" class="icon">
+                <img src="jpg/location.png" class="icon">
                 <span>123 Đường ABC, Quận XYZ, TP.HCM</span>
             </div>
 

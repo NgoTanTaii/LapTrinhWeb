@@ -2,12 +2,42 @@ package Dao;
 
 import DBcontext.Database;
 import Entity.Order;
+import Entity.OrderItem;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDAO {
+    public List<OrderItem> getOrderItemsByOrderId(int orderId) {
+        List<OrderItem> orderItems = new ArrayList<>();
+        String query = "SELECT oi.order_item_id, oi.property_id, oi.quantity, oi.price, oi.title, oi.status " +
+                "FROM orderitems oi " +
+                "WHERE oi.order_id = ?";
+
+        try (Connection con = Database.getConnection();
+             PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setInt(1, orderId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    int orderItemId = rs.getInt("order_item_id");
+                    int propertyId = rs.getInt("property_id");
+                    int quantity = rs.getInt("quantity");
+                    double price = rs.getDouble("price");
+                    String title = rs.getString("title");
+                    String status = rs.getString("status");
+
+                    // Assuming OrderItem has a constructor to set values
+                    OrderItem orderItem = new OrderItem(orderItemId, orderId, propertyId, quantity, price, title, status);
+                    orderItems.add(orderItem);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orderItems;
+    }
 
 
     // Lấy tất cả đơn hàng có trạng thái 'processed'
@@ -133,4 +163,26 @@ public class OrderDAO {
             return false;
         }
     }
+    private Order getOrderById(int orderId) {
+        Order order = null;
+        String query = "SELECT order_id, user_id, order_date, username FROM orders WHERE order_id = ?";
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, orderId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int userId = rs.getInt("user_id");
+                    Date orderDate = rs.getDate("order_date");
+                    String username = rs.getString("username");
+                    order = new Order(orderId, orderDate, username, userId);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return order;
+    }
+
+
 }

@@ -89,7 +89,17 @@
     </style>
 </head>
 <body>
+<%
 
+    // Sử dụng biến session có sẵn trong JSP
+    String role = (String) session.getAttribute("role");
+
+    if (!"admin".equals(role)) {
+        // Nếu không phải admin, chuyển hướng đến trang không có quyền truy cập
+        response.sendRedirect("access-denied.jsp");
+        return;
+    }
+%>
 <div class="container">
     <h2>Thêm Người Dùng Mới</h2>
 

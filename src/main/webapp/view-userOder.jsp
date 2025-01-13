@@ -20,6 +20,7 @@
     <%
         // Lấy thông tin phân quyền từ session
         String role = (String) session.getAttribute("role");  // Giả sử 'role' chứa thông tin về quyền người dùng
+
         int loggedInUserId = (Integer) session.getAttribute("userId");  // Lấy userId từ session
 
         // Nếu người dùng không phải là admin và đang truy cập dữ liệu của người khác

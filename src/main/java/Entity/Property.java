@@ -21,6 +21,16 @@ public class Property {
         this.available = available;
     }
 
+    public Property(int propertyId, String title, String address, double price, double area, String imageUrl) {
+        this.id = propertyId;
+        this.title = title;
+        this.address = address;
+        this.price = price;
+        this.area = area;
+        this.imageUrl = imageUrl;
+
+    }
+
     // Getter và Setter
     public String getTitle() {
         return title;

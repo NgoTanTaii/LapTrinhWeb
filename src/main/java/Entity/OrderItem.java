@@ -7,16 +7,8 @@ public class OrderItem {
     private int quantity;
     private double price;
     private String title;
+    private String status;
 
-    // Constructor
-    public OrderItem(int orderItemId, int orderId, int propertyId, int quantity, double price, String title) {
-        this.orderItemId = orderItemId;
-        this.orderId = orderId;
-        this.propertyId = propertyId;
-        this.quantity = quantity;
-        this.price = price;
-        this.title = title;
-    }
 
     public OrderItem(int propertyId, String title, double price, int quantity) {
         this.propertyId = propertyId;
@@ -25,7 +17,21 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    // Getters and setters
+    public OrderItem(int orderItemId, int orderId, int propertyId, int quantity, double price, String title, String status) {
+        this.orderItemId = orderItemId;
+        this.orderId = orderId;
+        this.propertyId = propertyId;
+        this.quantity = quantity;
+        this.price = price;
+        this.title = title;
+        this.status = status;
+
+    }
+
+    public OrderItem() {
+
+    }
+
     public int getOrderItemId() {
         return orderItemId;
     }
@@ -72,5 +78,26 @@ public class OrderItem {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderItem{" +
+                "orderItemId=" + orderItemId +
+                ", orderId=" + orderId +
+                ", propertyId=" + propertyId +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                ", title='" + title + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

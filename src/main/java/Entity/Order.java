@@ -66,4 +66,15 @@ public class Order {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", orderDate=" + orderDate +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Dự Án</title>
+  <link rel="stylesheet" href="../css/property-for-sale.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    .right-content {
+      position: absolute; /* Đặt nó tuyệt đối trong body */
+      top: 1150px; /* Khoảng cách từ trên xuống */
+      right: 120px; /* Khoảng cách từ bên phải */
+      width: 200px; /* Chiều rộng cho phần lọc */
+      background-color: #f9f9f9; /* Màu nền cho phần lọc */
+      padding: 15px; /* Padding cho phần lọc */
+      border-radius: 10px; /* Bo góc cho phần lọc */
+
+
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin-right: 0;
+      border-radius: 10px;
+    }
+
+    .u-lo li {
+      position: relative;
+      display: inline-block;
+      margin-right: 20px;
+      z-index: 10; /* Đảm bảo menu cha hiển thị trên cùng */
+    }
+
+    ul li a {
+      text-decoration: none;
+      display: inline-block;
+      color: #333;
+    }
+
+    /* Thiết lập cho menu con */
+    ul li ul {
+      display: none; /* Ẩn menu con mặc định */
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #f9f9f9;
+      min-width: 200px;
+      padding: 10px 0;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      z-index: 999; /* Đảm bảo menu con hiển thị trên các phần tử khác */
+    }
+
+    ul li ul li {
+      display: block;
+      margin: 0;
+    }
+
+    ul li ul li a {
+      padding: 10px 15px;
+      color: #333;
+      display: block;
+    }
+
+    /* Hiển thị menu con khi hover */
+    ul li:hover ul {
+      display: block;
+    }
+
+    /* Style cho menu con khi hover */
+    ul li ul li a:hover {
+      background-color: #eee;
+    }
+
+    /* CSS ở đây */
+    body {
+      font-family: Arial, sans-serif;
+
+    }
+
+    .container1 {
+      padding: 15px;
+      margin-bottom: 30px;
+      border: 1px solid black;
+      width: 90%;
+      border-radius: 5px;
+      margin-top: 30px;
+      margin-left: 50px;
+      display: flex; /* Sử dụng flexbox cho cấu trúc */
+      justify-content: space-between; /* Để căn giữa các phần tử */
+      gap: 20px; /* Khoảng cách giữa phần nội dung và phần lọc */
+    }
+
+    .left-content {
+      flex: 2; /* Chiếm 2 phần không gian */
+    }
+
+    .filter-container {
+      position: absolute; /* Đặt nó tuyệt đối trong body */
+      top: 440px; /* Khoảng cách từ trên xuống */
+      right: 120px; /* Khoảng cách từ bên phải */
+      width: 200px; /* Chiều rộng cho phần lọc */
+      background-color: #f9f9f9; /* Màu nền cho phần lọc */
+      padding: 15px; /* Padding cho phần lọc */
+      border-radius: 10px; /* Bo góc cho phần lọc */
+
+    }
+
+    .price-options {
+      list-style-type: none; /* Loại bỏ dấu đầu dòng */
+      padding: 0; /* Xóa padding */
+      margin: 10px 0; /* Margin cho danh sách */
+    }
+
+    .price-options li {
+      margin-bottom: 5px; /* Khoảng cách giữa các mục */
+      padding: 3px; /* Thêm padding cho mỗi mục */
+      cursor: pointer; /* Chỉ con trỏ thành hình bàn tay */
+      transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu */
+    }
+
+    .price-options li:hover {
+      color: silver;
+    }
+
+
+    /* Thêm một lớp để hiển thị giá đã chọn (nếu cần) */
+    .selected {
+      background-color: #d4edda; /* Màu nền cho tùy chọn đã chọn */
+    }
+
+    .filter-group {
+      display: flex; /* Hiển thị các nút lọc theo hàng ngang */
+      gap: 10px; /* Khoảng cách giữa các nút lọc */
+      margin-bottom: 20px; /* Khoảng cách dưới cùng cho nhóm nút lọc */
+    }
+
+    .filter-btn {
+
+      padding: 10px 15px; /* Padding cho các nút lọc */
+      background-color: #f0f0f0; /* Màu nền cho các nút lọc */
+      border: none; /* Không có đường viền */
+      cursor: pointer; /* Con trỏ chuột khi hover vào nút */
+      display: flex; /* Hiển thị các nút theo hàng ngang */
+      align-items: center; /* Căn giữa theo chiều dọc */
+    }
+
+    .filter-btn i {
+      margin-right: 5px; /* Khoảng cách bên phải cho biểu tượng */
+    }
+
+    .form-group {
+      margin-bottom: 15px; /* Khoảng cách dưới cùng cho nhóm nhập liệu */
+    }
+
+    .filter-container1 {
+      position: absolute; /* Đặt nó tuyệt đối trong body */
+      top: 990px; /* Khoảng cách từ trên xuống */
+      right: 120px; /* Khoảng cách từ bên phải */
+      width: 200px; /* Chiều rộng cho phần lọc */
+      background-color: #f9f9f9; /* Màu nền cho phần lọc */
+      padding: 15px; /* Padding cho phần lọc */
+      border-radius: 10px; /* Bo góc cho phần lọc */
+    }
+
+    label {
+      display: block; /* Hiển thị label như một khối */
+      margin-bottom: 5px; /* Khoảng cách dưới cùng cho label */
+    }
+
+    select {
+      width: 100%; /* Đặt chiều rộng của select là 100% */
+      padding: 8px; /* Padding cho select */
+    }
+
+    .container {
+      margin-top: 40px;
+      background-color: #ffffff;
+      padding-top: 20px;
+      width: 90%;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng nhẹ */
+      text-align: center;
+    }
+
+    .container:hover {
+      scale: calc(1.01);
+      cursor: pointer;
+    }
+
+    /* Tiêu đề và đoạn văn trong container */
+    .container h1 {
+      font-size: 26px;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .container p {
+      font-size: 15px;
+      color: #666;
+      margin-bottom: 25px;
+    }
+    .image-gallery {
+      display: flex;
+      gap: 10px;
+      margin-top: -5px;
+    }
+
+    /* Hình ảnh lớn */
+    .large-image img {
+      width: 700px;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    /* Các hình ảnh nhỏ */
+    .small-images {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .small-image img {
+      width: 370px;
+      height: 255px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    /* Overlay hiển thị số ảnh còn lại */
+    .with-overlay {
+      position: relative;
+    }
+
+    .with-overlay .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+    }
+
+  </style>
+
+
+</head>
+<body>
+<header class="header">
+  <div class="header-top" style="width: 100%; position: sticky; top: 0; z-index: 1000;">
+    <div class="header-left">
+
+      <div class="contact-item">
+        <img src="../jpg/phone-call.png" class="icon">
+        <span>098 664 1965</span>
+      </div>
+      <div class="contact-item">
+        <img src="../jpg/email.png" class="icon">
+        <span>khoangoquan@gmail.com</span>
+      </div>
+      <div class="contact-item">
+
+        <img src="../jpg/location.png" class="icon">
+        <span>123 Đường 12, Quận 9, TP.HCM</span>
+      </div>
+
+
+    </div>
+    <div class="header-right" style="margin-top: 10px">
+
+      <a href="login.html" class="btn"><h3>Đăng nhập</h3></a>
+      <a href="register.html" class="btn"><h3>Đăng ký</h3></a>
+      <a href="post-status.html" class="btn"><h3>Đăng tin</h3></a>
+    </div>
+    <a href="#" class="floating-cart" id="floating-cart" onclick="toggleMiniCart()"
+       style="border: 1px solid #ccc; border-radius:100%;">
+      <img src="../jpg/heart%20(1).png" style="width: 30px!important; height: 30px !important;" alt="Giỏ hàng"
+           class="cart-icon">
+      <div class="item-count">0</div>
+      <div class="mini-cart">
+        <h4>Bất động sản đã lưu</h4>
+        <ul id="cart-items"></ul>
+        <button id="go-to-cart" onclick="goToCart()">Đi tới xem bất động sản đã lưu</button>
+      </div>
+    </a>
+
+  </div>
+  <div class="menu">
+    <div class="header-bottom" style="height:60px;margin-top: 0">
+
+      <div class="store-name">
+        <h1><a href="index.html">
+          <span class="color1">HOME</span>
+          <span class="color2">LANDER</span> <!-- Đổi từ VINA BOOK sang VINA BĐS -->
+        </a></h1>
+      </div>
+
+
+      <nav>
+        <ul class="u-lo">
+          <li><a href="property-for-sale.html">Nhà Đất Bán</a>
+            <ul>
+              <li><a href="apartment-sale.html">Bán căn hộ chung cư</a></li>
+              <li><a href="house-sale.html">Bán nhà riêng</a></li>
+              <li><a href="villa-sale.html">Bán nhà biệt thự liền kề</a></li>
+              <li><a href="street_houses-sale.html">Bán nhà mặt phố</a></li>
+              <li><a href="farm_resort-sale.html">Bán trang trại khu nghỉ dưỡng</a></li>
+              <li><a href="warehouses_factories-sale.html">Bán kho , nhà xưởng</a></li>
+              <li><a href="other_real_estate-sale.html">Bán loại bất động sản khác</a></li>
+            </ul>
+          </li>
+          <li><a href="property-for-rent.html">Nhà Đất Cho Thuê</a>
+            <ul>
+              <li><a href="apartment-rental.html">Cho thuê căn hộ chung cư</a></li>
+              <li><a href="house-rental.html">Cho thuê nhà riêng</a></li>
+              <li><a href="villa-rental.html">Cho thuê nhà biệt thự, liền kề</a></li>
+              <li><a href="street_houses-rental.html">Cho thuê nhà mặt phố</a></li>
+              <li><a href="accommodation-rental.html">Cho thuê phòng trọ , nhà trọ</a></li>
+              <li><a href="office-rental.html">Cho thuê văn phòng</a></li>
+              <li><a href="other_real_estate-rental.html">Cho thuê loại bất động sản khác</a></li>
+            </ul>
+          </li>
+          <li><a href="project.html">Dự Án</a>
+            <ul>
+              <li><a href="#">Các dự án nổi bật</a></li>
+              <li><a href="#">Dự án nhà ở</a></li>
+              <li><a href="#">Dự án chung cư</a></li>
+            </ul>
+          </li>
+          <li><a href="news.html">Tin Tức</a>
+            <ul>
+              <li><a href="#">Tin thị trường</a></li>
+              <li><a href="#">Xu hướng bất động sản</a></li>
+              <li><a href="#">Phân tích và đánh giá</a></li>
+            </ul>
+          </li>
+          <li><a href="wiki.html">Wiki BĐS</a>
+            <ul>
+              <li><a href="#">Mua bán</a></li>
+              <li><a href="#">Cho thuê</a></li>
+              <li><a href="#">Tài chính</a></li>
+              <li><a href="#">Phong thủy</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
+
+      <div class="contact-info">
+        <img src="../jpg/phone-call.png" alt="Phone Icon" class="phone-icon">
+        <span class="phone-number">098 664 1965</span>
+      </div>
+
+    </div>
+  </div>
+
+
+</header>
+
+  <div class="left-content" style="">
+    <H4>Dự án / Khu đô thị Sunburn</H4>
+    <h2>Khu đô thị Sunburn</h2>
+    <span>Thị trấn Vĩnh Trụ, Huyện Lý Nhân, Hà Nam.</span>
+  </div>
+
+
+<div class="container" style="width: 90%;margin-left: 50px;margin-top: 20px">
+
+  <div class="image-gallery" style="margin-top: -30px">
+
+    <div class="large-image">
+      <img src="../jpg/2.jpg" alt="Hình ảnh lớn">
+    </div>
+
+
+    <div class="small-images">
+      <div class="small-image">
+        <img src="../jpg/7.jpg" alt="Hình ảnh nhỏ 1">
+      </div>
+      <div class="small-image with-overlay">
+        <img src="../jpg/2.jpg" alt="Hình ảnh nhỏ 2">
+        <div class="overlay">+5</div> <!-- Thông báo số ảnh còn lại -->
+      </div>
+    </div>
+
+  </div>
+  <div class="listing-container">
+    <div class="grid-container">
+      <div class="grid-item">
+        <a href="#">Tổng Quan</a>
+        <a href="#">Giới Thiệu Về Dự Án</a>
+      </div>
+      <div class="grid-item">
+        <a href="#">Mặt Bằng Dự Án</a>
+        <a href="#">Tổng Thể Hạ Tầng</a>
+      </div>
+      <div class="grid-item">
+        <a href="#">Vị Trí</a>
+        <a href="#">Bản Đồ Dự Án</a>
+      </div>
+      <div class="grid-item">
+        <a href="#">Ước Tính Khoản Vay</a>
+        <a href="#">Hỗ Trợ Tính Lãi Suất</a>
+      </div>
+      <div class="grid-item">
+        <a href="#">Câu Hỏi Thường Gặp</a>
+        <a href="#">Hỗ Trợ Thắc Mắc</a>
+      </div>
+      <div class="grid-item">
+        <a href="#">Dự Án Liên Quan</a>
+        <a href="#">Dự Án Xung Quanh</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="container1" style="border: none;width: 60%">
+  <div class="left-content">
+
+    <h1>Tổng quan khu đô thị Sunburn</h1>
+
+    <p style="padding-top: 20px">
+      Khu đô thị Sunburn tọa lạc tại Thị trấn Vĩnh Trụ, huyện Lý Nhân, tỉnh Hà Nam, cạnh dự án Hà Phương 1 & 2. Dự án Sunburn Lý Nhân Hà Nam với 2 loại hình chính Shophouse và Nhà phố ở liền kề, được xây dựng bởi chủ đầu tư Hà Phương.
+    </p>
+    <div class="image-form" style="padding-top: 20px">
+      <img src="../jpg/duan.jpg" style="border-radius: 10px" alt="Hình ảnh khu đô thị Sunburn" class="large-image">
+    </div>
+
+    <div class="left-content">
+      <h1>Vị Trí</h1>
+      <p>
+        Khu đô thị Sunburn tọa lạc tại Thị trấn Vĩnh Trụ, huyện Lý Nhân, tỉnh Hà Nam, cạnh dự án Hà Phương 1 & 2.
+      </p>
+
+      <ul class="location-details">
+        <li><strong>Phía Bắc:</strong> Giáp DT 971</li>
+        <li><strong>Phía Nam:</strong> Giáp khu dân cư</li>
+        <li><strong>Phía Đông:</strong> Giáp khu đô thị Hà Phương 1</li>
+        <li><strong>Phía Tây:</strong> Giáp khu Công Nghiệp Nhân Chính</li>
+      </ul>
+      <div class="image-item">
+        <img src="../jpg/duan1.jpg" alt="Hình ảnh 1">
+      </div>
+      <h2>Vị trí KĐT Sunburn</h2>
+      <p><strong>Giá Bán:</strong> Giá bán dự án Sunburn đang cập nhật.</p>
+
+      <h3>Thiết Kế - Mặt Bằng</h3>
+      <p>
+        Các thông số về KĐT Sunburn Lý Nhân Hà Nam:
+      </p>
+      <ul class="design-details">
+        <li><strong>Quy mô:</strong> 655 khu nhà liền kề và nhà phố shophouse.</li>
+        <li><strong>Khu nhà phố Shophouse:</strong> 76 lô với diện tích 10x20m</li>
+        <li><strong>Khu nhà liền kề:</strong> 589 lô</li>
+        <li>Khu A – 4 Block tổng 137 lô</li>
+        <li>Khu B – 4 Block tổng 224 lô</li>
+        <li>Khu C – 4 Block tổng 218 lô</li>
+        <li><strong>Diện tích khu nhà liền kề:</strong> 100m², 135m², 152m², 155m², 161m², 192m², 213m²</li>
+      </ul>
+      <div class="image-item">
+        <img src="../jpg/duan2.png" alt="Hình ảnh 1">
+      </div>
+      <h3>Mặt Bằng KĐT Sunburn</h3>
+      <p><strong>Khu nhà ở liền kề:</strong> 589 lô, diện tích từ 100m² - 213m², Tầng cao trung bình 4 tầng, mật độ trung bình từ 60% - 70%</p>
+      <p><strong>Khu nhà ở Shophouse:</strong> 76 lô, diện tích 200m², Tầng cao trung bình 4 tầng, mật độ xây dựng 55%</p>
+
+      <h3>Tiện Ích</h3>
+      <p>Hệ thống tiện ích tại KĐT Sunburn:</p>
+      <ul class="facilities">
+        <li>Phố đi bộ</li>
+        <li>Cây xanh nội khu</li>
+        <li>Khu vui chơi trẻ em</li>
+        <li>Khu thể thao (tennis, bể bơi, sân bóng…)</li>
+        <li>Trung tâm thương mại</li>
+        <li>Hệ thống an ninh nội khu bảo vệ 24/24</li>
+        <li>Nhà hàng, café, cửa hàng tiện ích…</li>
+      </ul>
+
+      <h3>Trung tâm thương mại của khu Đô Thị Sunburn</h3>
+      <div class="image-item">
+        <img src="../jpg/duan3.jpg" alt="Hình ảnh 1">
+      </div>
+      <h3>Pháp Lý</h3>
+      <p><strong>Hình thức sở hữu:</strong> Sổ đỏ thổ cư 100%</p>
+
+      <div class="map-container">
+        <h3>Bản Đồ Vị Trí KĐT Sunburn</h3>
+
+        <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.3602677852815!2d-122.4009425846817!3d37.79281677975801!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085808cbd76b6bb%3A0xf1390594e40361b1!2sSalesforce%20Tower!5e0!3m2!1sen!2sus!4v1614694698710!5m2!1sen!2sus"
+                width="100%"
+                height="200"
+                style="border:5px;"
+                allowfullscreen=""
+                loading="lazy"></iframe>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+
+<style>
+
+  .left-content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+
+  .left-content h1 {
+    font-size: 2.2em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .left-content h2,
+  .left-content h3 {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #444;
+    margin-top: 20px;
+  }
+
+  .left-content p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #666;
+    text-align: justify;
+  }
+
+  .location-details,
+  .design-details,
+  .facilities {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .location-details li,
+  .design-details li,
+  .facilities li {
+    font-size: 1.1em;
+    color: #666;
+    margin: 8px 0;
+  }
+
+  .image-gallery {
+    display: flex;
+    gap: 20px;
+    margin-top: 30px;
+  }
+
+  .image-item {
+    flex: 1;
+    padding-top: 20px;
+  }
+
+  .image-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* 6 cột */
+    gap: 10px; /* Khoảng cách giữa các cột */
+  }
+
+  .grid-item {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column; /* Đặt các liên kết theo cột */
+    justify-content: flex-start; /* Căn dọc về phía đầu */
+    align-items: flex-start; /* Căn ngang về phía trái */
+  }
+
+  .grid-item a {
+    display: inline-block; /* Đảm bảo các liên kết không xuống dòng */
+    text-decoration: none;
+    color: #333;
+    font-size: 1em; /* Chữ bằng nhau */
+    text-align: left; /* Căn chữ về bên trái */
+    margin-bottom: 5px; /* Khoảng cách giữa các liên kết */
+  }
+
+  .grid-item a:first-child {
+    font-weight: bold; /* Chữ trên in đậm */
+  }
+
+  .grid-item a:last-child {
+    font-size: 0.9em; /* Chữ dưới nhỏ hơn */
+  }
+
+  /* Gạch chân chỉ khi hover vào liên kết dưới */
+  .grid-item a:last-child:hover {
+    color: #007BFF; /* Đổi màu khi hover */
+    border-bottom: 2px solid #007BFF; /* Gạch chân khi hover vào liên kết dưới */
+  }
+
+  .grid-item a:first-child:hover {
+    color: #007BFF; /* Đổi màu khi hover vào liên kết trên */
+    border-bottom: none; /* Không gạch chân khi hover vào liên kết trên */
+  }
+
+  @media (max-width: 1024px) {
+    .grid-container {
+      grid-template-columns: repeat(3, 1fr); /* 3 cột khi màn hình nhỏ */
+    }
+  }
+
+  @media (max-width: 768px) {
+    .grid-container {
+      grid-template-columns: repeat(2, 1fr); /* 2 cột khi màn hình rất nhỏ */
+    }
+  }
+
+  @media (max-width: 480px) {
+    .grid-container {
+      grid-template-columns: 1fr; /* 1 cột khi màn hình cực kỳ nhỏ */
+    }
+  }
+
+
+</style>
+</div>
+
+
+<div class="related-properties" style="width:95%;margin-left: -60px">
+  <h3>Các dự án liên quan</h3>
+  <div class="related-properties-container" id="relatedProductsContainer">
+    <a href="project-detail.html?id=1" style="text-decoration: none;">
+      <div class="related-property">
+        <img src="../jpg/1.jpg" alt="Sản phẩm 1">
+        <h4>Nhà Vinhomes Riverside</h4>
+        <p style="display: flex; justify-content: space-between; color: red;">
+          <span>Giá: 1.5 tỷ</span>
+          <span>Diện tích: 100m²</span>
+        </p>
+        <p style="display: flex; align-items: center;">
+          <img src="../jpg/location.png" alt="Location Icon" class="location-icon" style="width: 16px; height: 16px; margin-right: 5px;">
+          Địa chỉ: HCM
+        </p>
+      </div>
+    </a>
+    <a href="project-detail.html?id=1" style="text-decoration: none;">
+      <div class="related-property">
+        <img src="../jpg/2.jpg" alt="Sản phẩm 2">
+        <h4>Nhà Sunrise City</h4>
+        <p style="display: flex; justify-content: space-between; color: red;">
+          <span>Giá: 1.5 tỷ</span>
+          <span>Diện tích: 100m²</span>
+        </p>
+        <p style="display: flex; align-items: center;">
+          <img src="../jpg/location.png" alt="Location Icon" class="location-icon" style="width: 16px; height: 16px; margin-right: 5px;">
+          Địa chỉ: HCM
+        </p>
+      </div>
+    </a>
+    <a href="project-detail.html?id=1" style="text-decoration: none;">
+      <div class="related-property">
+        <img src="../jpg/21.jpg" alt="Sản phẩm 3">
+        <h4>Nhà Masteri Thảo Điền</h4>
+        <p style="display: flex; justify-content: space-between; color: red;">
+          <span>Giá: 1.5 tỷ</span>
+          <span>Diện tích: 100m²</span>
+        </p>
+        <p style="display: flex; align-items: center;">
+          <img src="../jpg/location.png" alt="Location Icon" class="location-icon" style="width: 16px; height: 16px; margin-right: 5px;">
+          Địa chỉ: HCM
+        </p>
+      </div>
+    </a>
+    <a href="project-detail.html?id=1" style="text-decoration: none;">
+      <div class="related-property">
+        <img src="../jpg/20.jpg" alt="Sản phẩm 4">
+        <h4>Nhà Landmark 81</h4>
+        <p style="display: flex; justify-content: space-between; color: red;">
+          <span>Giá: 1.5 tỷ</span>
+          <span>Diện tích: 100m²</span>
+        </p>
+        <p style="display: flex; align-items: center;">
+          <img src="../jpg/location.png" alt="Location Icon" class="location-icon" style="width: 16px; height: 16px; margin-right: 5px;">
+          Địa chỉ: HCM
+        </p>
+      </div>
+    </a>
+    <a href="project-detail.html?id=1" style="text-decoration: none;">
+      <div class="related-property">
+        <img src="../jpg/18.jpg" alt="Sản phẩm 5">
+        <h4>Nhà Sala Đại Quang Minh</h4>
+        <p style="display: flex; justify-content: space-between; color: red;">
+          <span>Giá: 1.5 tỷ</span>
+          <span>Diện tích: 100m²</span>
+        </p>
+        <p style="display: flex; align-items: center;">
+          <img src="../jpg/location.png" alt="Location Icon" class="location-icon" style="width: 16px; height: 16px; margin-right: 5px;">
+          Địa chỉ: HCM
+        </p>
+      </div>
+    </a>
+    <a href="project-detail.html?id=1" style="text-decoration: none;">
+      <div class="related-property">
+        <img src="../jpg/6.jpg" alt="Sản phẩm 6">
+        <h4>Nhà The Manor</h4>
+        <p style="display: flex; justify-content: space-between; color: red;">
+          <span>Giá: 1.5 tỷ</span>
+          <span>Diện tích: 100m²</span>
+        </p>
+        <p style="display: flex; align-items: center;">
+          <img src="../jpg/location.png" alt="Location Icon" class="location-icon" style="width: 16px; height: 16px; margin-right: 5px;">
+          Địa chỉ: HCM
+        </p>
+      </div>
+    </a>
+    <a href="project-detail.html?id=1" style="text-decoration: none;">
+      <div class="related-property">
+        <img src="../jpg/7.jpg" alt="Sản phẩm 7">
+        <h4>Nhà Empire City</h4>
+        <p style="display: flex; justify-content: space-between; color: red;">
+          <span>Giá: 1.5 tỷ</span>
+          <span>Diện tích: 100m²</span>
+        </p>
+        <p style="display: flex; align-items: center;">
+          <img src="../jpg/location.png" alt="Location Icon" class="location-icon" style="width: 16px; height: 16px; margin-right: 5px;">
+          Địa chỉ: HCM
+        </p>
+      </div>
+    </a>
+
+
+    <div class="more-products">
+      <button id="scrollLeftBtn"> <</button>
+      <button id="scrollRightBtn">️ ></button>
+    </div>
+    <script>
+      const container = document.getElementById('relatedProductsContainer');
+
+      document.getElementById('scrollLeftBtn').addEventListener('click', function () {
+        container.scrollBy({
+          top: 0,
+          left: -200, // Cuộn 200px sang trái
+          behavior: 'smooth'
+        });
+      });
+
+      document.getElementById('scrollRightBtn').addEventListener('click', function () {
+        container.scrollBy({
+          top: 0,
+          left: 200, // Cuộn 200px sang phải
+          behavior: 'smooth'
+        });
+      });
+
+    </script>
+
+  </div>
+</div>
+<div class="right-content" style="width: 300px; padding: 20px; border: 1px solid #ccc; border-radius: 10px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); background-color: #f9f9f9;">
+  <h3 style="margin-bottom: 15px; color: #333;">Liên hệ tư vấn miễn phí</h3>
+  <p style="margin-bottom: 15px;">Hãy để lại thông tin của bạn để nhận tư vấn và các cập nhật mới nhất của dự án này.</p>
+  <button type="submit" style="width: 100%; background-color: #4CAF50; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">
+    Liên hệ lại tôi
+  </button>
+</div>
+
+
+  <style>
+  .large-image {
+    width: 100%;
+    height: auto;
+  }
+
+  h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 16px;
+    color: #666;
+  }
+</style>
+<style>
+
+  .related-properties {
+    margin-top: 30px; /* Giảm khoảng cách giữa các phần */
+    padding-left: 135px; /* Khoảng cách với lề trái */
+    position: relative; /* Để định vị các nút */
+
+  }
+
+
+  .related-properties-container {
+    display: flex;
+    overflow-x: auto; /* Ẩn thanh cuộn mặc định */
+    height: 250px; /* Chiều cao cố định cho sản phẩm liên quan */
+    padding-bottom: 10px; /* Khoảng cách cho nút cuộn */
+
+
+  }
+
+  .related-properties-container::-webkit-scrollbar {
+    height: 0px; /* Chiều cao của thanh cuộn */
+  }
+
+  .related-property {
+    flex: 0 0 auto; /* Không cho phép co lại */
+    width: 200px; /* Chiều rộng của mỗi sản phẩm liên quan */
+    margin-right: 10px;
+    text-align: left;
+    overflow: visible; /* Cho phép hình ảnh hiển thị bên ngoài */
+    border: 1px solid gainsboro;
+    border-radius: 10px;
+    position: relative; /* Để z-index có hiệu lực */
+    transition: transform 0.3s; /* Thêm hiệu ứng chuyển tiếp */
+  }
+
+  .related-property:hover {
+    transform: translateY(-5px); /* Nổi lên trên 5px */
+    z-index: 15; /* Đưa sản phẩm lên trên cùng để không bị che khuất */
+  }
+
+
+  .related-property img {
+    width: 100%; /* Đảm bảo hình ảnh phù hợp với kích thước chứa */
+    height: auto; /* Tự động điều chỉnh chiều cao */
+    border: 2px solid transparent; /* Border mặc định là trong suốt */
+    border-radius: 10px; /* Bo tròn góc cho hình ảnh */
+    transition: border-color 0.3s; /* Hiệu ứng chuyển tiếp cho border */
+  }
+
+  .more-products {
+    position: absolute; /* Định vị tuyệt đối */
+    top: 0; /* Căn lên cùng với tiêu đề */
+    right: 0; /* Căn bên phải */
+    padding-bottom: 5px;
+  }
+
+  #scrollLeftBtn, #scrollRightBtn {
+    background-color: whitesmoke; /* Màu nền cho nút */
+    color: black; /* Màu chữ */
+    border: none; /* Không có đường viền */
+    padding: 5px; /* Khoảng cách bên trong */
+    cursor: pointer; /* Con trỏ khi di chuột qua */
+    border-radius: 5px; /* Bo tròn góc */
+    font-size: 14px; /* Kích thước chữ */
+    margin-left: 5px; /* Khoảng cách giữa các nút */
+  }
+
+  #scrollLeftBtn:hover, #scrollRightBtn:hover {
+    background-color: wheat; /* Màu nền khi di chuột qua */
+  }
+
+  .bottom-banner {
+    width: 56%; /* Kích thước của banner */
+    margin-left: 135px; /* Canh giữa và tạo khoảng cách */
+    margin-top: 50px;
+  }
+
+  .bottom-banner img {
+    width: 63%; /* Chiều rộng đầy đủ */
+    border-radius: 5px; /* Bo góc cho banner */
+    padding-right: 50px;
+  }
+
+  .property-features {
+    margin-top: 30px;
+    width: 52%; /* Kích thước của banner */
+    margin-left: 135px; /* Canh giữa và tạo khoảng cách */
+
+    padding: 15px; /* Padding cho phần đặc điểm */
+    border: 1px solid #ccc; /* Viền cho phần đặc điểm */
+    border-radius: 5px; /* Bo góc cho phần đặc điểm */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng cho phần đặc điểm */
+  }
+
+  .features-container {
+    display: flex; /* Sử dụng Flexbox để chia cột */
+    justify-content: space-between; /* Tạo khoảng cách đều giữa các cột */
+  }
+
+  .features-column {
+    width: 48%; /* Chiều rộng của mỗi cột */
+  }
+
+  .feature-item {
+    display: flex; /* Sử dụng Flexbox cho mỗi mục */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    margin-bottom: 10px; /* Khoảng cách giữa các mục */
+    padding: 5px 0; /* Thêm padding trên và dưới để căn chỉnh */
+  }
+
+  .feature-icon {
+    font-size: 24px; /* Kích thước biểu tượng */
+    margin-right: 20px; /* Khoảng cách giữa biểu tượng và nội dung */
+
+    flex-shrink: 0; /* Đảm bảo biểu tượng không bị co lại */
+  }
+
+  /* Đảm bảo nội dung trong các mục được căn chỉnh đều */
+  .feature-item span {
+    display: flex; /* Sử dụng Flexbox cho span */
+    justify-content: space-between; /* Căn đều giữa label và giá trị */
+    width: 100%; /* Đảm bảo chiều rộng đầy đủ */
+  }
+
+  .property-features h3 {
+    margin-bottom: 10px; /* Khoảng cách dưới tiêu đề */
+  }
+
+  .property-features ul {
+    list-style-type: none; /* Xóa dấu chấm đầu dòng */
+    padding: 0; /* Xóa padding mặc định */
+  }
+
+  .property-features li {
+    margin-bottom: 8px; /* Khoảng cách giữa các mục trong danh sách */
+    display: flex; /* Hiển thị các mục dưới dạng dòng */
+  }
+
+  .property-features strong {
+    margin-right: 10px; /* Khoảng cách giữa tiêu đề và giá trị */
+    color: #333; /* Màu sắc cho tiêu đề */
+  }
+
+  .feature-icon {
+    font-size: 24px; /* Điều chỉnh kích thước biểu tượng */
+    margin-right: 10px; /* Khoảng cách giữa biểu tượng và nội dung */
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+</style>
+
+<div class="footer">
+  <div class="footer-top">
+
+    <h1><a href="homes">
+      <span class="color1">HOME</span>
+      <span class="color2">LANDER</span>
+    </a></h1>
+    <span class="footer-item"><i class="fas fa-phone"></i> Hotline: 098 664 1965</span>
+    <span class="footer-item"><i class="fas fa-envelope"></i> Hỗ trợ: khoangoquan@gmail.com</span>
+    <span class="footer-item"><i class="fas fa-headset"></i> Chăm sóc: 098 664 1965</span>
+  </div>
+
+  <div class="footer-content">
+    <!-- Thông tin công ty -->
+    <div class="company-info">
+      <h3>Công ty Bất Động Sản</h3>
+      <p>Địa chỉ: 123 Đường 12, Quận 9, TP.HCM</p>
+      <p>Điện thoại: 098 664 1965</p>
+    </div>
+
+    <!-- Liên kết nhanh -->
+    <div class="quick-links">
+      <h3>Liên kết nhanh</h3>
+      <ul>
+        <li><a href="#">Trang chủ</a></li>
+        <li><a href="#">Dự án</a></li>
+        <li><a href="#">Tin tức</a></li>
+        <li><a href="#">Liên hệ</a></li>
+      </ul>
+    </div>
+
+    <!-- Mạng xã hội -->
+    <div class="social-media">
+      <h3>Mạng xã hội</h3>
+      <a href="https://www.facebook.com/khoa.ngo.562114/" class="social-icon"><i class="fab fa-facebook"></i>
+        Facebook</a>
+      <a href="https://www.instagram.com/khoa5462/" class="social-icon"><i class="fab fa-instagram"></i>
+        Instagram</a>
+      <a href="https://mail.google.com/mail/u/0/?hl=vi#inbox" class="social-icon"><i
+              class="fas fa-envelope"></i>
+        Mail</a>
+    </div>
+
+    <!-- Form nhập email -->
+    <div class="newsletter">
+      <h3>Đăng ký nhận tin tức mới nhất</h3>
+      <form action="#" method="POST">
+        <input type="email" name="email" placeholder="Nhập email của bạn" required>
+        <button type="submit">Đăng ký</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2024 Công ty Bất Động Sản HOMELANDER. Mọi quyền lợi thuộc về công ty.</p>
+  </div>
+
+
+</div>
+</body>
+</html>

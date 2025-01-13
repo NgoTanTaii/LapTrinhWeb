@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ckfinder>
+    <authentication>
+        <![CDATA[
+            public boolean isAuthenticated(HttpServletRequest request) {
+                // Ví dụ đơn giản: luôn trả về true
+                // Bạn nên thay đổi logic này để kiểm tra người dùng đã đăng nhập
+                return true;
+            }
+        ]]>
+    </authentication>
+    <licenseName>Your License Name</licenseName>
+    <licenseKey>Your License Key</licenseKey>
+    <backends>
+        <backend name="default" adapter="default">
+            <baseUrl>/uploads/</baseUrl>
+            <root>C:\Users\Linh Luu\IdeaProjects\untitled4\src\main\webapp\uploads</root>
+        </backend>
+    </backends>
+    <resourceTypes>
+        <resourceType name="Images" url="/uploads/images/" directory="/images/" maxSize="16MB">
+            <allowedExtensions>
+                <extension name="jpg"/>
+                <extension name="jpeg"/>
+                <extension name="png"/>
+                <extension name="gif"/>
+                <extension name="bmp"/>
+            </allowedExtensions>
+        </resourceType>
+        <resourceType name="Files" url="/uploads/files/" directory="/files/" maxSize="16MB">
+            <allowedExtensions>
+                <extension name="pdf"/>
+                <extension name="doc"/>
+                <extension name="docx"/>
+                <extension name="xls"/>
+                <extension name="xlsx"/>
+                <extension name="txt"/>
+            </allowedExtensions>
+        </resourceType>
+    </resourceTypes>
+</ckfinder>

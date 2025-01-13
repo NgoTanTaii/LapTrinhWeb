@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="5a51e10c-29fa-47d9-8d40-e95b9b68b55a" name="batdongsan" url="http://batdongsanthaylong.unaux.com/">
+        <fileTransfer rootFolder="C:\Users\Linh Luu\IdeaProjects\untitled4" host="ftpupload.net" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
